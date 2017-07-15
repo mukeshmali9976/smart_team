@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <array name="arry_menu">
+        <item>Name</item>
+        <item>Email</item>
+        <item>Payment methods</item>
+        <item>Promo Code</item>
+        <item>Quick Tour</item>
+        <item>FAQ</item>
+        <item>Privacy Policy</item>
+    </array>
+
+    <string-array name="arry_spineer">
+        <item>Name</item>
+        <item>Email</item>
+        <item>Payment methods</item>
+        <item>Promo Code</item>
+        <item>Quick Tour</item>
+        <item>FAQ</item>
+        <item>Privacy Policy</item>
+    </string-array>
+
+
+</resources>

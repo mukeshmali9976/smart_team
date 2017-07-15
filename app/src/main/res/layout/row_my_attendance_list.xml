@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:custom="http://schemas.android.com/tools"
+    android:id="@+id/llRowProjectList"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="@dimen/margin_2"
+    android:background="@drawable/theme_row_background"
+    android:orientation="horizontal">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_margin="@dimen/margin_8"
+        android:orientation="vertical">
+
+        <com.techmali.smartteam.ui.views.MyTextView
+            android:id="@+id/tvDate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:text="25 May 2017(08:20)"
+            android:textSize="@dimen/font_18"
+            android:textStyle="bold"
+            custom:font_style="semibold" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <com.techmali.smartteam.ui.views.MyTextView
+                android:id="@+id/tvStratDate"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1"
+                android:text="Check In: 08:45 AM"
+                custom:font_style="semibold" />
+
+            <com.techmali.smartteam.ui.views.MyTextView
+                android:id="@+id/tvEndDate"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1"
+                android:text="Check Out: 06:45 PM"
+                custom:font_style="semibold" />
+
+        </LinearLayout>
+
+        <com.techmali.smartteam.ui.views.MyTextView
+            android:id="@+id/tvCheckOutLocation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:text="In Location: M 89/1066 - Panchwati Appartment, Solaroad, Naranpur , Ahmedabad. "
+            android:textSize="@dimen/font_12" />
+
+        <com.techmali.smartteam.ui.views.MyTextView
+            android:id="@+id/tvCheckInLocation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:text="Out Location: M 89/1066 - Panchwati Appartment, Solaroad, Naranpur , Ahmedabad. "
+            android:textSize="@dimen/font_12" />
+    </LinearLayout>
+
+</LinearLayout>

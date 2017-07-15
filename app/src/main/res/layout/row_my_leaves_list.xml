@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:custom="http://schemas.android.com/tools"
+    android:id="@+id/llRowProjectList"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="@dimen/margin_2"
+    android:background="@drawable/theme_row_background"
+    android:orientation="horizontal">
+
+
+    <LinearLayout
+        android:layout_margin="@dimen/margin_6"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:orientation="vertical">
+
+        <com.techmali.smartteam.ui.views.MyTextView
+            android:id="@+id/tvStartDate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:text="25 May 2017"
+            android:textSize="@dimen/font_18"
+            android:textStyle="bold"
+            custom:font_style="semibold" />
+
+        <com.techmali.smartteam.ui.views.MyTextView
+            android:id="@+id/tvEndDate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:text="To: 27 May 2017 01 AM"
+            custom:font_style="semibold" />
+
+        <com.techmali.smartteam.ui.views.MyTextView
+            android:id="@+id/tvTotalTime"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:text="Time: 2 and half days"
+            custom:font_style="semibold" />
+
+        <com.techmali.smartteam.ui.views.MyTextView
+            android:id="@+id/tvStatus"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:text="Status: Approve"
+            custom:font_style="semibold" />
+
+    </LinearLayout>
+
+    <com.techmali.smartteam.ui.views.MyTextView
+        android:layout_width="@dimen/margin_10"
+        android:layout_height="match_parent"
+        android:background="@drawable/theme_my_leave_status_green" />
+</LinearLayout>

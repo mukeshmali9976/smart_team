@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/layout_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingLeft="@dimen/margin_10"
+        android:paddingRight="@dimen/margin_10">
+
+
+        <com.techmali.smartteam.ui.views.MyEditText
+            android:id="@+id/etStartDate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_20"
+            android:ems="10"
+            android:hint="@string/lbl_start_date"
+            android:imeOptions="actionDone"
+            android:padding="@dimen/margin_10" />
+
+        <TextView
+            android:id="@+id/tvErrorStartDate"
+            style="@style/styleErrorTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/error_enter"
+            android:visibility="gone" />
+
+        <com.techmali.smartteam.ui.views.MyTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginTop="@dimen/margin_10"
+            android:text="@string/lbl_start_day_is_full_day"
+            android:textColor="@color/text_hint_color"
+            android:textSize="@dimen/font_18"
+            android:textStyle="bold"
+            custom:font_style="semibold" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_10"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+
+            <com.techmali.smartteam.ui.views.MyTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:text="@string/lbl_yes"
+                android:textColor="@color/text_hint_color"
+                android:textSize="@dimen/font_18"
+                android:textStyle="bold"
+                custom:font_style="semibold" />
+
+            <ImageView
+                android:id="@+id/ivStartDateYes"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="@dimen/margin_10"
+                android:src="@drawable/checkbox_off" />
+
+            <com.techmali.smartteam.ui.views.MyTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="@dimen/margin_50"
+                android:text="@string/lbl_no"
+                android:textColor="@color/text_hint_color"
+                android:textSize="@dimen/font_18"
+                android:textStyle="bold"
+                custom:font_style="semibold" />
+
+            <ImageView
+                android:id="@+id/ivStartDateNo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="@dimen/margin_10"
+                android:src="@drawable/checkbox_off" />
+
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tvErrorStartIsFullDay"
+            style="@style/styleErrorTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/error_enter"
+            android:visibility="gone" />
+
+        <com.techmali.smartteam.ui.views.MyEditText
+            android:id="@+id/etEndDate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_10"
+            android:ems="10"
+            android:hint="@string/lbl_end_date_two"
+            android:imeOptions="actionDone"
+            android:padding="@dimen/margin_10" />
+
+        <TextView
+            android:id="@+id/tvErrorEndDate"
+            style="@style/styleErrorTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/error_enter"
+            android:visibility="gone" />
+
+        <com.techmali.smartteam.ui.views.MyTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginTop="@dimen/margin_10"
+            android:text="@string/lbl_end_day_is_full_day"
+            android:textColor="@color/text_hint_color"
+            android:textSize="@dimen/font_18"
+            android:textStyle="bold"
+            custom:font_style="semibold" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_10"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+
+            <com.techmali.smartteam.ui.views.MyTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:text="@string/lbl_yes"
+                android:textColor="@color/text_hint_color"
+                android:textSize="@dimen/font_18"
+                android:textStyle="bold"
+                custom:font_style="semibold" />
+
+            <ImageView
+                android:id="@+id/ivEndDateYes"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="@dimen/margin_10"
+                android:src="@drawable/checkbox_off" />
+
+            <com.techmali.smartteam.ui.views.MyTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="@dimen/margin_50"
+                android:text="@string/lbl_no"
+                android:textColor="@color/text_hint_color"
+                android:textSize="@dimen/font_18"
+                android:textStyle="bold"
+                custom:font_style="semibold" />
+
+            <ImageView
+                android:id="@+id/ivEndDateNo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="@dimen/margin_10"
+                android:src="@drawable/checkbox_off" />
+
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tvErrorEndIsFullDay"
+            style="@style/styleErrorTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/error_enter"
+            android:visibility="gone" />
+
+        <com.techmali.smartteam.ui.views.MyEditText
+            android:id="@+id/etDescription"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_10"
+            android:ems="10"
+            android:hint="@string/lbl_description_two"
+            android:imeOptions="actionDone"
+            android:maxLines="5"
+            android:padding="@dimen/margin_10" />
+
+        <TextView
+            android:id="@+id/tvErrorDescription"
+            style="@style/styleErrorTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/error_enter"
+            android:visibility="gone" />
+    </LinearLayout>
+
+    <com.techmali.smartteam.ui.views.MyButton
+        android:id="@+id/btnSubmit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/margin_10"
+        android:layout_marginRight="@dimen/margin_10"
+        android:layout_marginTop="@dimen/margin_20"
+        android:text="@string/lbl_submit" />
+</LinearLayout>

@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/rlMenu"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:custom="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="@dimen/margin_15"
+                android:paddingRight="@dimen/margin_15"
+                android:paddingTop="@dimen/margin_15">
+
+                <ImageView
+                    android:id="@+id/ivEdit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:src="@drawable/ic_edit" />
+
+                <com.techmali.smartteam.ui.views.CircleImageView
+                    android:id="@+id/ivProfile"
+                    android:layout_width="@dimen/profile_image_width"
+                    android:layout_height="@dimen/profile_image_width"
+                    android:layout_centerInParent="true"
+                    android:src="@drawable/ic_profile_photo"
+                    app:civ_border_color="@android:color/transparent"
+                    app:civ_border_width="2dp" />
+
+
+                <com.techmali.smartteam.ui.views.MyTextView
+                    android:id="@+id/tvName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/ivProfile"
+                    android:layout_centerHorizontal="true"
+                    android:paddingTop="@dimen/margin_3"
+                    android:text="Mukesh Mali"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="@dimen/font_16"
+                    custom:font_style="semibold" />
+
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingTop="@dimen/margin_10">
+
+                <com.techmali.smartteam.ui.views.MyTextView
+                    android:id="@+id/tvHome"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@drawable/ic_home"
+                    android:drawablePadding="@dimen/margin_10"
+                    android:gravity="center_vertical"
+                    android:padding="@dimen/margin_10"
+                    android:text="home"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="@dimen/font_16"
+                    custom:font_style="semibold" />
+
+                <FrameLayout
+                android:id="@+id/flNotification"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <com.techmali.smartteam.ui.views.MyTextView
+                    android:id="@+id/tvNotification"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_2"
+                    android:drawableLeft="@drawable/ic_notification"
+                    android:drawablePadding="@dimen/margin_10"
+                    android:gravity="center_vertical"
+                    android:padding="@dimen/margin_10"
+                    android:text="notifications"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="@dimen/font_16"
+                    custom:font_style="semibold" />
+
+                <com.techmali.smartteam.ui.views.SquareRelativeLayout
+                android:id="@+id/rltSquare"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginBottom="@dimen/margin_10"
+                android:layout_marginLeft="@dimen/margin_22"
+                android:background="@drawable/circle_orange"
+                android:padding="@dimen/margin_2"
+                android:visibility="gone">
+
+                <com.techmali.smartteam.ui.views.MyTextView
+                android:id="@+id/tvBadge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:gravity="center"
+                android:includeFontPadding="false"
+                android:lineSpacingExtra="0dp"
+                android:minEms="1"
+                android:singleLine="true"
+                android:text="0"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/font_12"
+                android:visibility="visible" />
+                </com.techmali.smartteam.ui.views.SquareRelativeLayout>
+
+                </FrameLayout>
+
+                <com.techmali.smartteam.ui.views.MyTextView
+                    android:id="@+id/tvCompanyProfile"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_2"
+                    android:drawableLeft="@drawable/ic_home"
+                    android:drawablePadding="@dimen/margin_10"
+                    android:gravity="center_vertical"
+                    android:padding="@dimen/margin_10"
+                    android:text="@string/lbl_company_profile"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="@dimen/font_16"
+                    custom:font_style="semibold" />
+
+
+                <com.techmali.smartteam.ui.views.MyTextView
+                    android:id="@+id/tvHolidays"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_2"
+                    android:drawableLeft="@drawable/ic_home"
+                    android:drawablePadding="@dimen/margin_10"
+                    android:gravity="center_vertical"
+                    android:padding="@dimen/margin_10"
+                    android:text="@string/lbl_holidays"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="@dimen/font_16"
+                    custom:font_style="semibold" />
+
+                <com.techmali.smartteam.ui.views.MyTextView
+                    android:id="@+id/tvHelp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_2"
+                    android:drawableLeft="@drawable/ic_help"
+                    android:drawablePadding="@dimen/margin_10"
+                    android:gravity="center_vertical"
+                    android:padding="@dimen/margin_10"
+                    android:text="help"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="@dimen/font_16"
+                    custom:font_style="semibold" />
+
+                <com.techmali.smartteam.ui.views.MyTextView
+                    android:id="@+id/tvLogout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_2"
+                    android:drawableLeft="@drawable/ic_logout"
+                    android:drawablePadding="@dimen/margin_10"
+                    android:gravity="center_vertical"
+                    android:padding="@dimen/margin_10"
+                    android:text="logout"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="@dimen/font_16"
+                    custom:font_style="semibold" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+    <TextView
+        android:id="@+id/tvVersion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_gravity="bottom"
+        android:padding="@dimen/margin_8"
+        android:textColor="@color/side_menu_text_color"
+        android:textSize="@dimen/font_14" />
+
+</RelativeLayout>

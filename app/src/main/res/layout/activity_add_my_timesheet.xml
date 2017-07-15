@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/layout_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingLeft="@dimen/margin_10"
+        android:paddingRight="@dimen/margin_10">
+
+        <com.techmali.smartteam.ui.views.MyEditText
+            android:id="@+id/etDate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_20"
+            android:ems="10"
+            android:hint="@string/lbl_select_date"
+            android:imeOptions="actionDone"
+            android:padding="@dimen/margin_10" />
+
+        <TextView
+            android:id="@+id/tvErrorDate"
+            style="@style/styleErrorTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/error_enter"
+            android:visibility="gone" />
+
+
+        <com.techmali.smartteam.ui.views.MyEditText
+            android:id="@+id/etProjects"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_10"
+            android:ems="10"
+            android:hint="@string/lbl_select_project"
+            android:imeOptions="actionDone"
+            android:padding="@dimen/margin_10" />
+
+        <TextView
+            android:id="@+id/tvErrorProjects"
+            style="@style/styleErrorTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/error_enter"
+            android:visibility="gone" />
+
+        <com.techmali.smartteam.ui.views.MyEditText
+            android:id="@+id/etTasks"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_10"
+            android:ems="10"
+            android:hint="@string/lbl_select_task"
+            android:imeOptions="actionDone"
+            android:padding="@dimen/margin_10" />
+
+        <TextView
+            android:id="@+id/tvErrorTasks"
+            style="@style/styleErrorTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/error_enter"
+            android:visibility="gone" />
+
+
+        <com.techmali.smartteam.ui.views.MyEditText
+            android:id="@+id/etTime"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_10"
+            android:ems="10"
+            android:hint="@string/lbl_time"
+            android:inputType="none"
+            android:imeOptions="actionDone"
+            android:padding="@dimen/margin_10" />
+
+        <TextView
+            android:id="@+id/tvErrorTime"
+            style="@style/styleErrorTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/error_enter"
+            android:visibility="gone" />
+
+
+        <com.techmali.smartteam.ui.views.MyEditText
+            android:id="@+id/etDescription"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_10"
+            android:ems="10"
+            android:maxLines="5"
+            android:hint="@string/lbl_description_two"
+            android:imeOptions="actionDone"
+            android:padding="@dimen/margin_10" />
+        <TextView
+            android:id="@+id/tvErrorDescription"
+            style="@style/styleErrorTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/error_enter"
+            android:visibility="gone" />
+
+
+    </LinearLayout>
+
+    <com.techmali.smartteam.ui.views.MyButton
+        android:id="@+id/btnSubmit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/margin_10"
+        android:layout_marginRight="@dimen/margin_10"
+        android:layout_marginTop="@dimen/margin_20"
+        android:text="@string/lbl_submit" />
+</LinearLayout>

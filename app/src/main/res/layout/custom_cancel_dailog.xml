@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimaryDark"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:paddingBottom="@dimen/margin_10"
+        android:paddingTop="@dimen/margin_10">
+
+        <TextView
+            android:id="@+id/tvTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:gravity="center"
+            android:textColor="@color/colorWhite"
+            android:textSize="@dimen/font_16"
+            tools:visibility="visible" />
+
+        <ImageView
+            android:id="@+id/ivClose"
+            android:layout_width="@dimen/margin_25"
+            android:layout_height="@dimen/margin_25"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_gravity="right|center"
+            android:layout_marginRight="@dimen/margin_10"
+            android:src="@drawable/ic_close"
+            android:visibility="visible" />
+
+    </RelativeLayout>
+
+
+
+    <TextView
+        android:id="@+id/tvMessage1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        android:gravity="center"
+        android:padding="@dimen/margin_10"
+        tools:text="abvcd"
+        tools:visibility="visible" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btnYes"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:paddingBottom="@dimen/margin_10"
+            android:paddingLeft="@dimen/margin_0"
+            android:paddingRight="@dimen/margin_0"
+            android:paddingTop="@dimen/margin_10"
+            android:text="@string/lbl_yes"
+            android:textColor="@color/colorWhite" />
+
+        <View
+            android:layout_width="@dimen/seperator"
+            android:layout_height="match_parent" />
+
+        <Button
+            android:id="@+id/btnNo"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:paddingBottom="@dimen/margin_10"
+            android:paddingLeft="@dimen/margin_0"
+            android:paddingRight="@dimen/margin_0"
+            android:paddingTop="@dimen/margin_10"
+            android:text="@string/lbl_no"
+            android:textColor="@color/colorWhite" />
+
+    </LinearLayout>
+
+
+</LinearLayout>

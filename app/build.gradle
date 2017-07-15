@@ -1,0 +1,94 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 25
+    buildToolsVersion "26.0.0"
+
+    defaultConfig {
+        applicationId "com.techmali.smartteam"
+        minSdkVersion 16
+        targetSdkVersion 25
+        versionCode 1
+        versionName "1.0"
+        multiDexEnabled true
+        renderscriptTargetApi 19
+        renderscriptSupportModeEnabled true
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    packagingOptions {
+        exclude 'META-INF/DEPENDENCIES'
+        exclude 'META-INF/DEPENDENCIES.txt'
+        exclude 'META-INF/NOTICE'
+        exclude 'META-INF/NOTICE.txt'
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/LICENSE.txt'
+    }
+    dexOptions {
+        javaMaxHeapSize "4g"
+    }
+    lintOptions {
+        abortOnError false
+    }
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+    compile 'com.android.support:appcompat-v7:25.3.1'
+    testCompile 'junit:junit:4.12'
+
+    compile('org.apache.httpcomponents:httpmime:4.3.6') {
+        exclude module: 'httpclient'
+    }
+    compile 'com.android.support:appcompat-v7:25.3.1'
+    compile 'com.android.support:design:25.3.1'
+    compile 'com.android.support:recyclerview-v7:25.3.1'
+
+    compile 'com.squareup.okhttp3:okhttp:3.8.0'
+    compile 'org.apache.httpcomponents:httpcore:4.4.1'
+
+    //Gson
+    compile 'com.google.code.gson:gson:2.7'
+
+    //Image loader
+    compile 'com.nostra13.universalimageloader:universal-image-loader:1.9.5'
+
+    //Font support library
+    compile 'uk.co.chrisjenx:calligraphy:2.2.0'
+
+    //Badge count in app icon
+    compile 'me.leolin:ShortcutBadger:1.1.4@aar'
+
+    //Firebase push message
+    compile 'com.google.firebase:firebase-core:9.8.0'
+    compile 'com.google.firebase:firebase-messaging:9.8.0'
+
+    //compile 'com.android.support:multidex:1.0.1'
+    //Location api of google
+    //compile 'com.google.android.gms:play-services-location:9.8.0'
+
+    //Map api of google
+    // compile 'com.google.android.gms:play-services-maps:9.8.0'
+
+    //For custom calender
+    //Expandable Listview
+    compile 'com.diegocarloslima:fgelv:0.1.+@aar'
+
+    //Swipe Menu
+    compile 'com.daimajia.swipelayout:library:1.2.0@aar'
+
+    compile 'com.appeaser.sublimepickerlibrary:sublimepickerlibrary:2.1.1'
+
+    compile 'org.apache.commons:commons-lang3:3.4'
+
+    compile 'it.sephiroth.android.library.easing:android-easing:1.0.3'
+
+
+}

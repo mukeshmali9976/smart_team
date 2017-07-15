@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/layout_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingLeft="@dimen/margin_10"
+            android:paddingRight="@dimen/margin_10">
+
+            <com.techmali.smartteam.ui.views.MyEditText
+                android:id="@+id/etProjectName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_20"
+                android:hint="@string/lbl_project_name"
+                android:inputType="textCapWords" />
+
+            <TextView
+                android:id="@+id/tvErrorProrjectName"
+                style="@style/styleErrorTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/error_enter"
+                android:visibility="gone" />
+
+            <EditText
+                android:id="@+id/etTaskTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_10"
+                android:focusable="false"
+                android:hint="@string/lbl_task_title"
+                android:inputType="none"
+                android:longClickable="false"
+                android:maxLength="13"
+                android:textIsSelectable="false" />
+
+            <TextView
+                android:id="@+id/tvErrorTaskTitle"
+                style="@style/styleErrorTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/error_enter"
+                android:visibility="gone" />
+
+
+            <com.techmali.smartteam.ui.views.MyEditText
+                android:id="@+id/etDescription"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_10"
+                android:hint="@string/hint_description"
+                android:inputType="textCapWords"
+                android:lines="5" />
+
+            <TextView
+                android:id="@+id/tvErrorDescription"
+                style="@style/styleErrorTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/error_enter"
+                android:visibility="gone" />
+
+            <com.techmali.smartteam.ui.views.MyEditText
+                android:id="@+id/etAssignTo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_10"
+                android:hint="@string/lbl_assign_to"
+                android:inputType="textCapWords" />
+
+            <TextView
+                android:id="@+id/tvErrorAssignTo"
+                style="@style/styleErrorTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/error_enter"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/tvUpLoadDocument"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_10"
+                android:text="@string/lbl_upload_document"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="@dimen/font_16" />
+
+            <com.techmali.smartteam.ui.views.MyButton
+                android:layout_width="@dimen/margin_100"
+                android:layout_height="@dimen/margin_100"
+                android:layout_marginTop="@dimen/margin_10"
+                android:text="@string/lbl_add" />
+
+            <com.techmali.smartteam.ui.views.MyButton
+                android:id="@+id/btnSubmit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_20"
+                android:text="@string/lbl_submit" />
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

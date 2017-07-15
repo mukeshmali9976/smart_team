@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@drawable/theme_calender"
+    android:orientation="vertical"
+    android:paddingLeft="@dimen/margin_6"
+    android:paddingRight="@dimen/margin_6">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:padding="@dimen/margin_2">
+
+        <TextView
+            android:id="@+id/dayNumber"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="2"
+            android:textAppearance="@style/TextAppearance.AppCompat.Headline"
+            android:textSize="@dimen/font_18" />
+
+        <TextView
+            android:id="@+id/monthName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="@dimen/margin_3"
+            android:text="Jan"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            android:textSize="@dimen/font_16" />
+
+    </LinearLayout>
+    <TextView
+        android:id="@+id/dayName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="Mon"
+        android:layout_marginLeft="@dimen/margin_4"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
+
+
+    <TextView
+        android:id="@+id/tvTime"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="02.00"
+        android:layout_marginLeft="@dimen/margin_4"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
+
+    <View
+        android:id="@+id/selection_view"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/margin_2"
+        android:layout_marginBottom="@dimen/margin_2"
+        android:visibility="visible" />
+
+
+</LinearLayout>

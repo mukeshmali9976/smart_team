@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
+    xmlns:swipe="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="@dimen/margin_2"
+    android:background="@drawable/theme_row_background">
+
+    <com.daimajia.swipe.SwipeLayout
+        android:id="@+id/swipe"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        swipe:leftEdgeSwipeOffset="0dp"
+        swipe:rightEdgeSwipeOffset="0dp">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:background="@color/colorRed"
+            android:gravity="center"
+            android:tag="Bottom3">
+
+            <TextView
+                android:id="@+id/btnDelete"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:paddingLeft="@dimen/margin_10"
+                android:paddingRight="@dimen/margin_10"
+                android:text="@string/lbl_delete"
+                android:textColor="@color/colorWhite" />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/llRowSwipe"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="@dimen/margin_8">
+
+            <com.techmali.smartteam.ui.views.CircleImageView
+                android:id="@+id/ivTask"
+                android:layout_width="@dimen/margin_46"
+                android:layout_height="@dimen/margin_46"
+                android:src="@drawable/ic_profile_photo" />
+
+            <com.techmali.smartteam.ui.views.MyTextView
+                android:id="@+id/tvMemberName"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_vertical"
+                android:paddingEnd="@dimen/margin_10"
+                android:paddingLeft="@dimen/margin_15"
+                android:paddingRight="@dimen/margin_10"
+                android:paddingStart="@dimen/margin_15"
+                android:text="Fields"
+                android:textColor="@color/text_hint_color"
+                custom:font_style="semibold" />
+
+            <ImageView
+                android:src="@drawable/ic_more_white"
+                android:layout_gravity="end"
+                android:layout_width="@dimen/margin_30"
+                android:layout_height="match_parent" />
+
+
+        </LinearLayout>
+    </com.daimajia.swipe.SwipeLayout>
+
+</LinearLayout>

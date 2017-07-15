@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!--<color name="colorPrimary">#5A5A5A</color>-->
+    <color name="colorPrimary">#009B97</color>
+    <color name="colorPrimaryDark">#05837f</color>
+    <color name="app_background_color">#24272E</color>
+
+    <color name="colorWhite">#FFFFFF</color>
+    <color name="colorGreen">#008000</color>
+    <color name="colorBlack">#000000</color>
+    <color name="colorOrange">#FA1526</color>
+    <color name="colorRed">#FA1526</color>
+
+    <color name="colorRowHeader">#312B37</color>
+    <color name="colorRow">#2D313C</color>
+
+    <color name="btn_normal">#009B97</color>
+    <color name="btn_pressed">#05837f</color>
+    <color name="transparent">#00000000</color>
+    <color name="side_menu_text_color">#929292</color>
+    <color name="text_hint_color">#A3A3A3</color>
+
+
+    <color name="blackRow">#5A5A5A</color>
+
+
+    <color name="edit_text_color">#000000</color>
+
+
+    <color name="border_rectangle_color">#AAAAAA</color>
+    <color name="text_color_2">#555555</color>
+    <color name="description_color">#A3A3A3</color>
+
+
+
+
+
+
+
+    <color name="colorText">#262642</color>
+    <color name="colorTextHint">#C6C4C4</color>
+
+
+
+
+</resources>

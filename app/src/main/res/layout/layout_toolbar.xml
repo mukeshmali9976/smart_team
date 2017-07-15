@@ -1,0 +1,112 @@
+<android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="?attr/actionBarSize"
+    android:background="@color/colorPrimary">
+
+   <!--<ImageView-->
+         <!--android:id="@+id/ivHomeLogo"-->
+         <!--android:layout_width="wrap_content"-->
+         <!--android:layout_height="wrap_content"-->
+         <!--android:layout_gravity="center"-->
+         <!--android:src="@drawable/ic_notification"-->
+         <!--android:scaleType="fitXY"-->
+         <!--android:visibility="gone" />-->
+
+    <ImageView
+        android:id="@+id/ivLInfo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="left"
+        android:padding="@dimen/margin_5"
+        android:src="@drawable/ic_notification"
+        android:visibility="gone"
+        custom:font_style="semibold" />
+
+    <com.techmali.smartteam.ui.views.MyTextView
+        android:id="@+id/tvAssign"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="right"
+        android:layout_margin="@dimen/margin_10"
+        android:gravity="center"
+        android:padding="@dimen/margin_5"
+        android:text="assign"
+        android:textColor="@color/colorWhite"
+        android:textSize="@dimen/font_15"
+        android:visibility="gone"
+        custom:font_style="semibold" />
+
+    <com.techmali.smartteam.ui.views.MyTextView
+        android:id="@+id/tvReview"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="right"
+        android:layout_margin="@dimen/margin_10"
+        android:gravity="center"
+        android:padding="@dimen/margin_5"
+        android:text="review"
+        android:textColor="@color/colorWhite"
+        android:textSize="@dimen/font_15"
+        android:visibility="gone"
+        custom:font_style="semibold" />
+
+    <ImageView
+        android:id="@+id/ivInfo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:layout_margin="@dimen/margin_10"
+        android:padding="@dimen/margin_5"
+        android:src="@drawable/ic_notification"
+        android:visibility="gone"
+        custom:font_style="semibold" />
+
+    <FrameLayout
+        android:id="@+id/flNotification"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:visibility="gone">
+
+        <com.techmali.smartteam.ui.views.MyTextView
+            android:id="@+id/tvTask"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="@dimen/margin_20"
+            android:text="task"
+            android:textColor="@color/colorWhite"
+            custom:font_style="semibold" />
+
+        <com.techmali.smartteam.ui.views.SquareRelativeLayout
+            android:id="@+id/rltSquare"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="@dimen/margin_15"
+            android:layout_marginLeft="@dimen/margin_15"
+            android:background="@drawable/circle_orange"
+            android:padding="@dimen/margin_2"
+            android:visibility="visible">
+
+            <com.techmali.smartteam.ui.views.MyTextView
+                android:id="@+id/tvBadge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:includeFontPadding="false"
+                android:lineSpacingExtra="0dp"
+                android:minEms="1"
+                android:singleLine="true"
+                android:text="0"
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/font_12"
+                android:visibility="visible" />
+        </com.techmali.smartteam.ui.views.SquareRelativeLayout>
+
+    </FrameLayout>
+
+</android.support.v7.widget.Toolbar>

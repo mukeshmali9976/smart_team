@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/tvSpinItem"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/transparent"
+        android:gravity="center_vertical"
+        android:paddingBottom="@dimen/margin_6"
+        android:paddingLeft="@dimen/margin_4"
+        android:paddingRight="@dimen/margin_4"
+        android:paddingTop="@dimen/margin_6" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/colorPrimary" />
+</LinearLayout>
