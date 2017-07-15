@@ -1,14 +1,10 @@
 package com.techmali.smartteam.ui.activities;
 
-import android.Manifest;
 import android.app.Dialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.Build;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.support.annotation.IdRes;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -22,27 +18,22 @@ import android.widget.TextView;
 
 import com.techmali.smartteam.R;
 import com.techmali.smartteam.base.BaseAppCompatActivity;
-import com.techmali.smartteam.domain.adapters.ProjectListAdapter;
 import com.techmali.smartteam.domain.adapters.TaskListAdapter;
 import com.techmali.smartteam.domain.adapters.UserListAdapter;
 import com.techmali.smartteam.models.TaskModel;
 import com.techmali.smartteam.models.UserModel;
 import com.techmali.smartteam.network.NetworkManager;
 import com.techmali.smartteam.network.RequestListener;
-import com.techmali.smartteam.ui.fragments.ProfileFragment;
-import com.techmali.smartteam.utils.Constants;
 import com.techmali.smartteam.utils.CryptoManager;
 import com.techmali.smartteam.utils.Utils;
-
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class ProjectDetailActivity extends BaseAppCompatActivity implements
-        View.OnClickListener, RequestListener, UserListAdapter.onSwipeClickLisener,
-        RadioGroup.OnCheckedChangeListener, TaskListAdapter.OnInnerViewsClickListener {
+public class TaskDetailActivity extends BaseAppCompatActivity implements
+        View.OnClickListener, RequestListener, UserListAdapter.onSwipeClickLisener, RadioGroup.OnCheckedChangeListener {
 
-    public static final String TAG = ProjectDetailActivity.class.getSimpleName();
+    public static final String TAG = TaskDetailActivity.class.getSimpleName();
     private SharedPreferences prefManager = null;
     private NetworkManager networkManager = null;
     private int reqIdProjectDetail = -1;
@@ -50,7 +41,7 @@ public class ProjectDetailActivity extends BaseAppCompatActivity implements
     private TaskListAdapter taskListAdapter;
     private RecyclerView rvUserList, rvTaskList;
 
-    private TextView tvProjectName, tvStartDate, tvEndDate, tvTotalTaskCount, tvTotalTime, tvDescription;
+    private TextView tvProjectName, tvStartDate, tvTaskName, tvTotalTime, tvDescription;
     private ImageView ivProject;
     private RadioGroup rgManagePeoject;
     private Dialog dialog = null;
@@ -58,10 +49,10 @@ public class ProjectDetailActivity extends BaseAppCompatActivity implements
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_project_detail);
+        setContentView(R.layout.activity_task_detail);
 
         networkManager = NetworkManager.getInstance();
-        prefManager = CryptoManager.getInstance(ProjectDetailActivity.this).getPrefs();
+        prefManager = CryptoManager.getInstance(TaskDetailActivity.this).getPrefs();
 
         initActionBar("Project Name");
         initView();
@@ -69,10 +60,9 @@ public class ProjectDetailActivity extends BaseAppCompatActivity implements
 
     private void initView() {
 
+        tvTaskName = (TextView) findViewById(R.id.tvTaskName);
         tvProjectName = (TextView) findViewById(R.id.tvProjectName);
         tvStartDate = (TextView) findViewById(R.id.tvStartDate);
-        tvEndDate = (TextView) findViewById(R.id.tvEndDate);
-        tvTotalTaskCount = (TextView) findViewById(R.id.tvTaskCount);
         tvTotalTime = (TextView) findViewById(R.id.tvTotalTime);
         tvDescription = (TextView) findViewById(R.id.tvDescription);
 
@@ -80,10 +70,7 @@ public class ProjectDetailActivity extends BaseAppCompatActivity implements
         rgManagePeoject.setOnCheckedChangeListener(this);
 
         ivProject = (ImageView) findViewById(R.id.ivProject);
-
         rvUserList = (RecyclerView) findViewById(R.id.rvUserList);
-        rvTaskList = (RecyclerView) findViewById(R.id.rvTaskList);
-
         List<UserModel> listModels = new ArrayList<>();
         UserModel userModel;
 
@@ -92,27 +79,11 @@ public class ProjectDetailActivity extends BaseAppCompatActivity implements
             listModels.add(userModel);
         }
 
-
-        mAdapter = new UserListAdapter(ProjectDetailActivity.this, listModels, this);
+        mAdapter = new UserListAdapter(TaskDetailActivity.this, listModels, this);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
         rvUserList.setLayoutManager(mLayoutManager);
         rvUserList.setItemAnimator(new DefaultItemAnimator());
         rvUserList.setAdapter(mAdapter);
-
-
-        List<TaskModel> listModel = new ArrayList<>();
-        TaskModel taskModel;
-
-        for (int i = 0; i < 10; i++) {
-            taskModel = new TaskModel();
-            listModel.add(taskModel);
-        }
-
-        taskListAdapter = new TaskListAdapter(ProjectDetailActivity.this, listModel, this);
-        mLayoutManager = new LinearLayoutManager(getApplicationContext());
-        rvTaskList.setLayoutManager(mLayoutManager);
-        rvTaskList.setItemAnimator(new DefaultItemAnimator());
-        rvTaskList.setAdapter(taskListAdapter);
 
     }
 
@@ -140,8 +111,6 @@ public class ProjectDetailActivity extends BaseAppCompatActivity implements
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_menu_add:
-                // startActivityForResult(new Intent(this, NotificationActivity.class), Constants.INTENT_NOTIFICATION);
-
                 customDialog();
                 Utils.hideKeyboard(this);
 
@@ -153,29 +122,25 @@ public class ProjectDetailActivity extends BaseAppCompatActivity implements
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.btn1:  // Manage User button
+            case R.id.btn1:    // Manage User button
                 if (dialog != null) {
                     dialog.dismiss();
                 }
                 break;
-            case R.id.btn2: // Add Task button
+            case R.id.btn2:   // Add Task Document
                 if (dialog != null) {
                     dialog.dismiss();
-                    startActivity(new Intent(ProjectDetailActivity.this, CreateTaskActivity.class));
+                   // startActivity(new Intent(TaskDetailActivity.this, CreateTaskActivity.class));
                 }
                 break;
-            case R.id.btn3: // Add Document button
-                if (dialog != null) {
-                    dialog.dismiss();
-                }
-                break;
-            case R.id.btn4: //cancel button
+            case R.id.btn4:    //cancel button
                 if (dialog != null) {
                     dialog.dismiss();
                 }
                 break;
 
         }
+
     }
 
     @Override
@@ -193,17 +158,6 @@ public class ProjectDetailActivity extends BaseAppCompatActivity implements
 
     }
 
-    @Override
-    public void onItemClick(View view, int position) {
-
-        startActivity(new Intent(this, TaskDetailActivity.class));
-    }
-
-    @Override
-    public void onItemLongClick(View view, int position) {
-
-    }
-
     private void customDialog() {
         dialog = new Dialog(this, android.R.style.Theme_Translucent_NoTitleBar);
         dialog.setContentView(R.layout.custom_dialog);
@@ -213,15 +167,18 @@ public class ProjectDetailActivity extends BaseAppCompatActivity implements
         Button btn2 = (Button) dialog.findViewById(R.id.btn2);
         Button btn3 = (Button) dialog.findViewById(R.id.btn3);
         Button btn4 = (Button) dialog.findViewById(R.id.btn4);
+        View view3 = (View) dialog.findViewById(R.id.view3);
 
         btn1.setVisibility(View.VISIBLE);
         btn2.setVisibility(View.VISIBLE);
         btn3.setVisibility(View.VISIBLE);
         btn4.setVisibility(View.VISIBLE);
 
+        btn3.setVisibility(View.GONE);
+        view3.setVisibility(View.GONE);
+
         btn1.setText(getResources().getString(R.string.lbl_manage_user));
-        btn2.setText(getResources().getString(R.string.lbl_add_task));
-        btn3.setText(getResources().getString(R.string.lbl_add_document));
+        btn2.setText(getResources().getString(R.string.lbl_add_document));
         btn4.setText(getResources().getString(R.string.lbl_cancel));
 
         btn1.setOnClickListener(this);
@@ -237,12 +194,8 @@ public class ProjectDetailActivity extends BaseAppCompatActivity implements
         switch (radioGroup.getCheckedRadioButtonId()) {
             case R.id.rbMembers:
                 rvUserList.setVisibility(View.VISIBLE);
-                rvTaskList.setVisibility(View.GONE);
                 break;
-            case R.id.rbTaskList:
-                rvUserList.setVisibility(View.GONE);
-                rvTaskList.setVisibility(View.VISIBLE);
+
         }
     }
-
 }

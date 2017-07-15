@@ -231,4 +231,8 @@
     <string name="permission_denied_message"><![CDATA[If you reject permission, you can not use this service\n\nPlease turn on permissions at [Setting] > [Permission]]]></string>
 
 
+    <!--Company Profile-->
+    <string name="lbl_address">Address : </string>
+    <string name="lbl_fax_number">Fax Number : </string>
+
 </resources>

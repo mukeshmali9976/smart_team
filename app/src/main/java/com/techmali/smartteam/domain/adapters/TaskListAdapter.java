@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
+import android.widget.LinearLayout;
 
 import com.google.android.gms.tasks.Task;
 import com.techmali.smartteam.R;
@@ -19,10 +20,12 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.ViewHo
 
     private Context context;
     private List<TaskModel> taskModelList;
+    private OnInnerViewsClickListener mListener;
 
-    public TaskListAdapter(Context context, List<TaskModel> taskModelList) {
+    public TaskListAdapter(Context context, List<TaskModel> taskModelList, OnInnerViewsClickListener mListener) {
         this.context = context;
         this.taskModelList = taskModelList;
+        this.mListener = mListener;
     }
 
     @Override
@@ -33,8 +36,13 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.ViewHo
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
-
+    public void onBindViewHolder(ViewHolder holder, final int position) {
+        holder.llRowSwipe.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mListener.onItemClick(view, position);
+            }
+        });
     }
 
     @Override
@@ -43,10 +51,18 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.ViewHo
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-
+        public LinearLayout llRowSwipe;
         public ViewHolder(View itemView) {
             super(itemView);
+
+            llRowSwipe = (LinearLayout) itemView.findViewById(R.id.llRowSwipe);
         }
+    }
+
+    public interface OnInnerViewsClickListener {
+        void onItemClick(View view, int position);
+
+        void onItemLongClick(View view, int position);
     }
 
 }

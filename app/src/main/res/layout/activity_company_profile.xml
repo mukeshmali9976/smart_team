@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:custom="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include layout="@layout/layout_toolbar" />
+
+    <LinearLayout
+        android:id="@+id/llMain"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <com.techmali.smartteam.ui.views.CircleImageView
+            android:id="@+id/ivCompanyProfile"
+            android:layout_width="@dimen/profile_image_width"
+            android:layout_height="@dimen/profile_image_width"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/margin_30"
+            android:src="@drawable/ic_profile_photo"
+            app:civ_border_color="@android:color/transparent"
+            app:civ_border_width="2dp" />
+
+
+        <com.techmali.smartteam.ui.views.MyTextView
+            android:id="@+id/tvName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:paddingTop="@dimen/margin_3"
+            android:text="Ashoka Pvt Ltd"
+            android:textColor="@color/colorWhite"
+            android:textSize="@dimen/font_16"
+            custom:font_style="semibold" />
+
+        <com.techmali.smartteam.ui.views.MyTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/margin_30"
+            android:gravity="center_vertical"
+            android:padding="@dimen/margin_10"
+            android:text="@string/lbl_name"
+            android:textColor="@color/colorWhite" />
+
+
+        <com.techmali.smartteam.ui.views.MyTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center_vertical"
+            android:padding="@dimen/margin_10"
+            android:text="@string/lbl_phone"
+            android:textColor="@color/colorWhite" />
+
+        <com.techmali.smartteam.ui.views.MyTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center_vertical"
+            android:padding="@dimen/margin_10"
+            android:text="@string/lbl_fax_number"
+            android:textColor="@color/colorWhite" />
+
+        <com.techmali.smartteam.ui.views.MyTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center_vertical"
+            android:padding="@dimen/margin_10"
+            android:text="@string/lbl_email"
+            android:textColor="@color/colorWhite" />
+
+        <com.techmali.smartteam.ui.views.MyTextView
+            android:id="@+id/myTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center_vertical"
+            android:padding="@dimen/margin_10"
+            android:text="@string/lbl_address"
+            android:textColor="@color/colorWhite" />
+
+
+    </LinearLayout>
+</LinearLayout>

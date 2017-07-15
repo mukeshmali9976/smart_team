@@ -81,8 +81,8 @@ public class LoginActivity extends BaseAppCompatActivity implements View.OnClick
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btnLogin:
-                //performLogin();
-                startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                performLogin();
+               // startActivity(new Intent(LoginActivity.this, MainActivity.class));
                 break;
             case R.id.btnForgotPassword:
                 startActivity(new Intent(LoginActivity.this, ForgotPasswordActivity.class));
