@@ -172,8 +172,10 @@ public class AddMyAttendanceActivity extends BaseAppCompatActivity implements Vi
         } else {
             tvErrorDescription.setVisibility(View.GONE);
         }
-//Flag returen
+
         return flag;
+
+        //Hello
     }
 
     private void dummyGit()
