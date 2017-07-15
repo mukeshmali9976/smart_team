@@ -175,4 +175,9 @@ public class AddMyAttendanceActivity extends BaseAppCompatActivity implements Vi
 
         return flag;
     }
+
+    private void dummyGit()
+    {
+
+    }
 }
