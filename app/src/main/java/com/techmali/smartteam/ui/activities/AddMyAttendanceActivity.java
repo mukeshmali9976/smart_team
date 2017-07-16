@@ -82,7 +82,7 @@ public class AddMyAttendanceActivity extends BaseAppCompatActivity implements Vi
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btnSubmit:
-                if(checkValidation()){
+                if (checkValidation()) {
 
                 }
                 break;

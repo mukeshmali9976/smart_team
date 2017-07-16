@@ -10,6 +10,7 @@ public class DbParams {
     ////// TABLE NAMES.........
     /////////////////////
     public static final String TBL_APP_SETTING = "app_setting";
+    public static final String TBL_USER_INFO = "userinfo";
     public static final String TBL_COMPANY = "company";
     public static final String TBL_EXPENSE = "expance";
     public static final String TBL_TASK = "task";
@@ -24,13 +25,31 @@ public class DbParams {
     ///// COLUMNS NAME..........
     /////////////////////
 
+    public static final String CLM_IS_UPDATED = "is_updated";
+
+    // User Info....
+    public static final String CLM_SERVER_USER_ID = "server_user_id";
+    public static final String CLM_LOCAL_USER_ID = "local_user_id";
+    public static final String CLM_USERNAME = "username";
+    public static final String CLM_GENDER = "gender";
+    public static final String CLM_BADGE_COUNT = "badge_count";
+    public static final String CLM_LAT = "lat";
+    public static final String CLM_LONG = "lng";
+    public static final String CLM_HOME_ADDRESS = "home_address";
+    public static final String CLM_WORK_ADDRESS = "work_address";
+    public static final String CLM_IS_SMARTPHONE = "is_smart_phone";
+    public static final String CLM_VERIFICATION_TOKEN = "verification_token";
+    public static final String CLM_VERIFICATION_TOKEN_TIME = "verification_token_time";
+    public static final String CLM_LAST_LOGIN_ON = "last_login_on";
+    public static final String CLM_STATUS_ID = "status_id";
+
+
     ////// App Setting Table...
     public static final String CLM_APP_SETTING_ID = "app_setting_id";
     public static final String CLM_SETTING_KEY = "setting_key";
     public static final String CLM_SETTING_VALUE = "setting_value";
     public static final String CLM_SETTING_VALUE_TYPE = "setting_value_type";
     public static final String CLM_APP_TYPE = "app_type";
-    public static final String CLM_STATUS_ID = "status_id";
 
     ///// Company Table.......
     public static final String CLM_LOCAL_COMPANY_ID = "local_company_id";
@@ -48,96 +67,136 @@ public class DbParams {
     public static final String CLM_UPDATED_ON = "updated_on";
 
     ///// Expense Table.........
-    static final String CLM_LOCAL_EXPENSE_ID = "local_expance_id";
-    static final String CLM_SERVER_EXPENSE_ID = "server_expance_id";
-    static final String CLM_COMPANY_ID = "company_id";
-    static final String CLM_USER_ID = "user_id";
-    static final String CLM_TASK_ID = "task_id";
-    static final String CLM_PROJECT_ID = "project_id";
-    static final String CLM_TITLE = "title";
-    static final String CLM_DESCRIPTION = "description";
-    static final String CLM_PAYOUT_STATUS = "payout_status";
+    public static final String CLM_LOCAL_EXPENSE_ID = "local_expance_id";
+    public static final String CLM_SERVER_EXPENSE_ID = "server_expance_id";
+    public static final String CLM_COMPANY_ID = "company_id";
+    public static final String CLM_USER_ID = "user_id";
+    public static final String CLM_TASK_ID = "task_id";
+    public static final String CLM_PROJECT_ID = "project_id";
+    public static final String CLM_TITLE = "title";
+    public static final String CLM_DESCRIPTION = "description";
+    public static final String CLM_PAYOUT_STATUS = "payout_status";
 
     // Task
-    static final String CLM_LOCAL_TASK_ID = "local_task_id";
-    static final String CLM_SERVER_TASK_ID = "server_task_id";
-    static final String CLM_TYPE = "type";
-    static final String CLM_START_DATE = "start_date";
-    static final String CLM_END_DATE = "end_date";
+    public static final String CLM_LOCAL_TASK_ID = "local_task_id";
+    public static final String CLM_SERVER_TASK_ID = "server_task_id";
+    public static final String CLM_TYPE = "type";
+    public static final String CLM_START_DATE = "start_date";
+    public static final String CLM_END_DATE = "end_date";
 
     // Message
-    static final String CLM_MESSAGE_ID = "message_id";
-    static final String CLM_TICKET_NUMBER = "ticket_number";
-    static final String CLM_AUTHOR_ID = "author_id";
-    static final String CLM_RECEIPT_ID = "recipient_id";
-    static final String CLM_SUBJECT = "subject";
-    static final String CLM_FIRST_NAME = "first_name";
-    static final String CLM_LAST_NAME = "last_name";
-    static final String CLM_THREAD_ID = "thread_id";
-    static final String CLM_CUSTOM_FIELD = "custom_field";
-    static final String CLM_ACTIVITY_TYPE_ID = "activity_type_id";
-    static final String CLM_REF_TABLE = "ref_table";
-    static final String CLM_REF_ID = "ref_id";
-    static final String CLM_REF_CODE = "ref_code";
-    static final String CLM_IS_READ = "is_read";
-    static final String CLM_SYSTEM_GENERATED = "system_generated";
-    static final String CLM_ACCEPTED_SEND_TIME = "accepted_send_time";
-    static final String CLM_IS_SEND = "is_send";
-    static final String CLM_IN_QUEUE = "in_queue";
-    static final String CLM_DEVICE_TYPE = "device_type";
-    static final String CLM_DEVICE_TOKEN = "device_token";
+    public static final String CLM_MESSAGE_ID = "message_id";
+    public static final String CLM_TICKET_NUMBER = "ticket_number";
+    public static final String CLM_AUTHOR_ID = "author_id";
+    public static final String CLM_RECEIPT_ID = "recipient_id";
+    public static final String CLM_SUBJECT = "subject";
+    public static final String CLM_FIRST_NAME = "first_name";
+    public static final String CLM_LAST_NAME = "last_name";
+    public static final String CLM_THREAD_ID = "thread_id";
+    public static final String CLM_CUSTOM_FIELD = "custom_field";
+    public static final String CLM_ACTIVITY_TYPE_ID = "activity_type_id";
+    public static final String CLM_REF_TABLE = "ref_table";
+    public static final String CLM_REF_ID = "ref_id";
+    public static final String CLM_REF_CODE = "ref_code";
+    public static final String CLM_IS_READ = "is_read";
+    public static final String CLM_SYSTEM_GENERATED = "system_generated";
+    public static final String CLM_ACCEPTED_SEND_TIME = "accepted_send_time";
+    public static final String CLM_IS_SEND = "is_send";
+    public static final String CLM_IN_QUEUE = "in_queue";
+    public static final String CLM_DEVICE_TYPE = "device_type";
+    public static final String CLM_DEVICE_TOKEN = "device_token";
 
     //Setting
-    static final String CLM_SETTING_ID = "setting_id";
-    static final String CLM_ADMIN_EMAIL = "admin_email";
-    static final String CLM_PORT = "port";
-    static final String CLM_SERVER = "server";
-    static final String CLM_USER_NAME = "username";
-    static final String CLM_ENCRYPTION = "encryption";
-    static final String CLM_APP_NAME = "app_name";
-    static final String CLM_TERM_AND_CONDITINS_USERS = "terms_and_conditions_user";
-    static final String CLM_PRIVACY_POLICY_USER = "privacy_policy_user";
-    static final String CLM_FAQ_USER = "faq_user";
-    static final String CLM_PRIVATE_KEY = "private_key";
-    static final String CLM_HOST = "host";
+    public static final String CLM_SETTING_ID = "setting_id";
+    public static final String CLM_ADMIN_EMAIL = "admin_email";
+    public static final String CLM_PORT = "port";
+    public static final String CLM_SERVER = "server";
+    public static final String CLM_ENCRYPTION = "encryption";
+    public static final String CLM_APP_NAME = "app_name";
+    public static final String CLM_TERM_AND_CONDITINS_USERS = "terms_and_conditions_user";
+    public static final String CLM_PRIVACY_POLICY_USER = "privacy_policy_user";
+    public static final String CLM_FAQ_USER = "faq_user";
+    public static final String CLM_PRIVATE_KEY = "private_key";
+    public static final String CLM_HOST = "host";
 
 
     // Role table
-    static final String CLM_ROLE_ID = "role_id";
-    static final String CLM_SORT_ORDER = "sort_order";
-    static final String CLM_ROLE_GROUP = "role_group";
-    static final String CLM_IS_CUSTOM = "is_custom";
-    static final String CLM_STATUS = "status";
+    public static final String CLM_ROLE_ID = "role_id";
+    public static final String CLM_SORT_ORDER = "sort_order";
+    public static final String CLM_ROLE_GROUP = "role_group";
+    public static final String CLM_IS_CUSTOM = "is_custom";
+    public static final String CLM_STATUS = "status";
 
     //Ref Table
-    static final String CLM_REF_TABLE_ID = "ref_table_id";
-    static final String CLM_NAME = "name";
-    static final String CLM_IS_TABLE = "is_table";
+    public static final String CLM_REF_TABLE_ID = "ref_table_id";
+    public static final String CLM_NAME = "name";
+    public static final String CLM_IS_TABLE = "is_table";
 
     // Project
-    static final String CLM_LOCAL_PROJECT_ID = "local_project_id";
-    static final String CLM_SERVER_PROJECT_ID = "server_project_id";
+    public static final String CLM_LOCAL_PROJECT_ID = "local_project_id";
+    public static final String CLM_SERVER_PROJECT_ID = "server_project_id";
 
     //Leave Apply
-    static final String CLM_LOCAL_LEAVE_ID = "local_leave_id";
-    static final String CLM_SERVER_LEAVE_ID = "server_leave_id";
-    static final String CLM_IS_DELETE = "is_delete";
+    public static final String CLM_LOCAL_LEAVE_ID = "local_leave_id";
+    public static final String CLM_SERVER_LEAVE_ID = "server_leave_id";
+    public static final String CLM_IS_DELETE = "is_delete";
 
     //TABLE SECURITY MENU CONTROLLERS LINK
-    static final String CLM_MENU_CONTROLLERS_LINK_ID = "menu_controllers_link_id";
-    static final String CLM_MENU_ID = "menu_id";
-    static final String CLM_CONTROLLER_ID = "controller_id";
-    static final String CLM_CREATED = "created";
-    static final String CLM_UPDATED = "updated";
+    public static final String CLM_MENU_CONTROLLERS_LINK_ID = "menu_controllers_link_id";
+    public static final String CLM_MENU_ID = "menu_id";
+    public static final String CLM_CONTROLLER_ID = "controller_id";
+    public static final String CLM_CREATED = "created_on";
+    public static final String CLM_UPDATED = "updated_on";
 
 
-    static final String CLM_USER_PERMISSION_ID = "user_permission_id";
-    static final String CLM__SECURIY_MENU_CONROLLERS_ACION_ID = "security_menu_controllers_action_id";
+    public static final String CLM_USER_PERMISSION_ID = "user_permission_id";
+    public static final String CLM__SECURIY_MENU_CONROLLERS_ACION_ID = "security_menu_controllers_action_id";
 
 
     ////////////////////
     ////// CREATE TABLE QUERY....
     ///////////////////
+
+    /*
+           user_name : DEFAULT login name
+           gender : 1=> Male, 2=> Female
+           company_id : Can be Null in case of Platform Admin users
+           role_id : 1=> Customer, 2=> Driver, 3=> Web
+           device_type : 1=> iOS, 2=> android, 3=> web
+           varification_token : use for varification, for activation or forgot password
+           status_id : 1=> active user, 2=> inactive, 3=> deleted, 4=> pending
+     */
+    static final String CREATE_TBL_USER_INFO = "CREATE TABLE " + TBL_USER_INFO + " (" +
+            CLM_LOCAL_USER_ID + " VARCHAR PRIMARY KEY," +
+            CLM_SERVER_USER_ID + " VARCHAR," +
+            CLM_USERNAME + " VARCHAR," +
+            CLM_EMAIL + " VARCHAR," +
+            CLM_FIRST_NAME + " VARCHAR," +
+            CLM_LAST_NAME + " VARCHAR," +
+            CLM_PHONE_NO + " VARCHAR," +
+            CLM_THUMB + " VARCHAR," +
+            CLM_GENDER + " VARCHAR," +
+            CLM_COMPANY_ID + " VARCHAR DEFAULT '0'," +
+            CLM_ROLE_ID + " VARCHAR," +
+            CLM_BADGE_COUNT + " VARCHAR," +
+            CLM_DEVICE_TYPE + " INTEGER DEFAULT 2," +
+            CLM_DEVICE_TOKEN + " VARCHAR," +
+            CLM_LAT + " VARCHAR," +
+            CLM_LONG + " VARCHAR," +
+            CLM_STATUS_ID + " INTEGER," +
+            CLM_HOME_ADDRESS + " VARCHAR," +
+            CLM_WORK_ADDRESS + " VARCHAR," +
+            CLM_VERIFICATION_TOKEN + " VARCHAR," +
+            CLM_VERIFICATION_TOKEN_TIME + " DATETIME DEFAULT (CURRENT_TIMESTAMP)," +
+            CLM_LAST_LOGIN_ON + " DATETIME DEFAULT (CURRENT_TIMESTAMP)," +
+            CLM_OBJECT_MESSAGE + " VARCHAR," +
+            CLM_IS_SMARTPHONE + " VARCHAR," +
+            CLM_CREATED_BY + " VARCHAR," +
+            CLM_UPDATED_BY + " VARCHAR," +
+            CLM_CREATED + " DATETIME DEFAULT (CURRENT_TIMESTAMP)," +
+            CLM_UPDATED + " DATETIME," +
+            CLM_IS_UPDATED + " INTEGER DEFAULT 0)";
+
     /*
         setting_value_type : 1=> test, 2 => json VARCHAR
         app_type : 0=> Both, 1=>user, 2=> driver
@@ -272,7 +331,7 @@ public class DbParams {
             CLM_HOST + " VARCHAR," +
             CLM_PORT + " VARCHAR," +
             CLM_SERVER + " VARCHAR," +
-            CLM_USER_NAME + " VARCHAR," +
+            CLM_USERNAME + " VARCHAR," +
             CLM_ENCRYPTION + " VARCHAR," +
             CLM_APP_NAME + " VARCHAR," +
             CLM_THUMB + " VARCHAR," +

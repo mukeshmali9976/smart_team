@@ -156,10 +156,9 @@ public class NetworkClient extends AsyncTask<Void, Void, String> {
                     String res = response.body().string();
 
                     Log.e(TAG, "URL => " + url);
-                    Log.e(TAG, "Status Code => " + statusCode + " - Message => " + message);
-                    Log.i(TAG, "Header:" + reqHeader);
+                    Log.e(TAG, "header_token => " + prefManager.getString(PARAMS.KEY_HEADER_TOKEN, ""));
+                    Log.e(TAG, "Params => " + reqParams);
                     Log.e(TAG, "Response => " + res);
-
 
                     JSONObject jObj = new JSONObject();
                     jObj.put("statusCode", 1);
@@ -179,8 +178,9 @@ public class NetworkClient extends AsyncTask<Void, Void, String> {
                             .build();
 
                     okhttp3.Request request = new okhttp3.Request.Builder()
-                            .header(PARAMS.TAG_HEADER_TOKEN, prefManager.getString(Constants.HEADER_TOKEN, ""))
-                            .addHeader(PARAMS.TAG_APP_VERSION, pInfo.versionName)
+                            .header(PARAMS.TAG_HEADER_TOKEN, prefManager.getString(Constants.HEADER_TOKEN, prefManager.getString(PARAMS.KEY_HEADER_TOKEN, "")))
+                            .addHeader(PARAMS.TAG_DEVICE_TYPE, Constants.DEVICE_TYPE)
+                            .addHeader(PARAMS.TAG_DEVICE_TOKEN, prefManager.getString(Constants.REGISTRATION_TOKEN, ""))
                             .url(url)
                             .post(body)
                             .build();
@@ -192,9 +192,8 @@ public class NetworkClient extends AsyncTask<Void, Void, String> {
                     String res = response.body().string();
 
                     Log.e(TAG, "URL => " + url);
-                    Log.e(TAG, "Params => " + reqHeader);
+                    Log.e(TAG, "header_token => " + prefManager.getString(PARAMS.KEY_HEADER_TOKEN, ""));
                     Log.e(TAG, "Params => " + reqParams);
-                    Log.e(TAG, "Status Code => " + statusCode + " - Message => " + message);
                     Log.e(TAG, "Response => " + res);
 
                     JSONObject jObj = new JSONObject();
@@ -223,8 +222,9 @@ public class NetworkClient extends AsyncTask<Void, Void, String> {
                     String message = response.message();
                     String res = response.body().string();
 
+                    Log.e(TAG, "URL => " + url);
+                    Log.e(TAG, "header_token => " + prefManager.getString(PARAMS.KEY_HEADER_TOKEN, ""));
                     Log.e(TAG, "Params => " + reqParams);
-                    Log.i(TAG, "Status Code => " + statusCode + " - Message => " + message);
                     Log.e(TAG, "Response => " + res);
 
                     JSONObject jObj = new JSONObject();

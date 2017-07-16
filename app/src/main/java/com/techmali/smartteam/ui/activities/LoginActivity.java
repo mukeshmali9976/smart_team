@@ -22,6 +22,8 @@ import com.techmali.smartteam.request.RequestBuilder;
 import com.techmali.smartteam.utils.CryptoManager;
 import com.techmali.smartteam.utils.Utils;
 
+import org.json.JSONObject;
+
 public class LoginActivity extends BaseAppCompatActivity implements View.OnClickListener,
         RequestListener {
 
@@ -53,7 +55,7 @@ public class LoginActivity extends BaseAppCompatActivity implements View.OnClick
         tvErrorPhone = (TextView) findViewById(R.id.tvErrorPhone);
         tvErrorPassword = (TextView) findViewById(R.id.tvErrorPassword);
 
-        etPhone.setText("deep.09@gmail.com");
+        etPhone.setText("dd@dd.com");
         etPassword.setText("12345678");
 
         findViewById(R.id.btnLogin).setOnClickListener(this);
@@ -82,7 +84,6 @@ public class LoginActivity extends BaseAppCompatActivity implements View.OnClick
         switch (view.getId()) {
             case R.id.btnLogin:
                 performLogin();
-               // startActivity(new Intent(LoginActivity.this, MainActivity.class));
                 break;
             case R.id.btnForgotPassword:
                 startActivity(new Intent(LoginActivity.this, ForgotPasswordActivity.class));
@@ -95,9 +96,9 @@ public class LoginActivity extends BaseAppCompatActivity implements View.OnClick
         try {
             if (!Utils.isEmptyString(response)) {
                 if (id == reqIdLogin) {
-                    LoginResponse loginResponse = new Gson().fromJson(response, LoginResponse.class);
-                    if (loginResponse.getStatus() == PARAMS.TAG_STATUS_200) {
-                        prefManager.edit().putString(PARAMS.TAG_HEADER_TOKEN,loginResponse.getResult().get(0).getHeader_token()).apply();
+                    JSONObject object = new JSONObject(response);
+                    if (object.getInt(PARAMS.TAG_STATUS) == PARAMS.TAG_STATUS_200) {
+                        prefManager.edit().putString(PARAMS.TAG_HEADER_TOKEN, object.getJSONArray(PARAMS.TAG_RESULT).getJSONObject(0).getString(PARAMS.TAG_HEADER_TOKEN)).apply();
                         startActivity(new Intent(LoginActivity.this, MainActivity.class));
                         finish();
                     }

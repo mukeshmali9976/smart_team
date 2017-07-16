@@ -8,10 +8,8 @@ public class PARAMS {
     public static final String TAG_MESSAGE = "message";
     public static final String TAG_HEADER_TOKEN = "header_token";
     public static final String TAG_RESULT = "result";
+    public static final String TAG_LAST_SYNC_DATE = "last_syncdate";
     public static final String TAG_APP_VERSION = "app_version";
-
-    // shared preferences keys
-    public static final String KEY_AES_PASS_KEY = "aesPassKey";
 
     // Login
     public static final String TAG_PHONE = "phone";
@@ -37,5 +35,11 @@ public class PARAMS {
     public static final int TAG_STATUS_112 = 112;
     public static final int TAG_STATUS_121 = 121;
     public static final int TAG_STATUS_120 = 120;
+
+
+    // Shared Preference keys
+    public static final String KEY_AES_PASS_KEY = "aesPassKey";
+    public static final String KEY_HEADER_TOKEN = "header_token";
+    public static final String KEY_LAST_SYNC_DATE = "last_syncdate";
 
 }

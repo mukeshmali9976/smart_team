@@ -20,6 +20,9 @@ public class RequestBuilder extends PARAMS {
     // for login detail
     public static final String METHOD_LOGIN_DETAIL = "user/logindetail";
 
+    // For DB sync
+    public static final String METHOD_SYNC_DATA = "sync/sync";
+
 
     public static HashMap<String, String> blankRequest() {
 
@@ -44,5 +47,6 @@ public class RequestBuilder extends PARAMS {
         Log.i(TAG, jObjReq.toString());
         return parameters;
     }
+
 
 }

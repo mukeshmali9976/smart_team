@@ -45,7 +45,6 @@ public class MainActivity extends SlidingActivity {
 
         mActivity = this;
         dbHelper = new PendingDataImpl(mActivity);
-        insert();
 
         // set the Behind View
         setBehindContentView(R.layout.layout_menu_drawer_fragment_container);
@@ -76,17 +75,6 @@ public class MainActivity extends SlidingActivity {
             }
         });
 
-        //dbHelper.getData();
-    }
-
-    private void insert() {
-
-        SyncCompanyModel model = new SyncCompanyModel();
-        model.setCompany_name("Test");
-        model.setAdmin_user_id("123");
-
-        dbHelper.insert(model, DbParams.TBL_COMPANY);
-        Log.e(TAG, "Inserted....");
     }
 
     public void restartActivity() {
