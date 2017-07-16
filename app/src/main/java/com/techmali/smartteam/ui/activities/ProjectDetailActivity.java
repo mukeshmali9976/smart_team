@@ -92,13 +92,11 @@ public class ProjectDetailActivity extends BaseAppCompatActivity implements
             listModels.add(userModel);
         }
 
-
         mAdapter = new UserListAdapter(ProjectDetailActivity.this, listModels, this);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
         rvUserList.setLayoutManager(mLayoutManager);
         rvUserList.setItemAnimator(new DefaultItemAnimator());
         rvUserList.setAdapter(mAdapter);
-
 
         List<TaskModel> listModel = new ArrayList<>();
         TaskModel taskModel;
@@ -113,7 +111,6 @@ public class ProjectDetailActivity extends BaseAppCompatActivity implements
         rvTaskList.setLayoutManager(mLayoutManager);
         rvTaskList.setItemAnimator(new DefaultItemAnimator());
         rvTaskList.setAdapter(taskListAdapter);
-
     }
 
     @Override
@@ -195,7 +192,6 @@ public class ProjectDetailActivity extends BaseAppCompatActivity implements
 
     @Override
     public void onItemClick(View view, int position) {
-
         startActivity(new Intent(this, TaskDetailActivity.class));
     }
 

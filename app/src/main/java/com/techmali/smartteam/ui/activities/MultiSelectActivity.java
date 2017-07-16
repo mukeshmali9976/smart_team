@@ -211,9 +211,9 @@ public class MultiSelectActivity extends BaseAppCompatActivity implements TextWa
 
         if (s.length() > 0) {
             ArrayList<IdValueModel> searchList = new ArrayList<>();
-            for (int i = 0; i < multiSelectAdapter.getItemCount(); i++) {
-                if (multiSelectAdapter.getItem(i).getValue().toLowerCase().contains(s.toString().toLowerCase())) {
-                    searchList.add(multiSelectAdapter.getItem(i));
+            for (int i = 0; i < filterList.size(); i++) {
+                if (filterList.get(i).getValue().toLowerCase().contains(s.toString().toLowerCase())) {
+                    searchList.add(filterList.get(i));
                 }
             }
             multiSelectAdapter.setData(searchList);

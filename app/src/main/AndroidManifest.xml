@@ -172,7 +172,9 @@
             android:launchMode="singleTask"
             android:permission="null"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateAlwaysHidden|stateHidden|adjustPan" /> <activity
+            android:windowSoftInputMode="stateAlwaysHidden|stateHidden|adjustPan" />
+
+        <activity
             android:name=".ui.activities.TaskDetailActivity"
             android:configChanges="screenSize|keyboardHidden|orientation"
             android:exported="false"
@@ -180,14 +182,8 @@
             android:permission="null"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden|stateHidden|adjustPan" />
-        <activity
-            android:name=".ui.activities.CompanyProfileActivity"
-            android:configChanges="screenSize|keyboardHidden|orientation"
-            android:exported="false"
-            android:launchMode="singleTask"
-            android:permission="null"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateAlwaysHidden|stateHidden|adjustPan" />
+
+
     </application>
 </manifest>
 

@@ -9,202 +9,236 @@
 
     <include layout="@layout/layout_toolbar" />
 
-    <LinearLayout
-        android:id="@+id/llMain"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-
-        <com.techmali.smartteam.ui.views.CircleImageView
-            android:id="@+id/ivProfile"
-            android:layout_width="@dimen/profile_image_width"
-            android:layout_height="@dimen/profile_image_width"
-            android:layout_gravity="center"
-            android:layout_marginTop="@dimen/margin_20"
-            android:src="@drawable/ic_profile_photo"
-            app:civ_border_color="@android:color/transparent"
-            app:civ_border_width="2dp" />
+        android:layout_height="match_parent">
 
         <LinearLayout
+            android:id="@+id/llMain"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_marginTop="@dimen/margin_30"
-            android:background="@color/colorPrimary"
-            android:orientation="horizontal">
+            android:orientation="vertical">
 
-            <com.techmali.smartteam.ui.views.MyTextView
-                android:layout_width="0dp"
+            <com.techmali.smartteam.ui.views.CircleImageView
+                android:id="@+id/ivProfile"
+                android:layout_width="@dimen/profile_image_width"
+                android:layout_height="@dimen/profile_image_width"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/margin_20"
+                android:src="@drawable/ic_profile_photo"
+                app:civ_border_color="@android:color/transparent"
+                app:civ_border_width="2dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginTop="@dimen/margin_30"
+                android:background="@color/colorPrimary"
+                android:orientation="horizontal">
+
+                <com.techmali.smartteam.ui.views.MyTextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="0.8"
+                    android:gravity="center_vertical"
+                    android:padding="@dimen/margin_10"
+                    android:text="@string/lbl_name"
+                    android:textColor="@color/colorWhite" />
+
+                <com.techmali.smartteam.ui.views.MyEditText
+                    android:id="@+id/edtName"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@null"
+                    android:ems="10"
+                    android:gravity="right"
+                    android:imeOptions="actionNext"
+                    android:inputType="text"
+                    android:textColor="@android:color/white"
+                    android:textCursorDrawable="@null" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginTop="@dimen/margin_2"
+                android:background="@color/colorPrimary"
+                android:orientation="horizontal">
+
+                <com.techmali.smartteam.ui.views.MyTextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="0.3"
+                    android:gravity="center_vertical"
+                    android:padding="@dimen/margin_10"
+                    android:text="@string/lbl_email"
+                    android:textColor="@color/colorWhite" />
+
+                <com.techmali.smartteam.ui.views.MyEditText
+                    android:id="@+id/edtEmail"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@null"
+                    android:editable="false"
+                    android:ems="10"
+                    android:focusable="false"
+                    android:gravity="right"
+                    android:imeOptions="actionNext"
+                    android:inputType="text"
+                    android:textColor="@android:color/white"
+                    android:textCursorDrawable="@null" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginTop="@dimen/margin_2"
+                android:background="@color/colorPrimary"
+                android:orientation="horizontal">
+
+                <com.techmali.smartteam.ui.views.MyTextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="0.5"
+                    android:gravity="center_vertical"
+                    android:padding="@dimen/margin_10"
+                    android:text="@string/lbl_phone"
+                    android:textColor="@color/colorWhite" />
+
+                <com.techmali.smartteam.ui.views.MyEditText
+                    android:id="@+id/edtPhone"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@null"
+                    android:ems="10"
+                    android:gravity="right"
+                    android:imeOptions="actionNext"
+                    android:inputType="number"
+                    android:textColor="@android:color/white"
+                    android:textCursorDrawable="@null" />
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginTop="@dimen/margin_2"
+                android:background="@color/colorPrimary"
+                android:orientation="horizontal">
+
+                <com.techmali.smartteam.ui.views.MyTextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="0.5"
+                    android:gravity="center_vertical"
+                    android:padding="@dimen/margin_10"
+                    android:text="@string/lbl_birth_date"
+                    android:textColor="@color/colorWhite" />
+
+
+                <com.techmali.smartteam.ui.views.MyEditText
+                    android:id="@+id/edtBirthDate"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@null"
+                    android:ems="10"
+                    android:gravity="right"
+                    android:imeOptions="actionNext"
+                    android:inputType="number"
+                    android:textColor="@android:color/white"
+                    android:textCursorDrawable="@null" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginTop="@dimen/margin_2"
+                android:background="@color/colorPrimary"
+                android:orientation="horizontal">
+
+                <com.techmali.smartteam.ui.views.MyTextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="0.8"
+                    android:gravity="center_vertical"
+                    android:padding="@dimen/margin_10"
+                    android:text="@string/lbl_new_password"
+                    android:textColor="@color/colorWhite" />
+
+                <com.techmali.smartteam.ui.views.MyEditText
+                    android:id="@+id/edtNewPassword"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@null"
+                    android:ems="10"
+                    android:gravity="right"
+                    android:imeOptions="actionNext"
+                    android:inputType="textPassword"
+                    android:textColor="@android:color/white"
+                    android:textCursorDrawable="@null" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginTop="@dimen/margin_2"
+                android:background="@color/colorPrimary"
+                android:orientation="horizontal">
+
+                <com.techmali.smartteam.ui.views.MyTextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="0.8"
+                    android:gravity="center_vertical"
+                    android:padding="@dimen/margin_10"
+                    android:text="@string/lbl_confirm_password"
+                    android:textColor="@color/colorWhite" />
+
+                <com.techmali.smartteam.ui.views.MyEditText
+                    android:id="@+id/edtConfirmPassword"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@null"
+                    android:ems="10"
+                    android:gravity="right"
+                    android:imeOptions="actionDone"
+                    android:inputType="textPassword"
+                    android:textColor="@android:color/white"
+                    android:textCursorDrawable="@null" />
+            </LinearLayout>
+
+            <com.techmali.smartteam.ui.views.MyButton
+                android:id="@+id/btnUpdate"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_weight="0.8"
-                android:gravity="center_vertical"
-                android:padding="@dimen/margin_10"
-                android:text="@string/lbl_name"
-                android:textColor="@color/colorWhite" />
+                android:layout_marginBottom="@dimen/margin_40"
+                android:layout_marginLeft="@dimen/margin_30"
+                android:layout_marginRight="@dimen/margin_30"
+                android:layout_marginTop="@dimen/margin_30"
+                android:text="@string/lbl_update_profile"
+                custom:font_style="bold" />
 
-            <com.techmali.smartteam.ui.views.MyEditText
-                android:id="@+id/edtName"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="@null"
-                android:ems="10"
-                android:gravity="right"
-                android:imeOptions="actionNext"
-                android:inputType="text"
-                android:textColor="@android:color/white"
-                android:textCursorDrawable="@null" />
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_marginTop="@dimen/margin_5"
-            android:background="@color/colorPrimary"
-            android:orientation="horizontal">
-
-            <com.techmali.smartteam.ui.views.MyTextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_weight="0.3"
-                android:gravity="center_vertical"
-                android:padding="@dimen/margin_10"
-                android:text="@string/lbl_email"
-                android:textColor="@color/colorWhite" />
-
-
-            <com.techmali.smartteam.ui.views.MyEditText
-                android:id="@+id/edtEmail"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="@null"
-                android:editable="false"
-                android:ems="10"
-                android:focusable="false"
-                android:gravity="right"
-                android:imeOptions="actionNext"
-                android:inputType="text"
-                android:textColor="@android:color/white"
-                android:textCursorDrawable="@null" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_marginTop="@dimen/margin_5"
-            android:background="@color/colorPrimary"
-            android:orientation="horizontal">
-
-            <com.techmali.smartteam.ui.views.MyTextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_weight="0.5"
-                android:gravity="center_vertical"
-                android:padding="@dimen/margin_10"
-                android:text="@string/lbl_phone"
-                android:textColor="@color/colorWhite" />
-
-
-            <com.techmali.smartteam.ui.views.MyEditText
-                android:id="@+id/edtPhone"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="@null"
-                android:ems="10"
-                android:gravity="right"
-                android:imeOptions="actionNext"
-                android:inputType="number"
-                android:textColor="@android:color/white"
-                android:textCursorDrawable="@null" />
-        </LinearLayout>
-
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_marginTop="@dimen/margin_5"
-            android:background="@color/colorPrimary"
-            android:orientation="horizontal">
-
-            <com.techmali.smartteam.ui.views.MyTextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_weight="0.8"
-                android:gravity="center_vertical"
-                android:padding="@dimen/margin_10"
-                android:text="@string/lbl_new_password"
-                android:textColor="@color/colorWhite" />
-
-
-            <com.techmali.smartteam.ui.views.MyEditText
-                android:id="@+id/edtNewPassword"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="@null"
-                android:ems="10"
-                android:gravity="right"
-                android:imeOptions="actionNext"
-                android:inputType="textPassword"
-                android:textColor="@android:color/white"
-                android:textCursorDrawable="@null" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_marginTop="@dimen/margin_5"
-            android:background="@color/colorPrimary"
-            android:orientation="horizontal">
-
-            <com.techmali.smartteam.ui.views.MyTextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_weight="0.8"
-                android:gravity="center_vertical"
-                android:padding="@dimen/margin_10"
-                android:text="@string/lbl_confirm_password"
-                android:textColor="@color/colorWhite" />
-
-
-            <com.techmali.smartteam.ui.views.MyEditText
-                android:id="@+id/edtConfirmPassword"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="@null"
-                android:ems="10"
-                android:gravity="right"
-                android:imeOptions="actionDone"
-                android:inputType="textPassword"
-                android:textColor="@android:color/white"
-                android:textCursorDrawable="@null" />
-        </LinearLayout>
-
-
-
-        <com.techmali.smartteam.ui.views.MyButton
-            android:id="@+id/btnUpdate"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginLeft="@dimen/margin_30"
-            android:layout_marginRight="@dimen/margin_30"
-            android:layout_marginTop="@dimen/margin_30"
-            android:text="@string/lbl_update_profile"
-            custom:font_style="bold" />
-
-    </LinearLayout>
+    </ScrollView>
 
 </LinearLayout>

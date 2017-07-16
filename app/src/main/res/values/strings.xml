@@ -43,7 +43,7 @@
 
     <!--Menu-->
     <string name="lbl_home">Home</string>
-    <string name="lbl_notification">Notificatio</string>
+    <string name="lbl_notification">Notification</string>
     <string name="lbl_company_profile">Comapany profile</string>
     <string name="lbl_my_reports">My Reports</string>
     <string name="lbl_holidays">Holidays</string>
@@ -162,6 +162,7 @@
     <string name="lbl_phone">Phone</string>
     <string name="lbl_email">Email</string>
     <string name="lbl_name">Name</string>
+    <string name="lbl_birth_date">Birth Date </string>
     <string name="hint_old_password">Old Password</string>
     <string name="error_enter_new_password">Enter New Password</string>
     <string name="error_enter_old_password">Enter old password</string>
@@ -232,7 +233,11 @@
 
 
     <!--Company Profile-->
+    <string name="title_company_profile">Company Profile</string>
     <string name="lbl_address">Address : </string>
     <string name="lbl_fax_number">Fax Number : </string>
+
+    <!--Notification-->
+    <string name="title_notification">Notification</string>
 
 </resources>

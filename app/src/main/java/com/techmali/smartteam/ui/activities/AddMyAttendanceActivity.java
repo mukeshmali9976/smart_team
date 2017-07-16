@@ -32,11 +32,10 @@ public class AddMyAttendanceActivity extends BaseAppCompatActivity implements Vi
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_my_attendance);
-
+        initActionBar(getString(R.string.title_add_attendance));
         networkManager = NetworkManager.getInstance();
         prefManager = CryptoManager.getInstance(AddMyAttendanceActivity.this).getPrefs();
 
-        initActionBar(getString(R.string.title_add_attendance));
         initView();
     }
 
@@ -100,11 +99,8 @@ public class AddMyAttendanceActivity extends BaseAppCompatActivity implements Vi
         int day = c.get(Calendar.DAY_OF_MONTH);
 
         Calendar selectDate = Calendar.getInstance();
-
         selectDate.set(year, month, day);
-
         String formattedDate = DateUtils.defaultDateFormatShort.format(selectDate.getTime());
-
         showDatePicker(1005, formattedDate, true, true);
     }
 

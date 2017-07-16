@@ -42,7 +42,7 @@ public class MenuFragment extends Fragment implements View.OnClickListener, Requ
     private int reqIdLogout = -1;
 
     private ImageLoader mImageLoader = ImageLoader.getInstance();
-    private ImageView ivProfile, ivEdit;
+    private ImageView ivProfile;
     private TextView tvName, tvVersion, tvHome, tvNotification, tvCompanyProfile, tvHolidays, tvHelp, tvLogout;
     private DisplayImageOptions options;
 
@@ -65,11 +65,9 @@ public class MenuFragment extends Fragment implements View.OnClickListener, Requ
 
     private void initView() {
 
-
         tvName = (TextView) mRootView.findViewById(R.id.tvName);
         ivProfile = (ImageView) mRootView.findViewById(R.id.ivProfile);
         tvVersion = (TextView) mRootView.findViewById(R.id.tvVersion);
-
 
         tvHome = (TextView) mRootView.findViewById(R.id.tvHome);
         tvNotification = (TextView) mRootView.findViewById(R.id.tvNotification);
@@ -78,7 +76,6 @@ public class MenuFragment extends Fragment implements View.OnClickListener, Requ
         tvHelp = (TextView) mRootView.findViewById(R.id.tvHelp);
         tvLogout = (TextView) mRootView.findViewById(R.id.tvLogout);
 
-
         mRootView.findViewById(R.id.rlMenu).setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.app_background_color));
         tvHome.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.colorPrimaryDark));
         tvNotification.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.colorPrimaryDark));
@@ -86,7 +83,6 @@ public class MenuFragment extends Fragment implements View.OnClickListener, Requ
         tvHolidays.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.colorPrimaryDark));
         tvHelp.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.colorPrimaryDark));
         tvLogout.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.colorPrimaryDark));
-
 
 //            setTextViewDrawableColor(tvHome, R.color.colorTextHint);
 //            setTextViewDrawableColor(tvMyperformance, R.color.white_color);
@@ -101,7 +97,6 @@ public class MenuFragment extends Fragment implements View.OnClickListener, Requ
 //            tvName.setTextColor(ContextCompat.getColor(getActivity(), R.color.white_color));
 //            tvVersion.setTextColor(ContextCompat.getColor(getActivity(), R.color.white_color));
 
-
         TextView tvBadge = (TextView) mRootView.findViewById(R.id.tvBadge);
 
         tvVersion.setText("App Version : 1.0.1");
@@ -111,31 +106,15 @@ public class MenuFragment extends Fragment implements View.OnClickListener, Requ
         if (!TextUtils.isEmpty(prefManager.getString(Constants.PREF_FULL_NAME, ""))) {
             tvName.setText(prefManager.getString(Constants.PREF_FULL_NAME, ""));
         }
-
         if (prefManager.getInt(Constants.PREF_NOTIFICATION_COUNT, 0) == 0) {
             mRootView.findViewById(R.id.rltSquare).setVisibility(View.GONE);
         } else {
             mRootView.findViewById(R.id.rltSquare).setVisibility(View.VISIBLE);
         }
-
         tvBadge.setText(String.valueOf(prefManager.getInt(Constants.PREF_NOTIFICATION_COUNT, 0)));
 
-        mRootView.findViewById(R.id.ivEdit).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ((MainActivity) getActivity()).getSlidingMenu().toggle();
-                ((MainActivity) getActivity()).clearBackStack();
-                ((MainActivity) getActivity()).replaceFragment(new ProfileFragment(), "Profile");
-            }
-        });
-        ivProfile.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ((MainActivity) getActivity()).getSlidingMenu().toggle();
-                ((MainActivity) getActivity()).clearBackStack();
-                ((MainActivity) getActivity()).replaceFragment(new ProfileFragment(), "Profile");
-            }
-        });
+        mRootView.findViewById(R.id.ivEdit).setOnClickListener(this);
+        ivProfile.setOnClickListener(this);
 
         tvHome.setOnClickListener(this);
         tvNotification.setOnClickListener(this);
@@ -155,10 +134,10 @@ public class MenuFragment extends Fragment implements View.OnClickListener, Requ
                 ((MainActivity) getActivity()).replaceFragment(new HomeFragment(), "Home");
                 break;
             case R.id.tvNotification:
-                ((MainActivity) getActivity()).replaceFragment(new HomeFragment(), "Notifications");
+                ((MainActivity) getActivity()).replaceFragment(new NotificationFragment(), "Notification");
                 break;
             case R.id.tvCompanyProfile:
-                startActivity(new Intent(getActivity(), CompanyProfileActivity.class));
+                ((MainActivity) getActivity()).replaceFragment(new CompanyProfileFragment(), "CompanyProfile");
                 break;
             case R.id.tvHolidays:
 
@@ -168,6 +147,12 @@ public class MenuFragment extends Fragment implements View.OnClickListener, Requ
                 break;
             case R.id.tvLogout:
                 showDialog();
+                break;
+            case R.id.ivProfile:
+            case R.id.ivEdit:
+                //((MainActivity) getActivity()).getSlidingMenu().toggle();
+//                ((MainActivity) getActivity()).clearBackStack();
+                ((MainActivity) getActivity()).replaceFragment(new ProfileFragment(), "Profile");
                 break;
 
         }
@@ -185,7 +170,6 @@ public class MenuFragment extends Fragment implements View.OnClickListener, Requ
         networkManager.removeListener(this);
     }
 
-
     private void setTextViewDrawableColor(TextView textView, int color) {
         for (Drawable drawable : textView.getCompoundDrawables()) {
             if (drawable != null) {
@@ -196,12 +180,10 @@ public class MenuFragment extends Fragment implements View.OnClickListener, Requ
 
     private void logoutRequest() {
 
-
     }
 
     @Override
     public void onSuccess(int id, String response) {
-
 
     }
 

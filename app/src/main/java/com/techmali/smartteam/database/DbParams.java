@@ -9,6 +9,7 @@ public class DbParams {
     //////////////////////
     ////// TABLE NAMES.........
     /////////////////////
+
     public static final String TBL_APP_SETTING = "app_setting";
     public static final String TBL_USER_INFO = "userinfo";
     public static final String TBL_COMPANY = "company";
@@ -198,7 +199,7 @@ public class DbParams {
             CLM_IS_UPDATED + " INTEGER DEFAULT 0)";
 
     /*
-        setting_value_type : 1=> test, 2 => json VARCHAR
+       setting_value_type : 1=> test, 2 => json VARCHAR
         app_type : 0=> Both, 1=>user, 2=> driver
     */
     static final String CREATE_TBL_APP_SETTING = "CREATE TABLE " + TBL_APP_SETTING + "(" +

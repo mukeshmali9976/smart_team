@@ -20,6 +20,7 @@ import android.support.v4.content.FileProvider;
 import android.text.TextUtils;
 import android.util.Base64;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -84,8 +85,10 @@ public class ProfileFragment extends BasePermissionFragment implements RequestLi
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+
         initActionBar(getResources().getString(R.string.lbl_profile), mRootView);
         getActivity().setTitle(getActivity().getResources().getString(R.string.lbl_profile));
+        changeToolBarColor();
         //getActivity().findViewById(R.id.ivHomeLogo).setVisibility(View.VISIBLE);
     }
 
@@ -100,7 +103,6 @@ public class ProfileFragment extends BasePermissionFragment implements RequestLi
         super.onStop();
         networkManager.removeListener(this);
     }
-
 
     private void initView() {
 
@@ -144,6 +146,7 @@ public class ProfileFragment extends BasePermissionFragment implements RequestLi
 
 
     }
+
 
     @Override
     public void onClick(View v) {
@@ -208,18 +211,47 @@ public class ProfileFragment extends BasePermissionFragment implements RequestLi
             @Override
             public void onClick(View v) {
                 dialog.dismiss();
-                isCamera = false;
-                Intent intent;
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-                    intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
-                    intent.addCategory(Intent.CATEGORY_OPENABLE);
-                    intent.setType("image/*");
-                    getActivity().startActivityForResult(intent, INTENT_GALLERY);
+                if (isPermissionGranted(getActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+                    isCamera = false;
+                    Intent intent;
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                        intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+                        intent.addCategory(Intent.CATEGORY_OPENABLE);
+                        intent.setType("image/*");
+                        getActivity().startActivityForResult(intent, INTENT_GALLERY);
+                    } else {
+                        intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                        getActivity().startActivityForResult(intent, INTENT_GALLERY);
+                    }
                 } else {
-                    intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                    getActivity().startActivityForResult(intent, INTENT_GALLERY);
-                }
+                    askForPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE, new PermissionListener() {
+                        @Override
+                        public void permissionGranted(String permission) {
+                            isCamera = false;
+                            Intent intent;
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                                intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+                                intent.addCategory(Intent.CATEGORY_OPENABLE);
+                                intent.setType("image/*");
+                                getActivity().startActivityForResult(intent, INTENT_GALLERY);
+                            } else {
+                                intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                                getActivity().startActivityForResult(intent, INTENT_GALLERY);
+                            }
+                        }
 
+                        @Override
+                        public void permissionDenied(String permission) {
+
+                        }
+
+                        @Override
+                        public void permissionForeverDenied(String permission) {
+                            openSettingsApp(getActivity(), getString(R.string.permission_denied_message));
+                        }
+                    });
+
+                }
             }
         });
 
@@ -227,7 +259,7 @@ public class ProfileFragment extends BasePermissionFragment implements RequestLi
             @Override
             public void onClick(View v) {
                 dialog.dismiss();
-                if (isPermissionGranted(getActivity(), Manifest.permission.CAMERA)) {
+                if (isPermissionsGranted(getActivity(), new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE})) {
                     isCamera = true;
                     Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                     getOutputMediaFileUri();
@@ -238,19 +270,66 @@ public class ProfileFragment extends BasePermissionFragment implements RequestLi
                         getActivity().startActivityForResult(intent, INTENT_CAMERA);
                     }
                 } else {
-                    askForPermission(Manifest.permission.CAMERA, ProfileFragment.this);
+                    askForPermissions(new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE}, new PermissionListener() {
+                        @Override
+                        public void permissionGranted(String permission) {
+
+                            isCamera = true;
+                            Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                            getOutputMediaFileUri();
+                            if (mFileUri != null)
+                                intent.putExtra(MediaStore.EXTRA_OUTPUT, mFileUri);
+
+                            if (intent.resolveActivity(getActivity().getPackageManager()) != null) {
+                                getActivity().startActivityForResult(intent, INTENT_CAMERA);
+                            }
+                        }
+
+                        @Override
+                        public void permissionDenied(String permission) {
+                            android.util.Log.e(TAG, "Denied : " + permission);
+                            switch (permission) {
+                                case Manifest.permission.CAMERA:
+                                    openSettingsApp(getActivity(), getString(R.string.permission_denied_message));
+                                    break;
+                                case Manifest.permission.WRITE_EXTERNAL_STORAGE:
+                                    openSettingsApp(getActivity(), getString(R.string.permission_denied_message));
+                                    break;
+                            }
+                        }
+
+                        @Override
+                        public void permissionForeverDenied(String permission) {
+                            android.util.Log.e(TAG, "Forever Denied : " + permission);
+                            switch (permission) {
+
+                                case Manifest.permission.CAMERA:
+                                    openSettingsApp(getActivity(), getString(R.string.permission_denied_message));
+                                    break;
+                                case Manifest.permission.WRITE_EXTERNAL_STORAGE:
+                                    openSettingsApp(getActivity(), getString(R.string.permission_denied_message));
+                                    break;
+
+                            }
+
+                        }
+                    });
                 }
             }
         });
 
-        btnDelete.setOnClickListener(new View.OnClickListener() {
+        btnDelete.setOnClickListener(new View.OnClickListener()
+
+        {
             @Override
             public void onClick(View v) {
                 ivProfile.setImageResource(R.drawable.ic_profile_photo);
                 dialog.dismiss();
             }
         });
-        btnCancel.setOnClickListener(new View.OnClickListener() {
+        btnCancel.setOnClickListener(new View.OnClickListener()
+
+        {
             @Override
             public void onClick(View v) {
                 dialog.dismiss();

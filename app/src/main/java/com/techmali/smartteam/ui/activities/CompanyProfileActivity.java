@@ -10,6 +10,8 @@ import com.techmali.smartteam.network.NetworkManager;
 import com.techmali.smartteam.network.RequestListener;
 import com.techmali.smartteam.utils.CryptoManager;
 
+import static com.techmali.smartteam.base.BaseFragment.changeToolBarColor;
+
 
 public class CompanyProfileActivity extends BaseAppCompatActivity implements View.OnClickListener ,
         RequestListener {
@@ -38,6 +40,7 @@ public class CompanyProfileActivity extends BaseAppCompatActivity implements Vie
     @Override
     public void onStart() {
         super.onStart();
+
         networkManager.setListener(this);
     }
 

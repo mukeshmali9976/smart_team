@@ -4,11 +4,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <include
-        android:id="@+id/toolbar"
-        layout="@layout/layout_toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+    <include layout="@layout/layout_toolbar" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -40,9 +36,9 @@
 
         <EditText
             android:id="@+id/etCheckInTime"
-            android:layout_marginTop="@dimen/margin_10"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_10"
             android:hint="@string/hint_check_in_time"
             android:inputType="textCapWords" />
 
@@ -56,9 +52,9 @@
 
         <com.techmali.smartteam.ui.views.MyEditText
             android:id="@+id/etCheckOutTime"
-            android:layout_marginTop="@dimen/margin_10"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_10"
             android:hint="@string/hint_check_out_time"
             android:inputType="textCapWords" />
 
@@ -73,12 +69,12 @@
 
         <com.techmali.smartteam.ui.views.MyEditText
             android:id="@+id/etDescription"
-            android:layout_marginTop="@dimen/margin_10"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:lines="5"
+            android:layout_marginTop="@dimen/margin_10"
             android:hint="@string/hint_description"
-            android:inputType="textCapWords" />
+            android:inputType="textCapWords"
+            android:lines="5" />
 
         <TextView
             android:id="@+id/tvErrorDescription"

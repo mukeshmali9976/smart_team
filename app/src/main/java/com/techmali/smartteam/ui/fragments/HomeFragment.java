@@ -100,7 +100,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         initActionBar(getActivity().getString(R.string.app_name), mRootView);
-        setTitle("");
+        setTitle("Smart Team");
         getLoginDetail();
         changeToolBarColor();
     }

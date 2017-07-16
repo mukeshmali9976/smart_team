@@ -22,7 +22,7 @@
             android:paddingRight="@dimen/margin_10">
 
             <com.techmali.smartteam.ui.views.MyEditText
-                android:id="@+id/etProjectName"
+                android:id="@+id/etProject"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin_20"
@@ -30,7 +30,7 @@
                 android:inputType="textCapWords" />
 
             <TextView
-                android:id="@+id/tvErrorProrjectName"
+                android:id="@+id/tvErrorProrject"
                 style="@style/styleErrorTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
