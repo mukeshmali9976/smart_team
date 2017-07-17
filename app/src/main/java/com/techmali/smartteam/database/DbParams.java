@@ -10,25 +10,37 @@ public class DbParams {
     ////// TABLE NAMES.........
     /////////////////////
 
-    public static final String TBL_APP_SETTING = "app_setting";
     public static final String TBL_USER_INFO = "userinfo";
-    public static final String TBL_COMPANY = "company";
-    public static final String TBL_EXPENSE = "expance";
+    public static final String TBL_PROJECT = "project";
     public static final String TBL_TASK = "task";
+    public static final String TBL_PROJECT_USER_LINK = "project_user_link";
+    public static final String TBL_TASK_USER_LINK = "task_user_link";
+    public static final String TBL_ATTENDANCE = "attendance";
+    public static final String TBL_CHECK_IN = "checkin";
+    public static final String TBL_EXPENSE = "expance";
+    public static final String TBL_LEAVE = "leave";
+
+
+    public static final String TBL_APP_SETTING = "app_setting";
+    public static final String TBL_COMPANY = "company";
     public static final String TBL_SETTING = "setting";
     public static final String TBL_SECURITY_MENU_CONTROLLERS_LINK = "security_menu_controllers_link";
-    public static final String TBL_LEAVE = "leave";
     public static final String TBL_ROLE = "role";
     public static final String TBL_MESSAGE = "message";
     public static final String TBL_SECURITY_ACTION_USER_PERMISSION = "security_action_user_permission";
+
 
     /////////////////////
     ///// COLUMNS NAME..........
     /////////////////////
 
     public static final String CLM_IS_UPDATED = "is_updated";
+    public static final String CLM_CREATED_BY = "created_by";
+    public static final String CLM_CREATED_ON = "created_on";
+    public static final String CLM_UPDATED_BY = "updated_by";
+    public static final String CLM_UPDATED_ON = "updated_on";
 
-    // User Info....
+    ////// User Info....
     public static final String CLM_SERVER_USER_ID = "server_user_id";
     public static final String CLM_LOCAL_USER_ID = "local_user_id";
     public static final String CLM_USERNAME = "username";
@@ -43,6 +55,52 @@ public class DbParams {
     public static final String CLM_VERIFICATION_TOKEN_TIME = "verification_token_time";
     public static final String CLM_LAST_LOGIN_ON = "last_login_on";
     public static final String CLM_STATUS_ID = "status_id";
+
+    ////// Project.....
+    public static final String CLM_LOCAL_PROJECT_ID = "local_project_id";
+    public static final String CLM_SERVER_PROJECT_ID = "server_project_id";
+    public static final String CLM_COMPANY_ID = "company_id";
+    public static final String CLM_TITLE = "title";
+    public static final String CLM_DESCRIPTION = "description";
+    public static final String CLM_START_DATE = "start_date";
+    public static final String CLM_END_DATE = "end_date";
+
+    ////// Task......
+    public static final String CLM_SERVER_TASK_ID = "server_task_id";
+    public static final String CLM_LOCAL_TASK_ID = "local_task_id";
+    public static final String CLM_PROJECT_ID = "project_id";
+    public static final String CLM_TYPE = "type";
+
+    ////// Project User Link.......
+    public static final String CLM_SERVER_PROJECT_USER_LINK_ID = "server_project_user_link_id";
+    public static final String CLM_LOCAL_PROJECT_USER_LINK_ID = "local_project_user_link_id";
+
+    ////// Task User Link.......
+    public static final String CLM_SERVER_TASK_USER_LINK_ID = "server_task_user_link_id";
+    public static final String CLM_LOCAL_TASK_USER_LINK_ID = "local_task_user_link_id";
+
+    ////// ATTENDANCE........
+    public static final String CLM_SERVER_ATTENDANCE_ID = "server_attendance_id";
+    public static final String CLM_LOCAL_ATTENDANCE_ID = "local_attendance_id";
+    public static final String CLM_ATTENDANCE_TYPE = "attandance_type";
+
+    ////// Check in..........
+    public static final String CLM_SERVER_CHECK_IN_ID = "server_checkin_id";
+    public static final String CLM_LOCAL_CHECK_IN_ID = "local_checkin_id";
+    public static final String CLM_CHECK_IN_TIME = "checkin_time";
+
+    ///// Expense.........
+    public static final String CLM_LOCAL_EXPENSE_ID = "local_expance_id";
+    public static final String CLM_SERVER_EXPENSE_ID = "server_expance_id";
+    public static final String CLM_AMOUNT = "amount";
+    public static final String CLM_PAYOUT_STATUS = "payout_status";
+
+    //Leave Apply
+    public static final String CLM_LOCAL_LEAVE_ID = "local_leave_id";
+    public static final String CLM_SERVER_LEAVE_ID = "server_leave_id";
+    public static final String CLM_IS_DELETE = "is_delete";
+    public static final String CLM_NOTE = "note";
+
 
 
     ////// App Setting Table...
@@ -62,28 +120,7 @@ public class DbParams {
     public static final String CLM_EMAIL = "email";
     public static final String CLM_ADMIN_USER_ID = "admin_user_id";
     public static final String CLM_OBJECT_MESSAGE = "object_message";
-    public static final String CLM_CREATED_BY = "created_by";
-    public static final String CLM_CREATED_ON = "created_on";
-    public static final String CLM_UPDATED_BY = "updated_by";
-    public static final String CLM_UPDATED_ON = "updated_on";
 
-    ///// Expense Table.........
-    public static final String CLM_LOCAL_EXPENSE_ID = "local_expance_id";
-    public static final String CLM_SERVER_EXPENSE_ID = "server_expance_id";
-    public static final String CLM_COMPANY_ID = "company_id";
-    public static final String CLM_USER_ID = "user_id";
-    public static final String CLM_TASK_ID = "task_id";
-    public static final String CLM_PROJECT_ID = "project_id";
-    public static final String CLM_TITLE = "title";
-    public static final String CLM_DESCRIPTION = "description";
-    public static final String CLM_PAYOUT_STATUS = "payout_status";
-
-    // Task
-    public static final String CLM_LOCAL_TASK_ID = "local_task_id";
-    public static final String CLM_SERVER_TASK_ID = "server_task_id";
-    public static final String CLM_TYPE = "type";
-    public static final String CLM_START_DATE = "start_date";
-    public static final String CLM_END_DATE = "end_date";
 
     // Message
     public static final String CLM_MESSAGE_ID = "message_id";
@@ -133,15 +170,6 @@ public class DbParams {
     public static final String CLM_NAME = "name";
     public static final String CLM_IS_TABLE = "is_table";
 
-    // Project
-    public static final String CLM_LOCAL_PROJECT_ID = "local_project_id";
-    public static final String CLM_SERVER_PROJECT_ID = "server_project_id";
-
-    //Leave Apply
-    public static final String CLM_LOCAL_LEAVE_ID = "local_leave_id";
-    public static final String CLM_SERVER_LEAVE_ID = "server_leave_id";
-    public static final String CLM_IS_DELETE = "is_delete";
-
     //TABLE SECURITY MENU CONTROLLERS LINK
     public static final String CLM_MENU_CONTROLLERS_LINK_ID = "menu_controllers_link_id";
     public static final String CLM_MENU_ID = "menu_id";
@@ -159,6 +187,7 @@ public class DbParams {
     ///////////////////
 
     /*
+           USERINFO TABLE......
            user_name : DEFAULT login name
            gender : 1=> Male, 2=> Female
            company_id : Can be Null in case of Platform Admin users
@@ -194,9 +223,174 @@ public class DbParams {
             CLM_IS_SMARTPHONE + " VARCHAR," +
             CLM_CREATED_BY + " VARCHAR," +
             CLM_UPDATED_BY + " VARCHAR," +
-            CLM_CREATED + " DATETIME DEFAULT (CURRENT_TIMESTAMP)," +
-            CLM_UPDATED + " DATETIME," +
+            CLM_CREATED_ON + " DATETIME DEFAULT (CURRENT_TIMESTAMP)," +
+            CLM_UPDATED_ON + " DATETIME," +
             CLM_IS_UPDATED + " INTEGER DEFAULT 0)";
+
+
+    /*
+          PROJECT TABLE.........
+          status_id : 1=> Active, 2=> inactive, 3=> delete                   DEFAULT '1'
+     */
+    static final String CREATE_TBL_PROJECT = "CREATE TABLE " + TBL_PROJECT + " (" +
+            CLM_LOCAL_PROJECT_ID + " VARCHAR PRIMARY KEY," +
+            CLM_SERVER_PROJECT_ID + " VARCHAR," +
+            CLM_COMPANY_ID + " VARCHAR," +
+            CLM_TITLE + " VARCHAR," +
+            CLM_DESCRIPTION + " VARCHAR," +
+            CLM_THUMB + " VARCHAR," +
+            CLM_START_DATE + " VARCHAR," +
+            CLM_END_DATE + " VARCHAR," +
+            CLM_STATUS_ID + " INTEGER DEFAULT 1," +
+            CLM_CREATED_BY + " VARCHAR," +
+            CLM_UPDATED_BY + " VARCHAR," +
+            CLM_CREATED_ON + " DATETIME DEFAULT (CURRENT_TIMESTAMP)," +
+            CLM_UPDATED_ON + " DATETIME," +
+            CLM_IS_UPDATED + " INTEGER DEFAULT 0)";
+
+    /*
+           TASK TABLE........
+           status_id : 1=> active, 2=> inactive, 3 => delete
+     */
+    static final String CREATE_TBL_TASK = "CREATE TABLE " + TBL_TASK + "(" +
+            CLM_LOCAL_TASK_ID + " VARCHAR PRIMARY KEY," +
+            CLM_SERVER_TASK_ID + " VARCHAR," +
+            CLM_COMPANY_ID + " VARCHAR," +
+            CLM_PROJECT_ID + " VARCHAR," +
+            CLM_DESCRIPTION + " VARCHAR," +
+            CLM_THUMB + " VARCHAR," +
+            CLM_START_DATE + " VARCHAR," +
+            CLM_END_DATE + " VARCHAR," +
+            CLM_TYPE + " VARCHAR," +
+            CLM_CREATED_BY + " VARCHAR," +
+            CLM_CREATED_ON + " DATETIME DEFAULT (CURRENT_TIMESTAMP)," +
+            CLM_UPDATED_BY + " VARCHAR," +
+            CLM_UPDATED_ON + " DATETIME," +
+            CLM_IS_UPDATED + " INTEGER DEFAULT 0)";
+
+    /*
+           PROJECT_USER_LINK TABLE.......
+     */
+    static final String CREATE_TBL_PROJECT_USER_LINK = "CREATE TABLE " + TBL_PROJECT_USER_LINK + "(" +
+            CLM_LOCAL_PROJECT_USER_LINK_ID + " VARCHAR PRIMARY KEY," +
+            CLM_SERVER_PROJECT_USER_LINK_ID + " VARCHAR," +
+            CLM_LOCAL_PROJECT_ID + " VARCHAR," +
+            CLM_SERVER_PROJECT_ID + " VARCHAR," +
+            CLM_LOCAL_USER_ID + " VARCHAR," +
+            CLM_SERVER_USER_ID + " VARCHAR," +
+            CLM_CREATED_BY + " VARCHAR," +
+            CLM_CREATED_ON + " DATETIME DEFAULT (CURRENT_TIMESTAMP)," +
+            CLM_UPDATED_BY + " VARCHAR," +
+            CLM_UPDATED_ON + " DATETIME," +
+            CLM_IS_UPDATED + " INTEGER DEFAULT 0)";
+
+    /*
+           TASK_USER_LINK TABLE.......
+    */
+    static final String CREATE_TBL_TASK_USER_LINK = "CREATE TABLE " + TBL_TASK_USER_LINK + "(" +
+            CLM_LOCAL_TASK_USER_LINK_ID + " VARCHAR PRIMARY KEY," +
+            CLM_SERVER_TASK_USER_LINK_ID + " VARCHAR," +
+            CLM_LOCAL_TASK_ID + " VARCHAR," +
+            CLM_SERVER_TASK_ID + " VARCHAR," +
+            CLM_LOCAL_USER_ID + " VARCHAR," +
+            CLM_SERVER_USER_ID + " VARCHAR," +
+            CLM_CREATED_BY + " VARCHAR," +
+            CLM_CREATED_ON + " DATETIME DEFAULT (CURRENT_TIMESTAMP)," +
+            CLM_UPDATED_BY + " VARCHAR," +
+            CLM_UPDATED_ON + " DATETIME," +
+            CLM_IS_UPDATED + " INTEGER DEFAULT 0)";
+
+    /*
+           ATTENDANCE TABLE.........
+           attandance_type : 1=> auto, 2=> menual                           DEFAULT 1
+    */
+    static final String CREATE_TBL_ATTENDANCE = "CREATE TABLE " + TBL_ATTENDANCE + " (" +
+            CLM_LOCAL_ATTENDANCE_ID + " VARCHAR PRIMARY KEY," +
+            CLM_SERVER_ATTENDANCE_ID + " VARCHAR," +
+            CLM_COMPANY_ID + " VARCHAR," +
+            CLM_LOCAL_USER_ID + " VARCHAR," +
+            CLM_SERVER_USER_ID + " VARCHAR," +
+            CLM_START_DATE + " VARCHAR," +
+            CLM_END_DATE + " VARCHAR," +
+            CLM_ATTENDANCE_TYPE + " INTEGER DEFAULT 1," +
+            CLM_STATUS_ID + " INTEGER DEFAULT 1," +
+            CLM_CREATED_BY + " VARCHAR," +
+            CLM_UPDATED_BY + " VARCHAR," +
+            CLM_CREATED_ON + " DATETIME DEFAULT (CURRENT_TIMESTAMP)," +
+            CLM_UPDATED_ON + " DATETIME," +
+            CLM_IS_UPDATED + " INTEGER DEFAULT 0)";
+
+    /*
+           CHECK_IN TABLE.........
+    */
+    static final String CREATE_TBL_CHECK_IN = "CREATE TABLE " + TBL_CHECK_IN + " (" +
+            CLM_LOCAL_CHECK_IN_ID + " VARCHAR PRIMARY KEY," +
+            CLM_SERVER_CHECK_IN_ID + " VARCHAR," +
+            CLM_COMPANY_ID + " VARCHAR DEFAULT '0'," +
+            CLM_LOCAL_ATTENDANCE_ID + " VARCHAR DEFAULT '0'," +
+            CLM_SERVER_ATTENDANCE_ID + " VARCHAR," +
+            CLM_LOCAL_USER_ID + " VARCHAR," +
+            CLM_SERVER_USER_ID + " VARCHAR," +
+            CLM_CHECK_IN_TIME + " VARCHAR," +
+            CLM_LAT + " VARCHAR DEFAULT '0.00000000'," +
+            CLM_LONG + " VARCHAR DEFAULT '0.00000000'," +
+            CLM_STATUS_ID + " INTEGER DEFAULT 1," +
+            CLM_CREATED_BY + " VARCHAR," +
+            CLM_UPDATED_BY + " VARCHAR," +
+            CLM_CREATED_ON + " DATETIME DEFAULT (CURRENT_TIMESTAMP)," +
+            CLM_UPDATED_ON + " DATETIME," +
+            CLM_IS_UPDATED + " INTEGER DEFAULT 0)";
+
+    /*
+            EXPENSE TABLE.........
+            payout_status : '1=> Unpaid, 2=> paid',            DEFAULT '1'
+            status_id : '1=> pending, 2=> approved, 3=> reject, 4=> delete',
+    */
+    static final String CREATE_TBL_EXPENSE = "CREATE TABLE " + TBL_EXPENSE + " (" +
+            CLM_LOCAL_EXPENSE_ID + " VARCHAR PRIMARY KEY," +
+            CLM_SERVER_EXPENSE_ID + " VARCHAR," +
+            CLM_COMPANY_ID + " VARCHAR," +
+            CLM_LOCAL_USER_ID + " VARCHAR," +
+            CLM_SERVER_USER_ID + " VARCHAR," +
+            CLM_LOCAL_TASK_ID + " VARCHAR," +
+            CLM_SERVER_TASK_ID + " VARCHAR," +
+            CLM_LOCAL_PROJECT_ID + " VARCHAR," +
+            CLM_SERVER_PROJECT_ID + " VARCHAR," +
+            CLM_TITLE + " VARCHAR," +
+            CLM_DESCRIPTION + " VARCHAR," +
+            CLM_AMOUNT + " VARCHAR DEFAULT '0.00'," +
+            CLM_PAYOUT_STATUS + " INTEGER DEFAULT 1," +
+            CLM_STATUS_ID + " INTEGER," +
+            CLM_CREATED_BY + " VARCHAR," +
+            CLM_UPDATED_BY + " VARCHAR," +
+            CLM_CREATED_ON + " DATETIME DEFAULT (CURRENT_TIMESTAMP)," +
+            CLM_UPDATED_ON + " DATETIME," +
+            CLM_IS_UPDATED + " INTEGER DEFAULT 0)";
+
+    /*
+          status_id : '1=>pending, 2=> approved, 3=> reject',         DEFAULT '1'
+          is_delete : '0=> not delete, 1=> deleted',                 DEFAULT '0'
+    */
+    static final String CREATE_TBL_LEAVE = "CREATE TABLE " + TBL_LEAVE + "(" +
+            CLM_LOCAL_LEAVE_ID + " VARCHAR PRIMARY KEY," +
+            CLM_SERVER_LEAVE_ID + " VARCHAR," +
+            CLM_COMPANY_ID + " INTEGER," +
+            CLM_LOCAL_USER_ID + " VARCHAR," +
+            CLM_SERVER_USER_ID + " VARCHAR," +
+            CLM_START_DATE + "  VARCHAR," +
+            CLM_END_DATE + "  VARCHAR," +
+            CLM_NOTE + "  VARCHAR," +
+            CLM_STATUS_ID + " INTEGER DEFAULT 1," +
+            CLM_IS_DELETE + " INTEGER DEFAULT 0," +
+            CLM_CREATED_BY + " VARCHAR," +
+            CLM_UPDATED_BY + " VARCHAR," +
+            CLM_CREATED_ON + " DATETIME DEFAULT (CURRENT_TIMESTAMP)," +
+            CLM_UPDATED_ON + " DATETIME," +
+            CLM_IS_UPDATED + " INTEGER DEFAULT 0)";
+
+
+
+
 
     /*
        setting_value_type : 1=> test, 2 => json VARCHAR
@@ -230,43 +424,6 @@ public class DbParams {
             CLM_UPDATED_BY + " INTEGER," +
             CLM_UPDATED_ON + " DATETIME DEFAULT (CURRENT_TIMESTAMP))";
 
-    /*
-        payout_status : '1=> Unpaid, 2=> paid',            DEFAULT '1'
-        status_id : '1=> pending, 2=> approved, 3=> reject, 4=> delete',
-     */
-    static final String CREATE_TBL_EXPENSE = "CREATE TABLE " + TBL_EXPENSE + " (" +
-            CLM_LOCAL_EXPENSE_ID + " VARCHAR PRIMARY KEY," +
-            CLM_SERVER_EXPENSE_ID + " VARCHAR, " +
-            CLM_COMPANY_ID + " INTEGER, " +
-            CLM_USER_ID + " INTEGER, " +
-            CLM_TASK_ID + " INTEGER, " +
-            CLM_PROJECT_ID + " INTEGER, " +
-            CLM_TITLE + " VARCHAR," +
-            CLM_DESCRIPTION + " VARCHAR," +
-            CLM_PAYOUT_STATUS + " INTEGER, " +
-            CLM_STATUS_ID + " INTEGER, " +
-            CLM_CREATED_BY + " INTEGER," +
-            CLM_CREATED_ON + " DATETIME DEFAULT (CURRENT_TIMESTAMP)," +
-            CLM_UPDATED_BY + " INTEGER," +
-            CLM_UPDATED_ON + " DATETIME DEFAULT (CURRENT_TIMESTAMP))";
-
-    /*
-          status_id : '1=>pending, 2=> approved, 3=> reject',         DEFAULT '1'
-          is_delete : '0 => not delete, 1=> deleted',                 DEFAULT '0'
-    */
-    static final String CREATE_TBL_LEAVE = "CREATE TABLE " + TBL_LEAVE + "(" +
-            CLM_LOCAL_LEAVE_ID + " VARCHAR PRIMARY KEY," +
-            CLM_SERVER_LEAVE_ID + " VARCHAR," +
-            CLM_COMPANY_ID + " INTEGER," +
-            CLM_USER_ID + " INTEGER," +
-            CLM_START_DATE + "  VARCHAR," +
-            CLM_END_DATE + "  VARCHAR," +
-            CLM_STATUS_ID + " INTEGER," +
-            CLM_IS_DELETE + " INTEGER," +
-            CLM_CREATED_BY + " INTEGER," +
-            CLM_CREATED_ON + " DATETIME DEFAULT (CURRENT_TIMESTAMP)," +
-            CLM_UPDATED_BY + " INTEGER," +
-            CLM_UPDATED_ON + " DATETIME DEFAULT (CURRENT_TIMESTAMP))";
 
     /*
            author_id : 'Ref to user table, who raised this ticket',
@@ -310,21 +467,6 @@ public class DbParams {
             CLM_CREATED + " DATETIME DEFAULT (CURRENT_TIMESTAMP)," +
             CLM_UPDATED + " DATETIME DEFAULT (CURRENT_TIMESTAMP))";
 
-
-    static final String CREATE_TBL_TASK = "CREATE TABLE " + TBL_TASK + "(" +
-            CLM_LOCAL_TASK_ID + " VARCHAR," +
-            CLM_SERVER_TASK_ID + " INTEGER," +
-            CLM_COMPANY_ID + " INTEGER," +
-            CLM_PROJECT_ID + " INTEGER," +
-            CLM_DESCRIPTION + " VARCHAR," +
-            CLM_THUMB + " VARCHAR," +
-            CLM_START_DATE + " VARCHAR," +
-            CLM_END_DATE + " VARCHAR," +
-            CLM_TYPE + " INTEGER," +
-            CLM_CREATED_BY + " INTEGER," +
-            CLM_CREATED_ON + " DATETIME DEFAULT (CURRENT_TIMESTAMP)," +
-            CLM_UPDATED_BY + " INTEGER," +
-            CLM_UPDATED_ON + " DATETIME DEFAULT (CURRENT_TIMESTAMP))";
 
     static final String CREATE_TBL_SETTING = "CREATE TABLE " + TBL_SETTING + "(" +
             CLM_SETTING_ID + " INTEGER PRIMARY KEY," +

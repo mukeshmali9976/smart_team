@@ -28,12 +28,19 @@ public class DbHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(DbParams.CREATE_TBL_USER_INFO);
+        db.execSQL(DbParams.CREATE_TBL_PROJECT);
+        db.execSQL(DbParams.CREATE_TBL_TASK);
+        db.execSQL(DbParams.CREATE_TBL_PROJECT_USER_LINK);
+        db.execSQL(DbParams.CREATE_TBL_TASK_USER_LINK);
+        db.execSQL(DbParams.CREATE_TBL_ATTENDANCE);
+        db.execSQL(DbParams.CREATE_TBL_CHECK_IN);
+        db.execSQL(DbParams.CREATE_TBL_EXPENSE);
+
+
         db.execSQL(DbParams.CREATE_TBL_APP_SETTING);
         db.execSQL(DbParams.CREATE_TBL_COMPANY);
         db.execSQL(DbParams.CREATE_TBL_SECURITY_MENU_CONTROLLERS_LINK);
         db.execSQL(DbParams.CREATE_TBL_SETTING);
-        db.execSQL(DbParams.CREATE_TBL_TASK);
-        db.execSQL(DbParams.CREATE_TBL_EXPENSE);
         db.execSQL(DbParams.CREATE_TBL_MESSAGE);
         db.execSQL(DbParams.CREATE_TBL_LEAVE);
         db.execSQL(DbParams.CREATE_TBL_ROLE);

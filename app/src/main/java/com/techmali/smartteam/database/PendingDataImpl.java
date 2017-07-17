@@ -75,11 +75,13 @@ public class PendingDataImpl {
         try {
             String last_sync_date = prefManager.getString(PARAMS.KEY_LAST_SYNC_DATE, "");
             reqObject.put(PARAMS.KEY_LAST_SYNC_DATE, last_sync_date);
-            String whereCond = "";
-            if (!Utils.isEmptyString(last_sync_date))
-                whereCond = " WHERE " + DbParams.CLM_UPDATED_ON + " >= '" + last_sync_date + "'";
 
-            String userinfo = "SELECT * FROM " + DbParams.TBL_USER_INFO + whereCond;
+            // USERINFO TBL.......
+            String whereCondUserinfo = "";
+            if (!Utils.isEmptyString(last_sync_date))
+                whereCondUserinfo = " WHERE " + DbParams.CLM_IS_UPDATED + " = 0";
+
+            String userinfo = "SELECT * FROM " + DbParams.TBL_USER_INFO + whereCondUserinfo;
             Cursor userinfoCursor = database.rawQuery(userinfo, null);
             JSONArray userinfoArray = new JSONArray();
             if (userinfoCursor.getCount() > 0) {
@@ -100,12 +102,239 @@ public class PendingDataImpl {
                     userinfoObject.put(DbParams.CLM_HOME_ADDRESS, userinfoCursor.getString(userinfoCursor.getColumnIndex(DbParams.CLM_HOME_ADDRESS)));
                     userinfoObject.put(DbParams.CLM_WORK_ADDRESS, userinfoCursor.getString(userinfoCursor.getColumnIndex(DbParams.CLM_WORK_ADDRESS)));
                     userinfoObject.put(DbParams.CLM_IS_SMARTPHONE, userinfoCursor.getString(userinfoCursor.getColumnIndex(DbParams.CLM_IS_SMARTPHONE)));
-                    userinfoObject.put(DbParams.CLM_STATUS_ID, userinfoCursor.getString(userinfoCursor.getColumnIndex(DbParams.CLM_STATUS_ID)));
+                    userinfoObject.put(DbParams.CLM_STATUS_ID, userinfoCursor.getInt(userinfoCursor.getColumnIndex(DbParams.CLM_STATUS_ID)));
 
                     userinfoArray.put(userinfoObject);
                 } while (userinfoCursor.moveToNext());
             }
             reqObject.put(DbParams.TBL_USER_INFO, userinfoArray);
+
+            // PROJECT TBL........
+            String whereCondProject = "";
+            if (!Utils.isEmptyString(last_sync_date))
+                whereCondProject = " WHERE " + DbParams.CLM_IS_UPDATED + " = 0";
+
+            String project = "SELECT * FROM " + DbParams.TBL_PROJECT + whereCondProject;
+            Cursor projectCursor = database.rawQuery(project, null);
+            JSONArray projectArray = new JSONArray();
+            if (projectCursor.getCount() > 0) {
+                projectCursor.moveToFirst();
+                do {
+
+                    JSONObject projectObject = new JSONObject();
+                    projectObject.put(DbParams.CLM_SERVER_PROJECT_ID, projectCursor.getString(projectCursor.getColumnIndex(DbParams.CLM_SERVER_PROJECT_ID)));
+                    projectObject.put(DbParams.CLM_LOCAL_PROJECT_ID, projectCursor.getString(projectCursor.getColumnIndex(DbParams.CLM_LOCAL_PROJECT_ID)));
+                    projectObject.put(DbParams.CLM_COMPANY_ID, projectCursor.getString(projectCursor.getColumnIndex(DbParams.CLM_COMPANY_ID)));
+                    projectObject.put(DbParams.CLM_TITLE, projectCursor.getString(projectCursor.getColumnIndex(DbParams.CLM_TITLE)));
+                    projectObject.put(DbParams.CLM_DESCRIPTION, projectCursor.getString(projectCursor.getColumnIndex(DbParams.CLM_DESCRIPTION)));
+                    projectObject.put(DbParams.CLM_START_DATE, projectCursor.getString(projectCursor.getColumnIndex(DbParams.CLM_START_DATE)));
+                    projectObject.put(DbParams.CLM_END_DATE, projectCursor.getString(projectCursor.getColumnIndex(DbParams.CLM_END_DATE)));
+                    projectObject.put(DbParams.CLM_STATUS_ID, projectCursor.getInt(projectCursor.getColumnIndex(DbParams.CLM_STATUS_ID)));
+
+                    projectArray.put(projectObject);
+                } while (projectCursor.moveToNext());
+            }
+            reqObject.put(DbParams.TBL_PROJECT, projectArray);
+
+            // TASK TBL........
+            String whereCondTask = "";
+            if (!Utils.isEmptyString(last_sync_date))
+                whereCondTask = " WHERE " + DbParams.CLM_IS_UPDATED + " = 0";
+
+            String task = "SELECT * FROM " + DbParams.TBL_PROJECT + whereCondTask;
+            Cursor taskCursor = database.rawQuery(task, null);
+            JSONArray taskArray = new JSONArray();
+            if (taskCursor.getCount() > 0) {
+                taskCursor.moveToFirst();
+                do {
+
+                    JSONObject taskObject = new JSONObject();
+                    taskObject.put(DbParams.CLM_SERVER_TASK_ID, taskCursor.getString(taskCursor.getColumnIndex(DbParams.CLM_SERVER_TASK_ID)));
+                    taskObject.put(DbParams.CLM_LOCAL_TASK_ID, taskCursor.getString(taskCursor.getColumnIndex(DbParams.CLM_LOCAL_TASK_ID)));
+                    taskObject.put(DbParams.CLM_SERVER_PROJECT_ID, taskCursor.getString(taskCursor.getColumnIndex(DbParams.CLM_SERVER_PROJECT_ID)));
+                    taskObject.put(DbParams.CLM_LOCAL_PROJECT_ID, taskCursor.getString(taskCursor.getColumnIndex(DbParams.CLM_LOCAL_PROJECT_ID)));
+                    taskObject.put(DbParams.CLM_COMPANY_ID, taskCursor.getString(taskCursor.getColumnIndex(DbParams.CLM_COMPANY_ID)));
+                    taskObject.put(DbParams.CLM_TITLE, taskCursor.getString(taskCursor.getColumnIndex(DbParams.CLM_TITLE)));
+                    taskObject.put(DbParams.CLM_DESCRIPTION, taskCursor.getString(taskCursor.getColumnIndex(DbParams.CLM_DESCRIPTION)));
+                    taskObject.put(DbParams.CLM_START_DATE, taskCursor.getString(taskCursor.getColumnIndex(DbParams.CLM_START_DATE)));
+                    taskObject.put(DbParams.CLM_END_DATE, taskCursor.getString(taskCursor.getColumnIndex(DbParams.CLM_END_DATE)));
+                    taskObject.put(DbParams.CLM_STATUS_ID, taskCursor.getInt(taskCursor.getColumnIndex(DbParams.CLM_STATUS_ID)));
+
+                    taskArray.put(taskObject);
+                } while (taskCursor.moveToNext());
+            }
+            reqObject.put(DbParams.TBL_TASK, taskArray);
+
+            // PROJECT_USER_LINK TBL........
+            String whereCondProjectUserLink = "";
+            if (!Utils.isEmptyString(last_sync_date))
+                whereCondProjectUserLink = " WHERE " + DbParams.CLM_IS_UPDATED + " = 0";
+
+            String projectUserLink = "SELECT * FROM " + DbParams.TBL_PROJECT_USER_LINK + whereCondProjectUserLink;
+            Cursor projectUserLinkCursor = database.rawQuery(projectUserLink, null);
+            JSONArray projectUserLinkArray = new JSONArray();
+            if (projectUserLinkCursor.getCount() > 0) {
+                projectUserLinkCursor.moveToFirst();
+                do {
+
+                    JSONObject projectUserLinkObject = new JSONObject();
+                    projectUserLinkObject.put(DbParams.CLM_SERVER_PROJECT_USER_LINK_ID, projectUserLinkCursor.getString(projectUserLinkCursor.getColumnIndex(DbParams.CLM_SERVER_PROJECT_USER_LINK_ID)));
+                    projectUserLinkObject.put(DbParams.CLM_LOCAL_PROJECT_USER_LINK_ID, projectUserLinkCursor.getString(projectUserLinkCursor.getColumnIndex(DbParams.CLM_LOCAL_PROJECT_USER_LINK_ID)));
+                    projectUserLinkObject.put(DbParams.CLM_SERVER_PROJECT_ID, projectUserLinkCursor.getString(projectUserLinkCursor.getColumnIndex(DbParams.CLM_SERVER_PROJECT_ID)));
+                    projectUserLinkObject.put(DbParams.CLM_LOCAL_PROJECT_ID, projectUserLinkCursor.getString(projectUserLinkCursor.getColumnIndex(DbParams.CLM_LOCAL_PROJECT_ID)));
+                    projectUserLinkObject.put(DbParams.CLM_SERVER_USER_ID, projectUserLinkCursor.getString(projectUserLinkCursor.getColumnIndex(DbParams.CLM_SERVER_USER_ID)));
+                    projectUserLinkObject.put(DbParams.CLM_LOCAL_USER_ID, projectUserLinkCursor.getString(projectUserLinkCursor.getColumnIndex(DbParams.CLM_LOCAL_USER_ID)));
+
+                    projectUserLinkArray.put(projectUserLinkObject);
+                } while (projectUserLinkCursor.moveToNext());
+            }
+            reqObject.put(DbParams.TBL_PROJECT_USER_LINK, projectUserLinkArray);
+
+            // TASK_USER_LINK TBL........
+            String whereCondTaskUserLink = "";
+            if (!Utils.isEmptyString(last_sync_date))
+                whereCondTaskUserLink = " WHERE " + DbParams.CLM_IS_UPDATED + " = 0";
+
+            String taskUserLink = "SELECT * FROM " + DbParams.TBL_TASK_USER_LINK + whereCondTaskUserLink;
+            Cursor taskUserLinkCursor = database.rawQuery(taskUserLink, null);
+            JSONArray taskUserLinkArray = new JSONArray();
+            if (taskUserLinkCursor.getCount() > 0) {
+                taskUserLinkCursor.moveToFirst();
+                do {
+
+                    JSONObject taskUserLinkObject = new JSONObject();
+                    taskUserLinkObject.put(DbParams.CLM_SERVER_TASK_USER_LINK_ID, taskUserLinkCursor.getString(taskUserLinkCursor.getColumnIndex(DbParams.CLM_SERVER_TASK_USER_LINK_ID)));
+                    taskUserLinkObject.put(DbParams.CLM_LOCAL_TASK_USER_LINK_ID, taskUserLinkCursor.getString(taskUserLinkCursor.getColumnIndex(DbParams.CLM_LOCAL_TASK_USER_LINK_ID)));
+                    taskUserLinkObject.put(DbParams.CLM_SERVER_TASK_ID, taskUserLinkCursor.getString(taskUserLinkCursor.getColumnIndex(DbParams.CLM_SERVER_TASK_ID)));
+                    taskUserLinkObject.put(DbParams.CLM_LOCAL_TASK_ID, taskUserLinkCursor.getString(taskUserLinkCursor.getColumnIndex(DbParams.CLM_LOCAL_TASK_ID)));
+                    taskUserLinkObject.put(DbParams.CLM_SERVER_USER_ID, taskUserLinkCursor.getString(taskUserLinkCursor.getColumnIndex(DbParams.CLM_SERVER_USER_ID)));
+                    taskUserLinkObject.put(DbParams.CLM_LOCAL_USER_ID, taskUserLinkCursor.getString(taskUserLinkCursor.getColumnIndex(DbParams.CLM_LOCAL_USER_ID)));
+
+                    taskUserLinkArray.put(taskUserLinkObject);
+                } while (taskUserLinkCursor.moveToNext());
+            }
+            reqObject.put(DbParams.TBL_TASK_USER_LINK, taskUserLinkArray);
+
+            // TASK TBL........
+            String whereCondAttendance = "";
+            if (!Utils.isEmptyString(last_sync_date))
+                whereCondAttendance = " WHERE " + DbParams.CLM_IS_UPDATED + " = 0";
+
+            String attendance = "SELECT * FROM " + DbParams.TBL_ATTENDANCE + whereCondAttendance;
+            Cursor attendanceCursor = database.rawQuery(attendance, null);
+            JSONArray attendanceArray = new JSONArray();
+            if (attendanceCursor.getCount() > 0) {
+                attendanceCursor.moveToFirst();
+                do {
+
+                    JSONObject attendanceObject = new JSONObject();
+                    attendanceObject.put(DbParams.CLM_SERVER_ATTENDANCE_ID, attendanceCursor.getString(attendanceCursor.getColumnIndex(DbParams.CLM_SERVER_ATTENDANCE_ID)));
+                    attendanceObject.put(DbParams.CLM_LOCAL_ATTENDANCE_ID, attendanceCursor.getString(attendanceCursor.getColumnIndex(DbParams.CLM_LOCAL_ATTENDANCE_ID)));
+                    attendanceObject.put(DbParams.CLM_SERVER_USER_ID, attendanceCursor.getString(attendanceCursor.getColumnIndex(DbParams.CLM_SERVER_USER_ID)));
+                    attendanceObject.put(DbParams.CLM_LOCAL_USER_ID, attendanceCursor.getString(attendanceCursor.getColumnIndex(DbParams.CLM_LOCAL_USER_ID)));
+                    attendanceObject.put(DbParams.CLM_START_DATE, attendanceCursor.getString(attendanceCursor.getColumnIndex(DbParams.CLM_START_DATE)));
+                    attendanceObject.put(DbParams.CLM_END_DATE, attendanceCursor.getString(attendanceCursor.getColumnIndex(DbParams.CLM_END_DATE)));
+                    attendanceObject.put(DbParams.CLM_COMPANY_ID, attendanceCursor.getString(attendanceCursor.getColumnIndex(DbParams.CLM_COMPANY_ID)));
+                    attendanceObject.put(DbParams.CLM_ATTENDANCE_TYPE, attendanceCursor.getInt(attendanceCursor.getColumnIndex(DbParams.CLM_ATTENDANCE_TYPE)));
+                    attendanceObject.put(DbParams.CLM_STATUS_ID, attendanceCursor.getInt(attendanceCursor.getColumnIndex(DbParams.CLM_STATUS_ID)));
+
+                    attendanceArray.put(attendanceObject);
+                } while (attendanceCursor.moveToNext());
+            }
+            reqObject.put(DbParams.TBL_ATTENDANCE, attendanceArray);
+
+            // CHECK_IN TBL........
+            String whereCondCheckIn = "";
+            if (!Utils.isEmptyString(last_sync_date))
+                whereCondCheckIn = " WHERE " + DbParams.CLM_IS_UPDATED + " = 0";
+
+            String checkIn = "SELECT * FROM " + DbParams.TBL_CHECK_IN + whereCondCheckIn;
+            Cursor checkInCursor = database.rawQuery(checkIn, null);
+            JSONArray checkInArray = new JSONArray();
+            if (checkInCursor.getCount() > 0) {
+                checkInCursor.moveToFirst();
+                do {
+
+                    JSONObject checkInObject = new JSONObject();
+                    checkInObject.put(DbParams.CLM_SERVER_CHECK_IN_ID, checkInCursor.getString(checkInCursor.getColumnIndex(DbParams.CLM_SERVER_CHECK_IN_ID)));
+                    checkInObject.put(DbParams.CLM_LOCAL_CHECK_IN_ID, checkInCursor.getString(checkInCursor.getColumnIndex(DbParams.CLM_LOCAL_CHECK_IN_ID)));
+                    checkInObject.put(DbParams.CLM_SERVER_ATTENDANCE_ID, checkInCursor.getString(checkInCursor.getColumnIndex(DbParams.CLM_SERVER_ATTENDANCE_ID)));
+                    checkInObject.put(DbParams.CLM_LOCAL_ATTENDANCE_ID, checkInCursor.getString(checkInCursor.getColumnIndex(DbParams.CLM_LOCAL_ATTENDANCE_ID)));
+                    checkInObject.put(DbParams.CLM_SERVER_USER_ID, checkInCursor.getString(checkInCursor.getColumnIndex(DbParams.CLM_SERVER_USER_ID)));
+                    checkInObject.put(DbParams.CLM_LOCAL_USER_ID, checkInCursor.getString(checkInCursor.getColumnIndex(DbParams.CLM_LOCAL_USER_ID)));
+                    checkInObject.put(DbParams.CLM_COMPANY_ID, checkInCursor.getString(checkInCursor.getColumnIndex(DbParams.CLM_COMPANY_ID)));
+                    checkInObject.put(DbParams.CLM_CHECK_IN_TIME, checkInCursor.getString(checkInCursor.getColumnIndex(DbParams.CLM_CHECK_IN_TIME)));
+                    checkInObject.put(DbParams.CLM_LAT, checkInCursor.getString(checkInCursor.getColumnIndex(DbParams.CLM_LAT)));
+                    checkInObject.put(DbParams.CLM_LONG, checkInCursor.getString(checkInCursor.getColumnIndex(DbParams.CLM_LONG)));
+                    checkInObject.put(DbParams.CLM_STATUS_ID, checkInCursor.getInt(checkInCursor.getColumnIndex(DbParams.CLM_STATUS_ID)));
+
+                    checkInArray.put(checkInObject);
+                } while (checkInCursor.moveToNext());
+            }
+            reqObject.put(DbParams.TBL_CHECK_IN, checkInArray);
+
+            // EXPENSE TBL........
+            String whereCondExpense = "";
+            if (!Utils.isEmptyString(last_sync_date))
+                whereCondExpense = " WHERE " + DbParams.CLM_IS_UPDATED + " = 0";
+
+            String expense = "SELECT * FROM " + DbParams.TBL_EXPENSE + whereCondExpense;
+            Cursor expenseCursor = database.rawQuery(expense, null);
+            JSONArray expenseArray = new JSONArray();
+            if (expenseCursor.getCount() > 0) {
+                expenseCursor.moveToFirst();
+                do {
+
+                    JSONObject expenseObject = new JSONObject();
+                    expenseObject.put(DbParams.CLM_SERVER_EXPENSE_ID, expenseCursor.getString(expenseCursor.getColumnIndex(DbParams.CLM_SERVER_EXPENSE_ID)));
+                    expenseObject.put(DbParams.CLM_LOCAL_EXPENSE_ID, expenseCursor.getString(expenseCursor.getColumnIndex(DbParams.CLM_LOCAL_EXPENSE_ID)));
+                    expenseObject.put(DbParams.CLM_COMPANY_ID, expenseCursor.getString(expenseCursor.getColumnIndex(DbParams.CLM_COMPANY_ID)));
+                    expenseObject.put(DbParams.CLM_SERVER_USER_ID, expenseCursor.getString(expenseCursor.getColumnIndex(DbParams.CLM_SERVER_USER_ID)));
+                    expenseObject.put(DbParams.CLM_LOCAL_USER_ID, expenseCursor.getString(expenseCursor.getColumnIndex(DbParams.CLM_LOCAL_USER_ID)));
+                    expenseObject.put(DbParams.CLM_SERVER_TASK_ID, expenseCursor.getString(expenseCursor.getColumnIndex(DbParams.CLM_SERVER_TASK_ID)));
+                    expenseObject.put(DbParams.CLM_LOCAL_TASK_ID, expenseCursor.getString(expenseCursor.getColumnIndex(DbParams.CLM_LOCAL_TASK_ID)));
+                    expenseObject.put(DbParams.CLM_SERVER_PROJECT_ID, expenseCursor.getString(expenseCursor.getColumnIndex(DbParams.CLM_SERVER_PROJECT_ID)));
+                    expenseObject.put(DbParams.CLM_LOCAL_PROJECT_ID, expenseCursor.getString(expenseCursor.getColumnIndex(DbParams.CLM_LOCAL_PROJECT_ID)));
+                    expenseObject.put(DbParams.CLM_TITLE, expenseCursor.getString(expenseCursor.getColumnIndex(DbParams.CLM_TITLE)));
+                    expenseObject.put(DbParams.CLM_DESCRIPTION, expenseCursor.getString(expenseCursor.getColumnIndex(DbParams.CLM_DESCRIPTION)));
+                    expenseObject.put(DbParams.CLM_AMOUNT, expenseCursor.getString(expenseCursor.getColumnIndex(DbParams.CLM_AMOUNT)));
+                    expenseObject.put(DbParams.CLM_PAYOUT_STATUS, expenseCursor.getInt(expenseCursor.getColumnIndex(DbParams.CLM_PAYOUT_STATUS)));
+                    expenseObject.put(DbParams.CLM_STATUS_ID, expenseCursor.getInt(expenseCursor.getColumnIndex(DbParams.CLM_STATUS_ID)));
+
+                    expenseArray.put(expenseObject);
+                } while (expenseCursor.moveToNext());
+            }
+            reqObject.put(DbParams.TBL_EXPENSE, expenseArray);
+
+            // LEAVE TBL........
+            String whereCondLeave = "";
+            if (!Utils.isEmptyString(last_sync_date))
+                whereCondLeave = " WHERE " + DbParams.CLM_IS_UPDATED + " = 0";
+
+            String leave = "SELECT * FROM " + DbParams.TBL_LEAVE + whereCondLeave;
+            Cursor leaveCursor = database.rawQuery(leave, null);
+            JSONArray leaveArray = new JSONArray();
+            if (leaveCursor.getCount() > 0) {
+                leaveCursor.moveToFirst();
+                do {
+
+                    JSONObject leaveObject = new JSONObject();
+                    leaveObject.put(DbParams.CLM_SERVER_LEAVE_ID, leaveCursor.getString(leaveCursor.getColumnIndex(DbParams.CLM_SERVER_LEAVE_ID)));
+                    leaveObject.put(DbParams.CLM_LOCAL_LEAVE_ID, leaveCursor.getString(leaveCursor.getColumnIndex(DbParams.CLM_LOCAL_LEAVE_ID)));
+                    leaveObject.put(DbParams.CLM_COMPANY_ID, leaveCursor.getString(leaveCursor.getColumnIndex(DbParams.CLM_COMPANY_ID)));
+                    leaveObject.put(DbParams.CLM_SERVER_USER_ID, leaveCursor.getString(leaveCursor.getColumnIndex(DbParams.CLM_SERVER_USER_ID)));
+                    leaveObject.put(DbParams.CLM_LOCAL_USER_ID, leaveCursor.getString(leaveCursor.getColumnIndex(DbParams.CLM_LOCAL_USER_ID)));
+                    leaveObject.put(DbParams.CLM_START_DATE, leaveCursor.getString(leaveCursor.getColumnIndex(DbParams.CLM_START_DATE)));
+                    leaveObject.put(DbParams.CLM_END_DATE, leaveCursor.getString(leaveCursor.getColumnIndex(DbParams.CLM_END_DATE)));
+                    leaveObject.put(DbParams.CLM_NOTE, leaveCursor.getString(leaveCursor.getColumnIndex(DbParams.CLM_NOTE)));
+                    leaveObject.put(DbParams.CLM_DESCRIPTION, leaveCursor.getString(leaveCursor.getColumnIndex(DbParams.CLM_DESCRIPTION)));
+                    leaveObject.put(DbParams.CLM_IS_DELETE, leaveCursor.getInt(leaveCursor.getColumnIndex(DbParams.CLM_IS_DELETE)));
+                    leaveObject.put(DbParams.CLM_STATUS_ID, leaveCursor.getInt(leaveCursor.getColumnIndex(DbParams.CLM_STATUS_ID)));
+
+                    leaveArray.put(leaveObject);
+                } while (leaveCursor.moveToNext());
+            }
+            reqObject.put(DbParams.TBL_LEAVE, leaveArray);
         } catch (JSONException e) {
             e.printStackTrace();
         }
