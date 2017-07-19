@@ -1,6 +1,5 @@
 package com.techmali.smartteam.database;
 
-import android.app.Activity;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -35,15 +34,19 @@ public class DbHelper extends SQLiteOpenHelper {
         db.execSQL(DbParams.CREATE_TBL_ATTENDANCE);
         db.execSQL(DbParams.CREATE_TBL_CHECK_IN);
         db.execSQL(DbParams.CREATE_TBL_EXPENSE);
-
-
-        db.execSQL(DbParams.CREATE_TBL_APP_SETTING);
-        db.execSQL(DbParams.CREATE_TBL_COMPANY);
-        db.execSQL(DbParams.CREATE_TBL_SECURITY_MENU_CONTROLLERS_LINK);
-        db.execSQL(DbParams.CREATE_TBL_SETTING);
-        db.execSQL(DbParams.CREATE_TBL_MESSAGE);
         db.execSQL(DbParams.CREATE_TBL_LEAVE);
+        db.execSQL(DbParams.CREATE_TBL_SECURITY_MENU);
+        db.execSQL(DbParams.CREATE_TBL_SECURITY_MENU_CONTROLLER_ACTION);
+        db.execSQL(DbParams.CREATE_TBL_SECURITY_MENU_CONTROLLERS_LINK);
+        db.execSQL(DbParams.CREATE_TBL_SECURITY_CONTROLLER);
+        db.execSQL(DbParams.CREATE_TBL_COMPANY);
+
         db.execSQL(DbParams.CREATE_TBL_ROLE);
+        db.execSQL(DbParams.CREATE_TBL_MESSAGE);
+        db.execSQL(DbParams.CREATE_TBL_REF_TABLE);
+        db.execSQL(DbParams.CREATE_TBL_SECURITY_ACTION_USER_PERMISSION);
+        db.execSQL(DbParams.CREATE_TBL_SETTING);
+        db.execSQL(DbParams.CREATE_TBL_APP_SETTING);
     }
 
     @Override

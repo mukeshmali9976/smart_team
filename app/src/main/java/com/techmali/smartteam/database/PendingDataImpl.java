@@ -79,7 +79,9 @@ public class PendingDataImpl {
             // USERINFO TBL.......
             String whereCondUserinfo = "";
             if (!Utils.isEmptyString(last_sync_date))
-                whereCondUserinfo = " WHERE " + DbParams.CLM_IS_UPDATED + " = 0";
+                whereCondUserinfo = " WHERE " + DbParams.CLM_UPDATED_ON + " >= Datetime('" + last_sync_date + "')";
+
+//                whereCondUserinfo = " WHERE " + DbParams.CLM_IS_UPDATED + " = 0";
 
             String userinfo = "SELECT * FROM " + DbParams.TBL_USER_INFO + whereCondUserinfo;
             Cursor userinfoCursor = database.rawQuery(userinfo, null);
@@ -376,7 +378,7 @@ public class PendingDataImpl {
         values.put(DbParams.CLM_HOME_ADDRESS, model.getHome_address());
         values.put(DbParams.CLM_WORK_ADDRESS, model.getWork_address());
         values.put(DbParams.CLM_STATUS_ID, model.getStatus_id());
-        values.put(DbParams.CLM_IS_UPDATED, 1);
+//        values.put(DbParams.CLM_IS_UPDATED, 1);
         return values;
     }
 

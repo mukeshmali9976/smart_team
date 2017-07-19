@@ -19,14 +19,18 @@ public class DbParams {
     public static final String TBL_CHECK_IN = "checkin";
     public static final String TBL_EXPENSE = "expance";
     public static final String TBL_LEAVE = "leave";
+    public static final String TBL_SECURITY_MENU = "security_menu";
+    public static final String TBL_SECURITY_MENU_CONTROLLERS_ACTION = "security_menu_controllers_action";
+    public static final String TBL_SECURITY_MENU_CONTROLLERS_LINK = "security_menu_controllers_link";
+    public static final String TBL_SECURITY_CONTROLLERS = "security_controllers";
 
 
+    public static final String TBL_ROLE = "role";
+    public static final String TBL_MESSAGE = "message";
+    public static final String TBL_REF_TABLE = "ref_table";
     public static final String TBL_APP_SETTING = "app_setting";
     public static final String TBL_COMPANY = "company";
     public static final String TBL_SETTING = "setting";
-    public static final String TBL_SECURITY_MENU_CONTROLLERS_LINK = "security_menu_controllers_link";
-    public static final String TBL_ROLE = "role";
-    public static final String TBL_MESSAGE = "message";
     public static final String TBL_SECURITY_ACTION_USER_PERMISSION = "security_action_user_permission";
 
 
@@ -95,34 +99,47 @@ public class DbParams {
     public static final String CLM_AMOUNT = "amount";
     public static final String CLM_PAYOUT_STATUS = "payout_status";
 
-    //Leave Apply
+    ////// Leave..........
     public static final String CLM_LOCAL_LEAVE_ID = "local_leave_id";
     public static final String CLM_SERVER_LEAVE_ID = "server_leave_id";
     public static final String CLM_IS_DELETE = "is_delete";
     public static final String CLM_NOTE = "note";
 
+    ////// Security Menu........
+    public static final String CLM_SECURITY_MENU_ID = "security_menu_id";
+    public static final String CLM_MENU_NAME = "menu_name";
+    public static final String CLM_MENU_DISPLAY_NAME = "menu_display_name";
+    public static final String CLM_MENU_LABEL = "menu_label";
+    public static final String CLM_URL = "url";
+    public static final String CLM_URL_PARAMETER = "url_parameter";
+    public static final String CLM_LINK_OPTIONS = "link_options";
+    public static final String CLM_ICON = "icon";
+    public static final String CLM_SORT_ORDER = "sort_order";
+    public static final String CLM_IS_ALWAYS_TRUE = "is_always_true";
+    public static final String CLM_STATUS = "status";
+
+    ////// Security Menu Controller Action.......
+    public static final String CLM_SECURITY_MENU_CONTROLLERS_ACTION_ID = "security_menu_controllers_action_id";
+    public static final String CLM_MENU_ID = "menu_id";
+    public static final String CLM_CONTROLLER_ID = "controllers_id";
+    public static final String CLM_MENU_CONTROLLERS_LINK_ID = "menu_controllers_link_id";
+    public static final String CLM_ACTION_NAME = "action_name";
+    public static final String CLM_ACTION_DISPLAY_NAME = "action_display_name";
+
+    ////// Security Controller....
+    public static final String CLM_SECURITY_CONTROLLER_ID = "security_controllers_id";
+    public static final String CLM_NAME = "name";
+    public static final String CLM_DISPLAY_NAME = "display_name";
+    public static final String CLM_CONTROLLER_NAME = "controller_name";
 
 
-    ////// App Setting Table...
-    public static final String CLM_APP_SETTING_ID = "app_setting_id";
-    public static final String CLM_SETTING_KEY = "setting_key";
-    public static final String CLM_SETTING_VALUE = "setting_value";
-    public static final String CLM_SETTING_VALUE_TYPE = "setting_value_type";
-    public static final String CLM_APP_TYPE = "app_type";
 
-    ///// Company Table.......
-    public static final String CLM_LOCAL_COMPANY_ID = "local_company_id";
-    public static final String CLM_COMPANY_NAME = "company_name";
-    public static final String CLM_REG_NO = "reg_no";
-    public static final String CLM_THUMB = "thumb";
-    public static final String CLM_CONTACT_PERSON = "contact_person";
-    public static final String CLM_PHONE_NO = "phone_no";
-    public static final String CLM_EMAIL = "email";
-    public static final String CLM_ADMIN_USER_ID = "admin_user_id";
-    public static final String CLM_OBJECT_MESSAGE = "object_message";
+    ////// Role table.......
+    public static final String CLM_ROLE_ID = "role_id";
+    public static final String CLM_ROLE_GROUP = "role_group";
+    public static final String CLM_IS_CUSTOM = "is_custom";
 
-
-    // Message
+    ////// Message............
     public static final String CLM_MESSAGE_ID = "message_id";
     public static final String CLM_TICKET_NUMBER = "ticket_number";
     public static final String CLM_AUTHOR_ID = "author_id";
@@ -144,7 +161,29 @@ public class DbParams {
     public static final String CLM_DEVICE_TYPE = "device_type";
     public static final String CLM_DEVICE_TOKEN = "device_token";
 
-    //Setting
+    ///// Company.......
+    public static final String CLM_LOCAL_COMPANY_ID = "local_company_id";
+    public static final String CLM_COMPANY_NAME = "company_name";
+    public static final String CLM_REG_NO = "reg_no";
+    public static final String CLM_THUMB = "thumb";
+    public static final String CLM_CONTACT_PERSON = "contact_person";
+    public static final String CLM_PHONE_NO = "phone_no";
+    public static final String CLM_EMAIL = "email";
+    public static final String CLM_ADMIN_USER_ID = "admin_user_id";
+    public static final String CLM_OBJECT_MESSAGE = "object_message";
+
+    ////// Ref Table.......
+    public static final String CLM_REF_TABLE_ID = "ref_table_id";
+    public static final String CLM_IS_TABLE = "is_table";
+
+    ////// App Setting........
+    public static final String CLM_APP_SETTING_ID = "app_setting_id";
+    public static final String CLM_SETTING_KEY = "setting_key";
+    public static final String CLM_SETTING_VALUE = "setting_value";
+    public static final String CLM_SETTING_VALUE_TYPE = "setting_value_type";
+    public static final String CLM_APP_TYPE = "app_type";
+
+    ////// Setting........
     public static final String CLM_SETTING_ID = "setting_id";
     public static final String CLM_ADMIN_EMAIL = "admin_email";
     public static final String CLM_PORT = "port";
@@ -157,29 +196,8 @@ public class DbParams {
     public static final String CLM_PRIVATE_KEY = "private_key";
     public static final String CLM_HOST = "host";
 
-
-    // Role table
-    public static final String CLM_ROLE_ID = "role_id";
-    public static final String CLM_SORT_ORDER = "sort_order";
-    public static final String CLM_ROLE_GROUP = "role_group";
-    public static final String CLM_IS_CUSTOM = "is_custom";
-    public static final String CLM_STATUS = "status";
-
-    //Ref Table
-    public static final String CLM_REF_TABLE_ID = "ref_table_id";
-    public static final String CLM_NAME = "name";
-    public static final String CLM_IS_TABLE = "is_table";
-
-    //TABLE SECURITY MENU CONTROLLERS LINK
-    public static final String CLM_MENU_CONTROLLERS_LINK_ID = "menu_controllers_link_id";
-    public static final String CLM_MENU_ID = "menu_id";
-    public static final String CLM_CONTROLLER_ID = "controller_id";
-    public static final String CLM_CREATED = "created_on";
-    public static final String CLM_UPDATED = "updated_on";
-
-
+    ////// Security_Action_User_Permission........
     public static final String CLM_USER_PERMISSION_ID = "user_permission_id";
-    public static final String CLM__SECURIY_MENU_CONROLLERS_ACION_ID = "security_menu_controllers_action_id";
 
 
     ////////////////////
@@ -302,7 +320,7 @@ public class DbParams {
 
     /*
            ATTENDANCE TABLE.........
-           attandance_type : 1=> auto, 2=> menual                           DEFAULT 1
+           attandance_type : 1=> auto, 2=> manual                           DEFAULT 1
     */
     static final String CREATE_TBL_ATTENDANCE = "CREATE TABLE " + TBL_ATTENDANCE + " (" +
             CLM_LOCAL_ATTENDANCE_ID + " VARCHAR PRIMARY KEY," +
@@ -368,6 +386,7 @@ public class DbParams {
             CLM_IS_UPDATED + " INTEGER DEFAULT 0)";
 
     /*
+          LEAVE TABLE.........
           status_id : '1=>pending, 2=> approved, 3=> reject',         DEFAULT '1'
           is_delete : '0=> not delete, 1=> deleted',                 DEFAULT '0'
     */
@@ -388,44 +407,112 @@ public class DbParams {
             CLM_UPDATED_ON + " DATETIME," +
             CLM_IS_UPDATED + " INTEGER DEFAULT 0)";
 
-
-
-
+    /*
+            SECURITY_MENU TABLE.........
+            menu_label : json or txt of label
+            url : url text
+            url_parameter : json text of url array
+            link_options : json text for link option
+            is_always_true : this menu will always appear in list
+            status: 1=>Active, 2=>inactive, 3=>Deleted              DEFAULT => 1
+     */
+    static final String CREATE_TBL_SECURITY_MENU = "CREATE TABLE " + TBL_SECURITY_MENU + " (" +
+            CLM_SECURITY_MENU_ID + " VARCHAR PRIMARY KEY," +
+            CLM_MENU_NAME + " VARCHAR," +
+            CLM_MENU_DISPLAY_NAME + " VARCHAR," +
+            CLM_MENU_LABEL + " VARCHAR," +
+            CLM_URL + " VARCHAR," +
+            CLM_URL_PARAMETER + " VARCHAR," +
+            CLM_LINK_OPTIONS + " VARCHAR," +
+            CLM_SORT_ORDER + " INTEGER," +
+            CLM_IS_ALWAYS_TRUE + " VARCHAR," +
+            CLM_STATUS + " INTEGER DEFAULT 1," +
+            CLM_CREATED_BY + " VARCHAR," +
+            CLM_UPDATED_BY + " VARCHAR," +
+            CLM_CREATED_ON + " DATETIME DEFAULT (CURRENT_TIMESTAMP)," +
+            CLM_UPDATED_ON + " DATETIME," +
+            CLM_IS_UPDATED + " INTEGER DEFAULT 0)";
 
     /*
-       setting_value_type : 1=> test, 2 => json VARCHAR
-        app_type : 0=> Both, 1=>user, 2=> driver
-    */
-    static final String CREATE_TBL_APP_SETTING = "CREATE TABLE " + TBL_APP_SETTING + "(" +
-            CLM_APP_SETTING_ID + "  INTEGER PRIMARY KEY," +
-            CLM_SETTING_KEY + " VARCHAR," +
-            CLM_SETTING_VALUE + " VARCHAR," +
-            CLM_SETTING_VALUE_TYPE + " INTEGER," +
-            CLM_APP_TYPE + " INTEGER," +
-            CLM_STATUS_ID + " INTEGER)";
+            SECURITY_MENU_CONTROLLER_LINK_ACTION TABLE.....
+            menu_id : ref. to security_module table
+            controllers_id : ref. to security_module_permission table
+            action_name : comma separated action name
+            action_display_name : ref. to role table
+     */
+    static final String CREATE_TBL_SECURITY_MENU_CONTROLLER_ACTION = "CREATE TABLE " + TBL_SECURITY_MENU_CONTROLLERS_ACTION + " (" +
+            CLM_SECURITY_MENU_CONTROLLERS_ACTION_ID + " VARCHAR PRIMARY KEY," +
+            CLM_MENU_ID + " VARCHAR," +
+            CLM_CONTROLLER_ID + " VARCHAR," +
+            CLM_MENU_CONTROLLERS_LINK_ID + " VARCHAR," +
+            CLM_ACTION_NAME + " VARCHAR," +
+            CLM_ACTION_DISPLAY_NAME + " VARCHAR," +
+            CLM_SORT_ORDER + " INTEGER DEFAULT 0," +
+            CLM_STATUS + " INTEGER," +
+            CLM_CREATED_BY + " VARCHAR," +
+            CLM_UPDATED_BY + " VARCHAR," +
+            CLM_CREATED_ON + " DATETIME DEFAULT (CURRENT_TIMESTAMP)," +
+            CLM_UPDATED_ON + " DATETIME," +
+            CLM_IS_UPDATED + " INTEGER DEFAULT 0)";
+
     /*
-        thumb: Company Logo image
-        admin_user_id: Ref to Admin user account which is associated with user
-        status_id: 1-Active, 2-Inactive, 3-Deleted, 4-Pending Activation
+            SECURITY_MENU_CONTROLLER_LINK TABLE...........
+     */
+    static final String CREATE_TBL_SECURITY_MENU_CONTROLLERS_LINK = "CREATE TABLE " + TBL_SECURITY_MENU_CONTROLLERS_LINK + " (" +
+            CLM_MENU_CONTROLLERS_LINK_ID + " VARCHAR PRIMARY KEY," +
+            CLM_MENU_ID + " VARCHAR," +
+            CLM_CONTROLLER_ID + " VARCHAR," +
+            CLM_STATUS + " INTEGER," +
+            CLM_CREATED_BY + " VARCHAR," +
+            CLM_UPDATED_BY + " VARCHAR," +
+            CLM_CREATED_ON + " DATETIME DEFAULT (CURRENT_TIMESTAMP)," +
+            CLM_UPDATED_ON + " DATETIME," +
+            CLM_IS_UPDATED + " INTEGER DEFAULT 0)";
+
+    /*
+            SECURITY_CONTROLLER TABLE..........
+            name : Ref. to security_module table
+            status : 1=> Active, 2=> Inactive, 3=> Deleted              DEFAULT 1
+     */
+    static final String CREATE_TBL_SECURITY_CONTROLLER = "CREATE TABLE "+ TBL_SECURITY_CONTROLLERS + " (" +
+            CLM_SECURITY_CONTROLLER_ID + " VARCHAR PRIMARY KEY," +
+            CLM_NAME + " VARCHAR," +
+            CLM_DISPLAY_NAME + " VARCHAR," +
+            CLM_CONTROLLER_NAME + " VARCHAR," +
+            CLM_SORT_ORDER + " INTEGER DEFAULT 0," +
+            CLM_STATUS + " INTEGER DEFAULT 1," +
+            CLM_CREATED_BY + " VARCHAR," +
+            CLM_UPDATED_BY + " VARCHAR," +
+            CLM_CREATED_ON + " DATETIME DEFAULT (CURRENT_TIMESTAMP)," +
+            CLM_UPDATED_ON + " DATETIME," +
+            CLM_IS_UPDATED + " INTEGER DEFAULT 0)";
+
+    /*
+            COMPANY TABLE.....
+            thumb: Company Logo image
+            admin_user_id: Ref to Admin user account which is associated with user
+            status_id: 1=> Active, 2=> Inactive, 3=> Deleted, 4=> Pending Activation
      */
     static final String CREATE_TBL_COMPANY = "CREATE TABLE " + TBL_COMPANY + "(" +
-            CLM_LOCAL_COMPANY_ID + " VARCHAR," +
+            CLM_LOCAL_COMPANY_ID + " VARCHAR primary key," +
             CLM_COMPANY_NAME + " VARCHAR," +
             CLM_REG_NO + " VARCHAR," +
             CLM_THUMB + " VARCHAR," +
             CLM_CONTACT_PERSON + " VARCHAR," +
             CLM_PHONE_NO + " VARCHAR," +
             CLM_EMAIL + " VARCHAR," +
-            CLM_ADMIN_USER_ID +
+            CLM_ADMIN_USER_ID + " VARCHAR," +
             CLM_OBJECT_MESSAGE + " VARCHAR," +
             CLM_STATUS_ID + " INTEGER," +
-            CLM_CREATED_BY + " INTEGER," +
+            CLM_CREATED_BY + " VARCHAR," +
+            CLM_UPDATED_BY + " VARCHAR," +
             CLM_CREATED_ON + " DATETIME DEFAULT (CURRENT_TIMESTAMP)," +
-            CLM_UPDATED_BY + " INTEGER," +
-            CLM_UPDATED_ON + " DATETIME DEFAULT (CURRENT_TIMESTAMP))";
+            CLM_UPDATED_ON + " DATETIME," +
+            CLM_IS_UPDATED + " INTEGER DEFAULT 0)";
 
 
-    /*
+      /*
+           MESSAGE TABLE.........
            author_id : 'Ref to user table, who raised this ticket',
            recipient_id : 'Ref to user table, who has received the message',
            thread_id : 'If ticket is refering to reply of previous ticket, can be null, content parant message id ',
@@ -440,7 +527,7 @@ public class DbParams {
            device_type : 1-iOS, 2-Android, 3-Web Admin
      */
     static final String CREATE_TBL_MESSAGE = "CREATE TABLE " + TBL_MESSAGE + " (" +
-            CLM_MESSAGE_ID + " INTEGER PRIMARY KEY," +
+            CLM_MESSAGE_ID + " VARCHAR PRIMARY KEY," +
             CLM_TICKET_NUMBER + " VARCHAR," +
             CLM_AUTHOR_ID + " VARCHAR," +
             CLM_RECEIPT_ID + " VARCHAR," +
@@ -464,12 +551,39 @@ public class DbParams {
             CLM_DEVICE_TOKEN + " VARCHAR," +
             CLM_CREATED_BY + " VARCHAR," +
             CLM_UPDATED_BY + " VARCHAR," +
-            CLM_CREATED + " DATETIME DEFAULT (CURRENT_TIMESTAMP)," +
-            CLM_UPDATED + " DATETIME DEFAULT (CURRENT_TIMESTAMP))";
+            CLM_CREATED_ON + " DATETIME DEFAULT (CURRENT_TIMESTAMP)," +
+            CLM_UPDATED_ON + " DATETIME," +
+            CLM_IS_UPDATED + " INTEGER DEFAULT 0)";
 
+    /*
+            REF_TABLE TABLE........
+     */
+    static final String CREATE_TBL_REF_TABLE = "CREATE TABLE " +TBL_REF_TABLE + " (" +
+            CLM_REF_TABLE_ID + " VARCHAR PRIMARY KEY," +
+            CLM_NAME + " VARCHAR," +
+            CLM_IS_TABLE + " INTEGER DEFAULT 1)";
 
+    /*
+            SECURITY_ACTION_USER_PERMISSION TABLE.......
+     */
+    static final String CREATE_TBL_SECURITY_ACTION_USER_PERMISSION = "CREATE TABLE " + TBL_SECURITY_ACTION_USER_PERMISSION + " (" +
+            CLM_USER_PERMISSION_ID + " VARCHAR PRIMARY KEY," +
+            CLM_SECURITY_MENU_CONTROLLERS_ACTION_ID + " VARCHAR," +
+            CLM_LOCAL_USER_ID + " VARCHAR," +
+            CLM_STATUS + " INTEGER DEFAULT 1," +
+            CLM_CREATED_BY + " VARCHAR," +
+            CLM_UPDATED_BY + " VARCHAR," +
+            CLM_CREATED_ON + " DATETIME DEFAULT (CURRENT_TIMESTAMP)," +
+            CLM_UPDATED_ON + " DATETIME," +
+            CLM_IS_UPDATED + " INTEGER DEFAULT 0)";
+
+    /*
+        SETTING TABLE.........
+        admin_email : 1=> Admin, 2=> App
+        app_name : Setting tag
+ */
     static final String CREATE_TBL_SETTING = "CREATE TABLE " + TBL_SETTING + "(" +
-            CLM_SETTING_ID + " INTEGER PRIMARY KEY," +
+            CLM_SETTING_ID + " VARCHAR PRIMARY KEY," +
             CLM_ADMIN_EMAIL + " VARCHAR," +
             CLM_HOST + " VARCHAR," +
             CLM_PORT + " VARCHAR," +
@@ -484,21 +598,31 @@ public class DbParams {
             CLM_PRIVATE_KEY + " VARCHAR," +
             CLM_UPDATED_BY + " VARCHAR)";
 
-    static final String CREATE_TBL_SECURITY_MENU_CONTROLLERS_LINK = "CREATE TABLE " + TBL_SECURITY_MENU_CONTROLLERS_LINK + " (" +
-            CLM_MENU_CONTROLLERS_LINK_ID + " INTEGER PRIMARY KEY," +
-            CLM_MENU_ID + " INTEGER," +
-            CLM_CONTROLLER_ID + " INTEGER," +
-            CLM_STATUS + " INTEGER," +
-            CLM_CREATED_BY + " INTEGER," +
-            CLM_CREATED + " DATETIME DEFAULT (CURRENT_TIMESTAMP)," +
-            CLM_UPDATED + " VARCHAR)";
+    /*
+            APP_SETTING TABLE.........
+            setting_value_type : 1=> test, 2 => json VARCHAR
+            app_type : 0=> Both, 1=>user, 2=> driver
+    */
+    static final String CREATE_TBL_APP_SETTING = "CREATE TABLE " + TBL_APP_SETTING + "(" +
+            CLM_APP_SETTING_ID + "  VARCHAR PRIMARY KEY," +
+            CLM_SETTING_KEY + " VARCHAR," +
+            CLM_SETTING_VALUE + " VARCHAR," +
+            CLM_SETTING_VALUE_TYPE + " INTEGER," +
+            CLM_APP_TYPE + " INTEGER," +
+            CLM_STATUS_ID + " INTEGER)";
 
+    /*
+            Role.....
+            role_group : enum('1','2','3','4','5','6','7','8','9') 1-Super Admin[Platform Staff],2- Company Admin[Bus Staff users]
+            is_custom : enum('1','2') 1-System Role,2-Custom Role                   DEFAULT 2
+            status : enum('1','2','3')  1-Active,2-InActive,3-Deleted                 DEFAULT 1
+     */
     static final String CREATE_TBL_ROLE = "CREATE TABLE " + TBL_ROLE + "(" +
-            CLM_ROLE_ID + " INTEGER PRIMARY KEY," +
+            CLM_ROLE_ID + " VARCHAR PRIMARY KEY," +
             CLM_NAME + "  VARCHAR," +
-            CLM_SORT_ORDER + " INTEGER," +
-            CLM_ROLE_GROUP + " INTEGER," +
-            CLM_IS_CUSTOM + " INTEGER," +
+            CLM_SORT_ORDER + " INTEGER DEFAULT 0," +
+            CLM_ROLE_GROUP + " VARCHAR," +
+            CLM_IS_CUSTOM + " VARCHAR," +
             CLM_STATUS + " INTEGER," +
             CLM_CREATED_BY + " INTEGER," +
             CLM_CREATED_ON + " DATETIME DEFAULT (CURRENT_TIMESTAMP)," +
