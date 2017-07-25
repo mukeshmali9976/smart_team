@@ -145,7 +145,7 @@ public class NetworkClient extends AsyncTask<Void, Void, String> {
                     okhttp3.Request request = new okhttp3.Request.Builder()
                             .header(PARAMS.TAG_HEADER_TOKEN, prefManager.getString(Constants.HEADER_TOKEN, ""))
                             .addHeader(PARAMS.TAG_APP_VERSION, pInfo.versionName)
-                            .addHeader(PARAMS.TAG_DEVICE_TYPE,Constants.DEVICE_TYPE)
+                            .addHeader(PARAMS.TAG_DEVICE_TYPE, Constants.DEVICE_TYPE)
                             .url(url)
                             .build();
 
@@ -157,6 +157,7 @@ public class NetworkClient extends AsyncTask<Void, Void, String> {
 
                     Log.e(TAG, "URL => " + url);
                     Log.e(TAG, "header_token => " + prefManager.getString(PARAMS.KEY_HEADER_TOKEN, ""));
+                    Log.e(TAG, "device_token => " + prefManager.getString(Constants.REGISTRATION_TOKEN, ""));
                     Log.e(TAG, "Params => " + reqParams);
                     Log.e(TAG, "Response => " + res);
 
@@ -193,6 +194,7 @@ public class NetworkClient extends AsyncTask<Void, Void, String> {
 
                     Log.e(TAG, "URL => " + url);
                     Log.e(TAG, "header_token => " + prefManager.getString(PARAMS.KEY_HEADER_TOKEN, ""));
+                    Log.e(TAG, "device_token => " + prefManager.getString(Constants.REGISTRATION_TOKEN, ""));
                     Log.e(TAG, "Params => " + reqParams);
                     Log.e(TAG, "Response => " + res);
 
@@ -224,6 +226,7 @@ public class NetworkClient extends AsyncTask<Void, Void, String> {
 
                     Log.e(TAG, "URL => " + url);
                     Log.e(TAG, "header_token => " + prefManager.getString(PARAMS.KEY_HEADER_TOKEN, ""));
+                    Log.e(TAG, "device_token => " + prefManager.getString(Constants.REGISTRATION_TOKEN, ""));
                     Log.e(TAG, "Params => " + reqParams);
                     Log.e(TAG, "Response => " + res);
 

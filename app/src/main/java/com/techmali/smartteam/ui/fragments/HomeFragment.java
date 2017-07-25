@@ -18,7 +18,18 @@ import com.techmali.smartteam.R;
 import com.techmali.smartteam.base.BaseFragment;
 import com.techmali.smartteam.database.DbParams;
 import com.techmali.smartteam.database.PendingDataImpl;
-import com.techmali.smartteam.models.LoginDetailResponse;
+import com.techmali.smartteam.models.SyncAttendance;
+import com.techmali.smartteam.models.SyncCheckIn;
+import com.techmali.smartteam.models.SyncCompany;
+import com.techmali.smartteam.models.SyncProject;
+import com.techmali.smartteam.models.SyncProjectUserLink;
+import com.techmali.smartteam.models.SyncRole;
+import com.techmali.smartteam.models.SyncSecurityController;
+import com.techmali.smartteam.models.SyncSecurityMenu;
+import com.techmali.smartteam.models.SyncSecurityMenuControllerAction;
+import com.techmali.smartteam.models.SyncSecurityMenuControllerLink;
+import com.techmali.smartteam.models.SyncTask;
+import com.techmali.smartteam.models.SyncTaskUserLink;
 import com.techmali.smartteam.models.SyncUserInfo;
 import com.techmali.smartteam.network.NetworkManager;
 import com.techmali.smartteam.network.RequestListener;
@@ -66,6 +77,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
         return mRootView;
     }
 
+
     private void initView() {
 
         mRootView.findViewById(R.id.tvMyTimeSheet).setOnClickListener(this);
@@ -80,8 +92,6 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
         mRootView.findViewById(R.id.tvLeaveApplication).setOnClickListener(this);
         mRootView.findViewById(R.id.tvTraking).setOnClickListener(this);
         mRootView.findViewById(R.id.tvCreateUser).setOnClickListener(this);
-
-        new GetSyncData().execute();
     }
 
     @Override
@@ -104,6 +114,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
         getLoginDetail();
         changeToolBarColor();
     }
+
 
     private class GetSyncData extends AsyncTask<Void, Void, String> {
 
@@ -129,6 +140,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
             }
         }
     }
+
 
     private void getLoginDetail() {
         networkManager.isProgressBarVisible(true);
@@ -186,7 +198,8 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
         try {
             if (!TextUtils.isEmpty(response)) {
                 if (id == reqIdLoginDetail) {
-                    LoginDetailResponse loginDetailResponse = new Gson().fromJson(response, LoginDetailResponse.class);
+//                    LoginDetailResponse loginDetailResponse = new Gson().fromJson(response, LoginDetailResponse.class);
+                    new GetSyncData().execute();
                 } else if (id == reqIdSyncData) {
                     JSONObject object = new JSONObject(response);
                     if (object.getInt(PARAMS.TAG_STATUS) == PARAMS.TAG_STATUS_200) {
@@ -206,14 +219,27 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
         displayError(message);
     }
 
-    class SaveData extends AsyncTask<String, Void, String> {
+
+    private class SaveData extends AsyncTask<String, Void, String> {
 
         @Override
         protected String doInBackground(String... strings) {
             try {
                 if (!Utils.isEmptyString(strings[0])) {
                     JSONObject object = new JSONObject(strings[0]);
-                    insetUserinfo(object.getString(DbParams.TBL_USER_INFO));
+                    insertUserinfo(object.getString(DbParams.TBL_USER_INFO), DbParams.TBL_USER_INFO);
+                    insertProject(object.getString(DbParams.TBL_PROJECT), DbParams.TBL_PROJECT);
+                    insetProjectUserLink(object.getString(DbParams.TBL_PROJECT_USER_LINK), DbParams.TBL_PROJECT_USER_LINK);
+                    insertTask(object.getString(DbParams.TBL_TASK), DbParams.TBL_TASK);
+                    insertTaskUserLink(object.getString(DbParams.TBL_TASK_USER_LINK), DbParams.TBL_TASK_USER_LINK);
+                    insertAttendance(object.getString(DbParams.TBL_ATTENDANCE), DbParams.TBL_ATTENDANCE);
+                    insertCheckIn(object.getString(DbParams.TBL_CHECK_IN), DbParams.TBL_CHECK_IN);
+                    insertSecurityMenu(object.getString(DbParams.TBL_SECURITY_MENU), DbParams.TBL_SECURITY_MENU);
+                    insertSecurityMenuControllerAction(object.getString(DbParams.TBL_SECURITY_MENU_CONTROLLERS_ACTION), DbParams.TBL_SECURITY_MENU_CONTROLLERS_ACTION);
+                    insertSecurityMenuControllerLink(object.getString(DbParams.TBL_SECURITY_MENU_CONTROLLERS_LINK), DbParams.TBL_SECURITY_MENU_CONTROLLERS_LINK);
+                    insertSecurityController(object.getString(DbParams.TBL_SECURITY_CONTROLLERS), DbParams.TBL_SECURITY_CONTROLLERS);
+                    insertRole(object.getString(DbParams.TBL_ROLE), DbParams.TBL_ROLE);
+                    insertCompany(object.getString(DbParams.TBL_COMPANY), DbParams.TBL_COMPANY);
                     return strings[1];
                 }
             } catch (JSONException e) {
@@ -225,24 +251,229 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
         @Override
         protected void onPostExecute(String result) {
             super.onPostExecute(result);
-            if(!Utils.isEmptyString(result)){
+            if (!Utils.isEmptyString(result)) {
                 prefManager.edit().putString(PARAMS.KEY_LAST_SYNC_DATE, result).apply();
             }
             networkManager.isProgressBarVisible(false);
         }
     }
 
-    private void insetUserinfo(String userinfo) {
-        if(!Utils.isEmptyString(userinfo)){
-            ArrayList<SyncUserInfo> userInfoArrayList = new Gson().fromJson(userinfo, new TypeToken<List<SyncUserInfo>>(){}.getType());
-            if(userInfoArrayList.size() > 0){
-                for (int i=0; i<userInfoArrayList.size(); i++){
-                    boolean isExists = pendingData.checkRecordExist(DbParams.TBL_USER_INFO, DbParams.CLM_LOCAL_USER_ID, userInfoArrayList.get(i).getLocal_user_id());
+    private void insertUserinfo(String syncModel, String table) {
+        if (!Utils.isEmptyString(syncModel)) {
+            ArrayList<SyncUserInfo> syncList = new Gson().fromJson(syncModel, new TypeToken<List<SyncUserInfo>>() {
+            }.getType());
+            if (syncList != null && !syncList.isEmpty()) {
+                for (int i = 0; i < syncList.size(); i++) {
+                    boolean isExists = pendingData.checkRecordExist(table, DbParams.CLM_LOCAL_USER_ID, syncList.get(i).getLocal_user_id());
                     Log.e(TAG, "isAvailable: " + isExists);
-                    if(isExists)
-                        pendingData.update(userInfoArrayList.get(i), DbParams.TBL_USER_INFO, userInfoArrayList.get(i).getServer_user_id());
+                    if (isExists)
+                        pendingData.update(syncList.get(i), table, syncList.get(i).getServer_user_id());
                     else
-                        pendingData.insert(userInfoArrayList.get(i), DbParams.TBL_USER_INFO);
+                        pendingData.insert(syncList.get(i), table);
+                }
+            }
+        }
+    }
+
+    private void insertProject(String syncModel, String table) {
+        if (!Utils.isEmptyString(syncModel)) {
+            ArrayList<SyncProject> syncList = new Gson().fromJson(syncModel, new TypeToken<List<SyncProject>>() {
+            }.getType());
+            if (syncList != null && !syncList.isEmpty()) {
+                for (int i = 0; i < syncList.size(); i++) {
+                    boolean isExists = pendingData.checkRecordExist(table, DbParams.CLM_LOCAL_PROJECT_ID, syncList.get(i).getLocal_project_id());
+                    Log.e(TAG, "isAvailable: " + isExists);
+                    if (isExists)
+                        pendingData.update(syncList.get(i), table, syncList.get(i).getProject_id());
+                    else
+                        pendingData.insert(syncList.get(i), table);
+                }
+            }
+        }
+    }
+
+    private void insetProjectUserLink(String syncModel, String table) {
+        if (!Utils.isEmptyString(syncModel)) {
+            ArrayList<SyncProjectUserLink> syncList = new Gson().fromJson(syncModel, new TypeToken<List<SyncProjectUserLink>>() {
+            }.getType());
+            if (syncList != null && !syncList.isEmpty()) {
+                for (int i = 0; i < syncList.size(); i++) {
+                    boolean isExists = pendingData.checkRecordExist(table, DbParams.CLM_LOCAL_PROJECT_USER_LINK_ID, syncList.get(i).getLocal_project_user_link_id());
+                    Log.e(TAG, "isAvailable: " + isExists);
+                    if (isExists)
+                        pendingData.update(syncList.get(i), table, syncList.get(i).getProject_user_link_id());
+                    else
+                        pendingData.insert(syncList.get(i), table);
+                }
+            }
+        }
+    }
+
+    private void insertTask(String syncModel, String table) {
+        if (!Utils.isEmptyString(syncModel)) {
+            ArrayList<SyncTask> syncList = new Gson().fromJson(syncModel, new TypeToken<List<SyncTask>>() {
+            }.getType());
+            if (syncList != null && !syncList.isEmpty()) {
+                for (int i = 0; i < syncList.size(); i++) {
+                    boolean isExists = pendingData.checkRecordExist(table, DbParams.CLM_LOCAL_TASK_ID, syncList.get(i).getLocal_task_id());
+                    Log.e(TAG, "isAvailable: " + isExists);
+                    if (isExists)
+                        pendingData.update(syncList.get(i), table, syncList.get(i).getTask_id());
+                    else
+                        pendingData.insert(syncList.get(i), table);
+                }
+            }
+        }
+    }
+
+    private void insertTaskUserLink(String syncModel, String table) {
+        if (!Utils.isEmptyString(syncModel)) {
+            ArrayList<SyncTaskUserLink> syncList = new Gson().fromJson(syncModel, new TypeToken<List<SyncTaskUserLink>>() {
+            }.getType());
+            if (syncList != null && !syncList.isEmpty()) {
+                for (int i = 0; i < syncList.size(); i++) {
+                    boolean isExists = pendingData.checkRecordExist(table, DbParams.CLM_LOCAL_TASK_USER_LINK_ID, syncList.get(i).getLocal_task_user_link_id());
+                    Log.e(TAG, "isAvailable: " + isExists);
+                    if (isExists)
+                        pendingData.update(syncList.get(i), table, syncList.get(i).getTask_id());
+                    else
+                        pendingData.insert(syncList.get(i), table);
+                }
+            }
+        }
+    }
+
+    private void insertAttendance(String syncModel, String table) {
+        if (!Utils.isEmptyString(syncModel)) {
+            ArrayList<SyncAttendance> syncList = new Gson().fromJson(syncModel, new TypeToken<List<SyncAttendance>>() {
+            }.getType());
+            if (syncList != null && !syncList.isEmpty()) {
+                for (int i = 0; i < syncList.size(); i++) {
+                    boolean isExists = pendingData.checkRecordExist(table, DbParams.CLM_LOCAL_ATTENDANCE_ID, syncList.get(i).getLocal_attendance_id());
+                    Log.e(TAG, "isAvailable: " + isExists);
+                    if (isExists)
+                        pendingData.update(syncList.get(i), table, syncList.get(i).getAttendance_id());
+                    else
+                        pendingData.insert(syncList.get(i), table);
+                }
+            }
+        }
+    }
+
+    private void insertCheckIn(String syncModel, String table) {
+        if (!Utils.isEmptyString(syncModel)) {
+            ArrayList<SyncCheckIn> syncList = new Gson().fromJson(syncModel, new TypeToken<List<SyncCheckIn>>() {
+            }.getType());
+            if (syncList != null && !syncList.isEmpty()) {
+                for (int i = 0; i < syncList.size(); i++) {
+                    boolean isExists = pendingData.checkRecordExist(table, DbParams.CLM_LOCAL_CHECK_IN_ID, syncList.get(i).getLocal_checkin_id());
+                    Log.e(TAG, "isAvailable: " + isExists);
+                    if (isExists)
+                        pendingData.update(syncList.get(i), table, syncList.get(i).getCheckin_id());
+                    else
+                        pendingData.insert(syncList.get(i), table);
+                }
+            }
+        }
+    }
+
+    private void insertSecurityMenu(String syncModel, String table) {
+        if (!Utils.isEmptyString(syncModel)) {
+            ArrayList<SyncSecurityMenu> syncList = new Gson().fromJson(syncModel, new TypeToken<List<SyncSecurityMenu>>() {
+            }.getType());
+            if (syncList != null && !syncList.isEmpty()) {
+                for (int i = 0; i < syncList.size(); i++) {
+                    boolean isExists = pendingData.checkRecordExist(table, DbParams.CLM_SECURITY_MENU_ID, syncList.get(i).getSecurity_menu_id());
+                    Log.e(TAG, "isAvailable: " + isExists);
+                    if (isExists)
+                        pendingData.update(syncList.get(i), table, syncList.get(i).getSecurity_menu_id());
+                    else
+                        pendingData.insert(syncList.get(i), table);
+                }
+            }
+        }
+    }
+
+    private void insertSecurityMenuControllerAction(String syncModel, String table) {
+        if (!Utils.isEmptyString(syncModel)) {
+            ArrayList<SyncSecurityMenuControllerAction> syncList = new Gson().fromJson(syncModel, new TypeToken<List<SyncSecurityMenuControllerAction>>() {
+            }.getType());
+            if (syncList != null && !syncList.isEmpty()) {
+                for (int i = 0; i < syncList.size(); i++) {
+                    boolean isExists = pendingData.checkRecordExist(table, DbParams.CLM_SECURITY_MENU_CONTROLLERS_ACTION_ID, syncList.get(i).getSecurity_menu_controllers_action_id());
+                    Log.e(TAG, "isAvailable: " + isExists);
+                    if (isExists)
+                        pendingData.update(syncList.get(i), table, syncList.get(i).getSecurity_menu_controllers_action_id());
+                    else
+                        pendingData.insert(syncList.get(i), table);
+                }
+            }
+        }
+    }
+
+    private void insertSecurityMenuControllerLink(String syncModel, String table) {
+        if (!Utils.isEmptyString(syncModel)) {
+            ArrayList<SyncSecurityMenuControllerLink> syncList = new Gson().fromJson(syncModel, new TypeToken<List<SyncSecurityMenuControllerLink>>() {
+            }.getType());
+            if (syncList != null && !syncList.isEmpty()) {
+                for (int i = 0; i < syncList.size(); i++) {
+                    boolean isExists = pendingData.checkRecordExist(table, DbParams.CLM_MENU_CONTROLLERS_LINK_ID, syncList.get(i).getMenu_controllers_link_id());
+                    Log.e(TAG, "isAvailable: " + isExists);
+                    if (isExists)
+                        pendingData.update(syncList.get(i), table, syncList.get(i).getMenu_controllers_link_id());
+                    else
+                        pendingData.insert(syncList.get(i), table);
+                }
+            }
+        }
+    }
+
+    private void insertSecurityController(String syncModel, String table) {
+        if (!Utils.isEmptyString(syncModel)) {
+            ArrayList<SyncSecurityController> syncList = new Gson().fromJson(syncModel, new TypeToken<List<SyncSecurityController>>() {
+            }.getType());
+            if (syncList != null && !syncList.isEmpty()) {
+                for (int i = 0; i < syncList.size(); i++) {
+                    boolean isExists = pendingData.checkRecordExist(table, DbParams.CLM_SECURITY_CONTROLLER_ID, syncList.get(i).getSecurity_controllers_id());
+                    Log.e(TAG, "isAvailable: " + isExists);
+                    if (isExists)
+                        pendingData.update(syncList.get(i), table, syncList.get(i).getSecurity_controllers_id());
+                    else
+                        pendingData.insert(syncList.get(i), table);
+                }
+            }
+        }
+    }
+
+    private void insertRole(String syncModel, String table) {
+        if (!Utils.isEmptyString(syncModel)) {
+            ArrayList<SyncRole> syncList = new Gson().fromJson(syncModel, new TypeToken<List<SyncRole>>() {
+            }.getType());
+            if (syncList != null && !syncList.isEmpty()) {
+                for (int i = 0; i < syncList.size(); i++) {
+                    boolean isExists = pendingData.checkRecordExist(table, DbParams.CLM_ROLE_ID, syncList.get(i).getRole_id());
+                    Log.e(TAG, "isAvailable: " + isExists);
+                    if (isExists)
+                        pendingData.update(syncList.get(i), table, syncList.get(i).getRole_id());
+                    else
+                        pendingData.insert(syncList.get(i), table);
+                }
+            }
+        }
+    }
+
+    private void insertCompany(String syncModel, String table) {
+        if (!Utils.isEmptyString(syncModel)) {
+            ArrayList<SyncCompany> syncList = new Gson().fromJson(syncModel, new TypeToken<List<SyncCompany>>() {
+            }.getType());
+            if (syncList != null && !syncList.isEmpty()) {
+                for (int i = 0; i < syncList.size(); i++) {
+                    boolean isExists = pendingData.checkRecordExist(table, DbParams.CLM_COMPANY_ID, syncList.get(i).getCompany_id());
+                    Log.e(TAG, "isAvailable: " + isExists);
+                    if (isExists)
+                        pendingData.update(syncList.get(i), table, syncList.get(i).getCompany_id());
+                    else
+                        pendingData.insert(syncList.get(i), table);
                 }
             }
         }

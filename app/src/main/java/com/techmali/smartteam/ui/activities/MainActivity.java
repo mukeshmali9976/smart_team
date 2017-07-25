@@ -16,10 +16,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.techmali.smartteam.R;
-import com.techmali.smartteam.database.DbHelper;
-import com.techmali.smartteam.database.DbParams;
 import com.techmali.smartteam.database.PendingDataImpl;
-import com.techmali.smartteam.models.SyncCompanyModel;
 import com.techmali.smartteam.slidingmenu.SlidingActivity;
 import com.techmali.smartteam.slidingmenu.SlidingMenu;
 import com.techmali.smartteam.ui.fragments.HomeFragment;
