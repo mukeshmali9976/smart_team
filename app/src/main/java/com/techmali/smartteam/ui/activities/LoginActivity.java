@@ -55,8 +55,8 @@ public class LoginActivity extends BaseAppCompatActivity implements View.OnClick
         tvErrorPhone = (TextView) findViewById(R.id.tvErrorPhone);
         tvErrorPassword = (TextView) findViewById(R.id.tvErrorPassword);
 
-        etPhone.setText("dd@dd.com");
-        etPassword.setText("12345678");
+        etPhone.setText("deep.dran10@gmail.com");
+        etPassword.setText("111111111");
 
         findViewById(R.id.btnLogin).setOnClickListener(this);
         findViewById(R.id.btnForgotPassword).setOnClickListener(this);

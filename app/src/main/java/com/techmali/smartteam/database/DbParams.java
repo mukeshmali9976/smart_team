@@ -45,7 +45,7 @@ public class DbParams {
     public static final String CLM_UPDATED_ON = "updated_on";
 
     ////// User Info....
-    public static final String CLM_SERVER_USER_ID = "server_user_id";
+    public static final String CLM_USER_ID = "user_id";
     public static final String CLM_LOCAL_USER_ID = "local_user_id";
     public static final String CLM_USERNAME = "username";
     public static final String CLM_GENDER = "gender";
@@ -62,7 +62,7 @@ public class DbParams {
 
     ////// Project.....
     public static final String CLM_LOCAL_PROJECT_ID = "local_project_id";
-    public static final String CLM_SERVER_PROJECT_ID = "server_project_id";
+    public static final String CLM_PROJECT_ID = "project_id";
     public static final String CLM_COMPANY_ID = "company_id";
     public static final String CLM_TITLE = "title";
     public static final String CLM_DESCRIPTION = "description";
@@ -72,13 +72,11 @@ public class DbParams {
     ////// Task......
     public static final String CLM_TASK_ID = "task_id";
     public static final String CLM_LOCAL_TASK_ID = "local_task_id";
-    public static final String CLM_PROJECT_ID = "project_id";
     public static final String CLM_TYPE = "type";
 
     ////// Project User Link.......
     public static final String CLM_PROJECT_USER_LINK_ID = "project_user_link_id";
     public static final String CLM_LOCAL_PROJECT_USER_LINK_ID = "local_project_user_link_id";
-    public static final String CLM_USER_ID = "user_id";
 
     ////// Task User Link.......
     public static final String CLM_TASK_USER_LINK_ID = "task_user_link_id";
@@ -133,7 +131,6 @@ public class DbParams {
     public static final String CLM_NAME = "name";
     public static final String CLM_DISPLAY_NAME = "display_name";
     public static final String CLM_CONTROLLER_NAME = "controller_name";
-
 
 
     ////// Role table.......
@@ -217,7 +214,7 @@ public class DbParams {
      */
     static final String CREATE_TBL_USER_INFO = "CREATE TABLE " + TBL_USER_INFO + " (" +
             CLM_LOCAL_USER_ID + " VARCHAR PRIMARY KEY," +
-            CLM_SERVER_USER_ID + " VARCHAR," +
+            CLM_USER_ID + " VARCHAR," +
             CLM_USERNAME + " VARCHAR," +
             CLM_EMAIL + " VARCHAR," +
             CLM_FIRST_NAME + " VARCHAR," +
@@ -253,7 +250,7 @@ public class DbParams {
      */
     static final String CREATE_TBL_PROJECT = "CREATE TABLE " + TBL_PROJECT + " (" +
             CLM_LOCAL_PROJECT_ID + " VARCHAR PRIMARY KEY," +
-            CLM_SERVER_PROJECT_ID + " VARCHAR," +
+            CLM_PROJECT_ID + " VARCHAR," +
             CLM_COMPANY_ID + " VARCHAR," +
             CLM_TITLE + " VARCHAR," +
             CLM_DESCRIPTION + " VARCHAR," +
@@ -277,10 +274,12 @@ public class DbParams {
             CLM_COMPANY_ID + " VARCHAR," +
             CLM_PROJECT_ID + " VARCHAR," +
             CLM_DESCRIPTION + " VARCHAR," +
+            CLM_TITLE + " VARCHAR," +
             CLM_THUMB + " VARCHAR," +
             CLM_START_DATE + " VARCHAR," +
             CLM_END_DATE + " VARCHAR," +
             CLM_TYPE + " VARCHAR," +
+            CLM_STATUS_ID + " INTEGER, " +
             CLM_CREATED_BY + " VARCHAR," +
             CLM_CREATED_ON + " DATETIME DEFAULT (CURRENT_TIMESTAMP)," +
             CLM_UPDATED_BY + " VARCHAR," +
@@ -294,7 +293,7 @@ public class DbParams {
             CLM_LOCAL_PROJECT_USER_LINK_ID + " VARCHAR PRIMARY KEY," +
             CLM_PROJECT_USER_LINK_ID + " VARCHAR," +
             CLM_LOCAL_PROJECT_ID + " VARCHAR," +
-            CLM_SERVER_PROJECT_ID + " VARCHAR," +
+            CLM_PROJECT_ID + " VARCHAR," +
             CLM_LOCAL_USER_ID + " VARCHAR," +
             CLM_USER_ID + " VARCHAR," +
             CLM_CREATED_BY + " VARCHAR," +
@@ -312,7 +311,7 @@ public class DbParams {
             CLM_LOCAL_TASK_ID + " VARCHAR," +
             CLM_TASK_ID + " VARCHAR," +
             CLM_LOCAL_USER_ID + " VARCHAR," +
-            CLM_SERVER_USER_ID + " VARCHAR," +
+            CLM_USER_ID + " VARCHAR," +
             CLM_CREATED_BY + " VARCHAR," +
             CLM_CREATED_ON + " DATETIME DEFAULT (CURRENT_TIMESTAMP)," +
             CLM_UPDATED_BY + " VARCHAR," +
@@ -328,7 +327,7 @@ public class DbParams {
             CLM_ATTENDANCE_ID + " VARCHAR," +
             CLM_COMPANY_ID + " VARCHAR," +
             CLM_LOCAL_USER_ID + " VARCHAR," +
-            CLM_SERVER_USER_ID + " VARCHAR," +
+            CLM_USER_ID + " VARCHAR," +
             CLM_START_DATE + " VARCHAR," +
             CLM_END_DATE + " VARCHAR," +
             CLM_ATTENDANCE_TYPE + " INTEGER DEFAULT 1," +
@@ -349,7 +348,7 @@ public class DbParams {
             CLM_LOCAL_ATTENDANCE_ID + " VARCHAR DEFAULT '0'," +
             CLM_ATTENDANCE_ID + " VARCHAR," +
             CLM_LOCAL_USER_ID + " VARCHAR," +
-            CLM_SERVER_USER_ID + " VARCHAR," +
+            CLM_USER_ID + " VARCHAR," +
             CLM_CHECK_IN_TIME + " VARCHAR," +
             CLM_LAT + " VARCHAR DEFAULT '0.00000000'," +
             CLM_LONG + " VARCHAR DEFAULT '0.00000000'," +
@@ -370,11 +369,11 @@ public class DbParams {
             CLM_SERVER_EXPENSE_ID + " VARCHAR," +
             CLM_COMPANY_ID + " VARCHAR," +
             CLM_LOCAL_USER_ID + " VARCHAR," +
-            CLM_SERVER_USER_ID + " VARCHAR," +
+            CLM_USER_ID + " VARCHAR," +
             CLM_LOCAL_TASK_ID + " VARCHAR," +
             CLM_TASK_ID + " VARCHAR," +
             CLM_LOCAL_PROJECT_ID + " VARCHAR," +
-            CLM_SERVER_PROJECT_ID + " VARCHAR," +
+            CLM_PROJECT_ID + " VARCHAR," +
             CLM_TITLE + " VARCHAR," +
             CLM_DESCRIPTION + " VARCHAR," +
             CLM_AMOUNT + " VARCHAR DEFAULT '0.00'," +
@@ -396,7 +395,7 @@ public class DbParams {
             CLM_SERVER_LEAVE_ID + " VARCHAR," +
             CLM_COMPANY_ID + " INTEGER," +
             CLM_LOCAL_USER_ID + " VARCHAR," +
-            CLM_SERVER_USER_ID + " VARCHAR," +
+            CLM_USER_ID + " VARCHAR," +
             CLM_START_DATE + "  VARCHAR," +
             CLM_END_DATE + "  VARCHAR," +
             CLM_NOTE + "  VARCHAR," +
@@ -426,6 +425,7 @@ public class DbParams {
             CLM_URL_PARAMETER + " VARCHAR," +
             CLM_LINK_OPTIONS + " VARCHAR," +
             CLM_FOR + " VARCHAR," +
+            CLM_ICON + " VARCHAR," +
             CLM_SORT_ORDER + " INTEGER," +
             CLM_IS_ALWAYS_TRUE + " VARCHAR," +
             CLM_STATUS + " INTEGER DEFAULT 1," +
@@ -476,7 +476,7 @@ public class DbParams {
             name : Ref. to security_module table
             status : 1=> Active, 2=> Inactive, 3=> Deleted              DEFAULT 1
      */
-    static final String CREATE_TBL_SECURITY_CONTROLLER = "CREATE TABLE "+ TBL_SECURITY_CONTROLLERS + " (" +
+    static final String CREATE_TBL_SECURITY_CONTROLLER = "CREATE TABLE " + TBL_SECURITY_CONTROLLERS + " (" +
             CLM_SECURITY_CONTROLLER_ID + " VARCHAR PRIMARY KEY," +
             CLM_NAME + " VARCHAR," +
             CLM_DISPLAY_NAME + " VARCHAR," +
@@ -513,21 +513,21 @@ public class DbParams {
             CLM_IS_UPDATED + " INTEGER DEFAULT 0)";
 
 
-      /*
-           MESSAGE TABLE.........
-           author_id : 'Ref to user table, who raised this ticket',
-           recipient_id : 'Ref to user table, who has received the message',
-           thread_id : 'If ticket is refering to reply of previous ticket, can be null, content parant message id ',
-           activity_type_id :'Ref to ActivityTypeID - TODO-- Ref to message_type table 1-Normal Message,2-Push,3-Email,4-Ticket,5-Booking Request,6-Staff Assignment,7-Booking Status Notification  8 - Accepr Reject Notification',
-           ref_id : 'refer to original table from where this message is generated'
-           status_id : 1=> active, 3=> Delete (Other status will not require)             DEFAULT '1'
-           is_read : DEFAULT '0',
-           system_generated : 1=> Yes, 0=> No                                  DEFAULT '0'
-           accepted_send_time` : timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'future notification',
-           is_send : DEFAULT '0',
-           in_queue : DEFAULT '0',
-           device_type : 1-iOS, 2-Android, 3-Web Admin
-     */
+    /*
+         MESSAGE TABLE.........
+         author_id : 'Ref to user table, who raised this ticket',
+         recipient_id : 'Ref to user table, who has received the message',
+         thread_id : 'If ticket is refering to reply of previous ticket, can be null, content parant message id ',
+         activity_type_id :'Ref to ActivityTypeID - TODO-- Ref to message_type tbable 1-Normal Message,2-Push,3-Email,4-Ticket,5-Booking Request,6-Staff Assignment,7-Booking Status Notification  8 - Accepr Reject Notification',
+         ref_id : 'refer to original table from where this message is generated'
+         status_id : 1=> active, 3=> Delete (Other status will not require)             DEFAULT '1'
+         is_read : DEFAULT '0',
+         system_generated : 1=> Yes, 0=> No                                  DEFAULT '0'
+         accepted_send_time` : timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'future notification',
+         is_send : DEFAULT '0',
+         in_queue : DEFAULT '0',
+         device_type : 1-iOS, 2-Android, 3-Web Admin
+   */
     static final String CREATE_TBL_MESSAGE = "CREATE TABLE " + TBL_MESSAGE + " (" +
             CLM_MESSAGE_ID + " VARCHAR PRIMARY KEY," +
             CLM_TICKET_NUMBER + " VARCHAR," +
@@ -560,7 +560,7 @@ public class DbParams {
     /*
             REF_TABLE TABLE........
      */
-    static final String CREATE_TBL_REF_TABLE = "CREATE TABLE " +TBL_REF_TABLE + " (" +
+    static final String CREATE_TBL_REF_TABLE = "CREATE TABLE " + TBL_REF_TABLE + " (" +
             CLM_REF_TABLE_ID + " VARCHAR PRIMARY KEY," +
             CLM_NAME + " VARCHAR," +
             CLM_IS_TABLE + " INTEGER DEFAULT 1)";
@@ -629,5 +629,6 @@ public class DbParams {
             CLM_CREATED_BY + " INTEGER," +
             CLM_CREATED_ON + " DATETIME DEFAULT (CURRENT_TIMESTAMP)," +
             CLM_UPDATED_BY + " INTEGER," +
-            CLM_UPDATED_ON + " DATETIME DEFAULT (CURRENT_TIMESTAMP))";
+            CLM_UPDATED_ON + " DATETIME DEFAULT (CURRENT_TIMESTAMP)," +
+            CLM_IS_UPDATED + " INTEGER DEFAULT 0)";
 }
