@@ -18,7 +18,6 @@ import com.techmali.smartteam.R;
 import com.techmali.smartteam.base.BaseFragment;
 import com.techmali.smartteam.database.DbParams;
 import com.techmali.smartteam.database.PendingDataImpl;
-import com.techmali.smartteam.models.LoginDetailResponse;
 import com.techmali.smartteam.models.SyncAttendance;
 import com.techmali.smartteam.models.SyncCheckIn;
 import com.techmali.smartteam.models.SyncCompany;
@@ -75,7 +74,6 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
         pendingData = new PendingDataImpl(mActivity);
 
         initView();
-
         return mRootView;
     }
 
@@ -117,6 +115,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
         changeToolBarColor();
     }
 
+
     private class GetSyncData extends AsyncTask<Void, Void, String> {
 
         @Override
@@ -151,14 +150,6 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-
-            case R.id.tvProject:
-                startActivity(new Intent(getActivity(), ProjectListActivity.class));
-                break;
-            case R.id.tvTask:
-
-                break;
-
             case R.id.tvMyTimeSheet:
                 startActivity(new Intent(getActivity(), MyTimeSheetActivity.class));
                 break;
@@ -171,6 +162,10 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
                 startActivity(new Intent(getActivity(), MyAttendanceActivity.class));
                 break;
             case R.id.tvCamera:
+                break;
+
+            case R.id.tvProject:
+                startActivity(new Intent(getActivity(), ProjectListActivity.class));
                 break;
 
             case R.id.tvTimeSheet:
@@ -195,6 +190,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
                 startActivity(new Intent(getActivity(), CreateUserActivity.class));
                 break;
         }
+
     }
 
     @Override
@@ -202,7 +198,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
         try {
             if (!TextUtils.isEmpty(response)) {
                 if (id == reqIdLoginDetail) {
-                   LoginDetailResponse loginDetailResponse = new Gson().fromJson(response, LoginDetailResponse.class);
+//                    LoginDetailResponse loginDetailResponse = new Gson().fromJson(response, LoginDetailResponse.class);
                     new GetSyncData().execute();
                 } else if (id == reqIdSyncData) {
                     JSONObject object = new JSONObject(response);
@@ -231,7 +227,19 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
             try {
                 if (!Utils.isEmptyString(strings[0])) {
                     JSONObject object = new JSONObject(strings[0]);
-                    insetUserinfo(object.getString(DbParams.TBL_USER_INFO));
+                    insertUserinfo(object.getString(DbParams.TBL_USER_INFO), DbParams.TBL_USER_INFO);
+                    insertProject(object.getString(DbParams.TBL_PROJECT), DbParams.TBL_PROJECT);
+                    insetProjectUserLink(object.getString(DbParams.TBL_PROJECT_USER_LINK), DbParams.TBL_PROJECT_USER_LINK);
+                    insertTask(object.getString(DbParams.TBL_TASK), DbParams.TBL_TASK);
+                    insertTaskUserLink(object.getString(DbParams.TBL_TASK_USER_LINK), DbParams.TBL_TASK_USER_LINK);
+                    insertAttendance(object.getString(DbParams.TBL_ATTENDANCE), DbParams.TBL_ATTENDANCE);
+                    insertCheckIn(object.getString(DbParams.TBL_CHECK_IN), DbParams.TBL_CHECK_IN);
+                    insertSecurityMenu(object.getString(DbParams.TBL_SECURITY_MENU), DbParams.TBL_SECURITY_MENU);
+                    insertSecurityMenuControllerAction(object.getString(DbParams.TBL_SECURITY_MENU_CONTROLLERS_ACTION), DbParams.TBL_SECURITY_MENU_CONTROLLERS_ACTION);
+                    insertSecurityMenuControllerLink(object.getString(DbParams.TBL_SECURITY_MENU_CONTROLLERS_LINK), DbParams.TBL_SECURITY_MENU_CONTROLLERS_LINK);
+                    insertSecurityController(object.getString(DbParams.TBL_SECURITY_CONTROLLERS), DbParams.TBL_SECURITY_CONTROLLERS);
+                    insertRole(object.getString(DbParams.TBL_ROLE), DbParams.TBL_ROLE);
+                    insertCompany(object.getString(DbParams.TBL_COMPANY), DbParams.TBL_COMPANY);
                     return strings[1];
                 }
             } catch (JSONException e) {
