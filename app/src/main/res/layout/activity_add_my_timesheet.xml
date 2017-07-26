@@ -92,7 +92,6 @@
             android:text="@string/error_enter"
             android:visibility="gone" />
 
-
         <com.techmali.smartteam.ui.views.MyEditText
             android:id="@+id/etDescription"
             android:layout_width="match_parent"

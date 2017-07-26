@@ -20,7 +20,7 @@ import com.techmali.smartteam.utils.CryptoManager;
 
 
 public class CameraActivity extends BaseAppCompatPermissionActivity implements View.OnClickListener,
-        RequestListener, PermissionListener {
+        RequestListener {
 
     public static final String TAG = CameraActivity.class.getSimpleName();
 
@@ -65,9 +65,35 @@ public class CameraActivity extends BaseAppCompatPermissionActivity implements V
                 .bitmapConfig(Bitmap.Config.RGB_565).build();
 
         if (isPermissionGranted(this, android.Manifest.permission.CAMERA))
-            askForPermissions(new String[]{
-                    Manifest.permission.CAMERA, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE
-            }, this);
+            askForPermissions(new String[]{Manifest.permission.CAMERA, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE}, new PermissionListener() {
+                @Override
+                public void permissionGranted(String permission, String tag) {
+                    switch (permission) {
+
+                        case Manifest.permission.CAMERA:
+                            cameraPermission = true;
+                            break;
+
+                        case Manifest.permission.WRITE_EXTERNAL_STORAGE:
+                            writeStoragePermission = true;
+                            break;
+
+                        case Manifest.permission.READ_EXTERNAL_STORAGE:
+                            readExternalStorage = true;
+                            break;
+                    }
+                }
+
+                @Override
+                public void permissionDenied(String permission) {
+
+                }
+
+                @Override
+                public void permissionForeverDenied(String permission) {
+
+                }
+            },"");
 
         btnCamera.setOnClickListener(this);
         btnGallery.setOnClickListener(this);
@@ -108,32 +134,4 @@ public class CameraActivity extends BaseAppCompatPermissionActivity implements V
         }
     }
 
-
-    @Override
-    public void permissionGranted(String permission) {
-        switch (permission) {
-
-            case Manifest.permission.CAMERA:
-                cameraPermission = true;
-                break;
-
-            case Manifest.permission.WRITE_EXTERNAL_STORAGE:
-                writeStoragePermission = true;
-                break;
-
-            case Manifest.permission.READ_EXTERNAL_STORAGE:
-                readExternalStorage = true;
-                break;
-        }
-    }
-
-    @Override
-    public void permissionDenied(String permission) {
-
-    }
-
-    @Override
-    public void permissionForeverDenied(String permission) {
-
-    }
 }

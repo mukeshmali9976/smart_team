@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/action_menu_sync"
+        android:icon="@drawable/circle_green"
+        android:orderInCategory="2"
+        android:title="@string/lbl_menu"
+        app:showAsAction="always|collapseActionView" />
+
+    <item
+        android:id="@+id/action_menu_checkin_checkout"
+        android:icon="@drawable/ic_home"
+        android:orderInCategory="2"
+        android:title="@string/lbl_menu"
+        app:showAsAction="always|collapseActionView" />
+
+</menu>

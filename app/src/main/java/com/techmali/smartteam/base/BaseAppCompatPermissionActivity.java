@@ -27,6 +27,7 @@ public class BaseAppCompatPermissionActivity extends BaseAppCompatActivity {
     private final int KEY_PERMISSION = 200;
     private PermissionListener permissionListener;
     private String permissionsAsk[];
+    private String mTag;
 
     /**
      * @param context    current Context
@@ -66,7 +67,7 @@ public class BaseAppCompatPermissionActivity extends BaseAppCompatActivity {
                 permissionsNotGranted.add(permissionAsk[i]);
             } else {
                 if (permissionListener != null) {
-                    permissionListener.permissionGranted(permissionAsk[i]);
+                    permissionListener.permissionGranted(permissionAsk[i],mTag);
                 }
             }
         }
@@ -98,27 +99,19 @@ public class BaseAppCompatPermissionActivity extends BaseAppCompatActivity {
                     permissionListener.permissionDenied(permissions[i]);
                 }
             } else {
-                permissionListener.permissionGranted(permissions[i]);
+                permissionListener.permissionGranted(permissions[i],mTag);
             }
         }
     }
 
-    /**
-     * @param permission         String permission which needs to be ask
-     * @param permissionListener callback PermissionResult
-     */
-    public void askForPermission(String permission, PermissionListener permissionListener) {
-        permissionsAsk = new String[]{permission};
-        this.permissionListener = permissionListener;
-        internalRequestPermission(permissionsAsk);
-    }
 
     /**
      * @param permissions        String[] permissions which needs to be ask
      * @param permissionListener callback PermissionResult
      */
-    public void askForPermissions(String permissions[], PermissionListener permissionListener) {
+    public void askForPermissions(String permissions[], PermissionListener permissionListener,String tag) {
         permissionsAsk = permissions;
+        this.mTag = tag;
         this.permissionListener = permissionListener;
         internalRequestPermission(permissionsAsk);
 

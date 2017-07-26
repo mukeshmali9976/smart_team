@@ -6,22 +6,26 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.TextView;
+
+import com.daimajia.swipe.SwipeLayout;
+import com.daimajia.swipe.adapters.RecyclerSwipeAdapter;
 import com.techmali.smartteam.R;
 import com.techmali.smartteam.models.NotificationModel;
+import com.techmali.smartteam.utils.Constants;
+import com.techmali.smartteam.utils.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapter.ViewHolder> {
+public class NotificationAdapter extends RecyclerSwipeAdapter<NotificationAdapter.ViewHolder> {
 
     private Context context;
     private ArrayList<NotificationModel> notificationModelList;
-    private OnInnerViewsClickListener mListener;
+    private onSwipeClickLisener mListener;
 
-    public NotificationAdapter(Context context, ArrayList<NotificationModel> notificationModelList,
-                               OnInnerViewsClickListener mListener) {
+    public NotificationAdapter(Context context, onSwipeClickLisener mListener) {
         this.context = context;
-        this.notificationModelList = notificationModelList;
         this.mListener = mListener;
     }
 
@@ -33,13 +37,65 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, final int position) {
-        holder.llRowSwipe.setOnClickListener(new View.OnClickListener() {
+    public void onBindViewHolder(final ViewHolder holder, final int position) {
+        NotificationModel row_object = getItem(position);
+
+        holder.swipeLayout.setShowMode(SwipeLayout.ShowMode.LayDown);
+
+//        if (!Utils.isEmptyString(row_object.getIs_read()) && row_object.getIs_read().equals(String.valueOf(Constants.MESSAGE_READ))) {
+//
+//            holder.ll_itemView.setBackgroundColor(mContext.getResources().getColor(R.color.colorPrimary));
+//
+//        } else {
+//
+//            holder.ll_itemView.setBackgroundColor(mContext.getResources().getColor(R.color.colorAccentLight));
+//        }
+
+        //   holder.tvNotificationDateTime.setText(row_object.getCreated());
+
+        // holder.tvNotificationTitle.setText(row_object.getSubject());
+
+//        if (!Utils.isEmptyString(row_object.getMessage())) {
+//            holder.tvNotificationDescription.setText(row_object.getMessage());
+//            holder.tvNotificationDescription.setVisibility(View.VISIBLE);
+//        } else
+//            holder.tvNotificationDescription.setVisibility(View.GONE);
+
+        holder.btnDelete.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                mListener.onItemClick(view, position);
+            public void onClick(View v) {
+
+                if (mListener != null)
+                    mListener.onSwipeClick(v, holder.getAdapterPosition());
+
+                mItemManger.closeAllItems();
+                mItemManger.removeShownLayouts(holder.swipeLayout);
+
             }
         });
+
+        holder.llRowSwipe.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if (mListener != null)
+                    mListener.onSwipeClick(v, holder.getAdapterPosition());
+
+                mItemManger.closeAllItems();
+                mItemManger.removeShownLayouts(holder.swipeLayout);
+            }
+        });
+
+        mItemManger.bindView(holder.itemView, position);
+
+    }
+
+    public NotificationModel getItem(int position) {
+        return notificationModelList.get(position);
+    }
+
+    public void setData(ArrayList<NotificationModel> mNotificationList) {
+        this.notificationModelList = mNotificationList;
     }
 
     @Override
@@ -47,18 +103,28 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
         return notificationModelList.size();
     }
 
+    @Override
+    public int getSwipeLayoutResourceId(int position) {
+        return R.id.swipe;
+    }
+
     public class ViewHolder extends RecyclerView.ViewHolder {
         public LinearLayout llRowSwipe;
+        public TextView btnDelete;
+        private SwipeLayout swipeLayout;
+
         public ViewHolder(View itemView) {
             super(itemView);
             llRowSwipe = (LinearLayout) itemView.findViewById(R.id.llRowSwipe);
+            btnDelete = (TextView) itemView.findViewById(R.id.btnDelete);
+            swipeLayout = (SwipeLayout) itemView.findViewById(R.id.swipe);
         }
     }
 
-    public interface OnInnerViewsClickListener {
-        void onItemClick(View view, int position);
 
-        void onItemLongClick(View view, int position);
+    public interface onSwipeClickLisener {
+        public void onSwipeClick(View v, int position);
     }
+
 
 }

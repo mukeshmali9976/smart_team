@@ -9,6 +9,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +23,7 @@ import com.techmali.smartteam.slidingmenu.SlidingMenu;
 import com.techmali.smartteam.ui.fragments.HomeFragment;
 import com.techmali.smartteam.ui.fragments.MenuFragment;
 import com.techmali.smartteam.utils.Log;
+import com.techmali.smartteam.utils.Utils;
 
 public class MainActivity extends SlidingActivity {
 
@@ -82,11 +84,26 @@ public class MainActivity extends SlidingActivity {
 
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_home, menu);
+//        menu.findItem(R.id.action_menu_add).setVisible(true);
+
+        return super.onCreateOptionsMenu(menu);
+    }
+
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
                 toggle();
-                return true;
+                break;
+            case R.id.action_menu_sync:
+                Utils.hideKeyboard(this);
+                break;
+            case R.id.action_menu_checkin_checkout:
+                Utils.hideKeyboard(this);
+                break;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -102,6 +119,7 @@ public class MainActivity extends SlidingActivity {
                 reset((ViewGroup) view);
         }
     }
+
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {

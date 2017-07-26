@@ -199,7 +199,6 @@ public class PendingDataImpl {
             if (userinfoCursor.getCount() > 0) {
                 userinfoCursor.moveToFirst();
                 do {
-
                     JSONObject userinfoObject = new JSONObject();
                     userinfoObject.put(DbParams.CLM_USER_ID, userinfoCursor.getString(userinfoCursor.getColumnIndex(DbParams.CLM_USER_ID)));
                     userinfoObject.put(DbParams.CLM_LOCAL_USER_ID, userinfoCursor.getString(userinfoCursor.getColumnIndex(DbParams.CLM_LOCAL_USER_ID)));
@@ -700,5 +699,4 @@ public class PendingDataImpl {
         values.put(DbParams.CLM_IS_UPDATED, 1);
         return values;
     }
-
 }

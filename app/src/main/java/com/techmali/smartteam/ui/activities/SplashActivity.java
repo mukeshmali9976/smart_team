@@ -35,19 +35,9 @@ public class SplashActivity extends BaseAppCompatActivity implements RequestList
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
 
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                Intent mainIntent = new Intent(SplashActivity.this, LoginActivity.class);
-                startActivity(mainIntent);
-                overridePendingTransition(R.anim.grow_from_bottom, R.anim.grow_from_bottom);
-                finish();
-            }
-        }, 500);
-
-
         networkManager = NetworkManager.getInstance();
         prefManager = CryptoManager.getInstance(SplashActivity.this).getPrefs();
+
 
     }
 
@@ -55,6 +45,15 @@ public class SplashActivity extends BaseAppCompatActivity implements RequestList
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
 
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                Intent mainIntent = new Intent(SplashActivity.this, LoginActivity.class);
+                startActivity(mainIntent);
+                overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
+                finish();
+            }
+        }, 3000);
 
     }
 

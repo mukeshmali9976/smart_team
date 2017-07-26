@@ -62,13 +62,6 @@
                 android:textColor="@color/text_hint_color"
                 custom:font_style="semibold" />
 
-            <ImageView
-                android:src="@drawable/ic_more_white"
-                android:layout_gravity="end"
-                android:layout_width="@dimen/margin_30"
-                android:layout_height="match_parent" />
-
-
         </LinearLayout>
     </com.daimajia.swipe.SwipeLayout>
 

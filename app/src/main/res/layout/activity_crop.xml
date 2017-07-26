@@ -1,0 +1,29 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/custom_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <com.oneplus.researchplus.ui.views.imageCrop.ImageCropView xmlns:imagecrop="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/image"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="visible"
+            imagecrop:gridInnerColor="#66ffffff"
+            imagecrop:gridInnerStroke="@dimen/seperator"
+            imagecrop:gridOuterColor="@android:color/white"
+            imagecrop:gridOuterStroke="@dimen/seperator"
+            imagecrop:setInnerGridMode="off"
+            imagecrop:setOuterGridMode="off" />
+    </FrameLayout>
+</LinearLayout>

@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_marginTop="@dimen/margin_2"
     android:orientation="vertical">
 
     <com.daimajia.swipe.SwipeLayout xmlns:swipe="http://schemas.android.com/apk/res-auto"
@@ -33,16 +34,14 @@
             android:id="@+id/llRowSwipe"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/colorText"
+            android:background="@drawable/theme_row_background"
             android:orientation="vertical"
-            android:paddingTop="@dimen/margin_20">
+            android:padding="@dimen/margin_10">
 
             <TextView
                 android:id="@+id/tvNotificationDateTime"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingLeft="@dimen/margin_24"
-                android:paddingRight="@dimen/margin_24"
                 android:text="02 March 2017, 11:00 Am"
                 android:textSize="@dimen/font_16"
                 android:textStyle="bold" />
@@ -51,8 +50,6 @@
                 android:id="@+id/tvNotificationTitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingLeft="@dimen/margin_24"
-                android:paddingRight="@dimen/margin_24"
                 android:paddingTop="@dimen/margin_4"
                 android:text="Welcome to Smart Team"
                 android:textSize="@dimen/font_16" />
@@ -61,16 +58,8 @@
                 android:id="@+id/tvNotificationDescription"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingLeft="@dimen/margin_24"
-                android:paddingRight="@dimen/margin_24"
                 android:paddingTop="@dimen/margin_4"
                 android:text="Thank you for joining Smart Team. your aaplication has beed approved." />
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/seperator"
-                android:layout_marginTop="@dimen/margin_20"
-                android:background="@color/colorPrimaryDark" />
         </LinearLayout>
 
 

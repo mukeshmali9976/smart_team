@@ -24,6 +24,7 @@ public class BasePermissionFragment extends BaseFragment {
     private final int KEY_PERMISSION = 200;
     private PermissionListener permissionListener;
     private String permissionsAsk[];
+    private String mTag;
 
     @Override
     public void onCreate(Bundle arg0) {
@@ -68,7 +69,7 @@ public class BasePermissionFragment extends BaseFragment {
                 permissionsNotGranted.add(permissionAsk[i]);
             } else {
                 if (permissionListener != null) {
-                    permissionListener.permissionGranted(permissionAsk[i]);
+                    permissionListener.permissionGranted(permissionAsk[i],mTag);
                 }
             }
         }
@@ -100,27 +101,14 @@ public class BasePermissionFragment extends BaseFragment {
                     permissionListener.permissionDenied(permissions[i]);
                 }
             } else {
-                permissionListener.permissionGranted(permissions[i]);
+                permissionListener.permissionGranted(permissions[i], mTag);
             }
         }
     }
 
-    /**
-     * @param permission         String permission ask
-     * @param permissionListener callback PermissionResult
-     */
-    public void askForPermission(String permission, PermissionListener permissionListener) {
-        permissionsAsk = new String[]{permission};
-        this.permissionListener = permissionListener;
-        internalRequestPermission(permissionsAsk);
-    }
-
-    /**
-     * @param permissions        String[] permissions to ask
-     * @param permissionListener callback PermissionResult
-     */
-    public void askForPermissions(String permissions[], PermissionListener permissionListener) {
+    public void askForPermissions(String permissions[], PermissionListener permissionListener,String  tag) {
         permissionsAsk = permissions;
+        this.mTag = tag;
         this.permissionListener = permissionListener;
         internalRequestPermission(permissionsAsk);
     }

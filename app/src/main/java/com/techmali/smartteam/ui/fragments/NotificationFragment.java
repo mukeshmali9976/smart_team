@@ -25,18 +25,15 @@ import com.techmali.smartteam.utils.Log;
 import java.util.ArrayList;
 import java.util.List;
 
-public class NotificationFragment extends BasePermissionFragment implements RequestListener, View.OnClickListener, NotificationAdapter.OnInnerViewsClickListener {
+public class NotificationFragment extends BasePermissionFragment implements RequestListener, View.OnClickListener, NotificationAdapter.onSwipeClickLisener {
 
     public static final String TAG = NotificationFragment.class.getSimpleName();
 
     private SharedPreferences prefManager = null;
     private NetworkManager networkManager;
-
     private View mRootView;
-
     private RecyclerView rvNotificationList;
     private NotificationAdapter mAdapter;
-
 
     @Nullable
     @Override
@@ -61,11 +58,12 @@ public class NotificationFragment extends BasePermissionFragment implements Requ
             notificationModelList.add(notificationModel);
         }
 
-//        mAdapter = new NotificationAdapter(getActivity(), notificationModelList, this);
-//        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity().getApplicationContext());
-//        rvNotificationList.setLayoutManager(mLayoutManager);
-//        rvNotificationList.setItemAnimator(new DefaultItemAnimator());
-//        rvNotificationList.setAdapter(mAdapter);
+        mAdapter = new NotificationAdapter(getActivity(),this);
+        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity().getApplicationContext());
+        rvNotificationList.setLayoutManager(mLayoutManager);
+        rvNotificationList.setItemAnimator(new DefaultItemAnimator());
+        mAdapter.setData(notificationModelList);
+        rvNotificationList.setAdapter(mAdapter);
 
     }
 
@@ -74,7 +72,7 @@ public class NotificationFragment extends BasePermissionFragment implements Requ
         super.onActivityCreated(savedInstanceState);
         initActionBar(getActivity().getString(R.string.title_notification), mRootView);
         setTitle(getString(R.string.title_notification));
-        changeToolBarColor();
+
     }
 
     @Override
@@ -112,12 +110,7 @@ public class NotificationFragment extends BasePermissionFragment implements Requ
     }
 
     @Override
-    public void onItemClick(View view, int position) {
-
-    }
-
-    @Override
-    public void onItemLongClick(View view, int position) {
+    public void onSwipeClick(View v, int position) {
 
     }
 }

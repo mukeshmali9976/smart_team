@@ -43,7 +43,6 @@ public class ProjectListActivity extends BaseAppCompatActivity implements View.O
     private void initView() {
         tabLayout = (TabLayout) findViewById(R.id.tabLayout);
         tabLayout.addTab(tabLayout.newTab().setText("Active"));
-        tabLayout.addTab(tabLayout.newTab().setText("Completed"));
         tabLayout.addTab(tabLayout.newTab().setText("Message"));
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
         tabLayout.addOnTabSelectedListener(this);
@@ -66,7 +65,6 @@ public class ProjectListActivity extends BaseAppCompatActivity implements View.O
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_add, menu);
         menu.findItem(R.id.action_menu_add).setVisible(true);
-
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -76,7 +74,6 @@ public class ProjectListActivity extends BaseAppCompatActivity implements View.O
             case R.id.action_menu_add:
                 startActivity(new Intent(ProjectListActivity.this,CreateProjectActivity.class));
                 Utils.hideKeyboard(this);
-
                 break;
         }
         return super.onOptionsItemSelected(item);
@@ -85,14 +82,12 @@ public class ProjectListActivity extends BaseAppCompatActivity implements View.O
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-
         }
     }
 
 
     @Override
     public void onSuccess(int id, String response) {
-
     }
 
     @Override
@@ -107,9 +102,6 @@ public class ProjectListActivity extends BaseAppCompatActivity implements View.O
                 addFragment(new ActiveProjectFragment(), R.id.llContainer);
                 break;
             case 1:
-                addFragment(new ActiveProjectFragment(), R.id.llContainer);
-                break;
-            case 2:
                 addFragment(new ActiveProjectFragment(), R.id.llContainer);
                 break;
             default:

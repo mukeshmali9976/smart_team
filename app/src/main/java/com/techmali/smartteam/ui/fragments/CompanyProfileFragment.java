@@ -21,7 +21,6 @@ import com.techmali.smartteam.utils.Log;
 public class CompanyProfileFragment extends BaseFragment implements RequestListener, View.OnClickListener {
 
     public static final String TAG = CompanyProfileFragment.class.getSimpleName();
-
     private SharedPreferences prefManager = null;
     private NetworkManager networkManager;
 
@@ -38,13 +37,10 @@ public class CompanyProfileFragment extends BaseFragment implements RequestListe
         prefManager = CryptoManager.getInstance(getActivity()).getPrefs();
 
         initView();
-
         return mRootView;
     }
 
     private void initView() {
-
-
     }
 
     @Override
@@ -52,7 +48,7 @@ public class CompanyProfileFragment extends BaseFragment implements RequestListe
         super.onActivityCreated(savedInstanceState);
         initActionBar(getActivity().getString(R.string.title_company_profile), mRootView);
         setTitle(getString(R.string.title_company_profile));
-        changeToolBarColor();
+
     }
 
     @Override

@@ -15,6 +15,7 @@ import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
 import android.media.ExifInterface;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Environment;
 import android.provider.DocumentsContract;
@@ -683,4 +684,6 @@ public class ImageUtils {
     private static boolean isGoogleDriveUri(Uri uri) {
         return "com.google.android.apps.docs.storage".equals(uri.getAuthority());
     }
+
+
 }

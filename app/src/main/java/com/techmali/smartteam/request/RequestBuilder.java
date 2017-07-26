@@ -1,7 +1,6 @@
 package com.techmali.smartteam.request;
 
 
-import com.techmali.smartteam.utils.Constants;
 import com.techmali.smartteam.utils.Log;
 
 import org.json.JSONException;

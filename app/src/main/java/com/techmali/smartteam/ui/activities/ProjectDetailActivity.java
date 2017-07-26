@@ -129,7 +129,6 @@ public class ProjectDetailActivity extends BaseAppCompatActivity implements
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_add, menu);
         menu.findItem(R.id.action_menu_add).setVisible(true);
-
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -192,7 +191,6 @@ public class ProjectDetailActivity extends BaseAppCompatActivity implements
 
     @Override
     public void onItemClick(View view, int position) {
-        startActivity(new Intent(this, TaskDetailActivity.class));
     }
 
     @Override
@@ -226,7 +224,6 @@ public class ProjectDetailActivity extends BaseAppCompatActivity implements
         btn4.setOnClickListener(this);
         dialog.show();
     }
-
 
     @Override
     public void onCheckedChanged(RadioGroup radioGroup, @IdRes int i) {

@@ -44,12 +44,14 @@
     <!--Menu-->
     <string name="lbl_home">Home</string>
     <string name="lbl_notification">Notification</string>
-    <string name="lbl_company_profile">Comapany profile</string>
+    <string name="lbl_company_profile">Company profile</string>
     <string name="lbl_my_reports">My Reports</string>
     <string name="lbl_holidays">Holidays</string>
     <string name="lbl_policy">Policy</string>
     <string name="lbl_help">Help</string>
     <string name="lbl_logout">Logout</string>
+
+
 
     <!--Splesh screen-->
     <string name="lbl_welcome">Welcome</string>
@@ -58,16 +60,17 @@
     <string name="title_login">Login</string>
     <string name="lbl_password">Password</string>
     <string name="lbl_login">Login</string>
-
     <string name="title_forgot_password">Forgot Password</string>
     <string name="lbl_forgot_password">Forgot Your Password</string>
     <string name="lbl_reset_phone">Enter your phone to reset it</string>
     <string name="lbl_send">Send</string>
 
+
     <!--OTP Verification-->
     <string name="lbl_otp">OTP</string>
     <string name="lbl_submit">Submit</string>
     <string name="lbl_resend_otp">Resend OTP?</string>
+
 
     <!--Home Fragment-->
     <string name="lbl_end_user">End User</string>
@@ -90,9 +93,10 @@
     <string name="lbl_add_document">Add Document</string>
 
 
-    <!--create project-->
+    <!--Create project-->
     <string name="title_create_project">Create Project</string>
     <string name="hint_project_title">Project Title</string>
+
 
     <!--Task List-->
     <string name="title_task">Task</string>
@@ -113,10 +117,12 @@
     <string name="lbl_upload_document">Upload Document</string>
     <string name="lbl_add">Add</string>
 
+
     <!--Report List-->
     <string name="title_report">Report</string>
     <string name="lbl_report">Report</string>
     <string name="lbl_pdf">Pdf</string>
+
 
     <!--Create Report-->
     <string name="title_create_report">Create Report</string>
@@ -125,6 +131,7 @@
     <string name="hint_completed_task">Completed Task</string>
     <string name="hint_amount">Amount</string>
     <string name="hint_description">Description</string>
+
 
     <!--Attendance List-->
     <string name="title_attendance">Attendance</string>
@@ -136,11 +143,6 @@
     <string name="lbl_is_half_day">Is Half Day</string>
     <string name="hint_end_date">End Date</string>
     <string name="hint_leave_type">Leave Type</string>
-
-    <!--Change Password-->
-    <string name="title_change_password">Change Password</string>
-    <string name="hint_new_password">New Password</string>
-    <string name="hint_confirm_password">Confirm Password</string>
 
     <!--Error message-->
     <string name="error_email_address">Please enter email address</string>
@@ -170,6 +172,11 @@
     <string name="error_old_new_password_match">Old New password Match</string>
     <string name="error_password_not_match">Password not match</string>
 
+
+    <!--Change Password-->
+    <string name="title_change_password">Change Password</string>
+    <string name="hint_new_password">New Password</string>
+    <string name="hint_confirm_password">Confirm Password</string>
 
     <!--My TimeSheet-->
     <string name="title_my_time_sheet">Add TimeSheet</string>
@@ -228,7 +235,6 @@
     <string name="error_birth_date">Please select date of birth</string>
 
     <!--Camera-->
-
     <string name="permission_denied_message"><![CDATA[If you reject permission, you can not use this service\n\nPlease turn on permissions at [Setting] > [Permission]]]></string>
 
 
