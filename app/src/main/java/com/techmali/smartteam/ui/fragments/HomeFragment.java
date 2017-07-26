@@ -227,7 +227,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
             try {
                 if (!Utils.isEmptyString(strings[0])) {
                     JSONObject object = new JSONObject(strings[0]);
-                    insertUserinfo(object.getString(DbParams.TBL_USER_INFO), DbParams.TBL_USER_INFO);
+                    insertUserInfo(object.getString(DbParams.TBL_USER_INFO), DbParams.TBL_USER_INFO);
                     insertProject(object.getString(DbParams.TBL_PROJECT), DbParams.TBL_PROJECT);
                     insetProjectUserLink(object.getString(DbParams.TBL_PROJECT_USER_LINK), DbParams.TBL_PROJECT_USER_LINK);
                     insertTask(object.getString(DbParams.TBL_TASK), DbParams.TBL_TASK);
@@ -258,7 +258,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
         }
     }
 
-    private void insertUserinfo(String syncModel, String table) {
+    private void insertUserInfo(String syncModel, String table) {
         if (!Utils.isEmptyString(syncModel)) {
             ArrayList<SyncUserInfo> syncList = new Gson().fromJson(syncModel, new TypeToken<List<SyncUserInfo>>() {
             }.getType());
