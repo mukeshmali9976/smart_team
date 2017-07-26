@@ -2,6 +2,7 @@ package com.techmali.smartteam.base;
 
 import android.accounts.NetworkErrorException;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
@@ -27,6 +28,8 @@ import java.net.UnknownHostException;
 import javax.net.ssl.SSLException;
 import javax.net.ssl.SSLPeerUnverifiedException;
 
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
+
 
 public class BaseAppCompatActivity extends AppCompatActivity {
 
@@ -38,6 +41,11 @@ public class BaseAppCompatActivity extends AppCompatActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+    }
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
     }
 
     public void initActionBar(String title) {

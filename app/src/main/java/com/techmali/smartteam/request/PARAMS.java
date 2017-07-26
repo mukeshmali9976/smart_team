@@ -26,11 +26,11 @@ public class PARAMS {
 
 
     // Status codes.
-    public static final int TAG_STATUS_200 = 200;
+    public static final int TAG_STATUS_200 = 200;                       // Success tag for DB operations
     public static final int TAG_STATUS_503 = 503;
     public static final int TAG_STATUS_507 = 507;
     public static final int TAG_STATUS_1001 = 1001;
-    public static final int TAG_STATUS_4004 = 4004;
+    public static final int TAG_STATUS_4004 = 4004;                     // Blank result for DB operations
 
     public static final int TAG_STATUS_112 = 112;
     public static final int TAG_STATUS_121 = 121;

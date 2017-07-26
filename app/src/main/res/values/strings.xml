@@ -37,9 +37,9 @@
     <string name="alert_logout_message">Are you sure you want to logout?</string>
 
     <!--Define all Font Names-->
-    <!--<string name="bold">fonts/proxima-nova-bold</string>-->
-    <!--<string name="semibold">fonts/proxima-nova-semibold</string>-->
-    <!--<string name="regular">fonts/proxima-nova-regular</string>-->
+    <string name="bold">font/roboto_bold.ttf</string>
+    <string name="semi_bold">font/roboto_medium.ttf</string>
+    <string name="regular">font/roboto_regular.ttf</string>
 
     <!--Menu-->
     <string name="lbl_home">Home</string>
@@ -50,7 +50,6 @@
     <string name="lbl_policy">Policy</string>
     <string name="lbl_help">Help</string>
     <string name="lbl_logout">Logout</string>
-
 
 
     <!--Splesh screen-->
@@ -77,6 +76,8 @@
 
 
     <!--Project List-->
+    <string name="tab_active">Active</string>
+    <string name="tab_message">Message</string>
     <string name="title_project">Projects</string>
     <string name="lbl_active">Active</string>
     <string name="lbl_completed">Completed</string>

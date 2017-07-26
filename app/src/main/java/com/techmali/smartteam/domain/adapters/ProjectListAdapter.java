@@ -6,6 +6,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -14,8 +15,9 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 import com.nostra13.universalimageloader.core.display.CircleBitmapDisplayer;
 import com.techmali.smartteam.R;
-import com.techmali.smartteam.models.ProjectListModel;
+import com.techmali.smartteam.models.SyncProject;
 import com.techmali.smartteam.ui.views.CircleImageView;
+import com.techmali.smartteam.utils.Utils;
 
 import java.util.List;
 
@@ -26,12 +28,12 @@ import java.util.List;
 public class ProjectListAdapter extends RecyclerView.Adapter<ProjectListAdapter.MyViewHolder> {
 
     private Context context;
-    private List<ProjectListModel> modelList;
+    private List<SyncProject> modelList;
     private OnInnerViewsClickListener mListener;
     private ImageLoader imageLoader;
     private DisplayImageOptions options;
 
-    public ProjectListAdapter(Context context, List<ProjectListModel> modelList, OnInnerViewsClickListener mListener) {
+    public ProjectListAdapter(Context context, List<SyncProject> modelList, OnInnerViewsClickListener mListener) {
         this.context = context;
         this.modelList = modelList;
         this.mListener = mListener;
@@ -48,7 +50,6 @@ public class ProjectListAdapter extends RecyclerView.Adapter<ProjectListAdapter.
     }
 
 
-
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -59,7 +60,16 @@ public class ProjectListAdapter extends RecyclerView.Adapter<ProjectListAdapter.
     @Override
     public void onBindViewHolder(MyViewHolder holder, final int position) {
 
-        //     imageLoader.displayImage(currentData.getJob_thumb().toString().trim(), holder.ivJobThumb, options);
+        SyncProject project = modelList.get(position);
+
+        holder.tvProjectName.setText(project.getTitle());
+        holder.tvDescription.setText(project.getDescription());
+        holder.tvStratDate.append(project.getStart_date());
+        holder.tvEndDate.append(project.getEnd_date());
+
+        if (!Utils.isEmptyString(project.getThumb()))
+            imageLoader.displayImage(project.getThumb(), holder.ivProject, options);
+
         holder.llRowProjectList.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -74,15 +84,16 @@ public class ProjectListAdapter extends RecyclerView.Adapter<ProjectListAdapter.
         return modelList.size();
     }
 
-    public class MyViewHolder extends RecyclerView.ViewHolder {
-        public LinearLayout llRowProjectList;
-        public CircleImageView ivProject;
-        public TextView tvProjectName,tvStratDate,tvEndDate,tvDescription;
-        public MyViewHolder(View itemView) {
+    class MyViewHolder extends RecyclerView.ViewHolder {
+        LinearLayout llRowProjectList;
+        ImageView ivProject;
+        TextView tvProjectName, tvStratDate, tvEndDate, tvDescription;
+
+        MyViewHolder(View itemView) {
             super(itemView);
 
             llRowProjectList = (LinearLayout) itemView.findViewById(R.id.llRowProjectList);
-            ivProject = (CircleImageView) itemView.findViewById(R.id.ivProject);
+            ivProject = (ImageView) itemView.findViewById(R.id.ivProject);
 
             tvProjectName = (TextView) itemView.findViewById(R.id.tvProjectName);
             tvStratDate = (TextView) itemView.findViewById(R.id.tvStratDate);

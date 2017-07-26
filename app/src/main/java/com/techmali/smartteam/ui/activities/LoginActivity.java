@@ -1,22 +1,27 @@
 package com.techmali.smartteam.ui.activities;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
 import com.techmali.smartteam.R;
 import com.techmali.smartteam.base.BaseAppCompatActivity;
+import com.techmali.smartteam.models.LoginResponse;
 import com.techmali.smartteam.network.NetworkManager;
 import com.techmali.smartteam.network.RequestListener;
 import com.techmali.smartteam.network.RequestMethod;
 import com.techmali.smartteam.request.PARAMS;
 import com.techmali.smartteam.request.RequestBuilder;
 import com.techmali.smartteam.utils.CryptoManager;
-import com.techmali.smartteam.utils.DialogUtils;
 import com.techmali.smartteam.utils.Utils;
+
 import org.json.JSONObject;
 
 public class LoginActivity extends BaseAppCompatActivity implements View.OnClickListener,
@@ -78,8 +83,7 @@ public class LoginActivity extends BaseAppCompatActivity implements View.OnClick
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btnLogin:
-                //performLogin();
-                startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                performLogin();
                 break;
             case R.id.btnForgotPassword:
                 startActivity(new Intent(LoginActivity.this, ForgotPasswordActivity.class));
@@ -96,20 +100,23 @@ public class LoginActivity extends BaseAppCompatActivity implements View.OnClick
                     if (object.getInt(PARAMS.TAG_STATUS) == PARAMS.TAG_STATUS_200) {
                         prefManager.edit().putString(PARAMS.TAG_HEADER_TOKEN, object.getJSONArray(PARAMS.TAG_RESULT).getJSONObject(0).getString(PARAMS.TAG_HEADER_TOKEN)).apply();
                         startActivity(new Intent(LoginActivity.this, MainActivity.class));
-                        overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
                         finish();
-                    }else{
-                        DialogUtils.showDialog(LoginActivity.this,"","",getString(R.string.ok));
                     }
                 }
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+
     }
 
     @Override
     public void onError(int id, String message) {
-        DialogUtils.showDialog(LoginActivity.this,"",message,getString(R.string.ok));
     }
+
+
+
+
+
 }

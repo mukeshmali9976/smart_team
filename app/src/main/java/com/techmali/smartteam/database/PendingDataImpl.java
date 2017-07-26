@@ -27,6 +27,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+
 public class PendingDataImpl {
 
     private static final String TAG = PendingDataImpl.class.getSimpleName();
@@ -40,6 +42,10 @@ public class PendingDataImpl {
         database = dbHelper.getWritableDatabase();
         prefManager = CryptoManager.getInstance(context).getPrefs();
     }
+
+    ///////////////////////////////////////////////
+    ////////////// DATABASE SYNC PROCESS......
+    ///////////////////////////////////////////////
 
     public long insert(Object object, String table) {
         long id = 0;
@@ -698,5 +704,41 @@ public class PendingDataImpl {
         values.put(DbParams.CLM_UPDATED_BY, model.getUpdated_by());
         values.put(DbParams.CLM_IS_UPDATED, 1);
         return values;
+    }
+
+
+    ////////////////////////////////////////////////////////
+    //////////////////// DATABASE OPERATIONS..........
+    ////////////////////////////////////////////////////////
+
+    public String getProjectList() {
+
+        JSONObject response = new JSONObject();
+        JSONArray array = new JSONArray();
+        try {
+            String query = "SELECT * FROM " + DbParams.TBL_PROJECT;
+            Cursor cursor = database.rawQuery(query, null);
+            if (cursor.getCount() > 0) {
+                cursor.moveToFirst();
+                do {
+                    JSONObject project = new JSONObject();
+                    project.put(DbParams.CLM_PROJECT_ID, cursor.getString(cursor.getColumnIndex(DbParams.CLM_PROJECT_ID)));
+                    project.put(DbParams.CLM_LOCAL_PROJECT_ID, cursor.getString(cursor.getColumnIndex(DbParams.CLM_LOCAL_PROJECT_ID)));
+                    project.put(DbParams.CLM_TITLE, cursor.getString(cursor.getColumnIndex(DbParams.CLM_TITLE)));
+                    project.put(DbParams.CLM_START_DATE, cursor.getString(cursor.getColumnIndex(DbParams.CLM_START_DATE)));
+                    project.put(DbParams.CLM_END_DATE, cursor.getString(cursor.getColumnIndex(DbParams.CLM_END_DATE)));
+                    project.put(DbParams.CLM_THUMB, cursor.getString(cursor.getColumnIndex(DbParams.CLM_THUMB)));
+                    project.put(DbParams.CLM_DESCRIPTION, cursor.getString(cursor.getColumnIndex(DbParams.CLM_DESCRIPTION)));
+
+                    array.put(project);
+                } while (cursor.moveToNext());
+            }
+            cursor.close();
+            response.put(PARAMS.TAG_STATUS, array.length() > 0 ? PARAMS.TAG_STATUS_200 : PARAMS.TAG_STATUS_4004);
+            response.put(PARAMS.TAG_RESULT, array);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return response.toString();
     }
 }

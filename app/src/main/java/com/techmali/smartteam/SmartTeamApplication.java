@@ -19,6 +19,7 @@ import com.techmali.smartteam.utils.CountryDetails;
 import com.techmali.smartteam.utils.Log;
 
 import me.leolin.shortcutbadger.ShortcutBadger;
+import uk.co.chrisjenx.calligraphy.CalligraphyConfig;
 
 /**
  * Created by Mali on 7/1/2017.
@@ -67,10 +68,7 @@ public class SmartTeamApplication  extends Application {
         }
 
         // apply font to app
-        //CalligraphyConfig.Builder builder = new CalligraphyConfig.Builder();
-        // builder.setDefaultFontPath(getString(R.string.regular));
-//        builder.setFontAttrId(R.attr.fontPath);
-        //CalligraphyConfig.initDefault(builder.build());
+        defineCalligraphy();
 
         // initialize image loader with required configuration
         initImageLoader();
@@ -115,4 +113,12 @@ public class SmartTeamApplication  extends Application {
         ImageLoader.getInstance().init(config.build());
         L.writeLogs(false);
     }
+
+    private void defineCalligraphy(){
+        CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
+                .setDefaultFontPath("font/roboto_regular.ttf")
+                .setFontAttrId(R.attr.fontPath)
+                .build());
+    }
+
 }

@@ -9,7 +9,7 @@
     android:orientation="horizontal"
     android:padding="@dimen/margin_8">
 
-    <com.techmali.smartteam.ui.views.CircleImageView
+    <ImageView
         android:id="@+id/ivProject"
         android:layout_width="@dimen/margin_60"
         android:layout_height="@dimen/margin_60"
@@ -23,39 +23,40 @@
         android:orientation="vertical"
         android:paddingLeft="@dimen/margin_15">
 
-        <com.techmali.smartteam.ui.views.MyTextView
+        <TextView
             android:id="@+id/tvProjectName"
+            style="@style/TextBold"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:text="Meeting"
-            android:textSize="@dimen/font_18"
-            android:textStyle="bold"
-            custom:font_style="semibold" />
+            android:textSize="@dimen/font_18" />
 
-        <com.techmali.smartteam.ui.views.MyTextView
+        <TextView
             android:id="@+id/tvStratDate"
+            style="@style/TextSemiBold"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:text="Start date: 25 May 2017"
-            custom:font_style="semibold" />
+            android:text="Start date: " />
 
-        <com.techmali.smartteam.ui.views.MyTextView
+        <TextView
             android:id="@+id/tvEndDate"
+            style="@style/TextSemiBold"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:text="End date : 25 May 2020"
-            custom:font_style="semibold" />
+            android:text="End date: " />
 
-        <com.techmali.smartteam.ui.views.MyTextView
+        <TextView
             android:id="@+id/tvDescription"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
+            android:ellipsize="end"
             android:maxLines="2"
-            android:text="Description: The word project comes from the Latin word projectum from the Latin verb proicere, before an action which in turn comes from pro-, which denotes precedence, something that comes before something else in time"
-            custom:font_style="semibold" />
+            android:text="Description: The word project comes from the Latin word projectum from the Latin verb proicere, before an action which in turn comes from pro-, which denotes precedence, something that comes before something else in time" />
+
     </LinearLayout>
+
 </LinearLayout>

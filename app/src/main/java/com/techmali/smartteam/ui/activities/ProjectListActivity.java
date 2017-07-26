@@ -6,12 +6,15 @@ import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.view.ViewPager;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
 import com.techmali.smartteam.R;
 import com.techmali.smartteam.base.BaseAppCompatActivity;
+import com.techmali.smartteam.database.PendingDataImpl;
+import com.techmali.smartteam.domain.adapters.ViewPagerAdapter;
 import com.techmali.smartteam.network.NetworkManager;
 import com.techmali.smartteam.network.RequestListener;
 import com.techmali.smartteam.ui.fragments.ActiveProjectFragment;
@@ -20,33 +23,44 @@ import com.techmali.smartteam.utils.Utils;
 
 
 public class ProjectListActivity extends BaseAppCompatActivity implements View.OnClickListener,
-        RequestListener,TabLayout.OnTabSelectedListener  {
+        RequestListener, TabLayout.OnTabSelectedListener {
 
     public static final String TAG = ProjectListActivity.class.getSimpleName();
+
     private SharedPreferences prefManager = null;
     private NetworkManager networkManager = null;
 
     private int reqIdProjectList = -1;
 
     private TabLayout tabLayout;
+    private ViewPager pager;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_project_list);
+
         networkManager = NetworkManager.getInstance();
         prefManager = CryptoManager.getInstance(ProjectListActivity.this).getPrefs();
+
         initActionBar(getString(R.string.title_project));
         initView();
     }
 
     private void initView() {
+        pager = (ViewPager) findViewById(R.id.viewpager);
+        setupViewpager();
+
         tabLayout = (TabLayout) findViewById(R.id.tabLayout);
-        tabLayout.addTab(tabLayout.newTab().setText("Active"));
-        tabLayout.addTab(tabLayout.newTab().setText("Message"));
-        tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
-        tabLayout.addOnTabSelectedListener(this);
-        addFragment(new ActiveProjectFragment(), R.id.llContainer);
+        tabLayout.setupWithViewPager(pager);
+    }
+
+    private void setupViewpager() {
+
+        ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
+        adapter.addFragment(getString(R.string.tab_active), new ActiveProjectFragment());
+        adapter.addFragment(getString(R.string.tab_message), new ActiveProjectFragment());
+        pager.setAdapter(adapter);
     }
 
     @Override
@@ -72,7 +86,7 @@ public class ProjectListActivity extends BaseAppCompatActivity implements View.O
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_menu_add:
-                startActivity(new Intent(ProjectListActivity.this,CreateProjectActivity.class));
+                startActivity(new Intent(ProjectListActivity.this, CreateProjectActivity.class));
                 Utils.hideKeyboard(this);
                 break;
         }
