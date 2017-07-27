@@ -21,6 +21,8 @@ import com.techmali.smartteam.database.PendingDataImpl;
 import com.techmali.smartteam.models.SyncAttendance;
 import com.techmali.smartteam.models.SyncCheckIn;
 import com.techmali.smartteam.models.SyncCompany;
+import com.techmali.smartteam.models.SyncExpense;
+import com.techmali.smartteam.models.SyncLeave;
 import com.techmali.smartteam.models.SyncProject;
 import com.techmali.smartteam.models.SyncProjectUserLink;
 import com.techmali.smartteam.models.SyncRole;
@@ -31,6 +33,7 @@ import com.techmali.smartteam.models.SyncSecurityMenuControllerLink;
 import com.techmali.smartteam.models.SyncTask;
 import com.techmali.smartteam.models.SyncTaskUserLink;
 import com.techmali.smartteam.models.SyncUserInfo;
+import com.techmali.smartteam.models.UserData;
 import com.techmali.smartteam.network.NetworkManager;
 import com.techmali.smartteam.network.RequestListener;
 import com.techmali.smartteam.network.RequestMethod;
@@ -198,7 +201,16 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
         try {
             if (!TextUtils.isEmpty(response)) {
                 if (id == reqIdLoginDetail) {
-//                    LoginDetailResponse loginDetailResponse = new Gson().fromJson(response, LoginDetailResponse.class);
+                    JSONObject object = new JSONObject(response);
+                    if (object.getInt(PARAMS.TAG_STATUS) == PARAMS.TAG_STATUS_200) {
+
+                        String roleList = object.getJSONObject(PARAMS.TAG_RESULT).getString(PARAMS.TAG_ROLE_LIST);
+                        prefManager.edit().putString(PARAMS.KEY_ROLE_LIST, roleList).apply();
+
+                        String userObject = object.getJSONObject(PARAMS.TAG_RESULT).getJSONArray(PARAMS.TAG_USER_DATA).getString(0);
+                        UserData data = new Gson().fromJson(userObject, UserData.class);
+                        saveLoginDataInPref(data);
+                    }
                     new GetSyncData().execute();
                 } else if (id == reqIdSyncData) {
                     JSONObject object = new JSONObject(response);
@@ -219,6 +231,22 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
         displayError(message);
     }
 
+    private void saveLoginDataInPref(UserData data) {
+
+        prefManager.edit().putString(PARAMS.KEY_COMPANY_ID, data.getCompany_id()).apply();
+        prefManager.edit().putString(PARAMS.KEY_HEADER_TOKEN, data.getHeader_token()).apply();
+        prefManager.edit().putString(PARAMS.KEY_COMPANY_NAME, data.getCompany_name()).apply();
+        prefManager.edit().putString(PARAMS.KEY_UNIQUE_CODE, data.getUnique_code()).apply();
+        prefManager.edit().putString(PARAMS.KEY_FIRST_NAME, data.getFirst_name()).apply();
+        prefManager.edit().putString(PARAMS.KEY_LAST_NAME, data.getLast_name()).apply();
+        prefManager.edit().putString(PARAMS.KEY_GENDER, data.getGender()).apply();
+        prefManager.edit().putString(PARAMS.KEY_EMAIL, data.getEmail()).apply();
+        prefManager.edit().putString(PARAMS.KEY_ROLE_NAME, data.getRole_name()).apply();
+        prefManager.edit().putString(PARAMS.KEY_STATUS_ID, data.getStatus_id()).apply();
+
+        Log.e(TAG, prefManager.getString(PARAMS.KEY_UNIQUE_CODE, "") + "_" + System.currentTimeMillis());
+    }
+
 
     private class SaveData extends AsyncTask<String, Void, String> {
 
@@ -234,6 +262,8 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
                     insertTaskUserLink(object.getString(DbParams.TBL_TASK_USER_LINK), DbParams.TBL_TASK_USER_LINK);
                     insertAttendance(object.getString(DbParams.TBL_ATTENDANCE), DbParams.TBL_ATTENDANCE);
                     insertCheckIn(object.getString(DbParams.TBL_CHECK_IN), DbParams.TBL_CHECK_IN);
+                    insertExpense(object.getString(DbParams.TBL_EXPENSE), DbParams.TBL_EXPENSE);
+                    insertLeave(object.getString(DbParams.TBL_LEAVE), DbParams.TBL_LEAVE);
                     insertSecurityMenu(object.getString(DbParams.TBL_SECURITY_MENU), DbParams.TBL_SECURITY_MENU);
                     insertSecurityMenuControllerAction(object.getString(DbParams.TBL_SECURITY_MENU_CONTROLLERS_ACTION), DbParams.TBL_SECURITY_MENU_CONTROLLERS_ACTION);
                     insertSecurityMenuControllerLink(object.getString(DbParams.TBL_SECURITY_MENU_CONTROLLERS_LINK), DbParams.TBL_SECURITY_MENU_CONTROLLERS_LINK);
@@ -284,7 +314,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
                     boolean isExists = pendingData.checkRecordExist(table, DbParams.CLM_LOCAL_PROJECT_ID, syncList.get(i).getLocal_project_id());
                     Log.e(TAG, "isAvailable: " + isExists);
                     if (isExists)
-                        pendingData.update(syncList.get(i), table, syncList.get(i).getProject_id());
+                        pendingData.update(syncList.get(i), table, syncList.get(i).getServer_project_id());
                     else
                         pendingData.insert(syncList.get(i), table);
                 }
@@ -335,7 +365,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
                     boolean isExists = pendingData.checkRecordExist(table, DbParams.CLM_LOCAL_TASK_USER_LINK_ID, syncList.get(i).getLocal_task_user_link_id());
                     Log.e(TAG, "isAvailable: " + isExists);
                     if (isExists)
-                        pendingData.update(syncList.get(i), table, syncList.get(i).getTask_id());
+                        pendingData.update(syncList.get(i), table, syncList.get(i).getTask_user_link_id());
                     else
                         pendingData.insert(syncList.get(i), table);
                 }
@@ -370,6 +400,40 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
                     Log.e(TAG, "isAvailable: " + isExists);
                     if (isExists)
                         pendingData.update(syncList.get(i), table, syncList.get(i).getCheckin_id());
+                    else
+                        pendingData.insert(syncList.get(i), table);
+                }
+            }
+        }
+    }
+
+    private void insertExpense(String syncModel, String table) {
+        if (!Utils.isEmptyString(syncModel)) {
+            ArrayList<SyncExpense> syncList = new Gson().fromJson(syncModel, new TypeToken<List<SyncExpense>>() {
+            }.getType());
+            if (syncList != null && !syncList.isEmpty()) {
+                for (int i = 0; i < syncList.size(); i++) {
+                    boolean isExists = pendingData.checkRecordExist(table, DbParams.CLM_LOCAL_EXPENSE_ID, syncList.get(i).getLocal_expance_id());
+                    Log.e(TAG, "isAvailable: " + isExists);
+                    if (isExists)
+                        pendingData.update(syncList.get(i), table, syncList.get(i).getExpance_id());
+                    else
+                        pendingData.insert(syncList.get(i), table);
+                }
+            }
+        }
+    }
+
+    private void insertLeave(String syncModel, String table) {
+        if (!Utils.isEmptyString(syncModel)) {
+            ArrayList<SyncLeave> syncList = new Gson().fromJson(syncModel, new TypeToken<List<SyncLeave>>() {
+            }.getType());
+            if (syncList != null && !syncList.isEmpty()) {
+                for (int i = 0; i < syncList.size(); i++) {
+                    boolean isExists = pendingData.checkRecordExist(table, DbParams.CLM_LOCAL_LEAVE_ID, syncList.get(i).getLocal_leave_id());
+                    Log.e(TAG, "isAvailable: " + isExists);
+                    if (isExists)
+                        pendingData.update(syncList.get(i), table, syncList.get(i).getLeave_id());
                     else
                         pendingData.insert(syncList.get(i), table);
                 }

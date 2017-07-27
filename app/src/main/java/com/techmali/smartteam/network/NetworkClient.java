@@ -124,8 +124,8 @@ public class NetworkClient extends AsyncTask<Void, Void, String> {
             if (Utils.isInternetAvailable(context)) {
 
                 reqHeader = new HashMap<>();
-                if (!Utils.isEmptyString(prefManager.getString(Constants.HEADER_TOKEN, ""))) {
-                    reqHeader.put(PARAMS.TAG_HEADER_TOKEN, prefManager.getString(Constants.HEADER_TOKEN, ""));
+                if (!Utils.isEmptyString(prefManager.getString(PARAMS.KEY_HEADER_TOKEN, ""))) {
+                    reqHeader.put(PARAMS.TAG_HEADER_TOKEN, prefManager.getString(PARAMS.KEY_HEADER_TOKEN, ""));
                     reqHeader.put(PARAMS.TAG_APP_VERSION, pInfo.versionName);
                 }
 
@@ -143,7 +143,7 @@ public class NetworkClient extends AsyncTask<Void, Void, String> {
                 if (reqMethod == RequestMethod.GET) {
 
                     okhttp3.Request request = new okhttp3.Request.Builder()
-                            .header(PARAMS.TAG_HEADER_TOKEN, prefManager.getString(Constants.HEADER_TOKEN, ""))
+                            .header(PARAMS.TAG_HEADER_TOKEN, prefManager.getString(PARAMS.KEY_HEADER_TOKEN, ""))
                             .addHeader(PARAMS.TAG_APP_VERSION, pInfo.versionName)
                             .addHeader(PARAMS.TAG_DEVICE_TYPE,Constants.DEVICE_TYPE)
                             .url(url)
@@ -178,7 +178,7 @@ public class NetworkClient extends AsyncTask<Void, Void, String> {
                             .build();
 
                     okhttp3.Request request = new okhttp3.Request.Builder()
-                            .header(PARAMS.TAG_HEADER_TOKEN, prefManager.getString(Constants.HEADER_TOKEN, prefManager.getString(PARAMS.KEY_HEADER_TOKEN, "")))
+                            .header(PARAMS.TAG_HEADER_TOKEN, prefManager.getString(PARAMS.KEY_HEADER_TOKEN, ""))
                             .addHeader(PARAMS.TAG_DEVICE_TYPE, Constants.DEVICE_TYPE)
                             .addHeader(PARAMS.TAG_DEVICE_TOKEN, prefManager.getString(Constants.REGISTRATION_TOKEN, ""))
                             .url(url)

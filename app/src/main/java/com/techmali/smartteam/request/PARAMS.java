@@ -17,6 +17,10 @@ public class PARAMS {
     public static final String TAG_PASSWORD = "password";
     public static final String TAG_DEVICE_TYPE = "devicetype";
 
+    // Login Detail
+    public static final String TAG_USER_DATA = "user_data";
+    public static final String TAG_ROLE_LIST = "role_list";
+
     public static final String TAG_DEVICE_TOKEN = "device_token";
     public static final String TAG_APPLICATION_TYPE = "application_type";
 
@@ -42,4 +46,15 @@ public class PARAMS {
     public static final String KEY_HEADER_TOKEN = "header_token";
     public static final String KEY_LAST_SYNC_DATE = "last_syncdate";
 
+    public static final String KEY_LOGGED_IN_USER_ID = "user_id";
+    public static final String KEY_UNIQUE_CODE = "unique_code";
+    public static final String KEY_COMPANY_ID = "company_id";
+    public static final String KEY_COMPANY_NAME = "company_name";
+    public static final String KEY_EMAIL = "email";
+    public static final String KEY_FIRST_NAME = "first_name";
+    public static final String KEY_LAST_NAME = "last_name";
+    public static final String KEY_GENDER = "gender";
+    public static final String KEY_ROLE_NAME = "role_name";
+    public static final String KEY_STATUS_ID = "status_id";
+    public static final String KEY_ROLE_LIST = "role_list";
 }

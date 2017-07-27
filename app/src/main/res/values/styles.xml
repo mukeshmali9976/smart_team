@@ -78,10 +78,10 @@
 
     <style name="styleTextView" parent="@android:style/Widget.TextView">
         <item name="android:textSize">@dimen/font_14</item>
-        <item name="fontPath">@string/regular</item>
         <item name="android:ellipsize">end</item>
         <item name="android:textColor">@color/text_hint_color</item>
         <item name="android:textColorHint">@color/text_hint_color</item>
+        <item name="fontPath">@string/regular</item>
     </style>
 
     <style name="styleEditText" parent="@android:style/Widget.EditText">
@@ -95,8 +95,8 @@
         <item name="android:paddingRight">@dimen/margin_14</item>
         <item name="android:minHeight">@dimen/edit_text_min_height</item>
         <item name="android:textSize">@dimen/font_15</item>
-        <item name="android:inputType">textNoSuggestions</item>
         <item name="android:textColorHint">@color/colorTextHint</item>
+        <item name="fontPath">@string/regular</item>
     </style>
 
     <style name="styleErrorTextView" parent="@android:style/Widget.TextView">
@@ -105,6 +105,7 @@
         <item name="android:layout_gravity">right|end</item>
         <item name="android:textColor">@color/colorRed</item>
         <item name="android:gravity">right|end</item>
+        <item name="fontPath">@string/regular</item>
     </style>
 
     <style name="styleButton" parent="@android:style/Widget.Button">
@@ -116,7 +117,7 @@
         <item name="android:paddingLeft">@dimen/margin_10</item>
         <item name="android:paddingRight">@dimen/margin_10</item>
         <item name="android:textSize">@dimen/font_16</item>
-        <item name="android:textStyle">bold</item>
+        <item name="fontPath">@string/semi_bold</item>
     </style>
 
     <style name="styleCheckBox" parent="@android:style/Widget.CompoundButton.CheckBox">
@@ -127,6 +128,7 @@
         <item name="android:minWidth">0dp</item>
         <item name="android:textSize">@dimen/font_14</item>
         <item name="android:textAppearance">@android:style/TextAppearance.Medium</item>
+        <item name="fontPath">@string/regular</item>
     </style>
 
     <style name="styleSpinner" parent="@android:style/Widget.DeviceDefault.DropDownItem.Spinner">
@@ -137,6 +139,7 @@
         <item name="android:minWidth">0dp</item>
         <item name="android:textSize">@dimen/font_14</item>
         <item name="android:textAppearance">@android:style/TextAppearance.Medium</item>
+        <item name="fontPath">@string/regular</item>
     </style>
 
     <!--Spinner Customized-->

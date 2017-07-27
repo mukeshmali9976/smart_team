@@ -21,7 +21,7 @@
             android:paddingLeft="@dimen/margin_10"
             android:paddingRight="@dimen/margin_10">
 
-            <com.techmali.smartteam.ui.views.MyEditText
+            <EditText
                 android:id="@+id/etProject"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -30,10 +30,11 @@
                 android:inputType="textCapWords" />
 
             <TextView
-                android:id="@+id/tvErrorProrject"
+                android:id="@+id/tvErrorProject"
                 style="@style/styleErrorTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_10"
                 android:text="@string/error_enter"
                 android:visibility="gone" />
 
@@ -43,20 +44,16 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin_10"
                 android:focusable="false"
-                android:hint="@string/lbl_start_date"
-                android:inputType="none"
-                android:longClickable="false"
-                android:maxLength="13"
-                android:textIsSelectable="false" />
+                android:hint="@string/lbl_start_date" />
 
             <TextView
                 android:id="@+id/tvErrorStartDate"
                 style="@style/styleErrorTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_10"
                 android:text="@string/error_enter"
                 android:visibility="gone" />
-
 
             <EditText
                 android:id="@+id/etEndDate"
@@ -64,27 +61,25 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin_10"
                 android:focusable="false"
-                android:hint="@string/lbl_end_date"
-                android:inputType="none"
-                android:longClickable="false"
-                android:maxLength="13"
-                android:textIsSelectable="false" />
+                android:hint="@string/lbl_end_date" />
 
             <TextView
                 android:id="@+id/tvErrorEndDate"
                 style="@style/styleErrorTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_10"
                 android:text="@string/error_enter"
                 android:visibility="gone" />
 
-            <com.techmali.smartteam.ui.views.MyEditText
+            <EditText
                 android:id="@+id/etDescription"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin_10"
+                android:gravity="top|left"
                 android:hint="@string/hint_description"
-                android:inputType="textCapWords"
+                android:inputType="textCapSentences|textMultiLine"
                 android:lines="5" />
 
             <TextView
@@ -92,10 +87,11 @@
                 style="@style/styleErrorTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_10"
                 android:text="@string/error_enter"
                 android:visibility="gone" />
 
-            <com.techmali.smartteam.ui.views.MyEditText
+            <EditText
                 android:id="@+id/etAssignTo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -108,6 +104,7 @@
                 style="@style/styleErrorTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_10"
                 android:text="@string/error_enter"
                 android:visibility="gone" />
 
@@ -120,19 +117,21 @@
                 android:textColor="@color/colorPrimaryDark"
                 android:textSize="@dimen/font_16" />
 
-            <com.techmali.smartteam.ui.views.MyButton
+            <Button
                 android:layout_width="@dimen/margin_100"
                 android:layout_height="@dimen/margin_100"
                 android:layout_marginTop="@dimen/margin_10"
                 android:text="@string/lbl_add" />
 
-            <com.techmali.smartteam.ui.views.MyButton
+            <Button
                 android:id="@+id/btnSubmit"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin_20"
                 android:text="@string/lbl_submit" />
+
         </LinearLayout>
+
     </ScrollView>
 
 </LinearLayout>

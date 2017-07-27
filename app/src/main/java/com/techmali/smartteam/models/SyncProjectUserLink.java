@@ -3,7 +3,7 @@ package com.techmali.smartteam.models;
 import java.io.Serializable;
 
 /**
- * Created by Gaurav-Pc on 7/22/2017.
+ * Created by Gaurav on 7/22/2017.
  */
 
 public class SyncProjectUserLink implements Serializable {

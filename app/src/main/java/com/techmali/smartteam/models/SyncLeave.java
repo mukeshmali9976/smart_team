@@ -3,26 +3,25 @@ package com.techmali.smartteam.models;
 import java.io.Serializable;
 
 /**
- * Created by Gaurav on 7/22/2017.
+ * Created by Gaurav on 7/28/2017.
  */
 
-public class SyncTask implements Serializable {
+public class SyncLeave implements Serializable {
 
     private String created_by;
     private String company_id;
     private String created_on;
-    private String task_id;
     private String status_id;
-    private String type;
-    private String title;
+    private String local_leave_id;
+    private String is_delete;
+    private String leave_id;
     private String end_date;
-    private String description;
-    private String project_id;
+    private String local_user_id;
     private String updated_by;
     private String updated_on;
-    private String thumb;
+    private String user_id;
     private String start_date;
-    private String local_task_id;
+    private String note;
 
     public String getCreated_by() {
         return created_by;
@@ -48,14 +47,6 @@ public class SyncTask implements Serializable {
         this.created_on = created_on;
     }
 
-    public String getTask_id() {
-        return task_id;
-    }
-
-    public void setTask_id(String task_id) {
-        this.task_id = task_id;
-    }
-
     public String getStatus_id() {
         return status_id;
     }
@@ -64,20 +55,28 @@ public class SyncTask implements Serializable {
         this.status_id = status_id;
     }
 
-    public String getType() {
-        return type;
+    public String getLocal_leave_id() {
+        return local_leave_id;
     }
 
-    public void setType(String type) {
-        this.type = type;
+    public void setLocal_leave_id(String local_leave_id) {
+        this.local_leave_id = local_leave_id;
     }
 
-    public String getTitle() {
-        return title;
+    public String getIs_delete() {
+        return is_delete;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setIs_delete(String is_delete) {
+        this.is_delete = is_delete;
+    }
+
+    public String getLeave_id() {
+        return leave_id;
+    }
+
+    public void setLeave_id(String leave_id) {
+        this.leave_id = leave_id;
     }
 
     public String getEnd_date() {
@@ -88,20 +87,12 @@ public class SyncTask implements Serializable {
         this.end_date = end_date;
     }
 
-    public String getDescription() {
-        return description;
+    public String getLocal_user_id() {
+        return local_user_id;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public String getProject_id() {
-        return project_id;
-    }
-
-    public void setProject_id(String project_id) {
-        this.project_id = project_id;
+    public void setLocal_user_id(String local_user_id) {
+        this.local_user_id = local_user_id;
     }
 
     public String getUpdated_by() {
@@ -120,12 +111,12 @@ public class SyncTask implements Serializable {
         this.updated_on = updated_on;
     }
 
-    public String getThumb() {
-        return thumb;
+    public String getUser_id() {
+        return user_id;
     }
 
-    public void setThumb(String thumb) {
-        this.thumb = thumb;
+    public void setUser_id(String user_id) {
+        this.user_id = user_id;
     }
 
     public String getStart_date() {
@@ -136,11 +127,11 @@ public class SyncTask implements Serializable {
         this.start_date = start_date;
     }
 
-    public String getLocal_task_id() {
-        return local_task_id;
+    public String getNote() {
+        return note;
     }
 
-    public void setLocal_task_id(String local_task_id) {
-        this.local_task_id = local_task_id;
+    public void setNote(String note) {
+        this.note = note;
     }
 }

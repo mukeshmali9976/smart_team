@@ -15,8 +15,6 @@ public class Constants {
 
     // shared preference name for this app
     public static String SHARED_PREF_NAME = "smart_team_shared_prefs";
-    // Application header token
-    public static String HEADER_TOKEN = "header_token";
 
     public static String CURRENCY_SYMBOL = "S$";
 

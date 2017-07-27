@@ -82,7 +82,7 @@ public class SplashActivity extends BaseAppCompatActivity implements RequestList
                 if (reqIdLogin == id) {
                     LoginResponse mLoginResponse = new Gson().fromJson(response, LoginResponse.class);
                     if (mLoginResponse.getStatus() == PARAMS.TAG_STATUS_200) {
-                        prefManager.edit().putString(Constants.HEADER_TOKEN, "").apply();
+                        prefManager.edit().putString(PARAMS.KEY_HEADER_TOKEN, "").apply();
                     }
                 }
             }

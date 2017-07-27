@@ -62,7 +62,7 @@ public class DbParams {
 
     ////// Project.....
     public static final String CLM_LOCAL_PROJECT_ID = "local_project_id";
-    public static final String CLM_PROJECT_ID = "project_id";
+    public static final String CLM_SERVER_PROJECT_ID = "server_project_id";
     public static final String CLM_COMPANY_ID = "company_id";
     public static final String CLM_TITLE = "title";
     public static final String CLM_DESCRIPTION = "description";
@@ -75,6 +75,7 @@ public class DbParams {
     public static final String CLM_TYPE = "type";
 
     ////// Project User Link.......
+    public static final String CLM_PROJECT_ID = "project_id";
     public static final String CLM_PROJECT_USER_LINK_ID = "project_user_link_id";
     public static final String CLM_LOCAL_PROJECT_USER_LINK_ID = "local_project_user_link_id";
 
@@ -94,13 +95,13 @@ public class DbParams {
 
     ///// Expense.........
     public static final String CLM_LOCAL_EXPENSE_ID = "local_expance_id";
-    public static final String CLM_SERVER_EXPENSE_ID = "server_expance_id";
+    public static final String CLM_EXPENSE_ID = "expance_id";
     public static final String CLM_AMOUNT = "amount";
     public static final String CLM_PAYOUT_STATUS = "payout_status";
 
     ////// Leave..........
     public static final String CLM_LOCAL_LEAVE_ID = "local_leave_id";
-    public static final String CLM_SERVER_LEAVE_ID = "server_leave_id";
+    public static final String CLM_LEAVE_ID = "leave_id";
     public static final String CLM_IS_DELETE = "is_delete";
     public static final String CLM_NOTE = "note";
 
@@ -250,7 +251,7 @@ public class DbParams {
      */
     static final String CREATE_TBL_PROJECT = "CREATE TABLE " + TBL_PROJECT + " (" +
             CLM_LOCAL_PROJECT_ID + " VARCHAR PRIMARY KEY," +
-            CLM_PROJECT_ID + " VARCHAR," +
+            CLM_SERVER_PROJECT_ID + " VARCHAR," +
             CLM_COMPANY_ID + " VARCHAR," +
             CLM_TITLE + " VARCHAR," +
             CLM_DESCRIPTION + " VARCHAR," +
@@ -366,7 +367,7 @@ public class DbParams {
     */
     static final String CREATE_TBL_EXPENSE = "CREATE TABLE " + TBL_EXPENSE + " (" +
             CLM_LOCAL_EXPENSE_ID + " VARCHAR PRIMARY KEY," +
-            CLM_SERVER_EXPENSE_ID + " VARCHAR," +
+            CLM_EXPENSE_ID + " VARCHAR," +
             CLM_COMPANY_ID + " VARCHAR," +
             CLM_LOCAL_USER_ID + " VARCHAR," +
             CLM_USER_ID + " VARCHAR," +
@@ -392,7 +393,7 @@ public class DbParams {
     */
     static final String CREATE_TBL_LEAVE = "CREATE TABLE " + TBL_LEAVE + "(" +
             CLM_LOCAL_LEAVE_ID + " VARCHAR PRIMARY KEY," +
-            CLM_SERVER_LEAVE_ID + " VARCHAR," +
+            CLM_LEAVE_ID + " VARCHAR," +
             CLM_COMPANY_ID + " INTEGER," +
             CLM_LOCAL_USER_ID + " VARCHAR," +
             CLM_USER_ID + " VARCHAR," +

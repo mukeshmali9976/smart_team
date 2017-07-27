@@ -3,7 +3,7 @@ package com.techmali.smartteam.models;
 import java.io.Serializable;
 
 /**
- * Created by Gaurav-Pc on 7/22/2017.
+ * Created by Gaurav on 7/22/2017.
  */
 
 public class SyncProject implements Serializable {
@@ -16,7 +16,7 @@ public class SyncProject implements Serializable {
     public String title;
     public String end_date;
     public String description;
-    public String project_id;
+    public String server_project_id;
     public String updated_by;
     public String updated_on;
     public String thumb;
@@ -86,12 +86,12 @@ public class SyncProject implements Serializable {
         this.description = description;
     }
 
-    public String getProject_id() {
-        return project_id;
+    public String getServer_project_id() {
+        return server_project_id;
     }
 
-    public void setProject_id(String project_id) {
-        this.project_id = project_id;
+    public void setServer_project_id(String server_project_id) {
+        this.server_project_id = server_project_id;
     }
 
     public String getUpdated_by() {

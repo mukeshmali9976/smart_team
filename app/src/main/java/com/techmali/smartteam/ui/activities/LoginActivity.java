@@ -98,7 +98,8 @@ public class LoginActivity extends BaseAppCompatActivity implements View.OnClick
                 if (id == reqIdLogin) {
                     JSONObject object = new JSONObject(response);
                     if (object.getInt(PARAMS.TAG_STATUS) == PARAMS.TAG_STATUS_200) {
-                        prefManager.edit().putString(PARAMS.TAG_HEADER_TOKEN, object.getJSONArray(PARAMS.TAG_RESULT).getJSONObject(0).getString(PARAMS.TAG_HEADER_TOKEN)).apply();
+                        prefManager.edit().putString(PARAMS.KEY_HEADER_TOKEN, object.getJSONArray(PARAMS.TAG_RESULT).getJSONObject(0).getString(PARAMS.TAG_HEADER_TOKEN)).apply();
+                        prefManager.edit().putString(PARAMS.KEY_LOGGED_IN_USER_ID, object.getJSONArray(PARAMS.TAG_RESULT).getJSONObject(0).getString("user_id")).apply();
                         startActivity(new Intent(LoginActivity.this, MainActivity.class));
                         finish();
                     }
@@ -114,9 +115,6 @@ public class LoginActivity extends BaseAppCompatActivity implements View.OnClick
     @Override
     public void onError(int id, String message) {
     }
-
-
-
 
 
 }

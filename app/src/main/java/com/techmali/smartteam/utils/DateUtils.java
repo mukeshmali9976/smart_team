@@ -21,6 +21,8 @@ public class DateUtils {
     public static final String API_DISPLAY_FORMAT_FULL = "yyyy-MM-dd hh:mm:ss";
     public static final String API_DISPLAY_FORMAT_SHORT = "yyyy-MM-dd";
 
+    private static final String DB_DATE_FORMAT = "dd-MM-yyyy HH:mm:ss";
+
     public static final SimpleDateFormat defaultDateFormatShort = new SimpleDateFormat(DEFAULT_DATE_FORMAT_SHORT, Locale.ENGLISH);
 
     public static final SimpleDateFormat sourceFormatFull = new SimpleDateFormat(API_DATE_FORMAT_FULL, Locale.ENGLISH);
@@ -89,4 +91,21 @@ public class DateUtils {
 
     }
 
+    public static String convertCurrentToUTC(Date date, String requiredFormat) {
+        SimpleDateFormat dateFormat;
+        if (!Utils.isEmptyString(requiredFormat))
+            dateFormat = new SimpleDateFormat(requiredFormat, Locale.getDefault());
+        else
+            dateFormat = new SimpleDateFormat(DB_DATE_FORMAT, Locale.getDefault());
+
+        dateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
+        return dateFormat.format(date);
+    }
+
+    public static String currentUTCDateTime(){
+        SimpleDateFormat dateFormat = new SimpleDateFormat(DB_DATE_FORMAT, Locale.getDefault());
+        dateFormat.setTimeZone(TimeZone.getTimeZone("utc"));
+        Date date = new Date();
+        return dateFormat.format(date.getTime());
+    }
 }

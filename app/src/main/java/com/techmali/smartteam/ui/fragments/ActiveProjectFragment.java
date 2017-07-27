@@ -6,6 +6,8 @@ import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -47,6 +49,7 @@ public class ActiveProjectFragment extends BasePermissionFragment implements Vie
 
     private ProjectListAdapter mAdapter;
     private RecyclerView rvActiveProjectList;
+    private SwipeRefreshLayout swipe;
 
     private ArrayList<SyncProject> projectArrayList = new ArrayList<>();
 
@@ -65,8 +68,18 @@ public class ActiveProjectFragment extends BasePermissionFragment implements Vie
 
     private void initView() {
 
+        swipe = (SwipeRefreshLayout) mRootView.findViewById(R.id.swipe);
         rvActiveProjectList = (RecyclerView) mRootView.findViewById(R.id.rvActiveProjectList);
+
+        swipe.setColorSchemeColors(ContextCompat.getColor(getActivity(), R.color.colorPrimary));
         new GetProjectList().execute();
+
+        swipe.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                new GetProjectList().execute();
+            }
+        });
     }
 
     @Override
@@ -105,17 +118,19 @@ public class ActiveProjectFragment extends BasePermissionFragment implements Vie
                     Log.e(TAG, result);
                     JSONObject object = new JSONObject(result);
                     if (object.getInt(PARAMS.TAG_STATUS) == PARAMS.TAG_STATUS_200) {
+                        projectArrayList.clear();
                         projectArrayList = new Gson().fromJson(object.getString(PARAMS.TAG_RESULT), new TypeToken<List<SyncProject>>() {
                         }.getType());
-                        if (projectArrayList != null && !projectArrayList.isEmpty()) {
-                            mAdapter = new ProjectListAdapter(getActivity(), projectArrayList, ActiveProjectFragment.this);
-                            RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity().getApplicationContext());
-                            rvActiveProjectList.setLayoutManager(mLayoutManager);
-                            rvActiveProjectList.setItemAnimator(new DefaultItemAnimator());
-                            rvActiveProjectList.setAdapter(mAdapter);
-                        }
+
+                        mAdapter = new ProjectListAdapter(getActivity(), projectArrayList, ActiveProjectFragment.this);
+                        rvActiveProjectList.setLayoutManager(new LinearLayoutManager(getActivity()));
+                        rvActiveProjectList.setItemAnimator(new DefaultItemAnimator());
+                        rvActiveProjectList.setAdapter(mAdapter);
                     }
                 }
+                if (swipe.isRefreshing())
+                    swipe.setRefreshing(false);
+
             } catch (Exception e) {
                 e.printStackTrace();
             }

@@ -4,11 +4,16 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.database.Cursor;
+import android.database.DatabaseUtils;
+import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import com.techmali.smartteam.models.SyncAttendance;
 import com.techmali.smartteam.models.SyncCheckIn;
 import com.techmali.smartteam.models.SyncCompany;
+import com.techmali.smartteam.models.SyncExpense;
+import com.techmali.smartteam.models.SyncLeave;
 import com.techmali.smartteam.models.SyncProject;
 import com.techmali.smartteam.models.SyncProjectUserLink;
 import com.techmali.smartteam.models.SyncRole;
@@ -21,13 +26,12 @@ import com.techmali.smartteam.models.SyncTaskUserLink;
 import com.techmali.smartteam.models.SyncUserInfo;
 import com.techmali.smartteam.request.PARAMS;
 import com.techmali.smartteam.utils.CryptoManager;
+import com.techmali.smartteam.utils.DateUtils;
 import com.techmali.smartteam.utils.Utils;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.util.ArrayList;
 
 public class PendingDataImpl {
 
@@ -56,7 +60,7 @@ public class PendingDataImpl {
                 break;
             case DbParams.TBL_PROJECT:
                 SyncProject project = (SyncProject) object;
-                id = database.insert(table, null, this.getProjectContentValues(project, project.getProject_id()));
+                id = database.insert(table, null, this.getProjectContentValues(project, project.getServer_project_id()));
                 break;
             case DbParams.TBL_PROJECT_USER_LINK:
                 SyncProjectUserLink projectUserLink = (SyncProjectUserLink) object;
@@ -77,6 +81,14 @@ public class PendingDataImpl {
             case DbParams.TBL_CHECK_IN:
                 SyncCheckIn checkIn = (SyncCheckIn) object;
                 id = database.insert(table, null, this.getCheckInContentValues(checkIn, checkIn.getCheckin_id()));
+                break;
+            case DbParams.TBL_EXPENSE:
+                SyncExpense expense = (SyncExpense) object;
+                id = database.insert(table, null, this.getExpenseContentValues(expense, expense.getExpance_id()));
+                break;
+            case DbParams.TBL_LEAVE:
+                SyncLeave leave = (SyncLeave) object;
+                id = database.insert(table, null, this.getLeaveContentValues(leave, leave.getLeave_id()));
                 break;
             case DbParams.TBL_SECURITY_MENU:
                 SyncSecurityMenu securityMenu = (SyncSecurityMenu) object;
@@ -124,63 +136,73 @@ public class PendingDataImpl {
                 break;
             case DbParams.TBL_PROJECT:
                 SyncProject project = (SyncProject) object;
-                id = database.update(table, this.getProjectContentValues(project, project.getProject_id()),
-                        DbParams.CLM_PROJECT_ID + "=?", new String[]{server_id});
+                id = database.update(table, this.getProjectContentValues(project, server_id),
+                        DbParams.CLM_SERVER_PROJECT_ID + "=?", new String[]{server_id});
                 break;
             case DbParams.TBL_PROJECT_USER_LINK:
                 SyncProjectUserLink projectUserLink = (SyncProjectUserLink) object;
-                id = database.update(table, this.getProjectUserLinkContentValues(projectUserLink, projectUserLink.getProject_user_link_id()),
+                id = database.update(table, this.getProjectUserLinkContentValues(projectUserLink, server_id),
                         DbParams.CLM_PROJECT_USER_LINK_ID + "=?", new String[]{server_id});
                 break;
             case DbParams.TBL_TASK:
                 SyncTask task = (SyncTask) object;
-                id = database.update(table, this.getTaskContentValues(task, task.getTask_id()),
+                id = database.update(table, this.getTaskContentValues(task, server_id),
                         DbParams.CLM_TASK_ID + "=?", new String[]{server_id});
                 break;
             case DbParams.TBL_TASK_USER_LINK:
                 SyncTaskUserLink taskUserLink = (SyncTaskUserLink) object;
-                id = database.update(table, this.getTaskUserLinkContentValues(taskUserLink, taskUserLink.getTask_user_link_id()),
+                id = database.update(table, this.getTaskUserLinkContentValues(taskUserLink, server_id),
                         DbParams.CLM_TASK_USER_LINK_ID + "=?", new String[]{server_id});
                 break;
             case DbParams.TBL_ATTENDANCE:
                 SyncAttendance attendance = (SyncAttendance) object;
-                id = database.update(table, this.getAttendanceContentValues(attendance, attendance.getAttendance_id()),
+                id = database.update(table, this.getAttendanceContentValues(attendance, server_id),
                         DbParams.CLM_ATTENDANCE_ID + "=?", new String[]{server_id});
                 break;
             case DbParams.TBL_CHECK_IN:
                 SyncCheckIn checkIn = (SyncCheckIn) object;
-                id = database.update(table, this.getCheckInContentValues(checkIn, checkIn.getCheckin_id()),
+                id = database.update(table, this.getCheckInContentValues(checkIn, server_id),
                         DbParams.CLM_CHECK_IN_ID + "=?", new String[]{server_id});
+                break;
+            case DbParams.TBL_EXPENSE:
+                SyncExpense expense = (SyncExpense) object;
+                id = database.update(table, this.getExpenseContentValues(expense, server_id),
+                        DbParams.CLM_EXPENSE_ID + "=?", new String[]{server_id});
+                break;
+            case DbParams.TBL_LEAVE:
+                SyncLeave leave = (SyncLeave) object;
+                id = database.update(table, this.getLeaveContentValues(leave, server_id),
+                        DbParams.CLM_LEAVE_ID + "=?", new String[]{server_id});
                 break;
             case DbParams.TBL_SECURITY_MENU:
                 SyncSecurityMenu securityMenu = (SyncSecurityMenu) object;
-                id = database.update(table, this.getSecurityMenuContentValues(securityMenu, securityMenu.getSecurity_menu_id()),
+                id = database.update(table, this.getSecurityMenuContentValues(securityMenu, server_id),
                         DbParams.CLM_SECURITY_MENU_ID + "=?", new String[]{server_id});
                 break;
             case DbParams.TBL_SECURITY_MENU_CONTROLLERS_ACTION:
                 SyncSecurityMenuControllerAction securityMenuControllerAction = (SyncSecurityMenuControllerAction) object;
-                id = database.update(table, this.getSecurityMenuControllerActionContentValues(securityMenuControllerAction, securityMenuControllerAction.getSecurity_menu_controllers_action_id()),
+                id = database.update(table, this.getSecurityMenuControllerActionContentValues(securityMenuControllerAction, server_id),
                         DbParams.CLM_SECURITY_MENU_CONTROLLERS_ACTION_ID + "=?", new String[]{server_id});
                 break;
             case DbParams.TBL_SECURITY_MENU_CONTROLLERS_LINK:
                 SyncSecurityMenuControllerLink securityMenuControllerLink = (SyncSecurityMenuControllerLink) object;
-                id = database.update(table, this.getSecurityMenuControllerLinkContentValues(securityMenuControllerLink, securityMenuControllerLink.getMenu_controllers_link_id()),
+                id = database.update(table, this.getSecurityMenuControllerLinkContentValues(securityMenuControllerLink, server_id),
                         DbParams.CLM_MENU_CONTROLLERS_LINK_ID + "=?", new String[]{server_id});
                 break;
             case DbParams.TBL_SECURITY_CONTROLLERS:
                 SyncSecurityController securityController = (SyncSecurityController) object;
-                id = database.update(table, this.getSecurityControllerContentValues(securityController, securityController.getSecurity_controllers_id()),
+                id = database.update(table, this.getSecurityControllerContentValues(securityController, server_id),
                         DbParams.CLM_SECURITY_CONTROLLER_ID + "=?", new String[]{server_id});
                 break;
             case DbParams.TBL_ROLE:
                 SyncRole role = (SyncRole) object;
-                id = database.update(table, this.getRoleContentValues(role, role.getRole_id()),
+                id = database.update(table, this.getRoleContentValues(role, server_id),
                         DbParams.CLM_ROLE_ID + "=?", new String[]{server_id});
                 break;
             case DbParams.TBL_COMPANY:
                 SyncCompany mDbModel = (SyncCompany) object;
-                id = database.update(table, this.getCompanyContentValues(mDbModel, String.valueOf(mDbModel.getCompany_id())),
-                        "local_id = ?", new String[]{server_id});
+                id = database.update(table, this.getCompanyContentValues(mDbModel, String.valueOf(server_id)),
+                        DbParams.CLM_COMPANY_ID + "=?", new String[]{server_id});
                 break;
         }
         return id;
@@ -191,7 +213,7 @@ public class PendingDataImpl {
         JSONObject reqObject = new JSONObject();
         try {
             String last_sync_date = prefManager.getString(PARAMS.KEY_LAST_SYNC_DATE, "");
-            reqObject.put(PARAMS.KEY_LAST_SYNC_DATE, last_sync_date);
+            reqObject.put(PARAMS.KEY_LAST_SYNC_DATE, "");
 
             // USERINFO TBL.......
             String whereCondUserinfo = "";
@@ -239,7 +261,7 @@ public class PendingDataImpl {
                 do {
 
                     JSONObject projectObject = new JSONObject();
-                    projectObject.put(DbParams.CLM_PROJECT_ID, projectCursor.getString(projectCursor.getColumnIndex(DbParams.CLM_PROJECT_ID)));
+                    projectObject.put(DbParams.CLM_SERVER_PROJECT_ID, projectCursor.getString(projectCursor.getColumnIndex(DbParams.CLM_SERVER_PROJECT_ID)));
                     projectObject.put(DbParams.CLM_LOCAL_PROJECT_ID, projectCursor.getString(projectCursor.getColumnIndex(DbParams.CLM_LOCAL_PROJECT_ID)));
                     projectObject.put(DbParams.CLM_COMPANY_ID, projectCursor.getString(projectCursor.getColumnIndex(DbParams.CLM_COMPANY_ID)));
                     projectObject.put(DbParams.CLM_TITLE, projectCursor.getString(projectCursor.getColumnIndex(DbParams.CLM_TITLE)));
@@ -258,7 +280,7 @@ public class PendingDataImpl {
             if (!Utils.isEmptyString(last_sync_date))
                 whereCondTask = " WHERE " + DbParams.CLM_UPDATED_ON + " >= DATETIME('" + last_sync_date + "')";
 
-            String task = "SELECT * FROM " + DbParams.TBL_PROJECT + whereCondTask;
+            String task = "SELECT * FROM " + DbParams.TBL_TASK + whereCondTask;
             Cursor taskCursor = database.rawQuery(task, null);
             JSONArray taskArray = new JSONArray();
             if (taskCursor.getCount() > 0) {
@@ -403,7 +425,7 @@ public class PendingDataImpl {
                 do {
 
                     JSONObject expenseObject = new JSONObject();
-                    expenseObject.put(DbParams.CLM_SERVER_EXPENSE_ID, expenseCursor.getString(expenseCursor.getColumnIndex(DbParams.CLM_SERVER_EXPENSE_ID)));
+                    expenseObject.put(DbParams.CLM_EXPENSE_ID, expenseCursor.getString(expenseCursor.getColumnIndex(DbParams.CLM_EXPENSE_ID)));
                     expenseObject.put(DbParams.CLM_LOCAL_EXPENSE_ID, expenseCursor.getString(expenseCursor.getColumnIndex(DbParams.CLM_LOCAL_EXPENSE_ID)));
                     expenseObject.put(DbParams.CLM_COMPANY_ID, expenseCursor.getString(expenseCursor.getColumnIndex(DbParams.CLM_COMPANY_ID)));
                     expenseObject.put(DbParams.CLM_USER_ID, expenseCursor.getString(expenseCursor.getColumnIndex(DbParams.CLM_USER_ID)));
@@ -436,7 +458,7 @@ public class PendingDataImpl {
                 do {
 
                     JSONObject leaveObject = new JSONObject();
-                    leaveObject.put(DbParams.CLM_SERVER_LEAVE_ID, leaveCursor.getString(leaveCursor.getColumnIndex(DbParams.CLM_SERVER_LEAVE_ID)));
+                    leaveObject.put(DbParams.CLM_LEAVE_ID, leaveCursor.getString(leaveCursor.getColumnIndex(DbParams.CLM_LEAVE_ID)));
                     leaveObject.put(DbParams.CLM_LOCAL_LEAVE_ID, leaveCursor.getString(leaveCursor.getColumnIndex(DbParams.CLM_LOCAL_LEAVE_ID)));
                     leaveObject.put(DbParams.CLM_COMPANY_ID, leaveCursor.getString(leaveCursor.getColumnIndex(DbParams.CLM_COMPANY_ID)));
                     leaveObject.put(DbParams.CLM_USER_ID, leaveCursor.getString(leaveCursor.getColumnIndex(DbParams.CLM_USER_ID)));
@@ -502,7 +524,7 @@ public class PendingDataImpl {
     private ContentValues getProjectContentValues(SyncProject model, String id) {
         ContentValues values = new ContentValues();
         values.put(DbParams.CLM_LOCAL_PROJECT_ID, model.getLocal_project_id());
-        values.put(DbParams.CLM_PROJECT_ID, id);
+        values.put(DbParams.CLM_SERVER_PROJECT_ID, id);
         values.put(DbParams.CLM_COMPANY_ID, model.getCompany_id());
         values.put(DbParams.CLM_TITLE, model.getTitle());
         values.put(DbParams.CLM_DESCRIPTION, model.getDescription());
@@ -607,6 +629,52 @@ public class PendingDataImpl {
         values.put(DbParams.CLM_CHECK_IN_TIME, model.getCheckin_time());
         values.put(DbParams.CLM_LAT, model.getLat());
         values.put(DbParams.CLM_LONG, model.getLng());
+        values.put(DbParams.CLM_CREATED_ON, model.getCreated_on());
+        values.put(DbParams.CLM_UPDATED_ON, model.getUpdated_on());
+        values.put(DbParams.CLM_CREATED_BY, model.getCreated_by());
+        values.put(DbParams.CLM_UPDATED_BY, model.getUpdated_by());
+        values.put(DbParams.CLM_IS_UPDATED, 1);
+        return values;
+    }
+
+    private ContentValues getExpenseContentValues(SyncExpense model, String id) {
+        ContentValues values = new ContentValues();
+
+        values.put(DbParams.CLM_LOCAL_EXPENSE_ID, model.getLocal_expance_id());
+        values.put(DbParams.CLM_EXPENSE_ID, id);
+        values.put(DbParams.CLM_COMPANY_ID, model.getCompany_id());
+        values.put(DbParams.CLM_LOCAL_USER_ID, model.getLocal_user_id());
+        values.put(DbParams.CLM_USER_ID, model.getUser_id());
+        values.put(DbParams.CLM_TASK_ID, model.getTask_id());
+        values.put(DbParams.CLM_LOCAL_TASK_ID, model.getLocal_task_id());
+        values.put(DbParams.CLM_PROJECT_ID, model.getProject_id());
+        values.put(DbParams.CLM_LOCAL_PROJECT_ID, model.getLocal_project_id());
+        values.put(DbParams.CLM_TITLE, model.getTitle());
+        values.put(DbParams.CLM_DESCRIPTION, model.getDescription());
+        values.put(DbParams.CLM_AMOUNT, model.getAmount());
+        values.put(DbParams.CLM_PAYOUT_STATUS, model.getPayout_status());
+        values.put(DbParams.CLM_STATUS_ID, model.getStatus_id());
+        values.put(DbParams.CLM_CREATED_ON, model.getCreated_on());
+        values.put(DbParams.CLM_UPDATED_ON, model.getUpdated_on());
+        values.put(DbParams.CLM_CREATED_BY, model.getCreated_by());
+        values.put(DbParams.CLM_UPDATED_BY, model.getUpdated_by());
+        values.put(DbParams.CLM_IS_UPDATED, 1);
+        return values;
+    }
+
+    private ContentValues getLeaveContentValues(SyncLeave model, String id) {
+        ContentValues values = new ContentValues();
+
+        values.put(DbParams.CLM_LOCAL_LEAVE_ID, model.getLocal_leave_id());
+        values.put(DbParams.CLM_LEAVE_ID, id);
+        values.put(DbParams.CLM_COMPANY_ID, model.getCompany_id());
+        values.put(DbParams.CLM_USER_ID, model.getUser_id());
+        values.put(DbParams.CLM_LOCAL_USER_ID, model.getLocal_user_id());
+        values.put(DbParams.CLM_START_DATE, model.getStart_date());
+        values.put(DbParams.CLM_END_DATE, model.getEnd_date());
+        values.put(DbParams.CLM_NOTE, model.getNote());
+        values.put(DbParams.CLM_STATUS_ID, model.getStatus_id());
+        values.put(DbParams.CLM_IS_DELETE, model.getIs_delete());
         values.put(DbParams.CLM_CREATED_ON, model.getCreated_on());
         values.put(DbParams.CLM_UPDATED_ON, model.getUpdated_on());
         values.put(DbParams.CLM_CREATED_BY, model.getCreated_by());
@@ -722,7 +790,7 @@ public class PendingDataImpl {
                 cursor.moveToFirst();
                 do {
                     JSONObject project = new JSONObject();
-                    project.put(DbParams.CLM_PROJECT_ID, cursor.getString(cursor.getColumnIndex(DbParams.CLM_PROJECT_ID)));
+                    project.put(DbParams.CLM_SERVER_PROJECT_ID, cursor.getString(cursor.getColumnIndex(DbParams.CLM_SERVER_PROJECT_ID)));
                     project.put(DbParams.CLM_LOCAL_PROJECT_ID, cursor.getString(cursor.getColumnIndex(DbParams.CLM_LOCAL_PROJECT_ID)));
                     project.put(DbParams.CLM_TITLE, cursor.getString(cursor.getColumnIndex(DbParams.CLM_TITLE)));
                     project.put(DbParams.CLM_START_DATE, cursor.getString(cursor.getColumnIndex(DbParams.CLM_START_DATE)));
@@ -740,5 +808,25 @@ public class PendingDataImpl {
             e.printStackTrace();
         }
         return response.toString();
+    }
+
+    public boolean createProject(String p_name, String start_date, String end_date, String description, String member_id) {
+        JSONObject object = new JSONObject();
+        boolean isCreated = false;
+        try {
+            String id = prefManager.getString(PARAMS.KEY_UNIQUE_CODE, "") + "_" + System.currentTimeMillis();
+            String query = "INSERT INTO " + DbParams.TBL_PROJECT + " (" + DbParams.CLM_LOCAL_PROJECT_ID + "," + DbParams.CLM_SERVER_PROJECT_ID + "," + DbParams.CLM_COMPANY_ID + "," +
+                    DbParams.CLM_TITLE + "," + DbParams.CLM_START_DATE + "," + DbParams.CLM_END_DATE + "," + DbParams.CLM_DESCRIPTION + "," + DbParams.CLM_CREATED_BY + "," +
+                    DbParams.CLM_UPDATED_BY + "," + DbParams.CLM_UPDATED_ON + ") VALUES ('" + id + "','" + id + "','" + prefManager.getString(PARAMS.KEY_COMPANY_ID, "") +
+                    "','" + p_name + "','" + start_date + "','" + end_date + "'," + DatabaseUtils.sqlEscapeString(description) + ",'" + prefManager.getString(PARAMS.KEY_LOGGED_IN_USER_ID, "") +
+                    "','" + prefManager.getString(PARAMS.KEY_LOGGED_IN_USER_ID, "") + "','" + DateUtils.currentUTCDateTime() + "')";
+            Log.e(TAG, query);
+            database.execSQL(query);
+            isCreated = true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            isCreated = false;
+        }
+        return isCreated;
     }
 }
