@@ -1,108 +1,112 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginTop="@dimen/margin_2">
+    android:orientation="vertical">
 
-    <com.daimajia.swipe.SwipeLayout xmlns:swipe="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/swipe"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        swipe:leftEdgeSwipeOffset="0dp"
-        swipe:rightEdgeSwipeOffset="0dp">
+        android:orientation="vertical">
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:background="@color/colorAccent"
-            android:gravity="center"
-            android:tag="Bottom3">
-
-            <View
-                android:layout_width="1dp"
-                android:layout_height="match_parent"
-                android:background="@color/colorWhite"/>
-
-            <ImageView
-                android:id="@+id/ivEdit"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_margin="@dimen/margin_10"
-                android:src="@drawable/ic_edit_new" />
-
-            <ImageView
-                android:id="@+id/ivDelete"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_margin="@dimen/margin_10"
-                android:src="@drawable/ic_delete" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/llRowProjectList"
+        <com.daimajia.swipe.SwipeLayout xmlns:swipe="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/swipe"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/colorRow"
-            android:orientation="horizontal"
-            android:padding="@dimen/margin_8">
-
-            <ImageView
-                android:id="@+id/ivProject"
-                android:layout_width="@dimen/margin_60"
-                android:layout_height="@dimen/margin_60"
-                android:layout_gravity="center"
-                android:src="@drawable/ic_profile_photo" />
+            swipe:leftEdgeSwipeOffset="0dp"
+            swipe:rightEdgeSwipeOffset="0dp">
 
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:orientation="vertical"
-                android:paddingLeft="@dimen/margin_15">
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:background="@color/colorAccent"
+                android:gravity="center"
+                android:tag="Bottom3">
+                <TextView
+                    android:id="@+id/tvEdit"
+                    android:layout_width="@dimen/margin_60"
+                    android:layout_height="match_parent"
+                    android:background="@color/colorAccent"
+                    android:gravity="center"
+                    android:text="@string/lbl_edit"
+                    android:textColor="@color/colorWhite" />
 
                 <TextView
-                    android:id="@+id/tvProjectName"
-                    style="@style/TextBold"
-                    android:textColor="@color/white"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:textSize="@dimen/font_18" />
-
-                <TextView
-                    android:id="@+id/tvStratDate"
-                    style="@style/TextSemiBold"
-                    android:textColor="@color/white"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:text="Start date: " />
-
-                <TextView
-                    android:id="@+id/tvEndDate"
-                    style="@style/TextSemiBold"
-                    android:textColor="@color/white"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:text="End date: " />
-
-                <TextView
-                    android:id="@+id/tvDescription"
-                    android:layout_width="match_parent"
-                    android:textColor="@color/white"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:ellipsize="end"
-                    android:maxLines="2" />
+                    android:id="@+id/tvDelete"
+                    android:layout_width="@dimen/margin_60"
+                    android:layout_height="match_parent"
+                    android:background="@color/colorRed"
+                    android:gravity="center_vertical|center_horizontal"
+                    android:text="@string/lbl_delete"
+                    android:textColor="@color/colorWhite" />
 
             </LinearLayout>
 
-        </LinearLayout>
+            <LinearLayout
+                android:id="@+id/llRowProjectList"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="@dimen/margin_8">
 
-    </com.daimajia.swipe.SwipeLayout>
+                <ImageView
+                    android:id="@+id/ivProject"
+                    android:layout_width="@dimen/margin_60"
+                    android:layout_height="@dimen/margin_60"
+                    android:layout_gravity="center"
+                    android:src="@drawable/ic_profile_photo" />
 
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:orientation="vertical"
+                    android:paddingLeft="@dimen/margin_15">
+
+                    <TextView
+                        android:id="@+id/tvProjectName"
+                        style="@style/TextBold"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:textSize="@dimen/font_14"
+                        tools:text="Project Name " />
+
+                    <TextView
+                        android:id="@+id/tvStratDate"
+                        style="@style/TextSemiBold"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        tools:text="Start date: " />
+
+                    <TextView
+                        android:id="@+id/tvEndDate"
+                        style="@style/TextSemiBold"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        tools:text="End date: " />
+
+                    <TextView
+                        android:id="@+id/tvDescription"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:ellipsize="end"
+                        android:maxLines="2"
+                        tools:text="Description " />
+
+                </LinearLayout>
+
+            </LinearLayout>
+        </com.daimajia.swipe.SwipeLayout>
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/seperator"
+        android:background="@color/text_hint_color" />
 </LinearLayout>

@@ -35,6 +35,7 @@
     <string name="lbl_open_gallery">Open Gallery</string>
     <string name="lbl_menu">Menu</string>
     <string name="lbl_delete">Delete</string>
+    <string name="lbl_edit">Edit</string>
     <string name="hint_search">Search</string>
     <string name="alert_logout_message">Are you sure you want to logout?</string>
     <string name="lbl_no_data">No Data Found</string>

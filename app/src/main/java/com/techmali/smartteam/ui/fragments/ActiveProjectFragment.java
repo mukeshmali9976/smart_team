@@ -92,7 +92,7 @@ public class ActiveProjectFragment extends BasePermissionFragment implements Pro
                 intent.putExtra(ProjectDetailActivity.TAG_PROJECT_ID, projectArrayList.get(position).getLocal_project_id());
                 startActivity(intent);
                 break;
-            case R.id.ivEdit:
+            case R.id.tvEdit:
                 Intent intentUpdate = new Intent(getActivity(), CreateProjectActivity.class);
                 intentUpdate.putExtra(CreateProjectActivity.TAG_PROJECT_ID, projectArrayList.get(position).getLocal_project_id());
                 intentUpdate.putExtra(CreateProjectActivity.TAG_IS_FOR_UPDATE, true);

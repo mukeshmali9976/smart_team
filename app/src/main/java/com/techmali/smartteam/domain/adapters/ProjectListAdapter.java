@@ -82,7 +82,7 @@ public class ProjectListAdapter extends RecyclerSwipeAdapter<ProjectListAdapter.
             }
         });
 
-        holder.ivEdit.setOnClickListener(new View.OnClickListener() {
+        holder.tvEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 mItemManger.closeAllItems();
@@ -90,7 +90,7 @@ public class ProjectListAdapter extends RecyclerSwipeAdapter<ProjectListAdapter.
             }
         });
 
-        holder.ivDelete.setOnClickListener(new View.OnClickListener() {
+        holder.tvDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 DialogUtils.showDialog(context, "", context.getString(R.string.delete_project), context.getString(R.string.lbl_yes), context.getString(R.string.lbl_no),
@@ -125,9 +125,9 @@ public class ProjectListAdapter extends RecyclerSwipeAdapter<ProjectListAdapter.
 
     class MyViewHolder extends RecyclerView.ViewHolder {
         LinearLayout llRowProjectList;
-        ImageView ivProject, ivDelete, ivEdit;
+        ImageView ivProject;
         SwipeLayout swipe;
-        TextView tvProjectName, tvStratDate, tvEndDate, tvDescription;
+        TextView tvProjectName, tvStratDate, tvEndDate, tvDescription,tvEdit,tvDelete;
 
         MyViewHolder(View itemView) {
             super(itemView);
@@ -136,8 +136,9 @@ public class ProjectListAdapter extends RecyclerSwipeAdapter<ProjectListAdapter.
             llRowProjectList = (LinearLayout) itemView.findViewById(R.id.llRowProjectList);
 
             ivProject = (ImageView) itemView.findViewById(R.id.ivProject);
-            ivDelete = (ImageView) itemView.findViewById(R.id.ivDelete);
-            ivEdit = (ImageView) itemView.findViewById(R.id.ivEdit);
+
+            tvEdit = (TextView) itemView.findViewById(R.id.tvEdit);
+            tvDelete = (TextView) itemView.findViewById(R.id.tvDelete);
 
             tvProjectName = (TextView) itemView.findViewById(R.id.tvProjectName);
             tvStratDate = (TextView) itemView.findViewById(R.id.tvStratDate);
@@ -149,7 +150,6 @@ public class ProjectListAdapter extends RecyclerSwipeAdapter<ProjectListAdapter.
 
     public interface OnInnerViewsClickListener {
         void onItemClick(View view, int position);
-
         void onDelete(View view, int position);
     }
 }
