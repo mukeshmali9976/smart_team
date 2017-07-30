@@ -66,6 +66,7 @@
                 <TextView
                     android:id="@+id/tvProjectName"
                     style="@style/TextBold"
+                    android:textColor="@color/white"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
@@ -74,6 +75,7 @@
                 <TextView
                     android:id="@+id/tvStratDate"
                     style="@style/TextSemiBold"
+                    android:textColor="@color/white"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
@@ -82,6 +84,7 @@
                 <TextView
                     android:id="@+id/tvEndDate"
                     style="@style/TextSemiBold"
+                    android:textColor="@color/white"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
@@ -90,6 +93,7 @@
                 <TextView
                     android:id="@+id/tvDescription"
                     android:layout_width="match_parent"
+                    android:textColor="@color/white"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:ellipsize="end"
