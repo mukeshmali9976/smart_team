@@ -12,7 +12,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
-
 import com.techmali.smartteam.R;
 import com.techmali.smartteam.base.BaseAppCompatActivity;
 import com.techmali.smartteam.domain.adapters.MyExpenseAdapter;

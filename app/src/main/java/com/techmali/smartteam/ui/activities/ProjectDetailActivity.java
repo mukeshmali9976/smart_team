@@ -30,6 +30,8 @@ import com.techmali.smartteam.domain.adapters.ProjectListAdapter;
 import com.techmali.smartteam.domain.adapters.TaskListAdapter;
 import com.techmali.smartteam.domain.adapters.UserListAdapter;
 import com.techmali.smartteam.models.SyncProject;
+import com.techmali.smartteam.models.SyncProjectUserLink;
+import com.techmali.smartteam.models.SyncTask;
 import com.techmali.smartteam.models.TaskModel;
 import com.techmali.smartteam.models.UserModel;
 import com.techmali.smartteam.network.NetworkManager;
@@ -50,10 +52,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ProjectDetailActivity extends BaseAppCompatActivity implements
-        View.OnClickListener, RequestListener, UserListAdapter.onSwipeClickLisener,
+        View.OnClickListener, UserListAdapter.onSwipeClickLisener,
         RadioGroup.OnCheckedChangeListener, TaskListAdapter.OnInnerViewsClickListener {
 
     public static final String TAG = ProjectDetailActivity.class.getSimpleName();
+
     public static final String TAG_PROJECT_ID = "project_id";
 
     private PendingDataImpl model;
@@ -96,34 +99,6 @@ public class ProjectDetailActivity extends BaseAppCompatActivity implements
 
         rvUserList = (RecyclerView) findViewById(R.id.rvUserList);
         rvTaskList = (RecyclerView) findViewById(R.id.rvTaskList);
-
-        List<UserModel> listModels = new ArrayList<>();
-        UserModel userModel;
-
-        for (int i = 0; i < 10; i++) {
-            userModel = new UserModel();
-            listModels.add(userModel);
-        }
-
-        mAdapter = new UserListAdapter(ProjectDetailActivity.this, listModels, this);
-        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
-        rvUserList.setLayoutManager(mLayoutManager);
-        rvUserList.setItemAnimator(new DefaultItemAnimator());
-        rvUserList.setAdapter(mAdapter);
-
-        List<TaskModel> listModel = new ArrayList<>();
-        TaskModel taskModel;
-
-        for (int i = 0; i < 10; i++) {
-            taskModel = new TaskModel();
-            listModel.add(taskModel);
-        }
-
-        taskListAdapter = new TaskListAdapter(ProjectDetailActivity.this, listModel, this);
-        mLayoutManager = new LinearLayoutManager(getApplicationContext());
-        rvTaskList.setLayoutManager(mLayoutManager);
-        rvTaskList.setItemAnimator(new DefaultItemAnimator());
-        rvTaskList.setAdapter(taskListAdapter);
 
         if (getIntent() != null && getIntent().hasExtra(TAG_PROJECT_ID)) {
             p_id = getIntent().getStringExtra(TAG_PROJECT_ID);
@@ -182,16 +157,6 @@ public class ProjectDetailActivity extends BaseAppCompatActivity implements
 
     @Override
     public void onSwipeClick(View v, int position) {
-
-    }
-
-    @Override
-    public void onSuccess(int id, String response) {
-
-    }
-
-    @Override
-    public void onError(int id, String message) {
 
     }
 
@@ -268,14 +233,34 @@ public class ProjectDetailActivity extends BaseAppCompatActivity implements
                     Log.e(TAG, result);
                     JSONObject object = new JSONObject(result);
                     if (object.getInt(PARAMS.TAG_STATUS) == PARAMS.TAG_STATUS_200) {
-                        ArrayList<SyncProject> projectArrayList = new ArrayList<>();
-                        projectArrayList = new Gson().fromJson(object.getString(PARAMS.TAG_RESULT), new TypeToken<List<SyncProject>>() {
+                        ArrayList<SyncProject> projectArrayList;
+                        projectArrayList = new Gson().fromJson(object.getJSONObject(PARAMS.TAG_RESULT).getString(PARAMS.TAG_PROJECT_DETAIL), new TypeToken<List<SyncProject>>() {
                         }.getType());
-                        if (!projectArrayList.isEmpty()) {
+                        if (projectArrayList != null && !projectArrayList.isEmpty()) {
                             tvProjectName.setText(projectArrayList.get(0).getTitle());
                             tvDescription.setText(projectArrayList.get(0).getDescription());
-                            tvStartDate.append(DateUtils.getLocalDateFromUTC(projectArrayList.get(0).getStart_date(), "dd MMM yyyy, hh:mm aa"));
-                            tvEndDate.append(DateUtils.getLocalDateFromUTC(projectArrayList.get(0).getEnd_date(), "dd MMM yyyy, hh:mm aa"));
+//                            tvStartDate.append(DateUtils.getLocalDateFromUTC(projectArrayList.get(0).getStart_date(), "dd MMM yyyy, hh:mm aa"));
+//                            tvEndDate.append(DateUtils.getLocalDateFromUTC(projectArrayList.get(0).getEnd_date(), "dd MMM yyyy, hh:mm aa"));
+                        }
+
+                        ArrayList<SyncProjectUserLink> projectUserLinkArrayList;
+                        projectUserLinkArrayList = new Gson().fromJson(object.getJSONObject(PARAMS.TAG_RESULT).getString(PARAMS.TAG_USER_LIST), new TypeToken<List<SyncProjectUserLink>>() {
+                        }.getType());
+                        if(projectUserLinkArrayList != null && !projectUserLinkArrayList.isEmpty()){
+                            mAdapter = new UserListAdapter(ProjectDetailActivity.this, projectUserLinkArrayList, ProjectDetailActivity.this);
+                            rvUserList.setLayoutManager(new LinearLayoutManager(ProjectDetailActivity.this));
+                            rvUserList.setItemAnimator(new DefaultItemAnimator());
+                            rvUserList.setAdapter(mAdapter);
+                        }
+
+                        ArrayList<SyncTask> taskList;
+                        taskList = new Gson().fromJson(object.getJSONObject(PARAMS.TAG_RESULT).getString(PARAMS.TAG_TASK_LIST), new TypeToken<List<SyncTask>>() {
+                        }.getType());
+                        if(taskList != null && !taskList.isEmpty()){
+                            taskListAdapter = new TaskListAdapter(ProjectDetailActivity.this, taskList, ProjectDetailActivity.this);
+                            rvTaskList.setLayoutManager(new LinearLayoutManager(ProjectDetailActivity.this));
+                            rvTaskList.setItemAnimator(new DefaultItemAnimator());
+                            rvTaskList.setAdapter(taskListAdapter);
                         }
                     }
                 }

@@ -13,6 +13,7 @@ public class DbParams {
     public static final String TBL_USER_INFO = "userinfo";
     public static final String TBL_PROJECT = "project";
     public static final String TBL_TASK = "task";
+    public static final String TBL_TASK_TYPE = "task_type";
     public static final String TBL_PROJECT_USER_LINK = "project_user_link";
     public static final String TBL_TASK_USER_LINK = "task_user_link";
     public static final String TBL_ATTENDANCE = "attendance";
@@ -73,6 +74,10 @@ public class DbParams {
     public static final String CLM_TASK_ID = "task_id";
     public static final String CLM_LOCAL_TASK_ID = "local_task_id";
     public static final String CLM_TYPE = "type";
+
+    ////// Task Type.......
+    public static final String CLM_TASK_TYPE_ID = "task_type_id";
+    public static final String CLM_TASK_TYPE_NAME = "type_name";
 
     ////// Project User Link.......
     public static final String CLM_PROJECT_ID = "project_id";
@@ -274,6 +279,7 @@ public class DbParams {
             CLM_TASK_ID + " VARCHAR," +
             CLM_COMPANY_ID + " VARCHAR," +
             CLM_PROJECT_ID + " VARCHAR," +
+            CLM_LOCAL_PROJECT_ID + " VARCHAR," +
             CLM_DESCRIPTION + " VARCHAR," +
             CLM_TITLE + " VARCHAR," +
             CLM_THUMB + " VARCHAR," +
@@ -288,7 +294,20 @@ public class DbParams {
             CLM_IS_UPDATED + " INTEGER DEFAULT 0)";
 
     /*
+            TASK_TYPE TABLE.........
+     */
+    static final String CREATE_TBL_TASK_TYPE = "CREATE TABLE " + TBL_TASK_TYPE + "(" +
+            CLM_TASK_TYPE_ID + " VARCHAR PRIMARY KEY," +
+            CLM_TASK_TYPE_NAME + " VARCHAR," +
+            CLM_CREATED_BY + " VARCHAR," +
+            CLM_CREATED_ON + " DATETIME DEFAULT (CURRENT_TIMESTAMP)," +
+            CLM_UPDATED_BY + " VARCHAR," +
+            CLM_UPDATED_ON + " DATETIME," +
+            CLM_IS_UPDATED + " INTEGER DEFAULT 0)";
+
+    /*
            PROJECT_USER_LINK TABLE.......
+           status_id : 1=> active, 2=> inactive, 3 => delete            DEFAULT : 1
      */
     static final String CREATE_TBL_PROJECT_USER_LINK = "CREATE TABLE " + TBL_PROJECT_USER_LINK + "(" +
             CLM_LOCAL_PROJECT_USER_LINK_ID + " VARCHAR PRIMARY KEY," +
@@ -297,6 +316,7 @@ public class DbParams {
             CLM_PROJECT_ID + " VARCHAR," +
             CLM_LOCAL_USER_ID + " VARCHAR," +
             CLM_USER_ID + " VARCHAR," +
+            CLM_STATUS_ID + " INTEGER DEFAULT 1," +
             CLM_CREATED_BY + " VARCHAR," +
             CLM_CREATED_ON + " DATETIME DEFAULT (CURRENT_TIMESTAMP)," +
             CLM_UPDATED_BY + " VARCHAR," +
@@ -305,6 +325,7 @@ public class DbParams {
 
     /*
            TASK_USER_LINK TABLE.......
+           status_id : 1=> active, 2=> inactive, 3 => delete            DEFAULT : 1
     */
     static final String CREATE_TBL_TASK_USER_LINK = "CREATE TABLE " + TBL_TASK_USER_LINK + "(" +
             CLM_LOCAL_TASK_USER_LINK_ID + " VARCHAR PRIMARY KEY," +
@@ -313,6 +334,7 @@ public class DbParams {
             CLM_TASK_ID + " VARCHAR," +
             CLM_LOCAL_USER_ID + " VARCHAR," +
             CLM_USER_ID + " VARCHAR," +
+            CLM_STATUS_ID + " INTEGER DEFAULT 1," +
             CLM_CREATED_BY + " VARCHAR," +
             CLM_CREATED_ON + " DATETIME DEFAULT (CURRENT_TIMESTAMP)," +
             CLM_UPDATED_BY + " VARCHAR," +

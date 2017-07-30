@@ -101,6 +101,7 @@
     <!--Create project-->
     <string name="title_create_project">Create Project</string>
     <string name="title_update_project">Update Project</string>
+    <string name="title_add_member">Add Member</string>
     <string name="hint_project_title">Project Title</string>
 
 

@@ -37,7 +37,7 @@ public class HorizontalCalendarView extends RecyclerView {
 
         try {
             textColorNormal = a.getColor(R.styleable.HorizontalCalendarView_textColorNormal, Color.LTGRAY);
-            textColorSelected = a.getColor(R.styleable.HorizontalCalendarView_textColorSelected, Color.BLACK);
+            textColorSelected = a.getColor(R.styleable.HorizontalCalendarView_textColorSelected, Color.WHITE);
             selectedDateBackground = a.getColor(R.styleable.HorizontalCalendarView_selectedDateBackground, Color.TRANSPARENT);
             selectorColor = a.getColor(R.styleable.HorizontalCalendarView_selectorColor, fetchAccentColor());
 

@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.daimajia.swipe.SwipeLayout;
 import com.daimajia.swipe.adapters.RecyclerSwipeAdapter;
 import com.techmali.smartteam.R;
+import com.techmali.smartteam.models.SyncProjectUserLink;
 import com.techmali.smartteam.models.UserModel;
 
 import java.util.List;
@@ -23,10 +24,10 @@ import java.util.List;
 public class UserListAdapter extends RecyclerSwipeAdapter<UserListAdapter.ViewHolder> {
 
     private Context context;
-    private List<UserModel> userList;
+    private List<SyncProjectUserLink> userList;
     private onSwipeClickLisener mListener;
 
-    public UserListAdapter(Context context, List<UserModel> userList, onSwipeClickLisener mListener) {
+    public UserListAdapter(Context context, List<SyncProjectUserLink> userList, onSwipeClickLisener mListener) {
         this.context = context;
         this.userList = userList;
         this.mListener = mListener;
@@ -44,6 +45,7 @@ public class UserListAdapter extends RecyclerSwipeAdapter<UserListAdapter.ViewHo
     public void onBindViewHolder(final ViewHolder holder, int position) {
 
         holder.swipeLayout.setShowMode(SwipeLayout.ShowMode.LayDown);
+        holder.tvMemberName.setText(userList.get(position).getLocal_project_user_link_id());
 
         holder.btnDelete.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -87,7 +89,7 @@ public class UserListAdapter extends RecyclerSwipeAdapter<UserListAdapter.ViewHo
 
         private SwipeLayout swipeLayout;
         private LinearLayout llRowSwipe;
-        private TextView btnDelete;
+        private TextView btnDelete, tvMemberName;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -95,6 +97,7 @@ public class UserListAdapter extends RecyclerSwipeAdapter<UserListAdapter.ViewHo
             llRowSwipe = (LinearLayout) itemView.findViewById(R.id.llRowSwipe);
             swipeLayout = (SwipeLayout) itemView.findViewById(R.id.swipe);
             btnDelete = (TextView) itemView.findViewById(R.id.btnDelete);
+            tvMemberName = (TextView) itemView.findViewById(R.id.tvMemberName);
         }
 
     }

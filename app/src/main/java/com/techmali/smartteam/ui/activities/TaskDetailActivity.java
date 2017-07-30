@@ -20,6 +20,7 @@ import com.techmali.smartteam.R;
 import com.techmali.smartteam.base.BaseAppCompatActivity;
 import com.techmali.smartteam.domain.adapters.TaskListAdapter;
 import com.techmali.smartteam.domain.adapters.UserListAdapter;
+import com.techmali.smartteam.models.SyncTask;
 import com.techmali.smartteam.models.TaskModel;
 import com.techmali.smartteam.models.UserModel;
 import com.techmali.smartteam.network.NetworkManager;
@@ -31,13 +32,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TaskDetailActivity extends BaseAppCompatActivity implements
-        View.OnClickListener, RequestListener, UserListAdapter.onSwipeClickLisener, RadioGroup.OnCheckedChangeListener {
+        View.OnClickListener, RadioGroup.OnCheckedChangeListener, TaskListAdapter.OnInnerViewsClickListener {
 
     public static final String TAG = TaskDetailActivity.class.getSimpleName();
     private SharedPreferences prefManager = null;
-    private NetworkManager networkManager = null;
-    private int reqIdProjectDetail = -1;
-    private UserListAdapter mAdapter;
+    private TaskListAdapter mAdapter;
     private TaskListAdapter taskListAdapter;
     private RecyclerView rvUserList, rvTaskList;
 
@@ -51,7 +50,6 @@ public class TaskDetailActivity extends BaseAppCompatActivity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_task_detail);
 
-        networkManager = NetworkManager.getInstance();
         prefManager = CryptoManager.getInstance(TaskDetailActivity.this).getPrefs();
 
         initActionBar("Project Name");
@@ -71,32 +69,20 @@ public class TaskDetailActivity extends BaseAppCompatActivity implements
 
         ivProject = (ImageView) findViewById(R.id.ivProject);
         rvUserList = (RecyclerView) findViewById(R.id.rvUserList);
-        List<UserModel> listModels = new ArrayList<>();
-        UserModel userModel;
+        List<SyncTask> listModels = new ArrayList<>();
+        SyncTask userModel;
 
         for (int i = 0; i < 10; i++) {
-            userModel = new UserModel();
+            userModel = new SyncTask();
             listModels.add(userModel);
         }
 
-        mAdapter = new UserListAdapter(TaskDetailActivity.this, listModels, this);
+        mAdapter = new TaskListAdapter(TaskDetailActivity.this, listModels, this);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
         rvUserList.setLayoutManager(mLayoutManager);
         rvUserList.setItemAnimator(new DefaultItemAnimator());
         rvUserList.setAdapter(mAdapter);
 
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        networkManager.setListener(this);
-    }
-
-    @Override
-    public void onStop() {
-        networkManager.removeListener(this);
-        super.onStop();
     }
 
     @Override
@@ -143,21 +129,6 @@ public class TaskDetailActivity extends BaseAppCompatActivity implements
 
     }
 
-    @Override
-    public void onSwipeClick(View v, int position) {
-
-    }
-
-    @Override
-    public void onSuccess(int id, String response) {
-
-    }
-
-    @Override
-    public void onError(int id, String message) {
-
-    }
-
     private void customDialog() {
         dialog = new Dialog(this, android.R.style.Theme_Translucent_NoTitleBar);
         dialog.setContentView(R.layout.custom_dialog);
@@ -197,5 +168,15 @@ public class TaskDetailActivity extends BaseAppCompatActivity implements
                 break;
 
         }
+    }
+
+    @Override
+    public void onItemClick(View view, int position) {
+
+    }
+
+    @Override
+    public void onItemLongClick(View view, int position) {
+
     }
 }

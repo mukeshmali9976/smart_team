@@ -19,27 +19,24 @@ import com.techmali.smartteam.horizontalcalendar.HorizontalCalendar;
 import com.techmali.smartteam.horizontalcalendar.HorizontalCalendarListener;
 import com.techmali.smartteam.models.TimeSheetModel;
 import com.techmali.smartteam.network.NetworkManager;
-import com.techmali.smartteam.network.RequestListener;
 import com.techmali.smartteam.utils.CryptoManager;
 import com.techmali.smartteam.utils.Utils;
 
-
-import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-public class MyTimeSheetActivity extends BaseAppCompatActivity implements View.OnClickListener,
-        RequestListener {
+public class MyTimeSheetActivity extends BaseAppCompatActivity implements View.OnClickListener {
 
     public static final String TAG = MyTimeSheetActivity.class.getSimpleName();
+
     private SharedPreferences prefManager = null;
     private NetworkManager networkManager = null;
-    private HorizontalCalendar horizontalCalendar;
 
     private MyTimeSheetAdapter mAdapter;
     private RecyclerView rvMyTimeSheet;
+    private HorizontalCalendar horizontalCalendar;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -48,15 +45,31 @@ public class MyTimeSheetActivity extends BaseAppCompatActivity implements View.O
 
         initActionBar("My TimeSheet");
 
-        networkManager = NetworkManager.getInstance();
         prefManager = CryptoManager.getInstance(MyTimeSheetActivity.this).getPrefs();
 
         initView();
-        calenderView();
     }
 
 
     private void initView() {
+
+        Calendar endDate = Calendar.getInstance();
+        endDate.add(Calendar.MONTH, 1);
+
+        Calendar startDate = Calendar.getInstance();
+        startDate.add(Calendar.MONTH, -1);
+
+        horizontalCalendar = new HorizontalCalendar.Builder(this, R.id.calendarView)
+                .startDate(startDate.getTime())
+                .endDate(endDate.getTime())
+                .datesNumberOnScreen(5)
+                .dayNameFormat("EEE")
+                .dayNumberFormat("dd")
+                .monthFormat("MMM")
+                .showDayName(true)
+                .showMonthName(true)
+                .defaultSelectedDate(Calendar.getInstance().getTime())
+                .build();
 
         rvMyTimeSheet = (RecyclerView) findViewById(R.id.rvMyTimeSheetList);
 
@@ -73,54 +86,11 @@ public class MyTimeSheetActivity extends BaseAppCompatActivity implements View.O
         rvMyTimeSheet.setItemAnimator(new DefaultItemAnimator());
         rvMyTimeSheet.setAdapter(mAdapter);
 
-    }
-
-    private void calenderView() {
-        Calendar endDate = Calendar.getInstance();
-        endDate.add(Calendar.MONTH, 0);
-
-
-        /** start before 1 month from now */
-        Calendar startDate = Calendar.getInstance();
-        startDate.add(Calendar.MONTH, -3);
-
-        final Calendar defaultDate = Calendar.getInstance();
-
-        defaultDate.add(Calendar.MONTH, 0);
-        defaultDate.add(Calendar.DAY_OF_WEEK, 0);
-
-        horizontalCalendar = new HorizontalCalendar.Builder(this, R.id.calendarView)
-                .startDate(startDate.getTime())
-                .endDate(endDate.getTime())
-                .datesNumberOnScreen(3)
-                .dayNameFormat("EE")
-                .dayNumberFormat("dd")
-                .monthFormat("MMM")
-                .showDayName(true)
-                .showMonthName(true)
-                .defaultSelectedDate(defaultDate.getTime())
-                .textColor(Color.LTGRAY, Color.WHITE)
-                .selectedDateBackground(Color.TRANSPARENT)
-                .build();
-
         horizontalCalendar.setCalendarListener(new HorizontalCalendarListener() {
             @Override
             public void onDateSelected(Date date, int position) {
-                Toast.makeText(MyTimeSheetActivity.this, DateFormat.getDateInstance().format(date) + " is selected!", Toast.LENGTH_SHORT).show();
             }
         });
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        networkManager.setListener(this);
-    }
-
-    @Override
-    public void onStop() {
-        networkManager.removeListener(this);
-        super.onStop();
     }
 
     @Override
@@ -135,7 +105,7 @@ public class MyTimeSheetActivity extends BaseAppCompatActivity implements View.O
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_menu_add:
-                startActivity(new Intent(this,AddMyTimeSheetActivity.class));
+                startActivity(new Intent(this, AddMyTimeSheetActivity.class));
                 Utils.hideKeyboard(this);
 
                 break;
@@ -149,14 +119,4 @@ public class MyTimeSheetActivity extends BaseAppCompatActivity implements View.O
 
         }
     }
-    @Override
-    public void onSuccess(int id, String response) {
-    }
-
-    @Override
-    public void onError(int id, String message) {
-
-    }
-
-
 }

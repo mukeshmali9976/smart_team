@@ -279,7 +279,7 @@ public class CreateProjectActivity extends BaseAppCompatActivity implements View
                     JSONObject object = new JSONObject(result);
                     if (object.getInt(PARAMS.TAG_STATUS) == PARAMS.TAG_STATUS_200) {
                         ArrayList<SyncProject> projectArrayList = new ArrayList<>();
-                        projectArrayList = new Gson().fromJson(object.getString(PARAMS.TAG_RESULT), new TypeToken<List<SyncProject>>() {
+                        projectArrayList = new Gson().fromJson(object.getJSONObject(PARAMS.TAG_RESULT).getString(PARAMS.TAG_PROJECT_DETAIL), new TypeToken<List<SyncProject>>() {
                         }.getType());
                         if (!projectArrayList.isEmpty()) {
                             start_date = projectArrayList.get(0).getStart_date();

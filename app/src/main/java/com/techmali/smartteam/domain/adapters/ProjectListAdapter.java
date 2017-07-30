@@ -64,6 +64,7 @@ public class ProjectListAdapter extends RecyclerSwipeAdapter<ProjectListAdapter.
     public void onBindViewHolder(final MyViewHolder holder, final int position) {
 
         SyncProject project = modelList.get(position);
+
         holder.swipe.setShowMode(SwipeLayout.ShowMode.LayDown);
 
         holder.tvProjectName.setText(project.getTitle());
@@ -127,7 +128,7 @@ public class ProjectListAdapter extends RecyclerSwipeAdapter<ProjectListAdapter.
         LinearLayout llRowProjectList;
         ImageView ivProject;
         SwipeLayout swipe;
-        TextView tvProjectName, tvStratDate, tvEndDate, tvDescription,tvEdit,tvDelete;
+        TextView tvProjectName, tvStratDate, tvEndDate, tvDescription, tvEdit, tvDelete;
 
         MyViewHolder(View itemView) {
             super(itemView);
@@ -150,6 +151,7 @@ public class ProjectListAdapter extends RecyclerSwipeAdapter<ProjectListAdapter.
 
     public interface OnInnerViewsClickListener {
         void onItemClick(View view, int position);
+
         void onDelete(View view, int position);
     }
 }

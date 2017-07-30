@@ -21,8 +21,16 @@ public class PARAMS {
     public static final String TAG_USER_DATA = "user_data";
     public static final String TAG_ROLE_LIST = "role_list";
 
+    // Project Detail
+    public static final String TAG_PROJECT_DETAIL = "project_detail";
+    public static final String TAG_USER_LIST = "user_list";
+    public static final String TAG_TASK_LIST = "task_list";
+
+
     public static final String TAG_DEVICE_TOKEN = "device_token";
     public static final String TAG_APPLICATION_TYPE = "application_type";
+
+
 
 
     //Add Media
@@ -45,6 +53,7 @@ public class PARAMS {
     public static final String KEY_AES_PASS_KEY = "aesPassKey";
     public static final String KEY_HEADER_TOKEN = "header_token";
     public static final String KEY_LAST_SYNC_DATE = "last_syncdate";
+    public static final String KEY_IS_LOGGED_IN = "is_logged_in";
 
     public static final String KEY_LOGGED_IN_USER_ID = "user_id";
     public static final String KEY_UNIQUE_CODE = "unique_code";

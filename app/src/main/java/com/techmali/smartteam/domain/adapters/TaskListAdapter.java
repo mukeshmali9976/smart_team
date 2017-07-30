@@ -7,9 +7,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.google.android.gms.tasks.Task;
 import com.techmali.smartteam.R;
+import com.techmali.smartteam.models.SyncTask;
 import com.techmali.smartteam.models.TaskModel;
 
 import java.util.List;
@@ -19,10 +21,10 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.ViewHo
 
 
     private Context context;
-    private List<TaskModel> taskModelList;
+    private List<SyncTask> taskModelList;
     private OnInnerViewsClickListener mListener;
 
-    public TaskListAdapter(Context context, List<TaskModel> taskModelList, OnInnerViewsClickListener mListener) {
+    public TaskListAdapter(Context context, List<SyncTask> taskModelList, OnInnerViewsClickListener mListener) {
         this.context = context;
         this.taskModelList = taskModelList;
         this.mListener = mListener;
@@ -43,6 +45,8 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.ViewHo
                 mListener.onItemClick(view, position);
             }
         });
+
+        holder.tvTaskName.setText(taskModelList.get(position).getTitle());
     }
 
     @Override
@@ -51,11 +55,14 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.ViewHo
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        public LinearLayout llRowSwipe;
+        LinearLayout llRowSwipe;
+        TextView tvTaskName;
+
         public ViewHolder(View itemView) {
             super(itemView);
 
             llRowSwipe = (LinearLayout) itemView.findViewById(R.id.llRowSwipe);
+            tvTaskName = (TextView) itemView.findViewById(R.id.tvTaskName);
         }
     }
 

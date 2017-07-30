@@ -79,7 +79,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
-                        tools:text="Start date: " />
+                        android:text="Start date: " />
 
                     <TextView
                         android:id="@+id/tvEndDate"
@@ -87,7 +87,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
-                        tools:text="End date: " />
+                        android:text="End date: " />
 
                     <TextView
                         android:id="@+id/tvDescription"

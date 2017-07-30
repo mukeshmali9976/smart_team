@@ -87,6 +87,4 @@ dependencies {
     compile 'org.apache.commons:commons-lang3:3.4'
 
     compile 'it.sephiroth.android.library.easing:android-easing:1.0.3'
-
-
 }

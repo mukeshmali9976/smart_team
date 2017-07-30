@@ -48,10 +48,17 @@ public class SplashActivity extends BaseAppCompatActivity implements RequestList
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                Intent mainIntent = new Intent(SplashActivity.this, LoginActivity.class);
-                startActivity(mainIntent);
-                overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
-                finish();
+                if(prefManager.getBoolean(PARAMS.KEY_IS_LOGGED_IN, false)) {
+                    Intent mainIntent = new Intent(SplashActivity.this, MainActivity.class);
+                    startActivity(mainIntent);
+                    overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
+                    finish();
+                }else {
+                    Intent mainIntent = new Intent(SplashActivity.this, LoginActivity.class);
+                    startActivity(mainIntent);
+                    overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
+                    finish();
+                }
             }
         }, 3000);
 

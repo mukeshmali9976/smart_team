@@ -31,6 +31,7 @@ import com.techmali.smartteam.models.SyncSecurityMenu;
 import com.techmali.smartteam.models.SyncSecurityMenuControllerAction;
 import com.techmali.smartteam.models.SyncSecurityMenuControllerLink;
 import com.techmali.smartteam.models.SyncTask;
+import com.techmali.smartteam.models.SyncTaskType;
 import com.techmali.smartteam.models.SyncTaskUserLink;
 import com.techmali.smartteam.models.SyncUserInfo;
 import com.techmali.smartteam.models.UserData;
@@ -240,7 +241,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
         prefManager.edit().putString(PARAMS.KEY_ROLE_NAME, data.getRole_name()).apply();
         prefManager.edit().putString(PARAMS.KEY_STATUS_ID, data.getStatus_id()).apply();
 
-        Log.e(TAG, prefManager.getString(PARAMS.KEY_UNIQUE_CODE, "") + "_" + System.currentTimeMillis());
+        prefManager.edit().putBoolean(PARAMS.KEY_IS_LOGGED_IN, true).apply();
     }
 
 
@@ -266,6 +267,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
                     insertSecurityController(object.getString(DbParams.TBL_SECURITY_CONTROLLERS), DbParams.TBL_SECURITY_CONTROLLERS);
                     insertRole(object.getString(DbParams.TBL_ROLE), DbParams.TBL_ROLE);
                     insertCompany(object.getString(DbParams.TBL_COMPANY), DbParams.TBL_COMPANY);
+                    insertTaskType(object.getString(DbParams.TBL_TASK_TYPE), DbParams.TBL_TASK_TYPE);
                     return strings[1];
                 }
             } catch (JSONException e) {
@@ -345,6 +347,23 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
                     Log.e(TAG, "isAvailable: " + isExists);
                     if (isExists)
                         pendingData.update(syncList.get(i), table, syncList.get(i).getTask_id());
+                    else
+                        pendingData.insert(syncList.get(i), table);
+                }
+            }
+        }
+    }
+
+    private void insertTaskType(String syncModel, String table) {
+        if (!Utils.isEmptyString(syncModel)) {
+            ArrayList<SyncTaskType> syncList = new Gson().fromJson(syncModel, new TypeToken<List<SyncTaskType>>() {
+            }.getType());
+            if (syncList != null && !syncList.isEmpty()) {
+                for (int i = 0; i < syncList.size(); i++) {
+                    boolean isExists = pendingData.checkRecordExist(table, DbParams.CLM_TASK_TYPE_ID, syncList.get(i).getTask_type_id());
+                    Log.e(TAG, "isAvailable: " + isExists);
+                    if (isExists)
+                        pendingData.update(syncList.get(i), table, syncList.get(i).getTask_type_id());
                     else
                         pendingData.insert(syncList.get(i), table);
                 }

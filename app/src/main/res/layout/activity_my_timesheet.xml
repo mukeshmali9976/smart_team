@@ -1,31 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <LinearLayout
+    <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
         <include
             android:id="@+id/toolbar"
-            layout="@layout/layout_toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            layout="@layout/layout_toolbar" />
 
         <com.techmali.smartteam.horizontalcalendar.HorizontalCalendarView
             android:id="@+id/calendarView"
+            android:background="@color/colorPrimary"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/rvMyTimeSheetList"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/margin_6" />
+    </android.support.design.widget.AppBarLayout>
 
-    </LinearLayout>
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rvMyTimeSheetList"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin_6"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
-
-</RelativeLayout>
+</android.support.design.widget.CoordinatorLayout>

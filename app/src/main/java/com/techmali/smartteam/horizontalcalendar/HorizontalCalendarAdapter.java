@@ -42,12 +42,11 @@ public class HorizontalCalendarAdapter extends RecyclerView.Adapter<HorizontalCa
 
     @Override
     public DayViewHolder onCreateViewHolder(final ViewGroup viewGroup, int position) {
-        View convertView = LayoutInflater.from(context).inflate(R.layout.item_calendar, viewGroup, false);
+        View convertView = LayoutInflater.from(context).inflate(R.layout.row_horizontal_calendar, viewGroup, false);
 
         convertView.setMinimumWidth(widthCell);
 
         final DayViewHolder holder = new DayViewHolder(convertView);
-        holder.selectionView.setBackgroundColor(horizontalCalendar.getSelectorColor());
 
         holder.rootView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -85,10 +84,10 @@ public class HorizontalCalendarAdapter extends RecyclerView.Adapter<HorizontalCa
 
         // Selected Day
         if (position == selectedItemPosition) {
-            holder.txtDayNumber.setTextColor(context.getResources().getColor(R.color.colorPrimary));
-            holder.txtMonthName.setTextColor(context.getResources().getColor(R.color.colorPrimary));
-            holder.txtDayName.setTextColor(context.getResources().getColor(R.color.colorPrimary));
-            holder.tvTime.setTextColor(context.getResources().getColor(R.color.colorPrimary));
+            holder.txtDayNumber.setTextColor(context.getResources().getColor(R.color.white));
+            holder.txtMonthName.setTextColor(context.getResources().getColor(R.color.white));
+            holder.txtDayName.setTextColor(context.getResources().getColor(R.color.white));
+            holder.tvTime.setTextColor(context.getResources().getColor(R.color.white));
             //holder.txtDayName.setTextColor(horizontalCalendar.getTextColorSelected());
             holder.selectionView.setVisibility(View.VISIBLE);
         } else { // Unselected Days
