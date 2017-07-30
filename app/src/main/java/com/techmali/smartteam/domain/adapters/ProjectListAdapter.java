@@ -1,6 +1,7 @@
 package com.techmali.smartteam.domain.adapters;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -10,13 +11,15 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.daimajia.swipe.SwipeLayout;
+import com.daimajia.swipe.adapters.RecyclerSwipeAdapter;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 import com.nostra13.universalimageloader.core.display.CircleBitmapDisplayer;
 import com.techmali.smartteam.R;
 import com.techmali.smartteam.models.SyncProject;
-import com.techmali.smartteam.ui.views.CircleImageView;
+import com.techmali.smartteam.utils.DialogUtils;
 import com.techmali.smartteam.utils.Utils;
 
 import java.util.List;
@@ -25,7 +28,7 @@ import java.util.List;
  * Created by mukesh mali on 5/27/2017.
  */
 
-public class ProjectListAdapter extends RecyclerView.Adapter<ProjectListAdapter.MyViewHolder> {
+public class ProjectListAdapter extends RecyclerSwipeAdapter<ProjectListAdapter.MyViewHolder> {
 
     private Context context;
     private List<SyncProject> modelList;
@@ -58,9 +61,10 @@ public class ProjectListAdapter extends RecyclerView.Adapter<ProjectListAdapter.
     }
 
     @Override
-    public void onBindViewHolder(MyViewHolder holder, final int position) {
+    public void onBindViewHolder(final MyViewHolder holder, final int position) {
 
         SyncProject project = modelList.get(position);
+        holder.swipe.setShowMode(SwipeLayout.ShowMode.LayDown);
 
         holder.tvProjectName.setText(project.getTitle());
         holder.tvDescription.setText(project.getDescription());
@@ -73,10 +77,40 @@ public class ProjectListAdapter extends RecyclerView.Adapter<ProjectListAdapter.
         holder.llRowProjectList.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                mItemManger.closeAllItems();
                 mListener.onItemClick(view, position);
             }
         });
 
+        holder.ivEdit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mItemManger.closeAllItems();
+                mListener.onItemClick(view, position);
+            }
+        });
+
+        holder.ivDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                DialogUtils.showDialog(context, "", context.getString(R.string.delete_project), context.getString(R.string.lbl_yes), context.getString(R.string.lbl_no),
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                dialogInterface.dismiss();
+                                mListener.onDelete(holder.swipe, position);
+                            }
+                        },
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                dialogInterface.dismiss();
+                            }
+                        });
+            }
+        });
+
+        mItemManger.bindView(holder.itemView, position);
     }
 
     @Override
@@ -84,16 +118,26 @@ public class ProjectListAdapter extends RecyclerView.Adapter<ProjectListAdapter.
         return modelList.size();
     }
 
+    @Override
+    public int getSwipeLayoutResourceId(int position) {
+        return R.id.swipe;
+    }
+
     class MyViewHolder extends RecyclerView.ViewHolder {
         LinearLayout llRowProjectList;
-        ImageView ivProject;
+        ImageView ivProject, ivDelete, ivEdit;
+        SwipeLayout swipe;
         TextView tvProjectName, tvStratDate, tvEndDate, tvDescription;
 
         MyViewHolder(View itemView) {
             super(itemView);
 
+            swipe = (SwipeLayout) itemView.findViewById(R.id.swipe);
             llRowProjectList = (LinearLayout) itemView.findViewById(R.id.llRowProjectList);
+
             ivProject = (ImageView) itemView.findViewById(R.id.ivProject);
+            ivDelete = (ImageView) itemView.findViewById(R.id.ivDelete);
+            ivEdit = (ImageView) itemView.findViewById(R.id.ivEdit);
 
             tvProjectName = (TextView) itemView.findViewById(R.id.tvProjectName);
             tvStratDate = (TextView) itemView.findViewById(R.id.tvStratDate);
@@ -104,10 +148,8 @@ public class ProjectListAdapter extends RecyclerView.Adapter<ProjectListAdapter.
     }
 
     public interface OnInnerViewsClickListener {
-        //void onAssignmentClick(View view, int position);
-
         void onItemClick(View view, int position);
 
-        void onItemLongClick(View view, int position);
+        void onDelete(View view, int position);
     }
 }

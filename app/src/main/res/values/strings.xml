@@ -99,6 +99,7 @@
 
     <!--Create project-->
     <string name="title_create_project">Create Project</string>
+    <string name="title_update_project">Update Project</string>
     <string name="hint_project_title">Project Title</string>
 
 
@@ -135,6 +136,7 @@
     <string name="hint_completed_task">Completed Task</string>
     <string name="hint_amount">Amount</string>
     <string name="hint_description">Description</string>
+    <string name="delete_project">Are you sure, want to delete this Project?</string>
 
 
     <!--Attendance List-->

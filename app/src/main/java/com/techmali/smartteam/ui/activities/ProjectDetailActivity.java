@@ -4,6 +4,7 @@ import android.Manifest;
 import android.app.Dialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -20,20 +21,30 @@ import android.widget.ImageView;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.techmali.smartteam.R;
 import com.techmali.smartteam.base.BaseAppCompatActivity;
+import com.techmali.smartteam.database.PendingDataImpl;
 import com.techmali.smartteam.domain.adapters.ProjectListAdapter;
 import com.techmali.smartteam.domain.adapters.TaskListAdapter;
 import com.techmali.smartteam.domain.adapters.UserListAdapter;
+import com.techmali.smartteam.models.SyncProject;
 import com.techmali.smartteam.models.TaskModel;
 import com.techmali.smartteam.models.UserModel;
 import com.techmali.smartteam.network.NetworkManager;
 import com.techmali.smartteam.network.RequestListener;
+import com.techmali.smartteam.request.PARAMS;
 import com.techmali.smartteam.ui.fragments.ProfileFragment;
+import com.techmali.smartteam.ui.views.MyProgressDialog;
 import com.techmali.smartteam.utils.Constants;
 import com.techmali.smartteam.utils.CryptoManager;
+import com.techmali.smartteam.utils.DateUtils;
+import com.techmali.smartteam.utils.Log;
 import com.techmali.smartteam.utils.Utils;
 
+
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,9 +54,10 @@ public class ProjectDetailActivity extends BaseAppCompatActivity implements
         RadioGroup.OnCheckedChangeListener, TaskListAdapter.OnInnerViewsClickListener {
 
     public static final String TAG = ProjectDetailActivity.class.getSimpleName();
-    private SharedPreferences prefManager = null;
-    private NetworkManager networkManager = null;
-    private int reqIdProjectDetail = -1;
+    public static final String TAG_PROJECT_ID = "project_id";
+
+    private PendingDataImpl model;
+
     private UserListAdapter mAdapter;
     private TaskListAdapter taskListAdapter;
     private RecyclerView rvUserList, rvTaskList;
@@ -55,15 +67,16 @@ public class ProjectDetailActivity extends BaseAppCompatActivity implements
     private RadioGroup rgManagePeoject;
     private Dialog dialog = null;
 
+    private String p_id = "";
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_project_detail);
 
-        networkManager = NetworkManager.getInstance();
-        prefManager = CryptoManager.getInstance(ProjectDetailActivity.this).getPrefs();
+        model = new PendingDataImpl(this);
 
-        initActionBar("Project Name");
+        initActionBar("Project Detail");
         initView();
     }
 
@@ -111,18 +124,11 @@ public class ProjectDetailActivity extends BaseAppCompatActivity implements
         rvTaskList.setLayoutManager(mLayoutManager);
         rvTaskList.setItemAnimator(new DefaultItemAnimator());
         rvTaskList.setAdapter(taskListAdapter);
-    }
 
-    @Override
-    public void onStart() {
-        super.onStart();
-        networkManager.setListener(this);
-    }
-
-    @Override
-    public void onStop() {
-        networkManager.removeListener(this);
-        super.onStop();
+        if (getIntent() != null && getIntent().hasExtra(TAG_PROJECT_ID)) {
+            p_id = getIntent().getStringExtra(TAG_PROJECT_ID);
+            new GetProjectDetail().execute();
+        }
     }
 
     @Override
@@ -238,4 +244,45 @@ public class ProjectDetailActivity extends BaseAppCompatActivity implements
         }
     }
 
+    private class GetProjectDetail extends AsyncTask<String, Void, String> {
+
+        MyProgressDialog dialog;
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            dialog = new MyProgressDialog(ProjectDetailActivity.this);
+            dialog.show();
+        }
+
+        @Override
+        protected String doInBackground(String... strings) {
+            return model.getProjectDetail(p_id);
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            super.onPostExecute(result);
+            try {
+                if (!Utils.isEmptyString(result)) {
+                    Log.e(TAG, result);
+                    JSONObject object = new JSONObject(result);
+                    if (object.getInt(PARAMS.TAG_STATUS) == PARAMS.TAG_STATUS_200) {
+                        ArrayList<SyncProject> projectArrayList = new ArrayList<>();
+                        projectArrayList = new Gson().fromJson(object.getString(PARAMS.TAG_RESULT), new TypeToken<List<SyncProject>>() {
+                        }.getType());
+                        if (!projectArrayList.isEmpty()) {
+                            tvProjectName.setText(projectArrayList.get(0).getTitle());
+                            tvDescription.setText(projectArrayList.get(0).getDescription());
+                            tvStartDate.append(DateUtils.getLocalDateFromUTC(projectArrayList.get(0).getStart_date(), "dd MMM yyyy, hh:mm aa"));
+                            tvEndDate.append(DateUtils.getLocalDateFromUTC(projectArrayList.get(0).getEnd_date(), "dd MMM yyyy, hh:mm aa"));
+                        }
+                    }
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            dialog.dismiss();
+        }
+    }
 }

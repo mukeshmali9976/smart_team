@@ -24,14 +24,12 @@
             android:padding="@dimen/margin_8">
 
             <TextView
+                style="@style/TextBold"
                 android:id="@+id/tvProjectName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:text="Meeting(High)"
-                android:textSize="@dimen/font_16"
-                android:textStyle="bold"
-                custom:font_style="semibold" />
+                android:textSize="@dimen/font_16" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -47,37 +45,36 @@
 
                     <TextView
                         android:id="@+id/tvStartDate"
+                        style="@style/TextSemiBold"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
-                        android:text="Start date: 25 May 2017"
-                        custom:font_style="semibold" />
+                        android:text="Start date: " />
 
                     <TextView
+                        style="@style/TextSemiBold"
                         android:id="@+id/tvEndDate"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
-                        android:text="End date : 25 May 2020"
-                        custom:font_style="semibold" />
+                        android:text="End date: " />
 
                     <TextView
                         android:id="@+id/tvTaskCount"
+                        style="@style/TextSemiBold"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
-                        android:text="Total Task : 102"
-                        custom:font_style="semibold" />
+                        android:text="Total Task: " />
 
                     <TextView
                         android:id="@+id/tvTotalTime"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Total Time: 10000"
-                        custom:font_style="semibold" />
+                        android:layout_height="wrap_content" />
+
                 </LinearLayout>
 
-                <ImageView
+                <com.techmali.smartteam.ui.views.CircleImageView
                     android:id="@+id/ivProject"
                     android:layout_width="@dimen/margin_70"
                     android:layout_height="@dimen/margin_70"
@@ -90,9 +87,7 @@
                 android:id="@+id/tvDescription"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:text="Description: The word project comes from the Latin word projectum from the Latin verb proicere, before an action which in turn comes from pro-, which denotes precedence, something that comes before something else in time"
-                custom:font_style="semibold" />
+                android:layout_gravity="center_vertical" />
 
             <RadioGroup
                 android:id="@+id/rgManagePeoject"
@@ -158,7 +153,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin_10"
                 android:orientation="vertical">
-
 
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/rvUserList"

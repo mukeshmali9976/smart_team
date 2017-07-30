@@ -4,7 +4,7 @@
     <!-- For Sliding Menu -->
 
     <declare-styleable name="SlidingMenu">
-        <attr name="mode">
+        <attr name="sliding_mode">
             <enum name="left" value="0" />
             <enum name="right" value="1" />
         </attr>

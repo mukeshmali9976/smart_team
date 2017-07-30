@@ -13,7 +13,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import com.daimajia.swipe.SwipeLayout;
 import com.daimajia.swipe.util.Attributes;
@@ -25,7 +24,6 @@ import com.techmali.smartteam.database.PendingDataImpl;
 import com.techmali.smartteam.domain.adapters.ProjectListAdapter;
 import com.techmali.smartteam.models.SyncProject;
 import com.techmali.smartteam.request.PARAMS;
-import com.techmali.smartteam.ui.activities.CreateProjectActivity;
 import com.techmali.smartteam.ui.activities.ProjectDetailActivity;
 import com.techmali.smartteam.utils.CryptoManager;
 import com.techmali.smartteam.utils.Log;
@@ -36,9 +34,9 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ActiveProjectFragment extends BasePermissionFragment implements ProjectListAdapter.OnInnerViewsClickListener {
+public class MessageProjectFragment extends BasePermissionFragment implements ProjectListAdapter.OnInnerViewsClickListener {
 
-    public static final String TAG = ActiveProjectFragment.class.getSimpleName();
+    public static final String TAG = MessageProjectFragment.class.getSimpleName();
 
     private SharedPreferences prefManager = null;
     private PendingDataImpl pendingData;
@@ -49,7 +47,6 @@ public class ActiveProjectFragment extends BasePermissionFragment implements Pro
     private RecyclerView rvActiveProjectList;
     private SwipeRefreshLayout swipe;
     private SwipeLayout swipeLayout;
-    private TextView tvNoData;
 
     private ArrayList<SyncProject> projectArrayList = new ArrayList<>();
     private int mPosition = -1;
@@ -57,12 +54,12 @@ public class ActiveProjectFragment extends BasePermissionFragment implements Pro
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        mRootView = inflater.inflate(R.layout.fragment_active_project, null);
+        mRootView = inflater.inflate(R.layout.fragment_message, null);
 
         prefManager = CryptoManager.getInstance(getActivity()).getPrefs();
         pendingData = new PendingDataImpl(getActivity());
 
-        initView();
+//        initView();
 
         return mRootView;
     }
@@ -70,7 +67,6 @@ public class ActiveProjectFragment extends BasePermissionFragment implements Pro
     private void initView() {
 
         swipe = (SwipeRefreshLayout) mRootView.findViewById(R.id.swipe);
-        tvNoData = (TextView) mRootView.findViewById(R.id.tvNoData);
         rvActiveProjectList = (RecyclerView) mRootView.findViewById(R.id.rvActiveProjectList);
 
         swipe.setColorSchemeColors(ContextCompat.getColor(getActivity(), R.color.colorPrimary));
@@ -88,15 +84,7 @@ public class ActiveProjectFragment extends BasePermissionFragment implements Pro
     public void onItemClick(View view, int position) {
         switch (view.getId()) {
             case R.id.llRowProjectList:
-                Intent intent = new Intent(getActivity(), ProjectDetailActivity.class);
-                intent.putExtra(ProjectDetailActivity.TAG_PROJECT_ID, projectArrayList.get(position).getLocal_project_id());
-                startActivity(intent);
-                break;
-            case R.id.ivEdit:
-                Intent intentUpdate = new Intent(getActivity(), CreateProjectActivity.class);
-                intentUpdate.putExtra(CreateProjectActivity.TAG_PROJECT_ID, projectArrayList.get(position).getLocal_project_id());
-                intentUpdate.putExtra(CreateProjectActivity.TAG_IS_FOR_UPDATE, true);
-                startActivity(intentUpdate);
+                startActivity(new Intent(getActivity(), ProjectDetailActivity.class));
                 break;
         }
     }
@@ -127,14 +115,11 @@ public class ActiveProjectFragment extends BasePermissionFragment implements Pro
                         projectArrayList = new Gson().fromJson(object.getString(PARAMS.TAG_RESULT), new TypeToken<List<SyncProject>>() {
                         }.getType());
 
-                        mAdapter = new ProjectListAdapter(getActivity(), projectArrayList, ActiveProjectFragment.this);
+                        mAdapter = new ProjectListAdapter(getActivity(), projectArrayList, MessageProjectFragment.this);
                         rvActiveProjectList.setLayoutManager(new LinearLayoutManager(getActivity()));
                         rvActiveProjectList.setItemAnimator(new DefaultItemAnimator());
                         mAdapter.setMode(Attributes.Mode.Single);
                         rvActiveProjectList.setAdapter(mAdapter);
-
-                        tvNoData.setVisibility(projectArrayList.size() > 0 ? View.GONE : View.VISIBLE);
-                        rvActiveProjectList.setVisibility(projectArrayList.size() > 0 ? View.VISIBLE : View.GONE);
                     }
                 }
                 if (swipe.isRefreshing())

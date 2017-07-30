@@ -21,7 +21,8 @@ public class DateUtils {
     public static final String API_DISPLAY_FORMAT_FULL = "yyyy-MM-dd hh:mm:ss";
     public static final String API_DISPLAY_FORMAT_SHORT = "yyyy-MM-dd";
 
-    private static final String DB_DATE_FORMAT = "dd-MM-yyyy HH:mm:ss";
+    public static final String DB_DATE_FORMAT = "yyyy-MM-dd HH:mm:ss";
+    public static final SimpleDateFormat dbFormat = new SimpleDateFormat(DB_DATE_FORMAT, Locale.ENGLISH);
 
     public static final SimpleDateFormat defaultDateFormatShort = new SimpleDateFormat(DEFAULT_DATE_FORMAT_SHORT, Locale.ENGLISH);
 
@@ -63,8 +64,8 @@ public class DateUtils {
                 }
                 SimpleDateFormat destFormat = new SimpleDateFormat(requiredDateFormat, Locale.getDefault());
                 destFormat.setTimeZone(TimeZone.getDefault());
-                sourceFormatFull.setTimeZone(TimeZone.getTimeZone("UTC"));
-                return destFormat.format(sourceFormatFull.parse(dateAsString));
+                dbFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
+                return destFormat.format(dbFormat.parse(dateAsString));
             }
         } catch (Exception e) {
             e.printStackTrace();

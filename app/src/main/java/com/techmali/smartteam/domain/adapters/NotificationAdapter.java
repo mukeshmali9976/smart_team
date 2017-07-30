@@ -12,11 +12,8 @@ import com.daimajia.swipe.SwipeLayout;
 import com.daimajia.swipe.adapters.RecyclerSwipeAdapter;
 import com.techmali.smartteam.R;
 import com.techmali.smartteam.models.NotificationModel;
-import com.techmali.smartteam.utils.Constants;
-import com.techmali.smartteam.utils.Utils;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class NotificationAdapter extends RecyclerSwipeAdapter<NotificationAdapter.ViewHolder> {
 

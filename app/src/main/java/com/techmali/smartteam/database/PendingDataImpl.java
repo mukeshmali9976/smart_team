@@ -810,16 +810,23 @@ public class PendingDataImpl {
         return response.toString();
     }
 
-    public boolean createProject(String p_name, String start_date, String end_date, String description, String member_id) {
+    public boolean createProject(String p_name, String start_date, String end_date, String description, String member_id, boolean isExists, String p_id) {
         JSONObject object = new JSONObject();
         boolean isCreated = false;
         try {
             String id = prefManager.getString(PARAMS.KEY_UNIQUE_CODE, "") + "_" + System.currentTimeMillis();
-            String query = "INSERT INTO " + DbParams.TBL_PROJECT + " (" + DbParams.CLM_LOCAL_PROJECT_ID + "," + DbParams.CLM_SERVER_PROJECT_ID + "," + DbParams.CLM_COMPANY_ID + "," +
-                    DbParams.CLM_TITLE + "," + DbParams.CLM_START_DATE + "," + DbParams.CLM_END_DATE + "," + DbParams.CLM_DESCRIPTION + "," + DbParams.CLM_CREATED_BY + "," +
-                    DbParams.CLM_UPDATED_BY + "," + DbParams.CLM_UPDATED_ON + ") VALUES ('" + id + "','" + id + "','" + prefManager.getString(PARAMS.KEY_COMPANY_ID, "") +
-                    "','" + p_name + "','" + start_date + "','" + end_date + "'," + DatabaseUtils.sqlEscapeString(description) + ",'" + prefManager.getString(PARAMS.KEY_LOGGED_IN_USER_ID, "") +
-                    "','" + prefManager.getString(PARAMS.KEY_LOGGED_IN_USER_ID, "") + "','" + DateUtils.currentUTCDateTime() + "')";
+            String query = "";
+            if (!isExists) {
+                query = "INSERT INTO " + DbParams.TBL_PROJECT + " (" + DbParams.CLM_LOCAL_PROJECT_ID + "," + DbParams.CLM_SERVER_PROJECT_ID + "," + DbParams.CLM_COMPANY_ID + "," +
+                        DbParams.CLM_TITLE + "," + DbParams.CLM_START_DATE + "," + DbParams.CLM_END_DATE + "," + DbParams.CLM_DESCRIPTION + "," + DbParams.CLM_CREATED_BY + "," +
+                        DbParams.CLM_UPDATED_BY + "," + DbParams.CLM_UPDATED_ON + ") VALUES ('" + id + "','" + id + "','" + prefManager.getString(PARAMS.KEY_COMPANY_ID, "") +
+                        "','" + p_name + "','" + start_date + "','" + end_date + "'," + DatabaseUtils.sqlEscapeString(description) + ",'" + prefManager.getString(PARAMS.KEY_LOGGED_IN_USER_ID, "") +
+                        "','" + prefManager.getString(PARAMS.KEY_LOGGED_IN_USER_ID, "") + "','" + DateUtils.currentUTCDateTime() + "')";
+            } else {
+                query = "UPDATE " + DbParams.TBL_PROJECT + " SET " + DbParams.CLM_TITLE + "='" + p_name +"', " + DbParams.CLM_START_DATE + "='" + start_date + "', " + DbParams.CLM_END_DATE +
+                        "='" + end_date + "', " + DbParams.CLM_DESCRIPTION + "=" + DatabaseUtils.sqlEscapeString(description) +", " + DbParams.CLM_UPDATED_ON + "='" + DateUtils.currentUTCDateTime() +
+                        "' WHERE " + DbParams.CLM_LOCAL_PROJECT_ID + "='" + p_id + "'";
+            }
             Log.e(TAG, query);
             database.execSQL(query);
             isCreated = true;
@@ -828,5 +835,81 @@ public class PendingDataImpl {
             isCreated = false;
         }
         return isCreated;
+    }
+
+    public boolean deleteProject(String project_id) {
+        JSONObject object = new JSONObject();
+        boolean isCreated = false;
+        try {
+            String query = "DELETE FROM " + DbParams.TBL_PROJECT + " WHERE " + DbParams.CLM_LOCAL_PROJECT_ID + " = '" + project_id + "'";
+            Log.e(TAG, query);
+            database.execSQL(query);
+            isCreated = true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            isCreated = false;
+        }
+        return isCreated;
+    }
+
+    public String getProjectDetail(String p_id) {
+        JSONObject response = new JSONObject();
+        JSONArray array = new JSONArray();
+        try {
+            String query = "SELECT * FROM " + DbParams.TBL_PROJECT + " WHERE " + DbParams.CLM_LOCAL_PROJECT_ID + "='" + p_id +"'";
+            Cursor cursor = database.rawQuery(query, null);
+            if (cursor.getCount() > 0) {
+                cursor.moveToFirst();
+                do {
+                    JSONObject project = new JSONObject();
+                    project.put(DbParams.CLM_SERVER_PROJECT_ID, cursor.getString(cursor.getColumnIndex(DbParams.CLM_SERVER_PROJECT_ID)));
+                    project.put(DbParams.CLM_LOCAL_PROJECT_ID, cursor.getString(cursor.getColumnIndex(DbParams.CLM_LOCAL_PROJECT_ID)));
+                    project.put(DbParams.CLM_TITLE, cursor.getString(cursor.getColumnIndex(DbParams.CLM_TITLE)));
+                    project.put(DbParams.CLM_START_DATE, cursor.getString(cursor.getColumnIndex(DbParams.CLM_START_DATE)));
+                    project.put(DbParams.CLM_END_DATE, cursor.getString(cursor.getColumnIndex(DbParams.CLM_END_DATE)));
+                    project.put(DbParams.CLM_THUMB, cursor.getString(cursor.getColumnIndex(DbParams.CLM_THUMB)));
+                    project.put(DbParams.CLM_DESCRIPTION, cursor.getString(cursor.getColumnIndex(DbParams.CLM_DESCRIPTION)));
+
+                    array.put(project);
+                } while (cursor.moveToNext());
+            }
+            cursor.close();
+            response.put(PARAMS.TAG_STATUS, array.length() > 0 ? PARAMS.TAG_STATUS_200 : PARAMS.TAG_STATUS_4004);
+            response.put(PARAMS.TAG_RESULT, array);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return response.toString();
+    }
+
+    public String getUserList() {
+
+        JSONObject response = new JSONObject();
+        JSONArray array = new JSONArray();
+        try {
+            String query = "SELECT * FROM " + DbParams.TBL_USER_INFO;
+            Cursor cursor = database.rawQuery(query, null);
+            if (cursor.getCount() > 0) {
+                cursor.moveToFirst();
+                do {
+                    JSONObject project = new JSONObject();
+                    project.put(DbParams.CLM_SERVER_PROJECT_ID, cursor.getString(cursor.getColumnIndex(DbParams.CLM_SERVER_PROJECT_ID)));
+                    project.put(DbParams.CLM_LOCAL_PROJECT_ID, cursor.getString(cursor.getColumnIndex(DbParams.CLM_LOCAL_PROJECT_ID)));
+                    project.put(DbParams.CLM_TITLE, cursor.getString(cursor.getColumnIndex(DbParams.CLM_TITLE)));
+                    project.put(DbParams.CLM_START_DATE, cursor.getString(cursor.getColumnIndex(DbParams.CLM_START_DATE)));
+                    project.put(DbParams.CLM_END_DATE, cursor.getString(cursor.getColumnIndex(DbParams.CLM_END_DATE)));
+                    project.put(DbParams.CLM_THUMB, cursor.getString(cursor.getColumnIndex(DbParams.CLM_THUMB)));
+                    project.put(DbParams.CLM_DESCRIPTION, cursor.getString(cursor.getColumnIndex(DbParams.CLM_DESCRIPTION)));
+
+                    array.put(project);
+                } while (cursor.moveToNext());
+            }
+            cursor.close();
+            response.put(PARAMS.TAG_STATUS, array.length() > 0 ? PARAMS.TAG_STATUS_200 : PARAMS.TAG_STATUS_4004);
+            response.put(PARAMS.TAG_RESULT, array);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return response.toString();
     }
 }
