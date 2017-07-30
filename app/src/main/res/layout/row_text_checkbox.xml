@@ -35,8 +35,4 @@
         android:visibility="gone"
         tools:text="tag line"
         tools:visibility="visible" />
-
-
-
-
 </LinearLayout>

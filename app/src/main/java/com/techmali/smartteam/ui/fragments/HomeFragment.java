@@ -80,7 +80,6 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
         return mRootView;
     }
 
-
     private void initView() {
 
         mRootView.findViewById(R.id.tvMyTimeSheet).setOnClickListener(this);
@@ -113,14 +112,13 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         initActionBar(getActivity().getString(R.string.app_name), mRootView);
-        setTitle("Smart Team");
+        setTitle(getResources().getString(R.string.app_name));
         getLoginDetail();
-        changeToolBarColor();
+
     }
 
 
     private class GetSyncData extends AsyncTask<Void, Void, String> {
-
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
@@ -143,8 +141,6 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
             }
         }
     }
-
-
     private void getLoginDetail() {
         networkManager.isProgressBarVisible(true);
         reqIdLoginDetail = networkManager.addRequest(RequestBuilder.blankRequest(), getActivity(), RequestMethod.POST, RequestBuilder.METHOD_LOGIN_DETAIL);

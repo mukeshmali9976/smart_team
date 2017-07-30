@@ -15,6 +15,7 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 
 import com.google.gson.Gson;
@@ -52,6 +53,7 @@ public class ActiveProjectFragment extends BasePermissionFragment implements Vie
     private SwipeRefreshLayout swipe;
 
     private ArrayList<SyncProject> projectArrayList = new ArrayList<>();
+    private TextView tvNoData;
 
     @Nullable
     @Override
@@ -69,6 +71,10 @@ public class ActiveProjectFragment extends BasePermissionFragment implements Vie
     private void initView() {
 
         swipe = (SwipeRefreshLayout) mRootView.findViewById(R.id.swipe);
+
+        tvNoData = (TextView) mRootView.findViewById(R.id.tvNoData);
+
+
         rvActiveProjectList = (RecyclerView) mRootView.findViewById(R.id.rvActiveProjectList);
 
         swipe.setColorSchemeColors(ContextCompat.getColor(getActivity(), R.color.colorPrimary));
@@ -122,10 +128,17 @@ public class ActiveProjectFragment extends BasePermissionFragment implements Vie
                         projectArrayList = new Gson().fromJson(object.getString(PARAMS.TAG_RESULT), new TypeToken<List<SyncProject>>() {
                         }.getType());
 
-                        mAdapter = new ProjectListAdapter(getActivity(), projectArrayList, ActiveProjectFragment.this);
-                        rvActiveProjectList.setLayoutManager(new LinearLayoutManager(getActivity()));
-                        rvActiveProjectList.setItemAnimator(new DefaultItemAnimator());
-                        rvActiveProjectList.setAdapter(mAdapter);
+                        if(projectArrayList.size() > 0) {
+                            rvActiveProjectList.setVisibility(View.VISIBLE);
+                            tvNoData.setVisibility(View.GONE);
+                            mAdapter = new ProjectListAdapter(getActivity(), projectArrayList, ActiveProjectFragment.this);
+                            rvActiveProjectList.setLayoutManager(new LinearLayoutManager(getActivity()));
+                            rvActiveProjectList.setItemAnimator(new DefaultItemAnimator());
+                            rvActiveProjectList.setAdapter(mAdapter);
+                        }else{
+                            rvActiveProjectList.setVisibility(View.GONE);
+                            tvNoData.setVisibility(View.VISIBLE);
+                        }
                     }
                 }
                 if (swipe.isRefreshing())

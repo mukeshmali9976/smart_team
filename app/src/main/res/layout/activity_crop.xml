@@ -14,7 +14,7 @@
         android:layout_height="0dp"
         android:layout_weight="1">
 
-        <com.oneplus.researchplus.ui.views.imageCrop.ImageCropView xmlns:imagecrop="http://schemas.android.com/apk/res-auto"
+        <com.techmali.smartteam.ui.views.imageCrop.ImageCropView xmlns:imagecrop="http://schemas.android.com/apk/res-auto"
             android:id="@+id/image"
             android:layout_width="match_parent"
             android:layout_height="match_parent"

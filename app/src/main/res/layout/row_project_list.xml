@@ -5,58 +5,71 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginTop="@dimen/margin_2"
-    android:background="@drawable/theme_row_background"
-    android:orientation="horizontal"
-    android:padding="@dimen/margin_8">
-
-    <ImageView
-        android:id="@+id/ivProject"
-        android:layout_width="@dimen/margin_60"
-        android:layout_height="@dimen/margin_60"
-        android:layout_gravity="center"
-        android:src="@drawable/ic_profile_photo" />
+    android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"
-        android:orientation="vertical"
-        android:paddingLeft="@dimen/margin_15">
+        android:layout_marginBottom="@dimen/margin_2"
+        android:orientation="horizontal"
+        android:padding="@dimen/margin_8">
 
-        <TextView
-            android:id="@+id/tvProjectName"
-            style="@style/TextBold"
+        <ImageView
+            android:id="@+id/ivProject"
+            android:layout_width="@dimen/margin_60"
+            android:layout_height="@dimen/margin_60"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_profile_photo" />
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:text="Meeting"
-            android:textSize="@dimen/font_18" />
+            android:orientation="vertical"
+            android:paddingLeft="@dimen/margin_15">
 
-        <TextView
-            android:id="@+id/tvStratDate"
-            style="@style/TextSemiBold"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:text="Start date: " />
+            <TextView
+                android:id="@+id/tvProjectName"
+                style="@style/TextBold"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:text="Meeting"
+                android:textSize="@dimen/font_14" />
 
-        <TextView
-            android:id="@+id/tvEndDate"
-            style="@style/TextSemiBold"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:text="End date: " />
+            <TextView
+                android:id="@+id/tvStratDate"
+                style="@style/TextSemiBold"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:text="Start date: " />
 
-        <TextView
-            android:id="@+id/tvDescription"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:ellipsize="end"
-            android:maxLines="2"
-            android:text="Description: The word project comes from the Latin word projectum from the Latin verb proicere, before an action which in turn comes from pro-, which denotes precedence, something that comes before something else in time" />
+            <TextView
+                android:id="@+id/tvEndDate"
+                style="@style/TextSemiBold"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:text="End date: " />
+
+            <TextView
+                android:id="@+id/tvDescription"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:ellipsize="end"
+                android:maxLines="2"
+                android:text="Description: The word project comes from the Latin word projectum from the Latin verb proicere, before an action which in turn comes from pro-, which denotes precedence, something that comes before something else in time" />
+
+        </LinearLayout>
+
 
     </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/seperator"
+        android:background="@color/text_hint_color" />
 
 </LinearLayout>

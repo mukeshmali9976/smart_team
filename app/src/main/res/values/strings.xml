@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">SmartTeam</string>
 
+    <!--Keys -->
+    <string name="google_maps_key">AIzaSyBDvfgR6DE4vVQYtK8iUs05MxvtMfcO83k</string>
     <!-- Common strings -->
     <string name="enable_location">Please enable location in settings</string>
     <string name="no_network_connection">Sorry! It appears that we are offline. Content and images may not display until we reconnect to the Internet.</string>
@@ -35,6 +37,7 @@
     <string name="lbl_delete">Delete</string>
     <string name="hint_search">Search</string>
     <string name="alert_logout_message">Are you sure you want to logout?</string>
+    <string name="lbl_no_data">No Data Found</string>
 
     <!--Define all Font Names-->
     <string name="bold">font/roboto_bold.ttf</string>

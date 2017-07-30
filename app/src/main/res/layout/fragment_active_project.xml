@@ -14,7 +14,16 @@
             android:id="@+id/rvActiveProjectList"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/margin_6" />
+            android:layout_margin="@dimen/margin_6"
+            android:visibility="gone" />
+
+        <TextView
+            android:visibility="gone"
+            android:id="@+id/tvNoData"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="@string/lbl_no_data" />
 
     </LinearLayout>
 

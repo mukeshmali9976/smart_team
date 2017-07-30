@@ -29,7 +29,7 @@
                     android:layout_weight="1"
                     android:orientation="vertical">
 
-                    <com.techmali.smartteam.ui.views.MyTextView
+                    <TextView
                         android:id="@+id/tvTaskName"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -39,7 +39,7 @@
                         android:textStyle="bold"
                         custom:font_style="semibold" />
 
-                    <com.techmali.smartteam.ui.views.MyTextView
+                    <TextView
                         android:id="@+id/tvProjectName"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -48,7 +48,7 @@
                         android:text="Project Name : Meeting"
                         custom:font_style="semibold" />
 
-                    <com.techmali.smartteam.ui.views.MyTextView
+                    <TextView
                         android:id="@+id/tvCreatedDate"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -56,7 +56,7 @@
                         android:text="Created: 25 May 2017"
                         custom:font_style="semibold" />
 
-                    <com.techmali.smartteam.ui.views.MyTextView
+                    <TextView
                         android:id="@+id/tvTotalTime"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -64,7 +64,7 @@
                         custom:font_style="semibold" />
                 </LinearLayout>
 
-                <com.techmali.smartteam.ui.views.CircleImageView
+                <ImageView
                     android:id="@+id/ivProject"
                     android:layout_width="@dimen/margin_70"
                     android:layout_height="@dimen/margin_70"
@@ -73,7 +73,7 @@
                     android:src="@drawable/ic_profile_photo" />
             </LinearLayout>
 
-            <com.techmali.smartteam.ui.views.MyTextView
+            <TextView
                 android:id="@+id/tvDescription"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -89,7 +89,7 @@
                 android:background="@drawable/round_rect"
                 android:orientation="horizontal">
 
-                <com.techmali.smartteam.ui.views.MyRadioButton
+                <RadioButton
                     android:id="@+id/rbMembers"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
@@ -108,7 +108,7 @@
                     android:layout_height="match_parent"
                     android:background="@color/border_rectangle_color" />
 
-                <com.techmali.smartteam.ui.views.MyRadioButton
+                <RadioButton
                     android:id="@+id/rbDocuments"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"

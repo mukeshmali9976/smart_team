@@ -35,7 +35,7 @@
             android:visibility="gone" />
 
 
-        <com.techmali.smartteam.ui.views.MyEditText
+        <EditText
             android:id="@+id/etExpenseType"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -52,7 +52,7 @@
             android:visibility="gone" />
 
 
-        <com.techmali.smartteam.ui.views.MyEditText
+        <EditText
             android:id="@+id/etAmount"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -70,7 +70,7 @@
             android:text="@string/error_enter"
             android:visibility="gone" />
 
-        <com.techmali.smartteam.ui.views.MyEditText
+        <EditText
             android:id="@+id/etDescription"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -91,7 +91,7 @@
 
     </LinearLayout>
 
-    <com.techmali.smartteam.ui.views.MyButton
+    <Button
         android:id="@+id/btnSubmit"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

@@ -187,59 +187,6 @@ public class DialogUtils {
         }
     }
 
-    public static void showConfirmationDialog(Context context, String title,
-                                              String message, boolean cancelable,
-                                              String buttonYesText, String buttonNoText, int isNoButtonVisible,
-                                              final View.OnClickListener listener) {
-        final Dialog dialog = new Dialog(context);
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.setCancelable(cancelable);
-        dialog.setContentView(R.layout.custom_cancel_dailog);
-
-        TextView tvTitle = (TextView) dialog.findViewById(R.id.tvTitle);
-        TextView tvMessage = (TextView) dialog.findViewById(R.id.tvMessage1);
-
-        Button btnYes = (Button) dialog.findViewById(R.id.btnYes);
-        Button btnNo = (Button) dialog.findViewById(R.id.btnNo);
-        ImageView ivClose = (ImageView) dialog.findViewById(R.id.ivClose);
-
-        ivClose.setVisibility(View.GONE);
-        btnNo.setVisibility(isNoButtonVisible);
-
-        tvTitle.setText(title);
-        tvMessage.setText(message);
-        btnNo.setText(buttonNoText);
-        btnYes.setText(buttonYesText);
-
-        btnYes.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                dialog.dismiss();
-                listener.onClick(view);
-
-            }
-        });
-        btnNo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                dialog.dismiss();
-                listener.onClick(view);
-            }
-        });
-        ivClose.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                dialog.dismiss();
-                listener.onClick(view);
-            }
-        });
-        dialog.show();
-    }
-
-
-
-
-
     public interface OnListItemClickListener {
         void onItemClick(int position, View view, String text);
 

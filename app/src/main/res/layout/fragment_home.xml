@@ -23,7 +23,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
-                <com.techmali.smartteam.ui.views.MyTextView
+                <TextView
                     android:id="@+id/tvProject"
                     android:layout_width="0dp"
                     android:layout_height="@dimen/margin_70"
@@ -36,9 +36,9 @@
                     android:text="Project"
                     android:textColor="@color/colorPrimaryDark"
                     android:textSize="@dimen/font_10"
-                    custom:font_style="semibold" />
+                     />
 
-                <com.techmali.smartteam.ui.views.MyTextView
+                <TextView
                     android:id="@+id/tvTask"
                     android:layout_width="0dp"
                     android:layout_height="@dimen/margin_70"
@@ -51,9 +51,9 @@
                     android:text="Task"
                     android:textColor="@color/colorPrimaryDark"
                     android:textSize="@dimen/font_10"
-                    custom:font_style="semibold" />
+                     />
 
-                <com.techmali.smartteam.ui.views.MyTextView
+                <TextView
                     android:id="@+id/tvMyTimeSheet"
                     android:layout_width="0dp"
                     android:layout_height="@dimen/margin_70"
@@ -65,8 +65,7 @@
                     android:paddingLeft="@dimen/margin_5"
                     android:text="My TimeSheet"
                     android:textColor="@color/colorPrimaryDark"
-                    android:textSize="@dimen/font_10"
-                    custom:font_style="semibold" />
+                    android:textSize="@dimen/font_10" />
 
 
             </LinearLayout>
@@ -78,7 +77,7 @@
                 android:orientation="horizontal">
 
 
-                <com.techmali.smartteam.ui.views.MyTextView
+                <TextView
                     android:id="@+id/tvMyExpense"
                     android:layout_width="0dp"
                     android:layout_height="@dimen/margin_70"
@@ -91,9 +90,9 @@
                     android:text="My Expense"
                     android:textColor="@color/colorPrimaryDark"
                     android:textSize="@dimen/font_10"
-                    custom:font_style="semibold" />
+                     />
 
-                <com.techmali.smartteam.ui.views.MyTextView
+                <TextView
                     android:id="@+id/tvMyAttendance"
                     android:layout_width="0dp"
                     android:layout_height="@dimen/margin_70"
@@ -106,10 +105,10 @@
                     android:text="My Attendance\nand Leaves "
                     android:textColor="@color/colorPrimaryDark"
                     android:textSize="@dimen/font_10"
-                    custom:font_style="semibold" />
+                     />
 
 
-                <com.techmali.smartteam.ui.views.MyTextView
+                <TextView
                     android:id="@+id/tvCamera"
                     android:layout_width="0dp"
                     android:layout_height="@dimen/margin_70"
@@ -122,7 +121,7 @@
                     android:text="Camera"
                     android:textColor="@color/colorPrimaryDark"
                     android:textSize="@dimen/font_10"
-                    custom:font_style="semibold" />
+                     />
 
 
             </LinearLayout>
@@ -131,7 +130,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <com.techmali.smartteam.ui.views.MyTextView
+                <TextView
                     android:id="@+id/tvTimeSheet"
                     android:layout_width="0dp"
                     android:layout_height="@dimen/margin_70"
@@ -144,9 +143,9 @@
                     android:text="TimeSheet"
                     android:textColor="@color/colorPrimaryDark"
                     android:textSize="@dimen/font_10"
-                    custom:font_style="semibold" />
+                     />
 
-                <com.techmali.smartteam.ui.views.MyTextView
+                <TextView
                     android:id="@+id/tvExpense"
                     android:layout_width="0dp"
                     android:layout_height="@dimen/margin_70"
@@ -159,10 +158,10 @@
                     android:text="Expense"
                     android:textColor="@color/colorPrimaryDark"
                     android:textSize="@dimen/font_10"
-                    custom:font_style="semibold" />
+                     />
 
 
-                <com.techmali.smartteam.ui.views.MyTextView
+                <TextView
                     android:id="@+id/tvAttendance"
                     android:layout_width="0dp"
                     android:layout_height="@dimen/margin_70"
@@ -175,7 +174,7 @@
                     android:text="Attendance"
                     android:textColor="@color/colorPrimaryDark"
                     android:textSize="@dimen/font_10"
-                    custom:font_style="semibold" />
+                     />
 
             </LinearLayout>
 
@@ -184,7 +183,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
-                <com.techmali.smartteam.ui.views.MyTextView
+                <TextView
                     android:id="@+id/tvLeaveApplication"
                     android:layout_width="0dp"
                     android:layout_height="@dimen/margin_70"
@@ -197,10 +196,10 @@
                     android:text="Leave\nApplication"
                     android:textColor="@color/colorPrimaryDark"
                     android:textSize="@dimen/font_10"
-                    custom:font_style="semibold" />
+                     />
 
 
-                <com.techmali.smartteam.ui.views.MyTextView
+                <TextView
                     android:id="@+id/tvTraking"
                     android:layout_width="0dp"
                     android:layout_height="@dimen/margin_70"
@@ -213,9 +212,9 @@
                     android:text="Traking"
                     android:textColor="@color/colorPrimaryDark"
                     android:textSize="@dimen/font_10"
-                    custom:font_style="semibold" />
+                     />
 
-                <com.techmali.smartteam.ui.views.MyTextView
+                <TextView
                     android:id="@+id/tvCreateUser"
                     android:layout_width="0dp"
                     android:layout_height="@dimen/margin_70"
@@ -228,7 +227,7 @@
                     android:text="Create User"
                     android:textColor="@color/colorPrimaryDark"
                     android:textSize="@dimen/font_10"
-                    custom:font_style="semibold" />
+                     />
 
             </LinearLayout>
         </LinearLayout>

@@ -3,6 +3,7 @@ package com.techmali.smartteam.ui.activities;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -23,7 +24,8 @@ public class ApplyLeavesActivity extends BaseAppCompatActivity implements View.O
     private NetworkManager networkManager = null;
 
     private EditText etStartDate,etEndDate,etDescription;
-    private ImageView ivStartDateYes,ivStartDateNo,ivEndDateYes,ivEndDateNo;
+    //private ImageView iv
+    private CheckBox chkStartDateYes,chkStartDateNo,chkEndDateYes,chkEndDateNo;
 
     private TextView tvErrorStartDate,tvErrorEndDate,tvErrorDescription,tvErrorStartIsFullDay,tvErrorEndIsFullDay;
     @Override
@@ -40,11 +42,17 @@ public class ApplyLeavesActivity extends BaseAppCompatActivity implements View.O
         etStartDate = (EditText) findViewById(R.id.etStartDate);
         etEndDate = (EditText) findViewById(R.id.etEndDate);
 
-        ivStartDateYes = (ImageView) findViewById(R.id.ivStartDateYes);
-        ivStartDateNo = (ImageView) findViewById(R.id.ivStartDateNo);
+        chkStartDateYes = (CheckBox) findViewById(R.id.chkStartDateYes);
+        chkStartDateNo = (CheckBox) findViewById(R.id.chkStartDateNo);
 
-        ivEndDateYes = (ImageView) findViewById(R.id.ivEndDateYes);
-        ivEndDateNo = (ImageView) findViewById(R.id.ivEndDateNo);
+        chkEndDateYes = (CheckBox) findViewById(R.id.chkEndDateYes);
+        chkEndDateNo = (CheckBox) findViewById(R.id.chkEndDateNo);
+
+//        ivStartDateYes = (ImageView) findViewById(R.id.ivStartDateYes);
+//        ivStartDateNo = (ImageView) findViewById(R.id.ivStartDateNo);
+//
+//        ivEndDateYes = (ImageView) findViewById(R.id.ivEndDateYes);
+//        ivEndDateNo = (ImageView) findViewById(R.id.ivEndDateNo);
 
         etDescription = (EditText) findViewById(R.id.etDescription);
 

@@ -21,7 +21,7 @@
             android:paddingLeft="@dimen/margin_10"
             android:paddingRight="@dimen/margin_10">
 
-            <com.techmali.smartteam.ui.views.MyEditText
+            <EditText
                 android:id="@+id/etProjectName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -58,7 +58,7 @@
                 android:visibility="gone" />
 
 
-            <com.techmali.smartteam.ui.views.MyEditText
+            <EditText
                 android:id="@+id/etDescription"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -75,7 +75,7 @@
                 android:text="@string/error_enter"
                 android:visibility="gone" />
 
-            <com.techmali.smartteam.ui.views.MyEditText
+            <EditText
                 android:id="@+id/etAssignTo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -100,13 +100,13 @@
                 android:textColor="@color/colorPrimaryDark"
                 android:textSize="@dimen/font_16" />
 
-            <com.techmali.smartteam.ui.views.MyButton
+            <Button
                 android:layout_width="@dimen/margin_100"
                 android:layout_height="@dimen/margin_100"
                 android:layout_marginTop="@dimen/margin_10"
                 android:text="@string/lbl_add" />
 
-            <com.techmali.smartteam.ui.views.MyButton
+            <Button
                 android:id="@+id/btnSubmit"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

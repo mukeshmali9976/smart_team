@@ -23,7 +23,6 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.techmali.smartteam.R;
 import com.techmali.smartteam.network.NetworkManager;
 import com.techmali.smartteam.network.RequestListener;
-import com.techmali.smartteam.ui.activities.CompanyProfileActivity;
 import com.techmali.smartteam.ui.activities.LoginActivity;
 import com.techmali.smartteam.ui.activities.MainActivity;
 import com.techmali.smartteam.utils.Constants;

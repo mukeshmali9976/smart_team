@@ -31,17 +31,16 @@
                     android:layout_alignParentStart="true"
                     android:src="@drawable/ic_edit" />
 
-                <com.techmali.smartteam.ui.views.CircleImageView
+                <ImageView
                     android:id="@+id/ivProfile"
                     android:layout_width="@dimen/profile_image_width"
                     android:layout_height="@dimen/profile_image_width"
                     android:layout_centerInParent="true"
                     android:src="@drawable/ic_profile_photo"
-                    app:civ_border_color="@android:color/transparent"
-                    app:civ_border_width="2dp" />
+                    />
 
 
-                <com.techmali.smartteam.ui.views.MyTextView
+                <TextView
                     android:id="@+id/tvName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -61,7 +60,7 @@
                 android:orientation="vertical"
                 android:paddingTop="@dimen/margin_10">
 
-                <com.techmali.smartteam.ui.views.MyTextView
+                <TextView
                     android:id="@+id/tvHome"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -80,7 +79,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
-                    <com.techmali.smartteam.ui.views.MyTextView
+                    <TextView
                         android:id="@+id/tvNotification"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -107,7 +106,7 @@
                         android:padding="@dimen/margin_2"
                         android:visibility="gone">
 
-                        <com.techmali.smartteam.ui.views.MyTextView
+                        <TextView
                             android:id="@+id/tvBadge"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -125,7 +124,7 @@
 
                 </FrameLayout>
 
-                <com.techmali.smartteam.ui.views.MyTextView
+                <TextView
                     android:id="@+id/tvCompanyProfile"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -141,7 +140,7 @@
                     custom:font_style="semibold" />
 
 
-                <com.techmali.smartteam.ui.views.MyTextView
+                <TextView
                     android:id="@+id/tvHolidays"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -156,7 +155,7 @@
                     android:textSize="@dimen/font_16"
                     custom:font_style="semibold" />
 
-                <com.techmali.smartteam.ui.views.MyTextView
+                <TextView
                     android:id="@+id/tvHelp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -171,7 +170,7 @@
                     android:textSize="@dimen/font_16"
                     custom:font_style="semibold" />
 
-                <com.techmali.smartteam.ui.views.MyTextView
+                <TextView
                     android:id="@+id/tvLogout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

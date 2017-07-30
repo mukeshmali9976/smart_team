@@ -24,11 +24,11 @@
         <item name="editTextStyle">@style/styleEditText</item>
         <item name="android:buttonStyle">@style/styleButton</item>
         <item name="buttonStyle">@style/styleButton</item>
-        <item name="android:checkboxStyle">@style/styleCheckBox</item>
+
         <item name="android:spinnerStyle">@style/styleSpinner</item>
         <item name="spinnerStyle">@style/styleSpinner</item>
-
-        <!--<item name="checkboxStyle">@style/styleCheckBox</item>-->
+        <item name="android:checkboxStyle">@style/styleCheckBox</item>
+        <item name="checkboxStyle">@style/styleCheckBox</item>
 
         <!--<item name="android:spinnerDropDownItemStyle">@style/SpinnerDropDownStyle</item>-->
         <!--<item name="spinnerDropDownItemStyle">@style/SpinnerDropDownStyle</item>-->
@@ -77,10 +77,10 @@
     </style>
 
     <style name="styleTextView" parent="@android:style/Widget.TextView">
-        <item name="android:textSize">@dimen/font_14</item>
+        <item name="android:textSize">@dimen/font_12</item>
         <item name="android:ellipsize">end</item>
-        <item name="android:textColor">@color/text_hint_color</item>
-        <item name="android:textColorHint">@color/text_hint_color</item>
+        <item name="android:textColor">@color/text_color</item>
+        <item name="android:textColorHint">@color/text_color</item>
         <item name="fontPath">@string/regular</item>
     </style>
 
@@ -121,9 +121,7 @@
     </style>
 
     <style name="styleCheckBox" parent="@android:style/Widget.CompoundButton.CheckBox">
-        <item name="android:textColor">@color/colorWhite</item>
-        <item name="android:button">@drawable/theme_checkbox</item>
-        <item name="android:background">@null</item>
+        <item name="android:textColor">@color/text_color</item>
         <item name="android:minHeight">0dp</item>
         <item name="android:minWidth">0dp</item>
         <item name="android:textSize">@dimen/font_14</item>
