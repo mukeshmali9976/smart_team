@@ -33,8 +33,8 @@ public class LoginActivity extends BaseAppCompatActivity implements View.OnClick
     private SharedPreferences prefManager = null;
     private NetworkManager networkManager = null;
 
-    private EditText etPhone, etPassword;
-    private TextView tvErrorPhone, tvErrorPassword;
+    private EditText etEmail, etPassword;
+    private TextView tvErrorEmail, tvErrorPassword;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -49,13 +49,13 @@ public class LoginActivity extends BaseAppCompatActivity implements View.OnClick
 
     private void initView() {
 
-        etPhone = (EditText) findViewById(R.id.etPhone);
+        etEmail = (EditText) findViewById(R.id.etEmail);
         etPassword = (EditText) findViewById(R.id.etPassword);
 
-        tvErrorPhone = (TextView) findViewById(R.id.tvErrorPhone);
+        tvErrorEmail = (TextView) findViewById(R.id.tvErrorEmail);
         tvErrorPassword = (TextView) findViewById(R.id.tvErrorPassword);
 
-        etPhone.setText("deep.dran10@gmail.com");
+        etEmail.setText("deep.dran10@gmail.com");
         etPassword.setText("111111111");
 
         findViewById(R.id.btnLogin).setOnClickListener(this);
@@ -76,7 +76,7 @@ public class LoginActivity extends BaseAppCompatActivity implements View.OnClick
 
     private void performLogin() {
         networkManager.isProgressBarVisible(true);
-        reqIdLogin = networkManager.addRequest(RequestBuilder.performLogin(etPhone.getText().toString().trim(), etPassword.getText().toString().trim()), LoginActivity.this, RequestMethod.POST, RequestBuilder.METHOD_LOGIN);
+        reqIdLogin = networkManager.addRequest(RequestBuilder.performLogin(etEmail.getText().toString().trim(), etPassword.getText().toString().trim()), LoginActivity.this, RequestMethod.POST, RequestBuilder.METHOD_LOGIN);
     }
 
     @Override

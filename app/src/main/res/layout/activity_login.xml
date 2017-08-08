@@ -10,40 +10,18 @@
         android:orientation="vertical"
         android:padding="@dimen/margin_24">
 
-        <LinearLayout
+        <EditText
+            android:id="@+id/etEmail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/theme_edit_text_background"
-            android:orientation="horizontal">
+            android:imeOptions="actionNext"
+            android:hint="@string/lbl_email"
+            android:inputType="textEmailAddress"
+             />
 
-            <TextView
-                android:layout_width="@dimen/margin_36"
-                android:layout_height="match_parent"
-                android:layout_gravity="center_vertical"
-                android:gravity="center"
-                android:padding="@dimen/margin_2"
-                android:text="+91 "
-                android:textColor="@color/colorPrimary" />
-
-            <View
-                android:layout_width="@dimen/seperator"
-                android:layout_height="match_parent"
-                android:background="@color/colorTextHint" />
-
-            <EditText
-                android:id="@+id/etPhone"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@null"
-                android:imeOptions="actionNext"
-                android:inputType="numberDecimal"
-                android:maxLength="25"
-                android:paddingLeft="@dimen/margin_6" />
-
-        </LinearLayout>
 
         <TextView
-            android:id="@+id/tvErrorPhone"
+            android:id="@+id/tvErrorEmail"
             style="@style/styleErrorTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -55,11 +33,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin_10"
-            android:ems="10"
             android:hint="@string/lbl_password"
             android:imeOptions="actionDone"
-            android:inputType="textPassword"
-            android:padding="@dimen/margin_10" />
+            android:inputType="textPassword" />
 
         <TextView
             android:id="@+id/tvErrorPassword"
