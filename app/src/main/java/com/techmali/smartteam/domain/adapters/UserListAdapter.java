@@ -13,6 +13,7 @@ import com.daimajia.swipe.SwipeLayout;
 import com.daimajia.swipe.adapters.RecyclerSwipeAdapter;
 import com.techmali.smartteam.R;
 import com.techmali.smartteam.models.SyncProjectUserLink;
+import com.techmali.smartteam.models.SyncUserInfo;
 import com.techmali.smartteam.models.UserModel;
 
 import java.util.List;
@@ -24,10 +25,10 @@ import java.util.List;
 public class UserListAdapter extends RecyclerSwipeAdapter<UserListAdapter.ViewHolder> {
 
     private Context context;
-    private List<SyncProjectUserLink> userList;
+    private List<SyncUserInfo> userList;
     private onSwipeClickLisener mListener;
 
-    public UserListAdapter(Context context, List<SyncProjectUserLink> userList, onSwipeClickLisener mListener) {
+    public UserListAdapter(Context context, List<SyncUserInfo> userList, onSwipeClickLisener mListener) {
         this.context = context;
         this.userList = userList;
         this.mListener = mListener;
@@ -45,7 +46,7 @@ public class UserListAdapter extends RecyclerSwipeAdapter<UserListAdapter.ViewHo
     public void onBindViewHolder(final ViewHolder holder, int position) {
 
         holder.swipeLayout.setShowMode(SwipeLayout.ShowMode.LayDown);
-        holder.tvMemberName.setText(userList.get(position).getLocal_project_user_link_id());
+        holder.tvMemberName.setText(userList.get(position).getFirst_name() + " " + userList.get(position).getLast_name());
 
         holder.btnDelete.setOnClickListener(new View.OnClickListener() {
             @Override

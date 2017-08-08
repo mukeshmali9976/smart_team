@@ -1,10 +1,12 @@
 package com.techmali.smartteam.ui.activities;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -20,8 +22,10 @@ import com.sleepbot.datetimepicker.time.TimePickerDialog;
 import com.techmali.smartteam.R;
 import com.techmali.smartteam.base.BaseAppCompatActivity;
 import com.techmali.smartteam.database.PendingDataImpl;
+import com.techmali.smartteam.domain.adapters.MemberSelectionAdapter;
 import com.techmali.smartteam.domain.adapters.ProjectListAdapter;
 import com.techmali.smartteam.models.SyncProject;
+import com.techmali.smartteam.models.SyncUserInfo;
 import com.techmali.smartteam.request.PARAMS;
 import com.techmali.smartteam.ui.fragments.ActiveProjectFragment;
 import com.techmali.smartteam.ui.views.MyProgressDialog;
@@ -43,6 +47,8 @@ public class CreateProjectActivity extends BaseAppCompatActivity implements View
 
     public static final String TAG = CreateProjectActivity.class.getSimpleName();
 
+    public static int TAG_ADD_MEMBER = 444;
+
     public static final String TAG_IS_FOR_UPDATE = "update";
     public static final String TAG_PROJECT_ID = "project_id";
 
@@ -53,15 +59,17 @@ public class CreateProjectActivity extends BaseAppCompatActivity implements View
 
     private PendingDataImpl model;
 
-    private EditText etProject, etStartDate, etEndDate, etDescription, etAssignTo;
-    private TextView tvErrorProject, tvErrorStartDate, tvErrorEndDate, tvErrorDescription, tvErrorAssignTo;
+    private EditText etProject, etStartDate, etEndDate, etDescription;
+    private TextView tvErrorProject, tvErrorStartDate, tvErrorEndDate, tvErrorDescription, tvAssignTo;
     private Button btnSubmit;
+    private RecyclerView rvMember;
 
     private TimePickerDialog timePickerDialog;
     private DatePickerDialog datePickerDialog;
 
     private String selectedTime = "", start_date = "", end_date = "", p_id = "";
     private boolean isForUpdate = false;
+    private ArrayList<SyncUserInfo> userArrayList = new ArrayList<>();
 
     private Calendar newDate, calendar;
 
@@ -74,6 +82,7 @@ public class CreateProjectActivity extends BaseAppCompatActivity implements View
 
         initView();
     }
+
 
     private void initView() {
 
@@ -95,13 +104,14 @@ public class CreateProjectActivity extends BaseAppCompatActivity implements View
         etStartDate = (EditText) findViewById(R.id.etStartDate);
         etEndDate = (EditText) findViewById(R.id.etEndDate);
         etDescription = (EditText) findViewById(R.id.etDescription);
-        etAssignTo = (EditText) findViewById(R.id.etAssignTo);
+
+        tvAssignTo = (TextView) findViewById(R.id.tvAssignTo);
+        rvMember = (RecyclerView) findViewById(R.id.rvMember);
 
         tvErrorProject = (TextView) findViewById(R.id.tvErrorProject);
         tvErrorStartDate = (TextView) findViewById(R.id.tvErrorStartDate);
         tvErrorEndDate = (TextView) findViewById(R.id.tvErrorEndDate);
         tvErrorDescription = (TextView) findViewById(R.id.tvErrorDescription);
-        tvErrorAssignTo = (TextView) findViewById(R.id.tvErrorAssignTo);
 
         btnSubmit = (Button) findViewById(R.id.btnSubmit);
 
@@ -113,7 +123,7 @@ public class CreateProjectActivity extends BaseAppCompatActivity implements View
 
         etStartDate.setOnClickListener(this);
         etEndDate.setOnClickListener(this);
-        etAssignTo.setOnClickListener(this);
+        tvAssignTo.setOnClickListener(this);
         btnSubmit.setOnClickListener(this);
 
         if (isForUpdate && !Utils.isEmptyString(p_id))
@@ -124,12 +134,15 @@ public class CreateProjectActivity extends BaseAppCompatActivity implements View
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.etAssignTo:
+            case R.id.tvAssignTo:
+                Intent intent = new Intent(CreateProjectActivity.this, AddProjectMember.class);
+                intent.putParcelableArrayListExtra(AddProjectMember.EXTRA_SELECTED_USERS, userArrayList);
+                startActivityForResult(intent, TAG_ADD_MEMBER);
                 break;
 
             case R.id.btnSubmit:
                 if (checkValidation())
-                    new CreateProject().execute(etProject.getText().toString(), start_date, end_date, etDescription.getText().toString(), "");
+                    new CreateProject().execute(etProject.getText().toString(), start_date, end_date, etDescription.getText().toString());
                 break;
 
             case R.id.etStartDate:
@@ -153,6 +166,24 @@ public class CreateProjectActivity extends BaseAppCompatActivity implements View
                     displayError("Select Start Date first.");
                 }
                 break;
+        }
+    }
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == TAG_ADD_MEMBER && resultCode == RESULT_OK){
+            if(data != null && data.hasExtra(AddProjectMember.EXTRA_SELECTED_USERS)){
+                userArrayList = data.getParcelableArrayListExtra(AddProjectMember.EXTRA_SELECTED_USERS);
+
+                MemberSelectionAdapter mAdapter = new MemberSelectionAdapter(CreateProjectActivity.this, userArrayList, false);
+                rvMember.setLayoutManager(new LinearLayoutManager(CreateProjectActivity.this));
+                rvMember.setItemAnimator(new DefaultItemAnimator());
+                rvMember.setAdapter(mAdapter);
+
+                rvMember.setHasFixedSize(true);
+            }
         }
     }
 
@@ -221,6 +252,7 @@ public class CreateProjectActivity extends BaseAppCompatActivity implements View
         }
     }
 
+
     private class CreateProject extends AsyncTask<String, Void, Boolean> {
 
         MyProgressDialog dialog;
@@ -234,7 +266,7 @@ public class CreateProjectActivity extends BaseAppCompatActivity implements View
 
         @Override
         protected Boolean doInBackground(String... strings) {
-            return model.createProject(strings[0], strings[1], strings[2], strings[3], strings[4], isForUpdate, p_id);
+            return model.createProject(strings[0], strings[1], strings[2], strings[3], userArrayList, isForUpdate, p_id);
         }
 
         @Override
@@ -253,6 +285,7 @@ public class CreateProjectActivity extends BaseAppCompatActivity implements View
             dialog.dismiss();
         }
     }
+
 
     private class GetProjectDetail extends AsyncTask<String, Void, String> {
 
@@ -278,7 +311,7 @@ public class CreateProjectActivity extends BaseAppCompatActivity implements View
                     Log.e(TAG, result);
                     JSONObject object = new JSONObject(result);
                     if (object.getInt(PARAMS.TAG_STATUS) == PARAMS.TAG_STATUS_200) {
-                        ArrayList<SyncProject> projectArrayList = new ArrayList<>();
+                        ArrayList<SyncProject> projectArrayList;
                         projectArrayList = new Gson().fromJson(object.getJSONObject(PARAMS.TAG_RESULT).getString(PARAMS.TAG_PROJECT_DETAIL), new TypeToken<List<SyncProject>>() {
                         }.getType());
                         if (!projectArrayList.isEmpty()) {
@@ -289,6 +322,17 @@ public class CreateProjectActivity extends BaseAppCompatActivity implements View
                             etDescription.setText(projectArrayList.get(0).getDescription());
                             etStartDate.setText(DateUtils.getLocalDateFromUTC(projectArrayList.get(0).getStart_date(), "dd MMM yyyy, hh:mm aa"));
                             etEndDate.setText(DateUtils.getLocalDateFromUTC(projectArrayList.get(0).getEnd_date(), "dd MMM yyyy, hh:mm aa"));
+                        }
+
+                        userArrayList = new Gson().fromJson(object.getJSONObject(PARAMS.TAG_RESULT).getString(PARAMS.TAG_USER_LIST), new TypeToken<List<SyncUserInfo>>() {
+                        }.getType());
+                        if (userArrayList != null && !userArrayList.isEmpty()) {
+                            MemberSelectionAdapter mAdapter = new MemberSelectionAdapter(CreateProjectActivity.this, userArrayList, false);
+                            rvMember.setLayoutManager(new LinearLayoutManager(CreateProjectActivity.this));
+                            rvMember.setItemAnimator(new DefaultItemAnimator());
+                            rvMember.setAdapter(mAdapter);
+
+                            rvMember.setHasFixedSize(true);
                         }
                     }
                 }

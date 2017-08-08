@@ -410,7 +410,7 @@ public class DbParams {
 
     /*
           LEAVE TABLE.........
-          status_id : '1=>pending, 2=> approved, 3=> reject',         DEFAULT '1'
+          status_id : '1=>pending, 2=>approved, 3=>reject',          DEFAULT '1'
           is_delete : '0=> not delete, 1=> deleted',                 DEFAULT '0'
     */
     static final String CREATE_TBL_LEAVE = "CREATE TABLE " + TBL_LEAVE + "(" +

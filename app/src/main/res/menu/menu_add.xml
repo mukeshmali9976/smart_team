@@ -7,5 +7,10 @@
         android:orderInCategory="2"
         android:title="@string/lbl_menu"
         app:showAsAction="always|collapseActionView" />
+    <item
+        android:id="@+id/action_done"
+        android:title="@string/lbl_done"
+        android:visible="false"
+        app:showAsAction="ifRoom" />
 
 </menu>

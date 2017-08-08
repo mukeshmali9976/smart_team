@@ -22,165 +22,110 @@
         android:roundIcon="@drawable/logo"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
         <activity
             android:name=".ui.activities.SplashActivity"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="stateAlwaysHidden|stateHidden|adjustResize">
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
         </activity>
-
         <activity
             android:name=".ui.activities.MainActivity"
             android:configChanges="screenSize|keyboardHidden|orientation"
-            android:exported="false"
-            android:launchMode="singleTask"
-            android:permission="null"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden|stateHidden|adjustPan" />
         <activity
             android:name=".ui.activities.LoginActivity"
             android:configChanges="screenSize|keyboardHidden|orientation"
-            android:exported="false"
-            android:launchMode="singleTask"
-            android:permission="null"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden|stateHidden|adjustPan" />
         <activity
             android:name=".ui.activities.ProjectListActivity"
             android:configChanges="screenSize|keyboardHidden|orientation"
-            android:exported="false"
-            android:launchMode="singleTask"
-            android:permission="null"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden|stateHidden|adjustPan" />
         <activity
             android:name=".ui.activities.CreateProjectActivity"
             android:configChanges="screenSize|keyboardHidden|orientation"
-            android:exported="false"
-            android:launchMode="singleTask"
-            android:permission="null"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden|stateHidden|adjustPan" />
         <activity
             android:name=".ui.activities.CreateTaskActivity"
             android:configChanges="screenSize|keyboardHidden|orientation"
-            android:exported="false"
-            android:launchMode="singleTask"
-            android:permission="null"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateAlwaysHidden|stateHidden|adjustPan" />
+        <activity
+            android:name=".ui.activities.AddProjectMember"
+            android:configChanges="screenSize|keyboardHidden|orientation"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden|stateHidden|adjustPan" />
         <activity
             android:name=".ui.activities.ProjectDetailActivity"
             android:configChanges="screenSize|keyboardHidden|orientation"
-            android:exported="false"
-            android:launchMode="singleTask"
-            android:permission="null"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden|stateHidden|adjustPan" />
         <activity
             android:name=".ui.activities.AttendanceActivity"
             android:configChanges="screenSize|keyboardHidden|orientation"
-            android:exported="false"
-            android:launchMode="singleTask"
-            android:permission="null"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden|stateHidden|adjustPan" />
         <activity
             android:name=".ui.activities.ForgotPasswordActivity"
             android:configChanges="screenSize|keyboardHidden|orientation"
-            android:exported="false"
-            android:launchMode="singleTask"
-            android:permission="null"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden|stateHidden|adjustPan" />
         <activity
             android:name=".ui.activities.OTPVarificationActivity"
             android:configChanges="screenSize|keyboardHidden|orientation"
-            android:exported="false"
-            android:launchMode="singleTask"
-            android:permission="null"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden|stateHidden|adjustPan" />
         <activity
             android:name=".ui.activities.MyTimeSheetActivity"
             android:configChanges="screenSize|keyboardHidden|orientation"
-            android:exported="false"
-            android:launchMode="singleTask"
-            android:permission="null"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden|stateHidden|adjustPan" />
         <activity
             android:name=".ui.activities.MyExpenseActivity"
             android:configChanges="screenSize|keyboardHidden|orientation"
-            android:exported="false"
-            android:launchMode="singleTask"
-            android:permission="null"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden|stateHidden|adjustPan" />
         <activity
             android:name=".ui.activities.MyAttendanceActivity"
             android:configChanges="screenSize|keyboardHidden|orientation"
-            android:exported="false"
-            android:launchMode="singleTask"
-            android:permission="null"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden|stateHidden|adjustPan" />
         <activity
             android:name=".ui.activities.AddMyTimeSheetActivity"
             android:configChanges="screenSize|keyboardHidden|orientation"
-            android:exported="false"
-            android:launchMode="singleTask"
-            android:permission="null"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden|stateHidden|adjustPan" />
         <activity
             android:name=".ui.activities.AddMyExpenseActivity"
             android:configChanges="screenSize|keyboardHidden|orientation"
-            android:exported="false"
-            android:launchMode="singleTask"
-            android:permission="null"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden|stateHidden|adjustPan" />
         <activity
             android:name=".ui.activities.ApplyLeavesActivity"
             android:configChanges="screenSize|keyboardHidden|orientation"
-            android:exported="false"
-            android:launchMode="singleTask"
-            android:permission="null"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden|stateHidden|adjustPan" />
         <activity
             android:name=".ui.activities.AddMyAttendanceActivity"
             android:configChanges="screenSize|keyboardHidden|orientation"
-            android:exported="false"
-            android:launchMode="singleTask"
-            android:permission="null"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden|stateHidden|adjustPan" />
         <activity
             android:name=".ui.activities.CreateUserActivity"
             android:configChanges="screenSize|keyboardHidden|orientation"
-            android:exported="false"
-            android:launchMode="singleTask"
-            android:permission="null"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden|stateHidden|adjustPan" />
-
         <activity
             android:name=".ui.activities.TaskDetailActivity"
             android:configChanges="screenSize|keyboardHidden|orientation"
-            android:exported="false"
-            android:launchMode="singleTask"
-            android:permission="null"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden|stateHidden|adjustPan" />
 

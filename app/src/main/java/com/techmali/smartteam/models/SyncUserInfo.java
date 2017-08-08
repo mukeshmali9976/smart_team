@@ -1,12 +1,13 @@
 package com.techmali.smartteam.models;
 
-import java.io.Serializable;
+import android.os.Parcel;
+import android.os.Parcelable;
 
 /**
  * Created by Gaurav on 7/15/2017.
  */
 
-public class SyncUserInfo implements Serializable {
+public class SyncUserInfo implements Parcelable {
 
     private String company_id;
     private String server_user_id;
@@ -23,7 +24,42 @@ public class SyncUserInfo implements Serializable {
     private String gender;
     private String thumb;
 
+    // For DB entry
     private int is_updated = 0;
+
+    // For Member selection list
+    private boolean selected = false;
+
+    protected SyncUserInfo(Parcel in) {
+        company_id = in.readString();
+        server_user_id = in.readString();
+        role_id = in.readString();
+        status_id = in.readString();
+        home_address = in.readString();
+        first_name = in.readString();
+        work_address = in.readString();
+        username = in.readString();
+        email = in.readString();
+        local_user_id = in.readString();
+        phone_no = in.readString();
+        last_name = in.readString();
+        gender = in.readString();
+        thumb = in.readString();
+        is_updated = in.readInt();
+        selected = in.readByte() != 0;
+    }
+
+    public static final Creator<SyncUserInfo> CREATOR = new Creator<SyncUserInfo>() {
+        @Override
+        public SyncUserInfo createFromParcel(Parcel in) {
+            return new SyncUserInfo(in);
+        }
+
+        @Override
+        public SyncUserInfo[] newArray(int size) {
+            return new SyncUserInfo[size];
+        }
+    };
 
     public String getCompany_id() {
         return company_id;
@@ -143,5 +179,38 @@ public class SyncUserInfo implements Serializable {
 
     public void setIs_updated(int is_updated) {
         this.is_updated = is_updated;
+    }
+
+    public boolean isSelected() {
+        return selected;
+    }
+
+    public void setSelected(boolean selected) {
+        this.selected = selected;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeString(company_id);
+        parcel.writeString(server_user_id);
+        parcel.writeString(role_id);
+        parcel.writeString(status_id);
+        parcel.writeString(home_address);
+        parcel.writeString(first_name);
+        parcel.writeString(work_address);
+        parcel.writeString(username);
+        parcel.writeString(email);
+        parcel.writeString(local_user_id);
+        parcel.writeString(phone_no);
+        parcel.writeString(last_name);
+        parcel.writeString(gender);
+        parcel.writeString(thumb);
+        parcel.writeInt(is_updated);
+        parcel.writeByte((byte) (selected ? 1 : 0));
     }
 }

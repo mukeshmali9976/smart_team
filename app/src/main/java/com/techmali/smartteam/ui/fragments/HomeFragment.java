@@ -267,7 +267,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
                     insertSecurityController(object.getString(DbParams.TBL_SECURITY_CONTROLLERS), DbParams.TBL_SECURITY_CONTROLLERS);
                     insertRole(object.getString(DbParams.TBL_ROLE), DbParams.TBL_ROLE);
                     insertCompany(object.getString(DbParams.TBL_COMPANY), DbParams.TBL_COMPANY);
-                    insertTaskType(object.getString(DbParams.TBL_TASK_TYPE), DbParams.TBL_TASK_TYPE);
+//                    insertTaskType(object.getString(DbParams.TBL_TASK_TYPE), DbParams.TBL_TASK_TYPE);
                     return strings[1];
                 }
             } catch (JSONException e) {

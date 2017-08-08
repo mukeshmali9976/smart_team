@@ -38,7 +38,10 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.security.SecureRandom;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -834,7 +837,18 @@ public class Utils {
     }
 
 
-    public static void getListDialog() {
+    public static String generateRandomNo() {
+        List<Integer> numbers = new ArrayList<>();
+        for(int i = 0; i < 10; i++){
+            numbers.add(i);
+        }
 
+        Collections.shuffle(numbers);
+
+        String result = "";
+        for(int i = 0; i < 4; i++){
+            result += numbers.get(i).toString();
+        }
+        return result;
     }
 }

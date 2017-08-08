@@ -32,6 +32,7 @@ import com.techmali.smartteam.domain.adapters.UserListAdapter;
 import com.techmali.smartteam.models.SyncProject;
 import com.techmali.smartteam.models.SyncProjectUserLink;
 import com.techmali.smartteam.models.SyncTask;
+import com.techmali.smartteam.models.SyncUserInfo;
 import com.techmali.smartteam.models.TaskModel;
 import com.techmali.smartteam.models.UserModel;
 import com.techmali.smartteam.network.NetworkManager;
@@ -243,8 +244,8 @@ public class ProjectDetailActivity extends BaseAppCompatActivity implements
 //                            tvEndDate.append(DateUtils.getLocalDateFromUTC(projectArrayList.get(0).getEnd_date(), "dd MMM yyyy, hh:mm aa"));
                         }
 
-                        ArrayList<SyncProjectUserLink> projectUserLinkArrayList;
-                        projectUserLinkArrayList = new Gson().fromJson(object.getJSONObject(PARAMS.TAG_RESULT).getString(PARAMS.TAG_USER_LIST), new TypeToken<List<SyncProjectUserLink>>() {
+                        ArrayList<SyncUserInfo> projectUserLinkArrayList;
+                        projectUserLinkArrayList = new Gson().fromJson(object.getJSONObject(PARAMS.TAG_RESULT).getString(PARAMS.TAG_USER_LIST), new TypeToken<List<SyncUserInfo>>() {
                         }.getType());
                         if(projectUserLinkArrayList != null && !projectUserLinkArrayList.isEmpty()){
                             mAdapter = new UserListAdapter(ProjectDetailActivity.this, projectUserLinkArrayList, ProjectDetailActivity.this);
