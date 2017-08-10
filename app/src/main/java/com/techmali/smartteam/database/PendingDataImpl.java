@@ -7,7 +7,6 @@ import android.database.Cursor;
 import android.database.DatabaseUtils;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
-import android.support.v4.view.ViewPager;
 import android.util.Log;
 
 import com.techmali.smartteam.models.SyncAttendance;
@@ -70,7 +69,7 @@ public class PendingDataImpl {
                 break;
             case DbParams.TBL_PROJECT_USER_LINK:
                 SyncProjectUserLink projectUserLink = (SyncProjectUserLink) object;
-                id = database.insert(table, null, this.getProjectUserLinkContentValues(projectUserLink, projectUserLink.getProject_user_link_id(), local_id));
+                id = database.insert(table, null, this.getProjectUserLinkContentValues(projectUserLink, projectUserLink.getServer_project_user_link_id(), local_id));
                 break;
             case DbParams.TBL_TASK:
                 SyncTask task = (SyncTask) object;
@@ -156,7 +155,7 @@ public class PendingDataImpl {
             case DbParams.TBL_PROJECT_USER_LINK:
                 SyncProjectUserLink projectUserLink = (SyncProjectUserLink) object;
                 id = database.update(table, this.getProjectUserLinkContentValues(projectUserLink, server_id, projectUserLink.getLocal_project_user_link_id()),
-                        DbParams.CLM_PROJECT_USER_LINK_ID + "=?", new String[]{server_id});
+                        DbParams.CLM_SERVER_PROJECT_USER_LINK_ID + "=?", new String[]{server_id});
                 break;
             case DbParams.TBL_TASK:
                 SyncTask task = (SyncTask) object;
@@ -247,7 +246,7 @@ public class PendingDataImpl {
                 userinfoCursor.moveToFirst();
                 do {
                     JSONObject userinfoObject = new JSONObject();
-                    userinfoObject.put(DbParams.CLM_USER_ID, userinfoCursor.getString(userinfoCursor.getColumnIndex(DbParams.CLM_USER_ID)));
+                    userinfoObject.put(DbParams.CLM_USER_ID, Utils.createBlank(userinfoCursor.getString(userinfoCursor.getColumnIndex(DbParams.CLM_USER_ID))));
                     userinfoObject.put(DbParams.CLM_LOCAL_USER_ID, userinfoCursor.getString(userinfoCursor.getColumnIndex(DbParams.CLM_LOCAL_USER_ID)));
                     userinfoObject.put(DbParams.CLM_USERNAME, userinfoCursor.getString(userinfoCursor.getColumnIndex(DbParams.CLM_USERNAME)));
                     userinfoObject.put(DbParams.CLM_FIRST_NAME, userinfoCursor.getString(userinfoCursor.getColumnIndex(DbParams.CLM_FIRST_NAME)));
@@ -280,7 +279,7 @@ public class PendingDataImpl {
                 do {
 
                     JSONObject projectObject = new JSONObject();
-                    projectObject.put(DbParams.CLM_SERVER_PROJECT_ID, projectCursor.getString(projectCursor.getColumnIndex(DbParams.CLM_SERVER_PROJECT_ID)));
+                    projectObject.put(DbParams.CLM_SERVER_PROJECT_ID, Utils.createBlank(projectCursor.getString(projectCursor.getColumnIndex(DbParams.CLM_SERVER_PROJECT_ID))));
                     projectObject.put(DbParams.CLM_LOCAL_PROJECT_ID, projectCursor.getString(projectCursor.getColumnIndex(DbParams.CLM_LOCAL_PROJECT_ID)));
                     projectObject.put(DbParams.CLM_COMPANY_ID, projectCursor.getString(projectCursor.getColumnIndex(DbParams.CLM_COMPANY_ID)));
                     projectObject.put(DbParams.CLM_TITLE, projectCursor.getString(projectCursor.getColumnIndex(DbParams.CLM_TITLE)));
@@ -288,6 +287,7 @@ public class PendingDataImpl {
                     projectObject.put(DbParams.CLM_START_DATE, projectCursor.getString(projectCursor.getColumnIndex(DbParams.CLM_START_DATE)));
                     projectObject.put(DbParams.CLM_END_DATE, projectCursor.getString(projectCursor.getColumnIndex(DbParams.CLM_END_DATE)));
                     projectObject.put(DbParams.CLM_STATUS_ID, projectCursor.getInt(projectCursor.getColumnIndex(DbParams.CLM_STATUS_ID)));
+                    projectObject.put(DbParams.CLM_IS_DELETE, projectCursor.getInt(projectCursor.getColumnIndex(DbParams.CLM_IS_DELETE)));
 
                     projectArray.put(projectObject);
                 } while (projectCursor.moveToNext());
@@ -307,9 +307,9 @@ public class PendingDataImpl {
                 do {
 
                     JSONObject taskObject = new JSONObject();
-                    taskObject.put(DbParams.CLM_TASK_ID, taskCursor.getString(taskCursor.getColumnIndex(DbParams.CLM_TASK_ID)));
+                    taskObject.put(DbParams.CLM_TASK_ID, Utils.createBlank(taskCursor.getString(taskCursor.getColumnIndex(DbParams.CLM_TASK_ID))));
                     taskObject.put(DbParams.CLM_LOCAL_TASK_ID, taskCursor.getString(taskCursor.getColumnIndex(DbParams.CLM_LOCAL_TASK_ID)));
-                    taskObject.put(DbParams.CLM_PROJECT_ID, taskCursor.getString(taskCursor.getColumnIndex(DbParams.CLM_PROJECT_ID)));
+                    taskObject.put(DbParams.CLM_PROJECT_ID, Utils.createBlank(taskCursor.getString(taskCursor.getColumnIndex(DbParams.CLM_PROJECT_ID))));
                     taskObject.put(DbParams.CLM_LOCAL_PROJECT_ID, taskCursor.getString(taskCursor.getColumnIndex(DbParams.CLM_LOCAL_PROJECT_ID)));
                     taskObject.put(DbParams.CLM_COMPANY_ID, taskCursor.getString(taskCursor.getColumnIndex(DbParams.CLM_COMPANY_ID)));
                     taskObject.put(DbParams.CLM_TITLE, taskCursor.getString(taskCursor.getColumnIndex(DbParams.CLM_TITLE)));
@@ -336,11 +336,11 @@ public class PendingDataImpl {
                 do {
 
                     JSONObject projectUserLinkObject = new JSONObject();
-                    projectUserLinkObject.put(DbParams.CLM_PROJECT_USER_LINK_ID, projectUserLinkCursor.getString(projectUserLinkCursor.getColumnIndex(DbParams.CLM_PROJECT_USER_LINK_ID)));
+                    projectUserLinkObject.put(DbParams.CLM_SERVER_PROJECT_USER_LINK_ID, Utils.createBlank(projectUserLinkCursor.getString(projectUserLinkCursor.getColumnIndex(DbParams.CLM_SERVER_PROJECT_USER_LINK_ID))));
                     projectUserLinkObject.put(DbParams.CLM_LOCAL_PROJECT_USER_LINK_ID, projectUserLinkCursor.getString(projectUserLinkCursor.getColumnIndex(DbParams.CLM_LOCAL_PROJECT_USER_LINK_ID)));
-                    projectUserLinkObject.put(DbParams.CLM_PROJECT_ID, projectUserLinkCursor.getString(projectUserLinkCursor.getColumnIndex(DbParams.CLM_PROJECT_ID)));
+                    projectUserLinkObject.put(DbParams.CLM_SERVER_PROJECT_ID, Utils.createBlank(projectUserLinkCursor.getString(projectUserLinkCursor.getColumnIndex(DbParams.CLM_SERVER_PROJECT_ID))));
                     projectUserLinkObject.put(DbParams.CLM_LOCAL_PROJECT_ID, projectUserLinkCursor.getString(projectUserLinkCursor.getColumnIndex(DbParams.CLM_LOCAL_PROJECT_ID)));
-                    projectUserLinkObject.put(DbParams.CLM_USER_ID, projectUserLinkCursor.getString(projectUserLinkCursor.getColumnIndex(DbParams.CLM_USER_ID)));
+                    projectUserLinkObject.put(DbParams.CLM_USER_ID, Utils.createBlank(projectUserLinkCursor.getString(projectUserLinkCursor.getColumnIndex(DbParams.CLM_USER_ID))));
                     projectUserLinkObject.put(DbParams.CLM_LOCAL_USER_ID, projectUserLinkCursor.getString(projectUserLinkCursor.getColumnIndex(DbParams.CLM_LOCAL_USER_ID)));
 
                     projectUserLinkArray.put(projectUserLinkObject);
@@ -361,11 +361,11 @@ public class PendingDataImpl {
                 do {
 
                     JSONObject taskUserLinkObject = new JSONObject();
-                    taskUserLinkObject.put(DbParams.CLM_TASK_USER_LINK_ID, taskUserLinkCursor.getString(taskUserLinkCursor.getColumnIndex(DbParams.CLM_TASK_USER_LINK_ID)));
+                    taskUserLinkObject.put(DbParams.CLM_TASK_USER_LINK_ID, Utils.createBlank(taskUserLinkCursor.getString(taskUserLinkCursor.getColumnIndex(DbParams.CLM_TASK_USER_LINK_ID))));
                     taskUserLinkObject.put(DbParams.CLM_LOCAL_TASK_USER_LINK_ID, taskUserLinkCursor.getString(taskUserLinkCursor.getColumnIndex(DbParams.CLM_LOCAL_TASK_USER_LINK_ID)));
-                    taskUserLinkObject.put(DbParams.CLM_TASK_ID, taskUserLinkCursor.getString(taskUserLinkCursor.getColumnIndex(DbParams.CLM_TASK_ID)));
+                    taskUserLinkObject.put(DbParams.CLM_TASK_ID, Utils.createBlank(taskUserLinkCursor.getString(taskUserLinkCursor.getColumnIndex(DbParams.CLM_TASK_ID))));
                     taskUserLinkObject.put(DbParams.CLM_LOCAL_TASK_ID, taskUserLinkCursor.getString(taskUserLinkCursor.getColumnIndex(DbParams.CLM_LOCAL_TASK_ID)));
-                    taskUserLinkObject.put(DbParams.CLM_USER_ID, taskUserLinkCursor.getString(taskUserLinkCursor.getColumnIndex(DbParams.CLM_USER_ID)));
+                    taskUserLinkObject.put(DbParams.CLM_USER_ID, Utils.createBlank(taskUserLinkCursor.getString(taskUserLinkCursor.getColumnIndex(DbParams.CLM_USER_ID))));
                     taskUserLinkObject.put(DbParams.CLM_LOCAL_USER_ID, taskUserLinkCursor.getString(taskUserLinkCursor.getColumnIndex(DbParams.CLM_LOCAL_USER_ID)));
 
                     taskUserLinkArray.put(taskUserLinkObject);
@@ -399,7 +399,7 @@ public class PendingDataImpl {
                     attendanceArray.put(attendanceObject);
                 } while (attendanceCursor.moveToNext());
             }
-            reqObject.put(DbParams.TBL_ATTENDANCE, attendanceArray);
+//            reqObject.put(DbParams.TBL_ATTENDANCE, attendanceArray);
 
             // CHECK_IN TBL........
             String whereCondCheckIn = "";
@@ -444,14 +444,14 @@ public class PendingDataImpl {
                 do {
 
                     JSONObject expenseObject = new JSONObject();
-                    expenseObject.put(DbParams.CLM_EXPENSE_ID, expenseCursor.getString(expenseCursor.getColumnIndex(DbParams.CLM_EXPENSE_ID)));
+                    expenseObject.put(DbParams.CLM_EXPENSE_ID, Utils.createBlank(expenseCursor.getString(expenseCursor.getColumnIndex(DbParams.CLM_EXPENSE_ID))));
                     expenseObject.put(DbParams.CLM_LOCAL_EXPENSE_ID, expenseCursor.getString(expenseCursor.getColumnIndex(DbParams.CLM_LOCAL_EXPENSE_ID)));
                     expenseObject.put(DbParams.CLM_COMPANY_ID, expenseCursor.getString(expenseCursor.getColumnIndex(DbParams.CLM_COMPANY_ID)));
-                    expenseObject.put(DbParams.CLM_USER_ID, expenseCursor.getString(expenseCursor.getColumnIndex(DbParams.CLM_USER_ID)));
+                    expenseObject.put(DbParams.CLM_USER_ID, Utils.createBlank(expenseCursor.getString(expenseCursor.getColumnIndex(DbParams.CLM_USER_ID))));
                     expenseObject.put(DbParams.CLM_LOCAL_USER_ID, expenseCursor.getString(expenseCursor.getColumnIndex(DbParams.CLM_LOCAL_USER_ID)));
-                    expenseObject.put(DbParams.CLM_TASK_ID, expenseCursor.getString(expenseCursor.getColumnIndex(DbParams.CLM_TASK_ID)));
+                    expenseObject.put(DbParams.CLM_TASK_ID, Utils.createBlank(expenseCursor.getString(expenseCursor.getColumnIndex(DbParams.CLM_TASK_ID))));
                     expenseObject.put(DbParams.CLM_LOCAL_TASK_ID, expenseCursor.getString(expenseCursor.getColumnIndex(DbParams.CLM_LOCAL_TASK_ID)));
-                    expenseObject.put(DbParams.CLM_PROJECT_ID, expenseCursor.getString(expenseCursor.getColumnIndex(DbParams.CLM_PROJECT_ID)));
+                    expenseObject.put(DbParams.CLM_PROJECT_ID, Utils.createBlank(expenseCursor.getString(expenseCursor.getColumnIndex(DbParams.CLM_PROJECT_ID))));
                     expenseObject.put(DbParams.CLM_LOCAL_PROJECT_ID, expenseCursor.getString(expenseCursor.getColumnIndex(DbParams.CLM_LOCAL_PROJECT_ID)));
                     expenseObject.put(DbParams.CLM_TITLE, expenseCursor.getString(expenseCursor.getColumnIndex(DbParams.CLM_TITLE)));
                     expenseObject.put(DbParams.CLM_DESCRIPTION, expenseCursor.getString(expenseCursor.getColumnIndex(DbParams.CLM_DESCRIPTION)));
@@ -477,10 +477,10 @@ public class PendingDataImpl {
                 do {
 
                     JSONObject leaveObject = new JSONObject();
-                    leaveObject.put(DbParams.CLM_LEAVE_ID, leaveCursor.getString(leaveCursor.getColumnIndex(DbParams.CLM_LEAVE_ID)));
+                    leaveObject.put(DbParams.CLM_LEAVE_ID, Utils.createBlank(leaveCursor.getString(leaveCursor.getColumnIndex(DbParams.CLM_LEAVE_ID))));
                     leaveObject.put(DbParams.CLM_LOCAL_LEAVE_ID, leaveCursor.getString(leaveCursor.getColumnIndex(DbParams.CLM_LOCAL_LEAVE_ID)));
                     leaveObject.put(DbParams.CLM_COMPANY_ID, leaveCursor.getString(leaveCursor.getColumnIndex(DbParams.CLM_COMPANY_ID)));
-                    leaveObject.put(DbParams.CLM_USER_ID, leaveCursor.getString(leaveCursor.getColumnIndex(DbParams.CLM_USER_ID)));
+                    leaveObject.put(DbParams.CLM_USER_ID, Utils.createBlank(leaveCursor.getString(leaveCursor.getColumnIndex(DbParams.CLM_USER_ID))));
                     leaveObject.put(DbParams.CLM_LOCAL_USER_ID, leaveCursor.getString(leaveCursor.getColumnIndex(DbParams.CLM_LOCAL_USER_ID)));
                     leaveObject.put(DbParams.CLM_START_DATE, leaveCursor.getString(leaveCursor.getColumnIndex(DbParams.CLM_START_DATE)));
                     leaveObject.put(DbParams.CLM_END_DATE, leaveCursor.getString(leaveCursor.getColumnIndex(DbParams.CLM_END_DATE)));
@@ -550,6 +550,7 @@ public class PendingDataImpl {
         values.put(DbParams.CLM_START_DATE, model.getStart_date());
         values.put(DbParams.CLM_END_DATE, model.getEnd_date());
         values.put(DbParams.CLM_STATUS_ID, model.getStatus_id());
+        values.put(DbParams.CLM_IS_DELETE, model.getIs_delete());
         values.put(DbParams.CLM_CREATED_ON, model.getCreated_on());
         values.put(DbParams.CLM_UPDATED_ON, model.getUpdated_on());
         values.put(DbParams.CLM_CREATED_BY, model.getCreated_by());
@@ -562,8 +563,8 @@ public class PendingDataImpl {
         ContentValues values = new ContentValues();
 
         values.put(DbParams.CLM_LOCAL_PROJECT_USER_LINK_ID, local_id);
-        values.put(DbParams.CLM_PROJECT_USER_LINK_ID, id);
-        values.put(DbParams.CLM_PROJECT_ID, model.getProject_id());
+        values.put(DbParams.CLM_SERVER_PROJECT_USER_LINK_ID, id);
+        values.put(DbParams.CLM_SERVER_PROJECT_ID, model.getServer_Project_id());
         values.put(DbParams.CLM_LOCAL_PROJECT_ID, model.getLocal_project_id());
         values.put(DbParams.CLM_LOCAL_USER_ID, model.getLocal_user_id());
         values.put(DbParams.CLM_USER_ID, model.getUser_id());
@@ -805,18 +806,40 @@ public class PendingDataImpl {
         return values;
     }
 
-    private boolean updateProjectUserLink() {
+    private boolean updateProjectUserLink(String local_project_id, String project_id, String local_user_id, String user_id) {
 
-        String query1 = "UPDATE " + DbParams.TBL_PROJECT_USER_LINK + " SET " + DbParams.CLM_STATUS_ID + "=3, " + DbParams.CLM_UPDATED_ON + "='" + DateUtils.currentUTCDateTime() +
-                "',  " + DbParams.CLM_UPDATED_BY + "='" + prefManager.getString(PARAMS.KEY_LOGGED_IN_USER_ID, "") + "' WHERE " + DbParams.CLM_LOCAL_PROJECT_ID + "='" +
-                prefManager.getString(PARAMS.KEY_LOGGED_IN_USER_ID, "") + "' AND FIND_IN_SET(`user_id`, v_user_id_list) = 0";
+        try {
+            String query1 = "UPDATE " + DbParams.TBL_PROJECT_USER_LINK + " SET " + DbParams.CLM_STATUS_ID + "=3, " + DbParams.CLM_UPDATED_ON + "='" + DateUtils.currentUTCDateTime() +
+                    "',  " + DbParams.CLM_UPDATED_BY + "='" + prefManager.getString(PARAMS.KEY_LOGGED_IN_USER_ID, "") + "' WHERE " + DbParams.CLM_LOCAL_PROJECT_ID + "='" +
+                    local_project_id + "' AND " + DbParams.CLM_LOCAL_USER_ID + " LIKE '" + local_user_id + "'";
+            Log.e(TAG, query1);
+            database.execSQL(query1);
 
-        Log.e(TAG, query1);
+            String query2 = "UPDATE " + DbParams.TBL_TASK_USER_LINK + " SET " + DbParams.CLM_STATUS_ID + "=3, " + DbParams.CLM_UPDATED_ON + "='" + DateUtils.currentUTCDateTime() +
+                    "',  " + DbParams.CLM_UPDATED_BY + "='" + prefManager.getString(PARAMS.KEY_LOGGED_IN_USER_ID, "") + "' WHERE " + DbParams.CLM_LOCAL_TASK_ID +
+                    " IN (SELECT " + DbParams.CLM_LOCAL_TASK_ID + " FROM " + DbParams.TBL_TASK + " WHERE " + DbParams.CLM_LOCAL_PROJECT_ID + "='" + local_project_id +
+                    "') AND " + DbParams.CLM_LOCAL_USER_ID + " LIKE '" + local_user_id + "' AND " + DbParams.CLM_STATUS_ID + "!=3";
+            Log.e(TAG, query2);
+            database.execSQL(query2);
 
+            String query3 = "SELECT GROUP_CONCAT(" + DbParams.CLM_LOCAL_USER_ID + ") AS v_user_id_added FROM " + DbParams.TBL_PROJECT_USER_LINK +
+                    " WHERE " + DbParams.CLM_LOCAL_PROJECT_ID + "='" + local_project_id + "' AND " + DbParams.CLM_STATUS_ID + "=1";
+            Log.e(TAG, query3);
+            database.rawQuery(query3, null);
 
+            String local_project_user_link_id = prefManager.getString(PARAMS.KEY_UNIQUE_CODE, "") + "_" + System.currentTimeMillis() + "_" + (new Random().nextInt(9999) + 1001);
+            String query4 = "INSERT INTO " + DbParams.TBL_PROJECT_USER_LINK + " (" + DbParams.CLM_LOCAL_PROJECT_USER_LINK_ID + "," + DbParams.CLM_SERVER_PROJECT_ID + "," +
+                    DbParams.CLM_LOCAL_PROJECT_ID + "," + DbParams.CLM_USER_ID + "," + DbParams.CLM_LOCAL_USER_ID + "," + DbParams.CLM_CREATED_BY +
+                    ") VALUES ('" + local_project_user_link_id + "','" + project_id + "','" + local_project_id + "','" + user_id + "','" + local_user_id +
+                    "','" + prefManager.getString(PARAMS.KEY_LOGGED_IN_USER_ID, "") + "')";
+            Log.e(TAG, query4);
+            database.execSQL(query4);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
         return true;
     }
-
 
     ////////////////////////////////////////////////////////
     //////////////////// DATABASE OPERATIONS..........
@@ -827,7 +850,7 @@ public class PendingDataImpl {
         JSONObject response = new JSONObject();
         JSONArray array = new JSONArray();
         try {
-            String query = "SELECT * FROM " + DbParams.TBL_PROJECT + " WHERE " + DbParams.CLM_STATUS_ID + "=1";
+            String query = "SELECT * FROM " + DbParams.TBL_PROJECT + " WHERE " + DbParams.CLM_STATUS_ID + "=1 AND " + DbParams.CLM_IS_DELETE + "=0";
             Cursor cursor = database.rawQuery(query, null);
             if (cursor.getCount() > 0) {
                 cursor.moveToFirst();
@@ -853,8 +876,8 @@ public class PendingDataImpl {
         return response.toString();
     }
 
-    public boolean createProject(String p_name, String start_date, String end_date, String description, ArrayList<SyncUserInfo> member_id, boolean isExists, String p_id) {
-        JSONObject object = new JSONObject();
+    public boolean createProject(String p_name, String start_date, String end_date, String description, ArrayList<SyncUserInfo> member_id,
+                                 boolean isExists, String local_project_id, String project_id) {
         boolean isCreated = false;
         try {
             String id = prefManager.getString(PARAMS.KEY_UNIQUE_CODE, "") + "_" + System.currentTimeMillis();
@@ -868,18 +891,15 @@ public class PendingDataImpl {
             } else {
                 query = "UPDATE " + DbParams.TBL_PROJECT + " SET " + DbParams.CLM_TITLE + "='" + p_name + "', " + DbParams.CLM_START_DATE + "='" + start_date + "', " + DbParams.CLM_END_DATE +
                         "='" + end_date + "', " + DbParams.CLM_DESCRIPTION + "=" + DatabaseUtils.sqlEscapeString(description) + ", " + DbParams.CLM_UPDATED_ON + "='" + DateUtils.currentUTCDateTime() +
-                        "' WHERE " + DbParams.CLM_LOCAL_PROJECT_ID + "='" + p_id + "'";
+                        "' WHERE " + DbParams.CLM_LOCAL_PROJECT_ID + "='" + local_project_id + "'";
             }
-
-            for (int i = 0; i < member_id.size(); i++) {
-
-                String local_project_user_link_id = prefManager.getString(PARAMS.KEY_UNIQUE_CODE, "") + "_" + System.currentTimeMillis() + "_" + (new Random().nextInt(9999) + 1001);
-
-            }
-
             Log.e(TAG, query);
             database.execSQL(query);
             isCreated = true;
+
+            for (int i = 0; i < member_id.size(); i++) {
+                isCreated = updateProjectUserLink(local_project_id, project_id, member_id.get(i).getLocal_user_id(), member_id.get(i).getServer_user_id());
+            }
         } catch (SQLException e) {
             e.printStackTrace();
             isCreated = false;
@@ -890,7 +910,8 @@ public class PendingDataImpl {
     public boolean deleteProject(String project_id) {
         boolean isCreated = false;
         try {
-            String query = "UPDATE " + DbParams.TBL_PROJECT + " SET " + DbParams.CLM_STATUS_ID + "=3 WHERE " + DbParams.CLM_LOCAL_PROJECT_ID + " = '" + project_id + "'";
+            String query = "UPDATE " + DbParams.TBL_PROJECT + " SET " + DbParams.CLM_STATUS_ID + "=3," + DbParams.CLM_UPDATED_ON + "='" + DateUtils.currentUTCDateTime()
+                    + "'," + DbParams.CLM_IS_DELETE + "=1 WHERE " + DbParams.CLM_LOCAL_PROJECT_ID + " = '" + project_id + "'";
             Log.e(TAG, query);
             database.execSQL(query);
             isCreated = true;
@@ -934,7 +955,7 @@ public class PendingDataImpl {
             query = "SELECT user.*, count(p_link." + DbParams.CLM_LOCAL_PROJECT_ID + ") As is_selected from " + DbParams.TBL_USER_INFO + " As user " +
                     "LEFT JOIN " + DbParams.TBL_PROJECT_USER_LINK + " As p_link ON p_link." + DbParams.CLM_LOCAL_USER_ID + "=user." + DbParams.CLM_LOCAL_USER_ID +
                     " and p_link." + DbParams.CLM_LOCAL_PROJECT_ID + "='" + p_id + "' WHERE user." + DbParams.CLM_STATUS_ID +
-                    "=1 Group by user." + DbParams.CLM_LOCAL_USER_ID + " having is_selected>0";
+                    "=1 Group by user." + DbParams.CLM_LOCAL_USER_ID + " having is_selected > 0";
             Log.e(TAG, query);
             Cursor userCursor = database.rawQuery(query, null);
             if (userCursor.getCount() > 0) {
@@ -945,7 +966,7 @@ public class PendingDataImpl {
                     userObject.put(DbParams.CLM_FIRST_NAME, userCursor.getString(userCursor.getColumnIndex(DbParams.CLM_FIRST_NAME)));
                     userObject.put(DbParams.CLM_LAST_NAME, userCursor.getString(userCursor.getColumnIndex(DbParams.CLM_LAST_NAME)));
                     userObject.put(DbParams.CLM_THUMB, userCursor.getString(userCursor.getColumnIndex(DbParams.CLM_THUMB)));
-                    userObject.put(DbParams.CLM_PHONE_NO, cursor.getString(userCursor.getColumnIndex(DbParams.CLM_PHONE_NO)) + "");
+                    userObject.put(DbParams.CLM_PHONE_NO, userCursor.getString(userCursor.getColumnIndex(DbParams.CLM_PHONE_NO)) + "");
 
                     userArray.put(userObject);
                 } while (userCursor.moveToNext());

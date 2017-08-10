@@ -12,7 +12,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.daimajia.swipe.util.Attributes;
 import com.fourmob.datetimepicker.date.DatePickerDialog;
 import com.fourmob.datetimepicker.date.SimpleMonthAdapter;
 import com.google.gson.Gson;
@@ -23,11 +22,9 @@ import com.techmali.smartteam.R;
 import com.techmali.smartteam.base.BaseAppCompatActivity;
 import com.techmali.smartteam.database.PendingDataImpl;
 import com.techmali.smartteam.domain.adapters.MemberSelectionAdapter;
-import com.techmali.smartteam.domain.adapters.ProjectListAdapter;
 import com.techmali.smartteam.models.SyncProject;
 import com.techmali.smartteam.models.SyncUserInfo;
 import com.techmali.smartteam.request.PARAMS;
-import com.techmali.smartteam.ui.fragments.ActiveProjectFragment;
 import com.techmali.smartteam.ui.views.MyProgressDialog;
 import com.techmali.smartteam.utils.DateUtils;
 import com.techmali.smartteam.utils.DialogUtils;
@@ -60,18 +57,21 @@ public class CreateProjectActivity extends BaseAppCompatActivity implements View
     private PendingDataImpl model;
 
     private EditText etProject, etStartDate, etEndDate, etDescription;
-    private TextView tvErrorProject, tvErrorStartDate, tvErrorEndDate, tvErrorDescription, tvAssignTo;
-    private Button btnSubmit;
+    private TextView tvErrorProject;
+    private TextView tvErrorStartDate;
+    private TextView tvErrorEndDate;
+    private TextView tvErrorDescription;
     private RecyclerView rvMember;
 
     private TimePickerDialog timePickerDialog;
     private DatePickerDialog datePickerDialog;
 
-    private String selectedTime = "", start_date = "", end_date = "", p_id = "";
+    private String selectedTime = "", start_date = "", end_date = "", local_project_id = "", project_id = "";
     private boolean isForUpdate = false;
     private ArrayList<SyncUserInfo> userArrayList = new ArrayList<>();
 
     private Calendar newDate, calendar;
+    private SimpleDateFormat displayFormat = new SimpleDateFormat("dd MMM, yyyy", Locale.getDefault());
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -79,7 +79,6 @@ public class CreateProjectActivity extends BaseAppCompatActivity implements View
         setContentView(R.layout.activity_create_project);
 
         model = new PendingDataImpl(this);
-
         initView();
     }
 
@@ -91,7 +90,7 @@ public class CreateProjectActivity extends BaseAppCompatActivity implements View
                 isForUpdate = getIntent().getBooleanExtra(TAG_IS_FOR_UPDATE, false);
             }
             if (getIntent().hasExtra(TAG_PROJECT_ID)) {
-                p_id = getIntent().getStringExtra(TAG_PROJECT_ID);
+                local_project_id = getIntent().getStringExtra(TAG_PROJECT_ID);
             }
         }
 
@@ -105,15 +104,12 @@ public class CreateProjectActivity extends BaseAppCompatActivity implements View
         etEndDate = (EditText) findViewById(R.id.etEndDate);
         etDescription = (EditText) findViewById(R.id.etDescription);
 
-        tvAssignTo = (TextView) findViewById(R.id.tvAssignTo);
         rvMember = (RecyclerView) findViewById(R.id.rvMember);
 
         tvErrorProject = (TextView) findViewById(R.id.tvErrorProject);
         tvErrorStartDate = (TextView) findViewById(R.id.tvErrorStartDate);
         tvErrorEndDate = (TextView) findViewById(R.id.tvErrorEndDate);
         tvErrorDescription = (TextView) findViewById(R.id.tvErrorDescription);
-
-        btnSubmit = (Button) findViewById(R.id.btnSubmit);
 
         calendar = Calendar.getInstance();
         newDate = Calendar.getInstance();
@@ -123,12 +119,11 @@ public class CreateProjectActivity extends BaseAppCompatActivity implements View
 
         etStartDate.setOnClickListener(this);
         etEndDate.setOnClickListener(this);
-        tvAssignTo.setOnClickListener(this);
-        btnSubmit.setOnClickListener(this);
+        findViewById(R.id.tvAssignTo).setOnClickListener(this);
+        findViewById(R.id.btnSubmit).setOnClickListener(this);
 
-        if (isForUpdate && !Utils.isEmptyString(p_id))
+        if (isForUpdate && !Utils.isEmptyString(local_project_id))
             new GetProjectDetail().execute();
-
     }
 
     @Override
@@ -229,11 +224,19 @@ public class CreateProjectActivity extends BaseAppCompatActivity implements View
 
     @Override
     public void onDateSet(DatePickerDialog datePickerDialog, int year, int month, int day) {
-        newDate.set(year, month, day);
+        newDate.set(year, month, day, 0, 0, 1);
 
-        timePickerDialog.setVibrate(false);
-        timePickerDialog.setCloseOnSingleTapMinute(false);
-        timePickerDialog.show(getSupportFragmentManager(), TIMEPICKER_TAG);
+        if (selectedTime.equalsIgnoreCase(TAG_START_TIME)) {
+            start_date = DateUtils.convertCurrentToUTC(newDate.getTime(), "");
+            etStartDate.setText(displayFormat.format(newDate.getTime()));
+        } else if (selectedTime.equalsIgnoreCase(TAG_END_TIME)) {
+            end_date = DateUtils.convertCurrentToUTC(newDate.getTime(), "");
+            etEndDate.setText(displayFormat.format(newDate.getTime()));
+        }
+
+//        timePickerDialog.setVibrate(false);
+//        timePickerDialog.setCloseOnSingleTapMinute(false);
+//        timePickerDialog.show(getSupportFragmentManager(), TIMEPICKER_TAG);
     }
 
     @Override
@@ -266,7 +269,7 @@ public class CreateProjectActivity extends BaseAppCompatActivity implements View
 
         @Override
         protected Boolean doInBackground(String... strings) {
-            return model.createProject(strings[0], strings[1], strings[2], strings[3], userArrayList, isForUpdate, p_id);
+            return model.createProject(strings[0], strings[1], strings[2], strings[3], userArrayList, isForUpdate, local_project_id, project_id);
         }
 
         @Override
@@ -300,7 +303,7 @@ public class CreateProjectActivity extends BaseAppCompatActivity implements View
 
         @Override
         protected String doInBackground(String... strings) {
-            return model.getProjectDetail(p_id);
+            return model.getProjectDetail(local_project_id);
         }
 
         @Override
@@ -317,11 +320,12 @@ public class CreateProjectActivity extends BaseAppCompatActivity implements View
                         if (!projectArrayList.isEmpty()) {
                             start_date = projectArrayList.get(0).getStart_date();
                             end_date = projectArrayList.get(0).getEnd_date();
+                            project_id = projectArrayList.get(0).getServer_project_id();
 
                             etProject.setText(projectArrayList.get(0).getTitle());
                             etDescription.setText(projectArrayList.get(0).getDescription());
-                            etStartDate.setText(DateUtils.getLocalDateFromUTC(projectArrayList.get(0).getStart_date(), "dd MMM yyyy, hh:mm aa"));
-                            etEndDate.setText(DateUtils.getLocalDateFromUTC(projectArrayList.get(0).getEnd_date(), "dd MMM yyyy, hh:mm aa"));
+                            etStartDate.setText(DateUtils.getLocalDateFromUTC(projectArrayList.get(0).getStart_date(), "dd MMM, yyyy"));
+                            etEndDate.setText(DateUtils.getLocalDateFromUTC(projectArrayList.get(0).getEnd_date(), "dd MMM, yyyy"));
                         }
 
                         userArrayList = new Gson().fromJson(object.getJSONObject(PARAMS.TAG_RESULT).getString(PARAMS.TAG_USER_LIST), new TypeToken<List<SyncUserInfo>>() {

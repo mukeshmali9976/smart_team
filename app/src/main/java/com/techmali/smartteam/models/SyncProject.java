@@ -13,6 +13,7 @@ public class SyncProject implements Serializable {
     public String local_project_id;
     public String created_on;
     public String status_id;
+    public String is_delete;
     public String title;
     public String end_date;
     public String description;
@@ -56,6 +57,14 @@ public class SyncProject implements Serializable {
 
     public String getStatus_id() {
         return status_id;
+    }
+
+    public String getIs_delete() {
+        return is_delete;
+    }
+
+    public void setIs_delete(String is_delete) {
+        this.is_delete = is_delete;
     }
 
     public void setStatus_id(String status_id) {

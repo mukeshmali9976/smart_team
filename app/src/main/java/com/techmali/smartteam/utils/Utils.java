@@ -851,4 +851,11 @@ public class Utils {
         }
         return result;
     }
+
+    public static String createBlank(String string){
+        if(isEmptyString(string))
+            return "";
+        else
+            return string;
+    }
 }

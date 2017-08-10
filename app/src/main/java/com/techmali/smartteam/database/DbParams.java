@@ -60,6 +60,7 @@ public class DbParams {
     public static final String CLM_VERIFICATION_TOKEN_TIME = "verification_token_time";
     public static final String CLM_LAST_LOGIN_ON = "last_login_on";
     public static final String CLM_STATUS_ID = "status_id";
+    public static final String CLM_IS_DELETE = "is_delete";
 
     ////// Project.....
     public static final String CLM_LOCAL_PROJECT_ID = "local_project_id";
@@ -81,7 +82,7 @@ public class DbParams {
 
     ////// Project User Link.......
     public static final String CLM_PROJECT_ID = "project_id";
-    public static final String CLM_PROJECT_USER_LINK_ID = "project_user_link_id";
+    public static final String CLM_SERVER_PROJECT_USER_LINK_ID = "server_project_user_link_id";
     public static final String CLM_LOCAL_PROJECT_USER_LINK_ID = "local_project_user_link_id";
 
     ////// Task User Link.......
@@ -107,7 +108,6 @@ public class DbParams {
     ////// Leave..........
     public static final String CLM_LOCAL_LEAVE_ID = "local_leave_id";
     public static final String CLM_LEAVE_ID = "leave_id";
-    public static final String CLM_IS_DELETE = "is_delete";
     public static final String CLM_NOTE = "note";
 
     ////// Security Menu........
@@ -264,6 +264,7 @@ public class DbParams {
             CLM_START_DATE + " VARCHAR," +
             CLM_END_DATE + " VARCHAR," +
             CLM_STATUS_ID + " INTEGER DEFAULT 1," +
+            CLM_IS_DELETE + " INTEGER DEFAULT 0," +
             CLM_CREATED_BY + " VARCHAR," +
             CLM_UPDATED_BY + " VARCHAR," +
             CLM_CREATED_ON + " DATETIME DEFAULT (CURRENT_TIMESTAMP)," +
@@ -311,9 +312,9 @@ public class DbParams {
      */
     static final String CREATE_TBL_PROJECT_USER_LINK = "CREATE TABLE " + TBL_PROJECT_USER_LINK + "(" +
             CLM_LOCAL_PROJECT_USER_LINK_ID + " VARCHAR PRIMARY KEY," +
-            CLM_PROJECT_USER_LINK_ID + " VARCHAR," +
+            CLM_SERVER_PROJECT_USER_LINK_ID + " VARCHAR," +
             CLM_LOCAL_PROJECT_ID + " VARCHAR," +
-            CLM_PROJECT_ID + " VARCHAR," +
+            CLM_SERVER_PROJECT_ID + " VARCHAR," +
             CLM_LOCAL_USER_ID + " VARCHAR," +
             CLM_USER_ID + " VARCHAR," +
             CLM_STATUS_ID + " INTEGER DEFAULT 1," +

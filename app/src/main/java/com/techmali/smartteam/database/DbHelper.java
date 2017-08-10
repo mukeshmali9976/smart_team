@@ -3,6 +3,7 @@ package com.techmali.smartteam.database;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 /**
  * Created by Mali on 7/9/2017.
@@ -18,10 +19,12 @@ public class DbHelper extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "SmartTeamDb";
 
     public static DbHelper instance;
+    private Context context;
 
 
     private DbHelper(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
         super(context, name, factory, version);
+        this.context = context;
     }
 
     @Override
@@ -47,6 +50,10 @@ public class DbHelper extends SQLiteOpenHelper {
         db.execSQL(DbParams.CREATE_TBL_SECURITY_ACTION_USER_PERMISSION);
         db.execSQL(DbParams.CREATE_TBL_SETTING);
         db.execSQL(DbParams.CREATE_TBL_APP_SETTING);
+
+        String dbpath = context.getDatabasePath(DATABASE_NAME).getAbsolutePath();
+        Log.e("Path", dbpath);
+
     }
 
     @Override

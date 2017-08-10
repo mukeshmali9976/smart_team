@@ -248,6 +248,12 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
     private class SaveData extends AsyncTask<String, Void, String> {
 
         @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            networkManager.isProgressBarVisible(true);
+        }
+
+        @Override
         protected String doInBackground(String... strings) {
             try {
                 if (!Utils.isEmptyString(strings[0])) {
@@ -257,8 +263,8 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
                     insetProjectUserLink(object.getString(DbParams.TBL_PROJECT_USER_LINK), DbParams.TBL_PROJECT_USER_LINK);
                     insertTask(object.getString(DbParams.TBL_TASK), DbParams.TBL_TASK);
                     insertTaskUserLink(object.getString(DbParams.TBL_TASK_USER_LINK), DbParams.TBL_TASK_USER_LINK);
-                    insertAttendance(object.getString(DbParams.TBL_ATTENDANCE), DbParams.TBL_ATTENDANCE);
-                    insertCheckIn(object.getString(DbParams.TBL_CHECK_IN), DbParams.TBL_CHECK_IN);
+//                    insertAttendance(object.getString(DbParams.TBL_ATTENDANCE), DbParams.TBL_ATTENDANCE);
+//                    insertCheckIn(object.getString(DbParams.TBL_CHECK_IN), DbParams.TBL_CHECK_IN);
                     insertExpense(object.getString(DbParams.TBL_EXPENSE), DbParams.TBL_EXPENSE);
                     insertLeave(object.getString(DbParams.TBL_LEAVE), DbParams.TBL_LEAVE);
                     insertSecurityMenu(object.getString(DbParams.TBL_SECURITY_MENU), DbParams.TBL_SECURITY_MENU);
@@ -329,7 +335,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
                     boolean isExists = pendingData.checkRecordExist(table, DbParams.CLM_LOCAL_PROJECT_USER_LINK_ID, syncList.get(i).getLocal_project_user_link_id());
                     Log.e(TAG, "isAvailable: " + isExists);
                     if (isExists)
-                        pendingData.update(syncList.get(i), table, syncList.get(i).getProject_user_link_id());
+                        pendingData.update(syncList.get(i), table, syncList.get(i).getServer_project_user_link_id());
                     else
                         pendingData.insert(syncList.get(i), table);
                 }
