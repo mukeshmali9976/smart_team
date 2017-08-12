@@ -142,6 +142,8 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
             }
         }
     }
+
+
     private void getLoginDetail() {
         networkManager.isProgressBarVisible(true);
         reqIdLoginDetail = networkManager.addRequest(RequestBuilder.blankRequest(), getActivity(), RequestMethod.POST, RequestBuilder.METHOD_LOGIN_DETAIL);
@@ -266,7 +268,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
 //                    insertAttendance(object.getString(DbParams.TBL_ATTENDANCE), DbParams.TBL_ATTENDANCE);
 //                    insertCheckIn(object.getString(DbParams.TBL_CHECK_IN), DbParams.TBL_CHECK_IN);
                     insertExpense(object.getString(DbParams.TBL_EXPENSE), DbParams.TBL_EXPENSE);
-                    insertLeave(object.getString(DbParams.TBL_LEAVE), DbParams.TBL_LEAVE);
+//                    insertLeave(object.getString(DbParams.TBL_LEAVE), DbParams.TBL_LEAVE);
                     insertSecurityMenu(object.getString(DbParams.TBL_SECURITY_MENU), DbParams.TBL_SECURITY_MENU);
                     insertSecurityMenuControllerAction(object.getString(DbParams.TBL_SECURITY_MENU_CONTROLLERS_ACTION), DbParams.TBL_SECURITY_MENU_CONTROLLERS_ACTION);
                     insertSecurityMenuControllerLink(object.getString(DbParams.TBL_SECURITY_MENU_CONTROLLERS_LINK), DbParams.TBL_SECURITY_MENU_CONTROLLERS_LINK);
@@ -318,7 +320,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
                     boolean isExists = pendingData.checkRecordExist(table, DbParams.CLM_LOCAL_PROJECT_ID, syncList.get(i).getLocal_project_id());
                     Log.e(TAG, "isAvailable: " + isExists);
                     if (isExists)
-                        pendingData.update(syncList.get(i), table, syncList.get(i).getServer_project_id());
+                        pendingData.update(syncList.get(i), table, syncList.get(i).getProject_id());
                     else
                         pendingData.insert(syncList.get(i), table);
                 }
@@ -335,7 +337,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
                     boolean isExists = pendingData.checkRecordExist(table, DbParams.CLM_LOCAL_PROJECT_USER_LINK_ID, syncList.get(i).getLocal_project_user_link_id());
                     Log.e(TAG, "isAvailable: " + isExists);
                     if (isExists)
-                        pendingData.update(syncList.get(i), table, syncList.get(i).getServer_project_user_link_id());
+                        pendingData.update(syncList.get(i), table, syncList.get(i).getProject_user_link_id());
                     else
                         pendingData.insert(syncList.get(i), table);
                 }
@@ -352,7 +354,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
                     boolean isExists = pendingData.checkRecordExist(table, DbParams.CLM_LOCAL_TASK_ID, syncList.get(i).getLocal_task_id());
                     Log.e(TAG, "isAvailable: " + isExists);
                     if (isExists)
-                        pendingData.update(syncList.get(i), table, syncList.get(i).getTask_id());
+                        pendingData.update(syncList.get(i), table, syncList.get(i).getServer_task_id());
                     else
                         pendingData.insert(syncList.get(i), table);
                 }
@@ -386,7 +388,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
                     boolean isExists = pendingData.checkRecordExist(table, DbParams.CLM_LOCAL_TASK_USER_LINK_ID, syncList.get(i).getLocal_task_user_link_id());
                     Log.e(TAG, "isAvailable: " + isExists);
                     if (isExists)
-                        pendingData.update(syncList.get(i), table, syncList.get(i).getTask_user_link_id());
+                        pendingData.update(syncList.get(i), table, syncList.get(i).getServer_task_user_link_id());
                     else
                         pendingData.insert(syncList.get(i), table);
                 }

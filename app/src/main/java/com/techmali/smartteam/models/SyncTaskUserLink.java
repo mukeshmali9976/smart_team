@@ -9,11 +9,11 @@ import java.io.Serializable;
 public class SyncTaskUserLink implements Serializable {
 
     private String created_by;
-    private String task_user_link_id;
+    private String server_task_user_link_id;
     private String local_task_user_link_id;
     private String created_on;
     private String local_user_id;
-    private String task_id;
+    private String server_task_id;
     private String updated_by;
     private String updated_on;
     private String user_id;
@@ -27,12 +27,12 @@ public class SyncTaskUserLink implements Serializable {
         this.created_by = created_by;
     }
 
-    public String getTask_user_link_id() {
-        return task_user_link_id;
+    public String getServer_task_user_link_id() {
+        return server_task_user_link_id;
     }
 
-    public void setTask_user_link_id(String task_user_link_id) {
-        this.task_user_link_id = task_user_link_id;
+    public void setServer_task_user_link_id(String server_task_user_link_id) {
+        this.server_task_user_link_id = server_task_user_link_id;
     }
 
     public String getLocal_task_user_link_id() {
@@ -59,12 +59,12 @@ public class SyncTaskUserLink implements Serializable {
         this.local_user_id = local_user_id;
     }
 
-    public String getTask_id() {
-        return task_id;
+    public String getServer_task_id() {
+        return server_task_id;
     }
 
-    public void setTask_id(String task_id) {
-        this.task_id = task_id;
+    public void setServer_task_id(String server_task_id) {
+        this.server_task_id = server_task_id;
     }
 
     public String getUpdated_by() {

@@ -55,17 +55,21 @@ public class DateUtils {
      * @param requiredDateFormat the required date format
      * @return the local date from utc
      */
-    public static String getLocalDateFromUTC(String dateAsString, String requiredDateFormat) {
+    public static String getLocalDateFromUTC(String dateAsString, String requiredDateFormat, String currentFormat) {
 
         try {
             if (!Utils.isEmptyString(dateAsString)) {
                 if (Utils.isEmptyString(requiredDateFormat)) {
-                    requiredDateFormat = "MM/dd/yyy hh:mm a";
+                    requiredDateFormat = "MM/dd/yyy hh:mm aa";
+                }
+                if (Utils.isEmptyString(currentFormat)) {
+                    currentFormat = DB_DATE_FORMAT;
                 }
                 SimpleDateFormat destFormat = new SimpleDateFormat(requiredDateFormat, Locale.getDefault());
                 destFormat.setTimeZone(TimeZone.getDefault());
-                dbFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
-                return destFormat.format(dbFormat.parse(dateAsString));
+                SimpleDateFormat sourceFormat = new SimpleDateFormat(currentFormat, Locale.getDefault());
+                sourceFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
+                return destFormat.format(sourceFormat.parse(dateAsString));
             }
         } catch (Exception e) {
             e.printStackTrace();

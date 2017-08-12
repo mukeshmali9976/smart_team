@@ -51,77 +51,78 @@ public class PendingDataImpl {
         prefManager = CryptoManager.getInstance(context).getPrefs();
     }
 
+
     ///////////////////////////////////////////////
     ////////////// DATABASE SYNC PROCESS......
     ///////////////////////////////////////////////
 
     public long insert(Object object, String table) {
         long id = 0;
-        String local_id = prefManager.getString(PARAMS.KEY_UNIQUE_CODE, "") + "_" + System.currentTimeMillis() + "_" + (new Random().nextInt(9999) + 1001);
+//        String local_id = prefManager.getString(PARAMS.KEY_UNIQUE_CODE, "") + "_" + System.currentTimeMillis() + "_" + (new Random().nextInt(9999) + 1001);
         switch (table) {
             case DbParams.TBL_USER_INFO:
                 SyncUserInfo userInfo = (SyncUserInfo) object;
-                id = database.insert(table, null, this.getUserInfoContentValues(userInfo, userInfo.getServer_user_id(), local_id));
+                id = database.insert(table, null, this.getUserInfoContentValues(userInfo, userInfo.getServer_user_id(), userInfo.getLocal_user_id()));
                 break;
             case DbParams.TBL_PROJECT:
                 SyncProject project = (SyncProject) object;
-                id = database.insert(table, null, this.getProjectContentValues(project, project.getServer_project_id(), local_id));
+                id = database.insert(table, null, this.getProjectContentValues(project, project.getProject_id(), project.getLocal_project_id()));
                 break;
             case DbParams.TBL_PROJECT_USER_LINK:
                 SyncProjectUserLink projectUserLink = (SyncProjectUserLink) object;
-                id = database.insert(table, null, this.getProjectUserLinkContentValues(projectUserLink, projectUserLink.getServer_project_user_link_id(), local_id));
+                id = database.insert(table, null, this.getProjectUserLinkContentValues(projectUserLink, projectUserLink.getProject_user_link_id(), projectUserLink.getLocal_project_user_link_id()));
                 break;
             case DbParams.TBL_TASK:
                 SyncTask task = (SyncTask) object;
-                id = database.insert(table, null, this.getTaskContentValues(task, task.getTask_id(), local_id));
+                id = database.insert(table, null, this.getTaskContentValues(task, task.getServer_task_id(), task.getLocal_task_id()));
                 break;
             case DbParams.TBL_TASK_TYPE:
                 SyncTaskType taskType = (SyncTaskType) object;
-                id = database.insert(table, null, this.getTaskTypeContentValues(taskType, taskType.getTask_type_id(), local_id));
+                id = database.insert(table, null, this.getTaskTypeContentValues(taskType, taskType.getTask_type_id(), taskType.getTask_type_id()));
                 break;
             case DbParams.TBL_TASK_USER_LINK:
                 SyncTaskUserLink taskUserLink = (SyncTaskUserLink) object;
-                id = database.insert(table, null, this.getTaskUserLinkContentValues(taskUserLink, taskUserLink.getTask_user_link_id(), local_id));
+                id = database.insert(table, null, this.getTaskUserLinkContentValues(taskUserLink, taskUserLink.getServer_task_user_link_id(), taskUserLink.getLocal_task_user_link_id()));
                 break;
             case DbParams.TBL_ATTENDANCE:
                 SyncAttendance attendance = (SyncAttendance) object;
-                id = database.insert(table, null, this.getAttendanceContentValues(attendance, attendance.getAttendance_id(), local_id));
+                id = database.insert(table, null, this.getAttendanceContentValues(attendance, attendance.getAttendance_id(), attendance.getLocal_attendance_id()));
                 break;
             case DbParams.TBL_CHECK_IN:
                 SyncCheckIn checkIn = (SyncCheckIn) object;
-                id = database.insert(table, null, this.getCheckInContentValues(checkIn, checkIn.getCheckin_id(), local_id));
+                id = database.insert(table, null, this.getCheckInContentValues(checkIn, checkIn.getCheckin_id(), checkIn.getLocal_checkin_id()));
                 break;
             case DbParams.TBL_EXPENSE:
                 SyncExpense expense = (SyncExpense) object;
-                id = database.insert(table, null, this.getExpenseContentValues(expense, expense.getExpance_id(), local_id));
+                id = database.insert(table, null, this.getExpenseContentValues(expense, expense.getExpance_id(), expense.getLocal_expance_id()));
                 break;
             case DbParams.TBL_LEAVE:
                 SyncLeave leave = (SyncLeave) object;
-                id = database.insert(table, null, this.getLeaveContentValues(leave, leave.getLeave_id(), local_id));
+                id = database.insert(table, null, this.getLeaveContentValues(leave, leave.getLeave_id(), leave.getLocal_leave_id()));
                 break;
             case DbParams.TBL_SECURITY_MENU:
                 SyncSecurityMenu securityMenu = (SyncSecurityMenu) object;
-                id = database.insert(table, null, this.getSecurityMenuContentValues(securityMenu, securityMenu.getSecurity_menu_id(), local_id));
+                id = database.insert(table, null, this.getSecurityMenuContentValues(securityMenu, securityMenu.getSecurity_menu_id(), securityMenu.getSecurity_menu_id()));
                 break;
             case DbParams.TBL_SECURITY_MENU_CONTROLLERS_ACTION:
                 SyncSecurityMenuControllerAction securityMenuControllerAction = (SyncSecurityMenuControllerAction) object;
-                id = database.insert(table, null, this.getSecurityMenuControllerActionContentValues(securityMenuControllerAction, securityMenuControllerAction.getSecurity_menu_controllers_action_id(), local_id));
+                id = database.insert(table, null, this.getSecurityMenuControllerActionContentValues(securityMenuControllerAction, securityMenuControllerAction.getSecurity_menu_controllers_action_id(), securityMenuControllerAction.getSecurity_menu_controllers_action_id()));
                 break;
             case DbParams.TBL_SECURITY_MENU_CONTROLLERS_LINK:
                 SyncSecurityMenuControllerLink securityMenuControllerLink = (SyncSecurityMenuControllerLink) object;
-                id = database.insert(table, null, this.getSecurityMenuControllerLinkContentValues(securityMenuControllerLink, securityMenuControllerLink.getMenu_controllers_link_id(), local_id));
+                id = database.insert(table, null, this.getSecurityMenuControllerLinkContentValues(securityMenuControllerLink, securityMenuControllerLink.getMenu_controllers_link_id(), securityMenuControllerLink.getMenu_controllers_link_id()));
                 break;
             case DbParams.TBL_SECURITY_CONTROLLERS:
                 SyncSecurityController securityController = (SyncSecurityController) object;
-                id = database.insert(table, null, this.getSecurityControllerContentValues(securityController, securityController.getSecurity_controllers_id(), local_id));
+                id = database.insert(table, null, this.getSecurityControllerContentValues(securityController, securityController.getSecurity_controllers_id(), securityController.getSecurity_controllers_id()));
                 break;
             case DbParams.TBL_ROLE:
                 SyncRole role = (SyncRole) object;
-                id = database.insert(table, null, this.getRoleContentValues(role, role.getRole_id(), local_id));
+                id = database.insert(table, null, this.getRoleContentValues(role, role.getRole_id(), role.getRole_id()));
                 break;
             case DbParams.TBL_COMPANY:
                 SyncCompany syncCompany = (SyncCompany) object;
-                id = database.insert(table, null, this.getCompanyContentValues(syncCompany, syncCompany.getCompany_id(), local_id));
+                id = database.insert(table, null, this.getCompanyContentValues(syncCompany, syncCompany.getCompany_id(), syncCompany.getCompany_id()));
                 break;
         }
         return id;
@@ -160,7 +161,7 @@ public class PendingDataImpl {
             case DbParams.TBL_TASK:
                 SyncTask task = (SyncTask) object;
                 id = database.update(table, this.getTaskContentValues(task, server_id, task.getLocal_task_id()),
-                        DbParams.CLM_TASK_ID + "=?", new String[]{server_id});
+                        DbParams.CLM_SERVER_TASK_ID + "=?", new String[]{server_id});
                 break;
             case DbParams.TBL_TASK_TYPE:
                 SyncTaskType taskType = (SyncTaskType) object;
@@ -170,7 +171,7 @@ public class PendingDataImpl {
             case DbParams.TBL_TASK_USER_LINK:
                 SyncTaskUserLink taskUserLink = (SyncTaskUserLink) object;
                 id = database.update(table, this.getTaskUserLinkContentValues(taskUserLink, server_id, taskUserLink.getLocal_task_user_link_id()),
-                        DbParams.CLM_TASK_USER_LINK_ID + "=?", new String[]{server_id});
+                        DbParams.CLM_SERVER_TASK_USER_LINK_ID + "=?", new String[]{server_id});
                 break;
             case DbParams.TBL_ATTENDANCE:
                 SyncAttendance attendance = (SyncAttendance) object;
@@ -246,7 +247,7 @@ public class PendingDataImpl {
                 userinfoCursor.moveToFirst();
                 do {
                     JSONObject userinfoObject = new JSONObject();
-                    userinfoObject.put(DbParams.CLM_USER_ID, Utils.createBlank(userinfoCursor.getString(userinfoCursor.getColumnIndex(DbParams.CLM_USER_ID))));
+                    userinfoObject.put(DbParams.CLM_SERVER_USER_ID, Utils.createBlank(userinfoCursor.getString(userinfoCursor.getColumnIndex(DbParams.CLM_SERVER_USER_ID))));
                     userinfoObject.put(DbParams.CLM_LOCAL_USER_ID, userinfoCursor.getString(userinfoCursor.getColumnIndex(DbParams.CLM_LOCAL_USER_ID)));
                     userinfoObject.put(DbParams.CLM_USERNAME, userinfoCursor.getString(userinfoCursor.getColumnIndex(DbParams.CLM_USERNAME)));
                     userinfoObject.put(DbParams.CLM_FIRST_NAME, userinfoCursor.getString(userinfoCursor.getColumnIndex(DbParams.CLM_FIRST_NAME)));
@@ -307,9 +308,9 @@ public class PendingDataImpl {
                 do {
 
                     JSONObject taskObject = new JSONObject();
-                    taskObject.put(DbParams.CLM_TASK_ID, Utils.createBlank(taskCursor.getString(taskCursor.getColumnIndex(DbParams.CLM_TASK_ID))));
+                    taskObject.put(DbParams.CLM_SERVER_TASK_ID, Utils.createBlank(taskCursor.getString(taskCursor.getColumnIndex(DbParams.CLM_SERVER_TASK_ID))));
                     taskObject.put(DbParams.CLM_LOCAL_TASK_ID, taskCursor.getString(taskCursor.getColumnIndex(DbParams.CLM_LOCAL_TASK_ID)));
-                    taskObject.put(DbParams.CLM_PROJECT_ID, Utils.createBlank(taskCursor.getString(taskCursor.getColumnIndex(DbParams.CLM_PROJECT_ID))));
+                    taskObject.put(DbParams.CLM_SERVER_PROJECT_ID, Utils.createBlank(taskCursor.getString(taskCursor.getColumnIndex(DbParams.CLM_SERVER_PROJECT_ID))));
                     taskObject.put(DbParams.CLM_LOCAL_PROJECT_ID, taskCursor.getString(taskCursor.getColumnIndex(DbParams.CLM_LOCAL_PROJECT_ID)));
                     taskObject.put(DbParams.CLM_COMPANY_ID, taskCursor.getString(taskCursor.getColumnIndex(DbParams.CLM_COMPANY_ID)));
                     taskObject.put(DbParams.CLM_TITLE, taskCursor.getString(taskCursor.getColumnIndex(DbParams.CLM_TITLE)));
@@ -340,7 +341,7 @@ public class PendingDataImpl {
                     projectUserLinkObject.put(DbParams.CLM_LOCAL_PROJECT_USER_LINK_ID, projectUserLinkCursor.getString(projectUserLinkCursor.getColumnIndex(DbParams.CLM_LOCAL_PROJECT_USER_LINK_ID)));
                     projectUserLinkObject.put(DbParams.CLM_SERVER_PROJECT_ID, Utils.createBlank(projectUserLinkCursor.getString(projectUserLinkCursor.getColumnIndex(DbParams.CLM_SERVER_PROJECT_ID))));
                     projectUserLinkObject.put(DbParams.CLM_LOCAL_PROJECT_ID, projectUserLinkCursor.getString(projectUserLinkCursor.getColumnIndex(DbParams.CLM_LOCAL_PROJECT_ID)));
-                    projectUserLinkObject.put(DbParams.CLM_USER_ID, Utils.createBlank(projectUserLinkCursor.getString(projectUserLinkCursor.getColumnIndex(DbParams.CLM_USER_ID))));
+                    projectUserLinkObject.put(DbParams.CLM_SERVER_USER_ID, Utils.createBlank(projectUserLinkCursor.getString(projectUserLinkCursor.getColumnIndex(DbParams.CLM_USER_ID))));
                     projectUserLinkObject.put(DbParams.CLM_LOCAL_USER_ID, projectUserLinkCursor.getString(projectUserLinkCursor.getColumnIndex(DbParams.CLM_LOCAL_USER_ID)));
 
                     projectUserLinkArray.put(projectUserLinkObject);
@@ -361,11 +362,11 @@ public class PendingDataImpl {
                 do {
 
                     JSONObject taskUserLinkObject = new JSONObject();
-                    taskUserLinkObject.put(DbParams.CLM_TASK_USER_LINK_ID, Utils.createBlank(taskUserLinkCursor.getString(taskUserLinkCursor.getColumnIndex(DbParams.CLM_TASK_USER_LINK_ID))));
+                    taskUserLinkObject.put(DbParams.CLM_SERVER_TASK_USER_LINK_ID, Utils.createBlank(taskUserLinkCursor.getString(taskUserLinkCursor.getColumnIndex(DbParams.CLM_SERVER_TASK_USER_LINK_ID))));
                     taskUserLinkObject.put(DbParams.CLM_LOCAL_TASK_USER_LINK_ID, taskUserLinkCursor.getString(taskUserLinkCursor.getColumnIndex(DbParams.CLM_LOCAL_TASK_USER_LINK_ID)));
-                    taskUserLinkObject.put(DbParams.CLM_TASK_ID, Utils.createBlank(taskUserLinkCursor.getString(taskUserLinkCursor.getColumnIndex(DbParams.CLM_TASK_ID))));
+                    taskUserLinkObject.put(DbParams.CLM_SERVER_TASK_ID, Utils.createBlank(taskUserLinkCursor.getString(taskUserLinkCursor.getColumnIndex(DbParams.CLM_SERVER_TASK_ID))));
                     taskUserLinkObject.put(DbParams.CLM_LOCAL_TASK_ID, taskUserLinkCursor.getString(taskUserLinkCursor.getColumnIndex(DbParams.CLM_LOCAL_TASK_ID)));
-                    taskUserLinkObject.put(DbParams.CLM_USER_ID, Utils.createBlank(taskUserLinkCursor.getString(taskUserLinkCursor.getColumnIndex(DbParams.CLM_USER_ID))));
+                    taskUserLinkObject.put(DbParams.CLM_SERVER_USER_ID, Utils.createBlank(taskUserLinkCursor.getString(taskUserLinkCursor.getColumnIndex(DbParams.CLM_USER_ID))));
                     taskUserLinkObject.put(DbParams.CLM_LOCAL_USER_ID, taskUserLinkCursor.getString(taskUserLinkCursor.getColumnIndex(DbParams.CLM_LOCAL_USER_ID)));
 
                     taskUserLinkArray.put(taskUserLinkObject);
@@ -449,7 +450,7 @@ public class PendingDataImpl {
                     expenseObject.put(DbParams.CLM_COMPANY_ID, expenseCursor.getString(expenseCursor.getColumnIndex(DbParams.CLM_COMPANY_ID)));
                     expenseObject.put(DbParams.CLM_USER_ID, Utils.createBlank(expenseCursor.getString(expenseCursor.getColumnIndex(DbParams.CLM_USER_ID))));
                     expenseObject.put(DbParams.CLM_LOCAL_USER_ID, expenseCursor.getString(expenseCursor.getColumnIndex(DbParams.CLM_LOCAL_USER_ID)));
-                    expenseObject.put(DbParams.CLM_TASK_ID, Utils.createBlank(expenseCursor.getString(expenseCursor.getColumnIndex(DbParams.CLM_TASK_ID))));
+                    expenseObject.put(DbParams.CLM_SERVER_TASK_ID, Utils.createBlank(expenseCursor.getString(expenseCursor.getColumnIndex(DbParams.CLM_SERVER_TASK_ID))));
                     expenseObject.put(DbParams.CLM_LOCAL_TASK_ID, expenseCursor.getString(expenseCursor.getColumnIndex(DbParams.CLM_LOCAL_TASK_ID)));
                     expenseObject.put(DbParams.CLM_PROJECT_ID, Utils.createBlank(expenseCursor.getString(expenseCursor.getColumnIndex(DbParams.CLM_PROJECT_ID))));
                     expenseObject.put(DbParams.CLM_LOCAL_PROJECT_ID, expenseCursor.getString(expenseCursor.getColumnIndex(DbParams.CLM_LOCAL_PROJECT_ID)));
@@ -521,7 +522,7 @@ public class PendingDataImpl {
     private ContentValues getUserInfoContentValues(SyncUserInfo model, String id, String local_id) {
         ContentValues values = new ContentValues();
 
-        values.put(DbParams.CLM_USER_ID, id);
+        values.put(DbParams.CLM_SERVER_USER_ID, id);
         values.put(DbParams.CLM_LOCAL_USER_ID, local_id);
         values.put(DbParams.CLM_USERNAME, model.getUsername());
         values.put(DbParams.CLM_EMAIL, model.getEmail());
@@ -580,9 +581,9 @@ public class PendingDataImpl {
         ContentValues values = new ContentValues();
 
         values.put(DbParams.CLM_LOCAL_TASK_ID, local_id);
-        values.put(DbParams.CLM_TASK_ID, id);
+        values.put(DbParams.CLM_SERVER_TASK_ID, id);
         values.put(DbParams.CLM_COMPANY_ID, model.getCompany_id());
-        values.put(DbParams.CLM_PROJECT_ID, model.getProject_id());
+        values.put(DbParams.CLM_SERVER_PROJECT_ID, model.getProject_id());
         values.put(DbParams.CLM_TITLE, model.getTitle());
         values.put(DbParams.CLM_DESCRIPTION, model.getDescription());
         values.put(DbParams.CLM_THUMB, model.getThumb());
@@ -615,8 +616,8 @@ public class PendingDataImpl {
         ContentValues values = new ContentValues();
 
         values.put(DbParams.CLM_LOCAL_TASK_USER_LINK_ID, local_id);
-        values.put(DbParams.CLM_TASK_USER_LINK_ID, id);
-        values.put(DbParams.CLM_TASK_ID, model.getTask_id());
+        values.put(DbParams.CLM_SERVER_TASK_USER_LINK_ID, id);
+        values.put(DbParams.CLM_SERVER_TASK_ID, model.getServer_task_id());
         values.put(DbParams.CLM_LOCAL_TASK_ID, model.getLocal_task_id());
         values.put(DbParams.CLM_USER_ID, model.getUser_id());
         values.put(DbParams.CLM_LOCAL_USER_ID, model.getLocal_user_id());
@@ -677,7 +678,7 @@ public class PendingDataImpl {
         values.put(DbParams.CLM_COMPANY_ID, model.getCompany_id());
         values.put(DbParams.CLM_LOCAL_USER_ID, model.getLocal_user_id());
         values.put(DbParams.CLM_USER_ID, model.getUser_id());
-        values.put(DbParams.CLM_TASK_ID, model.getTask_id());
+        values.put(DbParams.CLM_SERVER_TASK_ID, model.getTask_id());
         values.put(DbParams.CLM_LOCAL_TASK_ID, model.getLocal_task_id());
         values.put(DbParams.CLM_PROJECT_ID, model.getProject_id());
         values.put(DbParams.CLM_LOCAL_PROJECT_ID, model.getLocal_project_id());
@@ -806,40 +807,6 @@ public class PendingDataImpl {
         return values;
     }
 
-    private boolean updateProjectUserLink(String local_project_id, String project_id, String local_user_id, String user_id) {
-
-        try {
-            String query1 = "UPDATE " + DbParams.TBL_PROJECT_USER_LINK + " SET " + DbParams.CLM_STATUS_ID + "=3, " + DbParams.CLM_UPDATED_ON + "='" + DateUtils.currentUTCDateTime() +
-                    "',  " + DbParams.CLM_UPDATED_BY + "='" + prefManager.getString(PARAMS.KEY_LOGGED_IN_USER_ID, "") + "' WHERE " + DbParams.CLM_LOCAL_PROJECT_ID + "='" +
-                    local_project_id + "' AND " + DbParams.CLM_LOCAL_USER_ID + " LIKE '" + local_user_id + "'";
-            Log.e(TAG, query1);
-            database.execSQL(query1);
-
-            String query2 = "UPDATE " + DbParams.TBL_TASK_USER_LINK + " SET " + DbParams.CLM_STATUS_ID + "=3, " + DbParams.CLM_UPDATED_ON + "='" + DateUtils.currentUTCDateTime() +
-                    "',  " + DbParams.CLM_UPDATED_BY + "='" + prefManager.getString(PARAMS.KEY_LOGGED_IN_USER_ID, "") + "' WHERE " + DbParams.CLM_LOCAL_TASK_ID +
-                    " IN (SELECT " + DbParams.CLM_LOCAL_TASK_ID + " FROM " + DbParams.TBL_TASK + " WHERE " + DbParams.CLM_LOCAL_PROJECT_ID + "='" + local_project_id +
-                    "') AND " + DbParams.CLM_LOCAL_USER_ID + " LIKE '" + local_user_id + "' AND " + DbParams.CLM_STATUS_ID + "!=3";
-            Log.e(TAG, query2);
-            database.execSQL(query2);
-
-            String query3 = "SELECT GROUP_CONCAT(" + DbParams.CLM_LOCAL_USER_ID + ") AS v_user_id_added FROM " + DbParams.TBL_PROJECT_USER_LINK +
-                    " WHERE " + DbParams.CLM_LOCAL_PROJECT_ID + "='" + local_project_id + "' AND " + DbParams.CLM_STATUS_ID + "=1";
-            Log.e(TAG, query3);
-            database.rawQuery(query3, null);
-
-            String local_project_user_link_id = prefManager.getString(PARAMS.KEY_UNIQUE_CODE, "") + "_" + System.currentTimeMillis() + "_" + (new Random().nextInt(9999) + 1001);
-            String query4 = "INSERT INTO " + DbParams.TBL_PROJECT_USER_LINK + " (" + DbParams.CLM_LOCAL_PROJECT_USER_LINK_ID + "," + DbParams.CLM_SERVER_PROJECT_ID + "," +
-                    DbParams.CLM_LOCAL_PROJECT_ID + "," + DbParams.CLM_USER_ID + "," + DbParams.CLM_LOCAL_USER_ID + "," + DbParams.CLM_CREATED_BY +
-                    ") VALUES ('" + local_project_user_link_id + "','" + project_id + "','" + local_project_id + "','" + user_id + "','" + local_user_id +
-                    "','" + prefManager.getString(PARAMS.KEY_LOGGED_IN_USER_ID, "") + "')";
-            Log.e(TAG, query4);
-            database.execSQL(query4);
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return false;
-        }
-        return true;
-    }
 
     ////////////////////////////////////////////////////////
     //////////////////// DATABASE OPERATIONS..........
@@ -850,7 +817,7 @@ public class PendingDataImpl {
         JSONObject response = new JSONObject();
         JSONArray array = new JSONArray();
         try {
-            String query = "SELECT * FROM " + DbParams.TBL_PROJECT + " WHERE " + DbParams.CLM_STATUS_ID + "=1 AND " + DbParams.CLM_IS_DELETE + "=0";
+            String query = "SELECT * FROM " + DbParams.TBL_PROJECT + " WHERE " + DbParams.CLM_STATUS_ID + "=1";
             Cursor cursor = database.rawQuery(query, null);
             if (cursor.getCount() > 0) {
                 cursor.moveToFirst();
@@ -876,7 +843,47 @@ public class PendingDataImpl {
         return response.toString();
     }
 
-    public boolean createProject(String p_name, String start_date, String end_date, String description, ArrayList<SyncUserInfo> member_id,
+    public String getUserList(String project_id) {
+
+        JSONObject response = new JSONObject();
+        JSONArray array = new JSONArray();
+        try {
+            String query = "";
+
+            if (Utils.isEmptyString(project_id))
+                query = "SELECT * FROM " + DbParams.TBL_USER_INFO + " WHERE " + DbParams.CLM_STATUS_ID + "=1";
+            else
+                query = "SELECT user.*, count(p_link." + DbParams.CLM_LOCAL_PROJECT_ID + ") As is_selected from " + DbParams.TBL_USER_INFO + " As user " +
+                        "LEFT JOIN " + DbParams.TBL_PROJECT_USER_LINK + " As p_link ON p_link." + DbParams.CLM_LOCAL_USER_ID + "=user." + DbParams.CLM_LOCAL_USER_ID +
+                        " and p_link." + DbParams.CLM_LOCAL_PROJECT_ID + "='" + project_id + "' WHERE user." + DbParams.CLM_STATUS_ID +
+                        "=1 Group by user." + DbParams.CLM_LOCAL_USER_ID + " having is_selected > 0";
+
+            Log.e(TAG, query);
+            Cursor cursor = database.rawQuery(query, null);
+            if (cursor.getCount() > 0) {
+                cursor.moveToFirst();
+                do {
+                    JSONObject project = new JSONObject();
+                    project.put(DbParams.CLM_LOCAL_USER_ID, cursor.getString(cursor.getColumnIndex(DbParams.CLM_LOCAL_USER_ID)));
+                    project.put(DbParams.CLM_SERVER_USER_ID, cursor.getString(cursor.getColumnIndex(DbParams.CLM_SERVER_USER_ID)));
+                    project.put(DbParams.CLM_FIRST_NAME, cursor.getString(cursor.getColumnIndex(DbParams.CLM_FIRST_NAME)));
+                    project.put(DbParams.CLM_LAST_NAME, cursor.getString(cursor.getColumnIndex(DbParams.CLM_LAST_NAME)));
+                    project.put(DbParams.CLM_THUMB, cursor.getString(cursor.getColumnIndex(DbParams.CLM_THUMB)));
+                    project.put(DbParams.CLM_PHONE_NO, cursor.getString(cursor.getColumnIndex(DbParams.CLM_PHONE_NO)) + "");
+
+                    array.put(project);
+                } while (cursor.moveToNext());
+            }
+            cursor.close();
+            response.put(PARAMS.TAG_STATUS, array.length() > 0 ? PARAMS.TAG_STATUS_200 : PARAMS.TAG_STATUS_4004);
+            response.put(PARAMS.TAG_RESULT, array);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return response.toString();
+    }
+
+    public boolean createProject(String p_name, String start_date, String end_date, String description, ArrayList<SyncUserInfo> member_id, ArrayList<SyncUserInfo> selected_id,
                                  boolean isExists, String local_project_id, String project_id) {
         boolean isCreated = false;
         try {
@@ -888,6 +895,7 @@ public class PendingDataImpl {
                         DbParams.CLM_UPDATED_BY + "," + DbParams.CLM_UPDATED_ON + ") VALUES ('" + id + "','','" + prefManager.getString(PARAMS.KEY_COMPANY_ID, "") +
                         "','" + p_name + "','" + start_date + "','" + end_date + "'," + DatabaseUtils.sqlEscapeString(description) + ",'" + prefManager.getString(PARAMS.KEY_LOGGED_IN_USER_ID, "") +
                         "','" + prefManager.getString(PARAMS.KEY_LOGGED_IN_USER_ID, "") + "','" + DateUtils.currentUTCDateTime() + "')";
+                local_project_id = id;
             } else {
                 query = "UPDATE " + DbParams.TBL_PROJECT + " SET " + DbParams.CLM_TITLE + "='" + p_name + "', " + DbParams.CLM_START_DATE + "='" + start_date + "', " + DbParams.CLM_END_DATE +
                         "='" + end_date + "', " + DbParams.CLM_DESCRIPTION + "=" + DatabaseUtils.sqlEscapeString(description) + ", " + DbParams.CLM_UPDATED_ON + "='" + DateUtils.currentUTCDateTime() +
@@ -895,11 +903,40 @@ public class PendingDataImpl {
             }
             Log.e(TAG, query);
             database.execSQL(query);
-            isCreated = true;
 
             for (int i = 0; i < member_id.size(); i++) {
-                isCreated = updateProjectUserLink(local_project_id, project_id, member_id.get(i).getLocal_user_id(), member_id.get(i).getServer_user_id());
+
+                String query1 = "UPDATE " + DbParams.TBL_PROJECT_USER_LINK + " SET " + DbParams.CLM_STATUS_ID + "=3, " + DbParams.CLM_UPDATED_ON + "='" + DateUtils.currentUTCDateTime() +
+                        "',  " + DbParams.CLM_UPDATED_BY + "='" + prefManager.getString(PARAMS.KEY_LOGGED_IN_USER_ID, "") + "' WHERE " + DbParams.CLM_LOCAL_PROJECT_ID + "='" +
+                        local_project_id + "' AND " + DbParams.CLM_LOCAL_USER_ID + " LIKE '" + member_id.get(i).getLocal_user_id() + "'";
+                Log.e(TAG, query1);
+                database.execSQL(query1);
+
+                String query2 = "UPDATE " + DbParams.TBL_TASK_USER_LINK + " SET " + DbParams.CLM_STATUS_ID + "=3, " + DbParams.CLM_UPDATED_ON + "='" + DateUtils.currentUTCDateTime() +
+                        "',  " + DbParams.CLM_UPDATED_BY + "='" + prefManager.getString(PARAMS.KEY_LOGGED_IN_USER_ID, "") + "' WHERE " + DbParams.CLM_LOCAL_TASK_ID +
+                        " IN (SELECT " + DbParams.CLM_LOCAL_TASK_ID + " FROM " + DbParams.TBL_TASK + " WHERE " + DbParams.CLM_LOCAL_PROJECT_ID + "='" + local_project_id +
+                        "') AND " + DbParams.CLM_LOCAL_USER_ID + " LIKE '" + member_id.get(i).getLocal_user_id() + "' AND " + DbParams.CLM_STATUS_ID + "!=3";
+                Log.e(TAG, query2);
+                database.execSQL(query2);
+
+                String query3 = "SELECT GROUP_CONCAT(" + DbParams.CLM_LOCAL_USER_ID + ") AS v_user_id_added FROM " + DbParams.TBL_PROJECT_USER_LINK +
+                        " WHERE " + DbParams.CLM_LOCAL_PROJECT_ID + "='" + local_project_id + "' AND " + DbParams.CLM_STATUS_ID + "=1";
+                Log.e(TAG, query3);
+                database.rawQuery(query3, null);
             }
+
+            for (int i = 0; i < selected_id.size(); i++) {
+                String local_project_user_link_id = prefManager.getString(PARAMS.KEY_UNIQUE_CODE, "") + "_" + System.currentTimeMillis() + "_" + (new Random().nextInt(9999) + 1001);
+                String query4 = "INSERT INTO " + DbParams.TBL_PROJECT_USER_LINK + " (" + DbParams.CLM_LOCAL_PROJECT_USER_LINK_ID + "," + DbParams.CLM_SERVER_PROJECT_ID + "," +
+                        DbParams.CLM_LOCAL_PROJECT_ID + "," + DbParams.CLM_USER_ID + "," + DbParams.CLM_LOCAL_USER_ID + "," + DbParams.CLM_CREATED_BY + "," + DbParams.CLM_UPDATED_BY
+                        + "," + DbParams.CLM_UPDATED_ON + ") VALUES ('" + local_project_user_link_id + "','" + project_id + "','" + local_project_id + "','"
+                        + selected_id.get(i).getServer_user_id() + "','" + selected_id.get(i).getLocal_user_id() + "','" + prefManager.getString(PARAMS.KEY_LOGGED_IN_USER_ID, "") +
+                        "','" + prefManager.getString(PARAMS.KEY_LOGGED_IN_USER_ID, "") + "','" + DateUtils.currentUTCDateTime() + "')";
+                Log.e(TAG, query4);
+                database.execSQL(query4);
+            }
+
+            isCreated = true;
         } catch (SQLException e) {
             e.printStackTrace();
             isCreated = false;
@@ -907,13 +944,57 @@ public class PendingDataImpl {
         return isCreated;
     }
 
-    public boolean deleteProject(String project_id) {
+    public boolean createTask(String task_name, String start_date, String end_date, String description, ArrayList<SyncUserInfo> member_id, ArrayList<SyncUserInfo> selected_id,
+                             boolean isExists, String local_project_id, String project_id, String local_task_id, String server_task_id) {
         boolean isCreated = false;
         try {
-            String query = "UPDATE " + DbParams.TBL_PROJECT + " SET " + DbParams.CLM_STATUS_ID + "=3," + DbParams.CLM_UPDATED_ON + "='" + DateUtils.currentUTCDateTime()
-                    + "'," + DbParams.CLM_IS_DELETE + "=1 WHERE " + DbParams.CLM_LOCAL_PROJECT_ID + " = '" + project_id + "'";
+            String id = prefManager.getString(PARAMS.KEY_UNIQUE_CODE, "") + "_" + System.currentTimeMillis();
+            String query = "";
+            if (!isExists) {
+                query = "INSERT INTO " + DbParams.TBL_TASK + " (" + DbParams.CLM_LOCAL_PROJECT_ID + "," + DbParams.CLM_SERVER_PROJECT_ID + "," + DbParams.CLM_COMPANY_ID + "," +
+                        DbParams.CLM_LOCAL_TASK_ID + "," + DbParams.CLM_SERVER_TASK_ID + "," + DbParams.CLM_TITLE + "," + DbParams.CLM_START_DATE + "," + DbParams.CLM_END_DATE + ","
+                        + DbParams.CLM_DESCRIPTION + "," + DbParams.CLM_CREATED_BY + "," + DbParams.CLM_UPDATED_BY + "," + DbParams.CLM_UPDATED_ON +
+                        ") VALUES ('" + local_project_id + "','" + project_id + "','" + prefManager.getString(PARAMS.KEY_COMPANY_ID, "") +
+                        "','" + id + "','" + server_task_id +"','" +  task_name + "','" + start_date + "','" + end_date + "'," +
+                        DatabaseUtils.sqlEscapeString(description) + ",'" + prefManager.getString(PARAMS.KEY_LOGGED_IN_USER_ID, "") +
+                        "','" + prefManager.getString(PARAMS.KEY_LOGGED_IN_USER_ID, "") + "','" + DateUtils.currentUTCDateTime() + "')";
+                local_task_id = id;
+            } else {
+                query = "UPDATE " + DbParams.TBL_TASK + " SET " + DbParams.CLM_TITLE + "='" + task_name + "', " + DbParams.CLM_START_DATE + "='" + start_date + "', " + DbParams.CLM_END_DATE +
+                        "='" + end_date + "', " + DbParams.CLM_DESCRIPTION + "=" + DatabaseUtils.sqlEscapeString(description) + ", " + DbParams.CLM_UPDATED_ON + "='" + DateUtils.currentUTCDateTime() +
+                        "' WHERE " + DbParams.CLM_LOCAL_TASK_ID + "='" + local_task_id + "'";
+            }
             Log.e(TAG, query);
+
             database.execSQL(query);
+
+            for (int i = 0; i < member_id.size(); i++) {
+
+                String query1 = "UPDATE " + DbParams.TBL_TASK_USER_LINK + " SET " + DbParams.CLM_STATUS_ID + "=3, " + DbParams.CLM_UPDATED_ON + "='" + DateUtils.currentUTCDateTime() +
+                        "',  " + DbParams.CLM_UPDATED_BY + "='" + prefManager.getString(PARAMS.KEY_LOGGED_IN_USER_ID, "") + "' WHERE " + DbParams.CLM_LOCAL_TASK_ID + "='" +
+                        local_task_id + "' AND " + DbParams.CLM_LOCAL_USER_ID + " LIKE '" + member_id.get(i).getLocal_user_id() + "'";
+                Log.e(TAG, query1);
+                database.execSQL(query1);
+
+                String query2 = "SELECT GROUP_CONCAT(" + DbParams.CLM_LOCAL_USER_ID + ") AS v_user_id_added FROM " + DbParams.TBL_TASK_USER_LINK +
+                        " WHERE " + DbParams.CLM_LOCAL_TASK_ID + "='" + local_task_id + "' AND " + DbParams.CLM_STATUS_ID + "=1";
+                Log.e(TAG, query2);
+                database.rawQuery(query2, null);
+            }
+
+            for (int i = 0; i < selected_id.size(); i++) {
+                String local_task_user_link_id = prefManager.getString(PARAMS.KEY_UNIQUE_CODE, "") + "_" + System.currentTimeMillis() + "_" + (new Random().nextInt(9999) + 1001);
+                String query4 = "INSERT INTO " + DbParams.TBL_TASK_USER_LINK + " (" +
+                        DbParams.CLM_LOCAL_TASK_USER_LINK_ID + "," + DbParams.CLM_SERVER_TASK_USER_LINK_ID + "," + DbParams.CLM_LOCAL_TASK_ID + "," + DbParams.CLM_SERVER_TASK_ID
+                        + "," + DbParams.CLM_USER_ID + "," + DbParams.CLM_LOCAL_USER_ID + "," + DbParams.CLM_CREATED_BY + ","
+                        + DbParams.CLM_UPDATED_BY  + "," + DbParams.CLM_UPDATED_ON + ") VALUES ('" +
+                        local_task_user_link_id + "','','" + local_task_id + "','" + server_task_id + "','" +
+                        selected_id.get(i).getServer_user_id() + "','" + selected_id.get(i).getLocal_user_id() + "','" + prefManager.getString(PARAMS.KEY_LOGGED_IN_USER_ID, "") +
+                        "','" + prefManager.getString(PARAMS.KEY_LOGGED_IN_USER_ID, "") + "','" + DateUtils.currentUTCDateTime() + "')";
+                Log.e(TAG, query4);
+                database.execSQL(query4);
+            }
+
             isCreated = true;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -949,9 +1030,6 @@ public class PendingDataImpl {
             resultObject.put(PARAMS.TAG_PROJECT_DETAIL, array);
 
             JSONArray userArray = new JSONArray();
-//            query = "SELECT link.*,project.* FROM " + DbParams.TBL_PROJECT_USER_LINK + " As link INNER JOIN " + DbParams.TBL_PROJECT +
-//                    " As project ON link." + DbParams.CLM_LOCAL_PROJECT_ID + "=project." + DbParams.CLM_LOCAL_PROJECT_ID +
-//                    " WHERE link." + DbParams.CLM_LOCAL_PROJECT_ID + "='" + p_id + "' AND link." + DbParams.CLM_STATUS_ID + "=1";
             query = "SELECT user.*, count(p_link." + DbParams.CLM_LOCAL_PROJECT_ID + ") As is_selected from " + DbParams.TBL_USER_INFO + " As user " +
                     "LEFT JOIN " + DbParams.TBL_PROJECT_USER_LINK + " As p_link ON p_link." + DbParams.CLM_LOCAL_USER_ID + "=user." + DbParams.CLM_LOCAL_USER_ID +
                     " and p_link." + DbParams.CLM_LOCAL_PROJECT_ID + "='" + p_id + "' WHERE user." + DbParams.CLM_STATUS_ID +
@@ -963,6 +1041,7 @@ public class PendingDataImpl {
                 do {
                     JSONObject userObject = new JSONObject();
                     userObject.put(DbParams.CLM_LOCAL_USER_ID, userCursor.getString(userCursor.getColumnIndex(DbParams.CLM_LOCAL_USER_ID)));
+                    userObject.put(DbParams.CLM_SERVER_USER_ID, userCursor.getString(userCursor.getColumnIndex(DbParams.CLM_SERVER_USER_ID)));
                     userObject.put(DbParams.CLM_FIRST_NAME, userCursor.getString(userCursor.getColumnIndex(DbParams.CLM_FIRST_NAME)));
                     userObject.put(DbParams.CLM_LAST_NAME, userCursor.getString(userCursor.getColumnIndex(DbParams.CLM_LAST_NAME)));
                     userObject.put(DbParams.CLM_THUMB, userCursor.getString(userCursor.getColumnIndex(DbParams.CLM_THUMB)));
@@ -971,10 +1050,11 @@ public class PendingDataImpl {
                     userArray.put(userObject);
                 } while (userCursor.moveToNext());
             }
+            userCursor.close();
             resultObject.put(PARAMS.TAG_USER_LIST, userArray);
 
             JSONArray taskArray = new JSONArray();
-            query = "SELECT task.*,project.* FROM " + DbParams.TBL_TASK + " As task INNER JOIN " + DbParams.TBL_PROJECT +
+            query = "SELECT task.*,project." + DbParams.CLM_LOCAL_PROJECT_ID +" FROM " + DbParams.TBL_TASK + " As task INNER JOIN " + DbParams.TBL_PROJECT +
                     " As project ON task." + DbParams.CLM_LOCAL_PROJECT_ID + "=project." + DbParams.CLM_LOCAL_PROJECT_ID +
                     " WHERE task." + DbParams.CLM_LOCAL_PROJECT_ID + "='" + p_id + "' AND task." + DbParams.CLM_STATUS_ID + "=1";
             Log.e(TAG, query);
@@ -984,16 +1064,17 @@ public class PendingDataImpl {
                 do {
                     JSONObject taskObject = new JSONObject();
                     taskObject.put(DbParams.CLM_LOCAL_TASK_ID, taskCursor.getString(taskCursor.getColumnIndex(DbParams.CLM_LOCAL_TASK_ID)));
-                    taskObject.put(DbParams.CLM_TASK_ID, taskCursor.getString(taskCursor.getColumnIndex(DbParams.CLM_TASK_ID)));
+                    taskObject.put(DbParams.CLM_SERVER_TASK_ID, taskCursor.getString(taskCursor.getColumnIndex(DbParams.CLM_SERVER_TASK_ID)));
                     taskObject.put(DbParams.CLM_LOCAL_PROJECT_ID, taskCursor.getString(taskCursor.getColumnIndex(DbParams.CLM_LOCAL_PROJECT_ID)));
-                    taskObject.put(DbParams.CLM_PROJECT_ID, taskCursor.getString(taskCursor.getColumnIndex(DbParams.CLM_PROJECT_ID)));
+                    taskObject.put(DbParams.CLM_SERVER_PROJECT_ID, taskCursor.getString(taskCursor.getColumnIndex(DbParams.CLM_SERVER_PROJECT_ID)));
                     taskObject.put(DbParams.CLM_STATUS_ID, taskCursor.getInt(taskCursor.getColumnIndex(DbParams.CLM_STATUS_ID)));
-                    taskObject.put(DbParams.CLM_TITLE, taskCursor.getInt(taskCursor.getColumnIndex(DbParams.CLM_TITLE)));
-                    taskObject.put(DbParams.CLM_THUMB, taskCursor.getInt(taskCursor.getColumnIndex(DbParams.CLM_THUMB)));
+                    taskObject.put(DbParams.CLM_TITLE, taskCursor.getString(taskCursor.getColumnIndex(DbParams.CLM_TITLE)));
+                    taskObject.put(DbParams.CLM_THUMB, taskCursor.getString(taskCursor.getColumnIndex(DbParams.CLM_THUMB)));
 
                     taskArray.put(taskObject);
                 } while (taskCursor.moveToNext());
             }
+            taskCursor.close();
             resultObject.put(PARAMS.TAG_TASK_LIST, taskArray);
 
             response.put(PARAMS.TAG_STATUS, PARAMS.TAG_STATUS_200);
@@ -1004,32 +1085,19 @@ public class PendingDataImpl {
         return response.toString();
     }
 
-    public String getUserList() {
-
-        JSONObject response = new JSONObject();
-        JSONArray array = new JSONArray();
+    public boolean deleteProject(String project_id) {
+        boolean isCreated = false;
         try {
-            String query = "SELECT * FROM " + DbParams.TBL_USER_INFO + " WHERE " + DbParams.CLM_STATUS_ID + "=1";
-            Cursor cursor = database.rawQuery(query, null);
-            if (cursor.getCount() > 0) {
-                cursor.moveToFirst();
-                do {
-                    JSONObject project = new JSONObject();
-                    project.put(DbParams.CLM_LOCAL_USER_ID, cursor.getString(cursor.getColumnIndex(DbParams.CLM_LOCAL_USER_ID)));
-                    project.put(DbParams.CLM_FIRST_NAME, cursor.getString(cursor.getColumnIndex(DbParams.CLM_FIRST_NAME)));
-                    project.put(DbParams.CLM_LAST_NAME, cursor.getString(cursor.getColumnIndex(DbParams.CLM_LAST_NAME)));
-                    project.put(DbParams.CLM_THUMB, cursor.getString(cursor.getColumnIndex(DbParams.CLM_THUMB)));
-                    project.put(DbParams.CLM_PHONE_NO, cursor.getString(cursor.getColumnIndex(DbParams.CLM_PHONE_NO)) + "");
-
-                    array.put(project);
-                } while (cursor.moveToNext());
-            }
-            cursor.close();
-            response.put(PARAMS.TAG_STATUS, array.length() > 0 ? PARAMS.TAG_STATUS_200 : PARAMS.TAG_STATUS_4004);
-            response.put(PARAMS.TAG_RESULT, array);
-        } catch (JSONException e) {
+            String query = "UPDATE " + DbParams.TBL_PROJECT + " SET " + DbParams.CLM_STATUS_ID + "=3," + DbParams.CLM_UPDATED_ON + "='" + DateUtils.currentUTCDateTime()
+                    + "'," + DbParams.CLM_IS_DELETE + "=1 WHERE " + DbParams.CLM_LOCAL_PROJECT_ID + " = '" + project_id + "'";
+            Log.e(TAG, query);
+            database.execSQL(query);
+            isCreated = true;
+        } catch (SQLException e) {
             e.printStackTrace();
+            isCreated = false;
         }
-        return response.toString();
+        return isCreated;
     }
+
 }

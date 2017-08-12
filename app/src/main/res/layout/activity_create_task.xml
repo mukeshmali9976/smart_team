@@ -10,9 +10,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
-    <ScrollView
+    <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:scrollbars="none">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -22,32 +23,11 @@
             android:paddingRight="@dimen/margin_10">
 
             <EditText
-                android:id="@+id/etProjectName"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/margin_20"
-                android:hint="@string/lbl_project_name"
-                android:inputType="textCapWords" />
-
-            <TextView
-                android:id="@+id/tvErrorProrjectName"
-                style="@style/styleErrorTextView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/error_enter"
-                android:visibility="gone" />
-
-            <EditText
                 android:id="@+id/etTaskTitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin_10"
-                android:focusable="false"
-                android:hint="@string/lbl_task_title"
-                android:inputType="none"
-                android:longClickable="false"
-                android:maxLength="13"
-                android:textIsSelectable="false" />
+                android:hint="@string/lbl_task_title" />
 
             <TextView
                 android:id="@+id/tvErrorTaskTitle"
@@ -57,14 +37,48 @@
                 android:text="@string/error_enter"
                 android:visibility="gone" />
 
+            <EditText
+                android:id="@+id/etStartDate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_10"
+                android:focusable="false"
+                android:hint="@string/hint_start_date" />
+
+            <TextView
+                android:id="@+id/tvErrorStartDate"
+                style="@style/styleErrorTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_10"
+                android:text="@string/error_enter"
+                android:visibility="gone" />
+
+            <EditText
+                android:id="@+id/etEndDate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_10"
+                android:focusable="false"
+                android:hint="@string/hint_end_date" />
+
+            <TextView
+                android:id="@+id/tvErrorEndDate"
+                style="@style/styleErrorTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_10"
+                android:text="@string/error_enter"
+                android:visibility="gone" />
 
             <EditText
                 android:id="@+id/etDescription"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_marginTop="@dimen/margin_10"
+                android:gravity="top|left"
                 android:hint="@string/hint_description"
-                android:inputType="textCapWords"
+                android:inputType="textCapSentences|textMultiLine"
                 android:lines="5" />
 
             <TextView
@@ -72,24 +86,29 @@
                 style="@style/styleErrorTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_10"
                 android:text="@string/error_enter"
                 android:visibility="gone" />
-
-            <EditText
-                android:id="@+id/etAssignTo"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/margin_10"
-                android:hint="@string/lbl_assign_to"
-                android:inputType="textCapWords" />
 
             <TextView
-                android:id="@+id/tvErrorAssignTo"
-                style="@style/styleErrorTextView"
+                android:id="@+id/tvAssignTo"
+                style="@style/TextSemiBold"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/margin_40"
+                android:layout_marginTop="@dimen/margin_10"
+                android:background="@color/white"
+                android:drawableRight="@drawable/ic_arrow_right"
+                android:gravity="center_vertical"
+                android:padding="@dimen/margin_10"
+                android:text="@string/lbl_assign_to"
+                android:textColor="@color/text_hint_color"
+                android:textSize="@dimen/font_16" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rvMember"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/error_enter"
-                android:visibility="gone" />
+                android:nestedScrollingEnabled="false" />
 
             <TextView
                 android:id="@+id/tvUpLoadDocument"
@@ -113,6 +132,7 @@
                 android:layout_marginTop="@dimen/margin_20"
                 android:text="@string/lbl_submit" />
         </LinearLayout>
-    </ScrollView>
+
+    </android.support.v4.widget.NestedScrollView>
 
 </LinearLayout>

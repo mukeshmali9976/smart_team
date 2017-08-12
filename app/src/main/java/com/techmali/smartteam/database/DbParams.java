@@ -47,6 +47,7 @@ public class DbParams {
 
     ////// User Info....
     public static final String CLM_USER_ID = "user_id";
+    public static final String CLM_SERVER_USER_ID = "server_user_id";
     public static final String CLM_LOCAL_USER_ID = "local_user_id";
     public static final String CLM_USERNAME = "username";
     public static final String CLM_GENDER = "gender";
@@ -72,7 +73,7 @@ public class DbParams {
     public static final String CLM_END_DATE = "end_date";
 
     ////// Task......
-    public static final String CLM_TASK_ID = "task_id";
+    public static final String CLM_SERVER_TASK_ID = "server_task_id";
     public static final String CLM_LOCAL_TASK_ID = "local_task_id";
     public static final String CLM_TYPE = "type";
 
@@ -86,7 +87,7 @@ public class DbParams {
     public static final String CLM_LOCAL_PROJECT_USER_LINK_ID = "local_project_user_link_id";
 
     ////// Task User Link.......
-    public static final String CLM_TASK_USER_LINK_ID = "task_user_link_id";
+    public static final String CLM_SERVER_TASK_USER_LINK_ID = "server_task_user_link_id";
     public static final String CLM_LOCAL_TASK_USER_LINK_ID = "local_task_user_link_id";
 
     ////// ATTENDANCE........
@@ -220,7 +221,7 @@ public class DbParams {
      */
     static final String CREATE_TBL_USER_INFO = "CREATE TABLE " + TBL_USER_INFO + " (" +
             CLM_LOCAL_USER_ID + " VARCHAR PRIMARY KEY," +
-            CLM_USER_ID + " VARCHAR," +
+            CLM_SERVER_USER_ID + " VARCHAR," +
             CLM_USERNAME + " VARCHAR," +
             CLM_EMAIL + " VARCHAR," +
             CLM_FIRST_NAME + " VARCHAR," +
@@ -277,9 +278,9 @@ public class DbParams {
      */
     static final String CREATE_TBL_TASK = "CREATE TABLE " + TBL_TASK + "(" +
             CLM_LOCAL_TASK_ID + " VARCHAR PRIMARY KEY," +
-            CLM_TASK_ID + " VARCHAR," +
+            CLM_SERVER_TASK_ID + " VARCHAR," +
             CLM_COMPANY_ID + " VARCHAR," +
-            CLM_PROJECT_ID + " VARCHAR," +
+            CLM_SERVER_PROJECT_ID + " VARCHAR," +
             CLM_LOCAL_PROJECT_ID + " VARCHAR," +
             CLM_DESCRIPTION + " VARCHAR," +
             CLM_TITLE + " VARCHAR," +
@@ -287,7 +288,7 @@ public class DbParams {
             CLM_START_DATE + " VARCHAR," +
             CLM_END_DATE + " VARCHAR," +
             CLM_TYPE + " VARCHAR," +
-            CLM_STATUS_ID + " INTEGER, " +
+            CLM_STATUS_ID + " INTEGER DEFAULT 1, " +
             CLM_CREATED_BY + " VARCHAR," +
             CLM_CREATED_ON + " DATETIME DEFAULT (CURRENT_TIMESTAMP)," +
             CLM_UPDATED_BY + " VARCHAR," +
@@ -330,9 +331,9 @@ public class DbParams {
     */
     static final String CREATE_TBL_TASK_USER_LINK = "CREATE TABLE " + TBL_TASK_USER_LINK + "(" +
             CLM_LOCAL_TASK_USER_LINK_ID + " VARCHAR PRIMARY KEY," +
-            CLM_TASK_USER_LINK_ID + " VARCHAR," +
+            CLM_SERVER_TASK_USER_LINK_ID + " VARCHAR," +
             CLM_LOCAL_TASK_ID + " VARCHAR," +
-            CLM_TASK_ID + " VARCHAR," +
+            CLM_SERVER_TASK_ID + " VARCHAR," +
             CLM_LOCAL_USER_ID + " VARCHAR," +
             CLM_USER_ID + " VARCHAR," +
             CLM_STATUS_ID + " INTEGER DEFAULT 1," +
@@ -395,7 +396,7 @@ public class DbParams {
             CLM_LOCAL_USER_ID + " VARCHAR," +
             CLM_USER_ID + " VARCHAR," +
             CLM_LOCAL_TASK_ID + " VARCHAR," +
-            CLM_TASK_ID + " VARCHAR," +
+            CLM_SERVER_TASK_ID + " VARCHAR," +
             CLM_LOCAL_PROJECT_ID + " VARCHAR," +
             CLM_PROJECT_ID + " VARCHAR," +
             CLM_TITLE + " VARCHAR," +

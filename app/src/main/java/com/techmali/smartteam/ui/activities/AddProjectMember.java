@@ -42,12 +42,15 @@ public class AddProjectMember extends BaseAppCompatActivity {
     public static final String TAG = AddProjectMember.class.getSimpleName();
 
     public static final String EXTRA_SELECTED_USERS = "selected_users";
+    public static final String EXTRA_PROJECT_ID = "project_id";
 
     private PendingDataImpl model;
     private MemberSelectionAdapter mAdapter;
 
     private TextView tvNoData;
     private RecyclerView rvMember;
+
+    private String project_id = "";
 
     private ArrayList<SyncUserInfo> selectedArrayList = new ArrayList<>();
     private ArrayList<SyncUserInfo> userArrayList = new ArrayList<>();
@@ -70,6 +73,9 @@ public class AddProjectMember extends BaseAppCompatActivity {
 
         if (getIntent() != null && getIntent().hasExtra(EXTRA_SELECTED_USERS))
             selectedArrayList = getIntent().getParcelableArrayListExtra(EXTRA_SELECTED_USERS);
+
+        if (getIntent() != null && getIntent().hasExtra(EXTRA_PROJECT_ID))
+            project_id = getIntent().getStringExtra(EXTRA_PROJECT_ID);
 
         new GetMemberList().execute();
 
@@ -115,8 +121,6 @@ public class AddProjectMember extends BaseAppCompatActivity {
                     }
                 }
                 intent.putExtra(EXTRA_SELECTED_USERS, userArrayList);
-            } else {
-                intent.putExtra(EXTRA_SELECTED_USERS, selectedArrayList);
             }
             setResult(RESULT_OK, intent);
             finish();
@@ -128,7 +132,7 @@ public class AddProjectMember extends BaseAppCompatActivity {
 
         @Override
         protected String doInBackground(Void... voids) {
-            return model.getUserList();
+            return model.getUserList(project_id);
         }
 
         @Override

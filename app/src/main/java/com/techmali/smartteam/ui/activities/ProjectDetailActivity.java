@@ -1,15 +1,10 @@
 package com.techmali.smartteam.ui.activities;
 
-import android.Manifest;
 import android.app.Dialog;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.AsyncTask;
-import android.os.Build;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.support.annotation.IdRes;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -26,22 +21,13 @@ import com.google.gson.reflect.TypeToken;
 import com.techmali.smartteam.R;
 import com.techmali.smartteam.base.BaseAppCompatActivity;
 import com.techmali.smartteam.database.PendingDataImpl;
-import com.techmali.smartteam.domain.adapters.ProjectListAdapter;
 import com.techmali.smartteam.domain.adapters.TaskListAdapter;
 import com.techmali.smartteam.domain.adapters.UserListAdapter;
 import com.techmali.smartteam.models.SyncProject;
-import com.techmali.smartteam.models.SyncProjectUserLink;
 import com.techmali.smartteam.models.SyncTask;
 import com.techmali.smartteam.models.SyncUserInfo;
-import com.techmali.smartteam.models.TaskModel;
-import com.techmali.smartteam.models.UserModel;
-import com.techmali.smartteam.network.NetworkManager;
-import com.techmali.smartteam.network.RequestListener;
 import com.techmali.smartteam.request.PARAMS;
-import com.techmali.smartteam.ui.fragments.ProfileFragment;
 import com.techmali.smartteam.ui.views.MyProgressDialog;
-import com.techmali.smartteam.utils.Constants;
-import com.techmali.smartteam.utils.CryptoManager;
 import com.techmali.smartteam.utils.DateUtils;
 import com.techmali.smartteam.utils.Log;
 import com.techmali.smartteam.utils.Utils;
@@ -53,7 +39,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ProjectDetailActivity extends BaseAppCompatActivity implements
-        View.OnClickListener, UserListAdapter.onSwipeClickLisener,
+        View.OnClickListener, UserListAdapter.onSwipeClickListener,
         RadioGroup.OnCheckedChangeListener, TaskListAdapter.OnInnerViewsClickListener {
 
     public static final String TAG = ProjectDetailActivity.class.getSimpleName();
@@ -66,12 +52,12 @@ public class ProjectDetailActivity extends BaseAppCompatActivity implements
     private TaskListAdapter taskListAdapter;
     private RecyclerView rvUserList, rvTaskList;
 
-    private TextView tvProjectName, tvStartDate, tvEndDate, tvTotalTaskCount, tvTotalTime, tvDescription;
+    private TextView tvProjectName, tvStartDate, tvEndDate, tvTotalTaskCount, tvTotalTime, tvDescription, tvComingSoon;
     private ImageView ivProject;
     private RadioGroup rgManagePeoject;
     private Dialog dialog = null;
 
-    private String p_id = "";
+    private String local_project_id = "", server_project_id = "";
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -92,6 +78,7 @@ public class ProjectDetailActivity extends BaseAppCompatActivity implements
         tvTotalTaskCount = (TextView) findViewById(R.id.tvTaskCount);
         tvTotalTime = (TextView) findViewById(R.id.tvTotalTime);
         tvDescription = (TextView) findViewById(R.id.tvDescription);
+        tvComingSoon = (TextView) findViewById(R.id.tvComingSoon);
 
         rgManagePeoject = (RadioGroup) findViewById(R.id.rgManagePeoject);
         rgManagePeoject.setOnCheckedChangeListener(this);
@@ -102,7 +89,7 @@ public class ProjectDetailActivity extends BaseAppCompatActivity implements
         rvTaskList = (RecyclerView) findViewById(R.id.rvTaskList);
 
         if (getIntent() != null && getIntent().hasExtra(TAG_PROJECT_ID)) {
-            p_id = getIntent().getStringExtra(TAG_PROJECT_ID);
+            local_project_id = getIntent().getStringExtra(TAG_PROJECT_ID);
             new GetProjectDetail().execute();
         }
     }
@@ -139,7 +126,10 @@ public class ProjectDetailActivity extends BaseAppCompatActivity implements
             case R.id.btn2: // Add Task button
                 if (dialog != null) {
                     dialog.dismiss();
-                    startActivity(new Intent(ProjectDetailActivity.this, CreateTaskActivity.class));
+                    Intent intent = new Intent(ProjectDetailActivity.this, CreateTaskActivity.class);
+                    intent.putExtra(CreateTaskActivity.TAG_LOCAL_PROJECT_ID, local_project_id);
+                    intent.putExtra(CreateTaskActivity.TAG_SERVER_PROJECT_ID, server_project_id);
+                    startActivity(intent);
                 }
                 break;
             case R.id.btn3: // Add Document button
@@ -203,27 +193,32 @@ public class ProjectDetailActivity extends BaseAppCompatActivity implements
             case R.id.rbMembers:
                 rvUserList.setVisibility(View.VISIBLE);
                 rvTaskList.setVisibility(View.GONE);
+                tvComingSoon.setVisibility(View.GONE);
                 break;
             case R.id.rbTaskList:
                 rvUserList.setVisibility(View.GONE);
                 rvTaskList.setVisibility(View.VISIBLE);
+                tvComingSoon.setVisibility(View.GONE);
+                break;
+            case R.id.rbDocuments:
+                rvUserList.setVisibility(View.GONE);
+                rvTaskList.setVisibility(View.GONE);
+                tvComingSoon.setVisibility(View.VISIBLE);
+                break;
         }
     }
 
     private class GetProjectDetail extends AsyncTask<String, Void, String> {
 
-        MyProgressDialog dialog;
-
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            dialog = new MyProgressDialog(ProjectDetailActivity.this);
-            dialog.show();
+            showProgressDialog();
         }
 
         @Override
         protected String doInBackground(String... strings) {
-            return model.getProjectDetail(p_id);
+            return model.getProjectDetail(local_project_id);
         }
 
         @Override
@@ -238,16 +233,18 @@ public class ProjectDetailActivity extends BaseAppCompatActivity implements
                         projectArrayList = new Gson().fromJson(object.getJSONObject(PARAMS.TAG_RESULT).getString(PARAMS.TAG_PROJECT_DETAIL), new TypeToken<List<SyncProject>>() {
                         }.getType());
                         if (projectArrayList != null && !projectArrayList.isEmpty()) {
+                            server_project_id = projectArrayList.get(0).getServer_project_id();
+
                             tvProjectName.setText(projectArrayList.get(0).getTitle());
                             tvDescription.setText(projectArrayList.get(0).getDescription());
-//                            tvStartDate.append(DateUtils.getLocalDateFromUTC(projectArrayList.get(0).getStart_date(), "dd MMM yyyy, hh:mm aa"));
-//                            tvEndDate.append(DateUtils.getLocalDateFromUTC(projectArrayList.get(0).getEnd_date(), "dd MMM yyyy, hh:mm aa"));
+                            tvStartDate.setText(getString(R.string.lbl_start_date) + " " + DateUtils.getLocalDateFromUTC(projectArrayList.get(0).getStart_date(), "dd MMM, yyyy", "yyyy-MM-dd"));
+                            tvEndDate.setText(getString(R.string.lbl_end_date) + " " + DateUtils.getLocalDateFromUTC(projectArrayList.get(0).getEnd_date(), "dd MMM, yyyy", "yyyy-MM-dd"));
                         }
 
                         ArrayList<SyncUserInfo> projectUserLinkArrayList;
                         projectUserLinkArrayList = new Gson().fromJson(object.getJSONObject(PARAMS.TAG_RESULT).getString(PARAMS.TAG_USER_LIST), new TypeToken<List<SyncUserInfo>>() {
                         }.getType());
-                        if(projectUserLinkArrayList != null && !projectUserLinkArrayList.isEmpty()){
+                        if (projectUserLinkArrayList != null && !projectUserLinkArrayList.isEmpty()) {
                             mAdapter = new UserListAdapter(ProjectDetailActivity.this, projectUserLinkArrayList, ProjectDetailActivity.this);
                             rvUserList.setLayoutManager(new LinearLayoutManager(ProjectDetailActivity.this));
                             rvUserList.setItemAnimator(new DefaultItemAnimator());
@@ -257,18 +254,20 @@ public class ProjectDetailActivity extends BaseAppCompatActivity implements
                         ArrayList<SyncTask> taskList;
                         taskList = new Gson().fromJson(object.getJSONObject(PARAMS.TAG_RESULT).getString(PARAMS.TAG_TASK_LIST), new TypeToken<List<SyncTask>>() {
                         }.getType());
-                        if(taskList != null && !taskList.isEmpty()){
+                        if (taskList != null && !taskList.isEmpty()) {
                             taskListAdapter = new TaskListAdapter(ProjectDetailActivity.this, taskList, ProjectDetailActivity.this);
                             rvTaskList.setLayoutManager(new LinearLayoutManager(ProjectDetailActivity.this));
                             rvTaskList.setItemAnimator(new DefaultItemAnimator());
                             rvTaskList.setAdapter(taskListAdapter);
+
+                            tvTotalTaskCount.setText(getString(R.string.lbl_total_task) + " " + taskList.size() + " Task(s)");
                         }
                     }
                 }
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            dialog.dismiss();
+            dismissProgressDialog();
         }
     }
 }

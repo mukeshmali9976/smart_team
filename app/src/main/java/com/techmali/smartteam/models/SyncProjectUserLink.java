@@ -18,6 +18,8 @@ public class SyncProjectUserLink implements Serializable {
     private String updated_on;
     private String user_id;
     private String server_project_user_link_id;
+    private String project_user_link_id;
+    private String project_id;
 
     public String getCreated_by() {
         return created_by;
@@ -97,5 +99,29 @@ public class SyncProjectUserLink implements Serializable {
 
     public void setServer_project_user_link_id(String server_project_user_link_id) {
         this.server_project_user_link_id = server_project_user_link_id;
+    }
+
+    public String getServer_project_id() {
+        return server_project_id;
+    }
+
+    public void setServer_project_id(String server_project_id) {
+        this.server_project_id = server_project_id;
+    }
+
+    public String getProject_user_link_id() {
+        return project_user_link_id;
+    }
+
+    public void setProject_user_link_id(String project_user_link_id) {
+        this.project_user_link_id = project_user_link_id;
+    }
+
+    public String getProject_id() {
+        return project_id;
+    }
+
+    public void setProject_id(String project_id) {
+        this.project_id = project_id;
     }
 }

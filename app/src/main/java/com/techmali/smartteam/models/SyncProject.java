@@ -18,6 +18,7 @@ public class SyncProject implements Serializable {
     public String end_date;
     public String description;
     public String server_project_id;
+    public String project_id;
     public String updated_by;
     public String updated_on;
     public String thumb;
@@ -133,5 +134,13 @@ public class SyncProject implements Serializable {
 
     public void setStart_date(String start_date) {
         this.start_date = start_date;
+    }
+
+    public String getProject_id() {
+        return project_id;
+    }
+
+    public void setProject_id(String project_id) {
+        this.project_id = project_id;
     }
 }

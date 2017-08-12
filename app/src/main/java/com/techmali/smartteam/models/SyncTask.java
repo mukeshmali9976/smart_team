@@ -11,7 +11,7 @@ public class SyncTask implements Serializable {
     private String created_by;
     private String company_id;
     private String created_on;
-    private String task_id;
+    private String server_task_id;
     private String status_id;
     private String type;
     private String title;
@@ -23,6 +23,7 @@ public class SyncTask implements Serializable {
     private String thumb;
     private String start_date;
     private String local_task_id;
+    private String server_project_id;
 
     public String getCreated_by() {
         return created_by;
@@ -48,12 +49,12 @@ public class SyncTask implements Serializable {
         this.created_on = created_on;
     }
 
-    public String getTask_id() {
-        return task_id;
+    public String getServer_task_id() {
+        return server_task_id;
     }
 
-    public void setTask_id(String task_id) {
-        this.task_id = task_id;
+    public void setServer_task_id(String server_task_id) {
+        this.server_task_id = server_task_id;
     }
 
     public String getStatus_id() {
@@ -142,5 +143,13 @@ public class SyncTask implements Serializable {
 
     public void setLocal_task_id(String local_task_id) {
         this.local_task_id = local_task_id;
+    }
+
+    public String getServer_project_id() {
+        return server_project_id;
+    }
+
+    public void setServer_project_id(String server_project_id) {
+        this.server_project_id = server_project_id;
     }
 }

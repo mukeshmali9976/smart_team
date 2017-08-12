@@ -100,6 +100,8 @@ public class MainActivity extends SlidingActivity {
                 break;
             case R.id.action_menu_sync:
                 Utils.hideKeyboard(this);
+                Intent dbmanager = new Intent(MainActivity.this, AndroidDatabaseManager.class);
+                startActivity(dbmanager);
                 break;
             case R.id.action_menu_checkin_checkout:
                 Utils.hideKeyboard(this);

@@ -40,6 +40,7 @@
     <string name="hint_search">Search</string>
     <string name="alert_logout_message">Are you sure you want to logout?</string>
     <string name="lbl_no_data">No Data Found</string>
+    <string name="coming_soon">Coming Soon…</string>
 
     <!--Define all Font Names-->
     <string name="bold">font/roboto_bold.ttf</string>
@@ -90,14 +91,20 @@
     <!--Project Description-->
     <string name="lbl_owner">Created By : </string>
     <string name="lbl_created_date">Created date : </string>
+    <string name="lbl_start_date">Start date :</string>
     <string name="lbl_end_date">End date :</string>
+    <string name="lbl_total_task">Total Task :</string>
     <string name="lbl_description">Description :</string>
     <string name="lbl_assigned_to_list">Assigned To : </string>
     <string name="lbl_file">File : </string>
     <string name="lbl_manage_user">Manage User</string>
     <string name="lbl_add_task">Add Task</string>
     <string name="lbl_add_document">Add Document</string>
-
+    <string name="tab_members">Members</string>
+    <string name="tab_task">Task</string>
+    <string name="tab_document">Document</string>
+    <string name="hint_start_date">Start date</string>
+    <string name="hint_end_date">End date</string>
 
     <!--Create project-->
     <string name="title_create_project">Create Project</string>
@@ -148,9 +155,7 @@
     <string name="lbl_leaves">Leaves</string>
 
     <string name="title_create_leave">Create Leave</string>
-    <string name="hint_start_date">Start Date</string>
     <string name="lbl_is_half_day">Is Half Day</string>
-    <string name="hint_end_date">End Date</string>
     <string name="hint_leave_type">Leave Type</string>
 
     <!--Error message-->
@@ -208,7 +213,6 @@
     <string name="title_apply_leaves">Apply Leaves</string>
     <string name="lbl_apply_leaves">Apply Leaves</string>
     <string name="title_add_attendance">Add Attendance</string>
-    <string name="lbl_start_date">Start Date</string>
     <string name="hint_check_in_time">Check In Time</string>
     <string name="hint_check_out_time">Check Out Time</string>
     <string name="lbl_date">Date</string>

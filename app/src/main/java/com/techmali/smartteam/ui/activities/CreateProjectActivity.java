@@ -8,7 +8,6 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -57,10 +56,7 @@ public class CreateProjectActivity extends BaseAppCompatActivity implements View
     private PendingDataImpl model;
 
     private EditText etProject, etStartDate, etEndDate, etDescription;
-    private TextView tvErrorProject;
-    private TextView tvErrorStartDate;
-    private TextView tvErrorEndDate;
-    private TextView tvErrorDescription;
+    private TextView tvErrorProject, tvErrorStartDate, tvErrorEndDate, tvErrorDescription;
     private RecyclerView rvMember;
 
     private TimePickerDialog timePickerDialog;
@@ -68,7 +64,8 @@ public class CreateProjectActivity extends BaseAppCompatActivity implements View
 
     private String selectedTime = "", start_date = "", end_date = "", local_project_id = "", project_id = "";
     private boolean isForUpdate = false;
-    private ArrayList<SyncUserInfo> userArrayList = new ArrayList<>();
+    private ArrayList<SyncUserInfo> prevSelectedUserArrayList = new ArrayList<>();
+    private ArrayList<SyncUserInfo> newUserArrayList = new ArrayList<>();
 
     private Calendar newDate, calendar;
     private SimpleDateFormat displayFormat = new SimpleDateFormat("dd MMM, yyyy", Locale.getDefault());
@@ -131,7 +128,7 @@ public class CreateProjectActivity extends BaseAppCompatActivity implements View
         switch (view.getId()) {
             case R.id.tvAssignTo:
                 Intent intent = new Intent(CreateProjectActivity.this, AddProjectMember.class);
-                intent.putParcelableArrayListExtra(AddProjectMember.EXTRA_SELECTED_USERS, userArrayList);
+                intent.putParcelableArrayListExtra(AddProjectMember.EXTRA_SELECTED_USERS, prevSelectedUserArrayList);
                 startActivityForResult(intent, TAG_ADD_MEMBER);
                 break;
 
@@ -168,11 +165,11 @@ public class CreateProjectActivity extends BaseAppCompatActivity implements View
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode == TAG_ADD_MEMBER && resultCode == RESULT_OK){
-            if(data != null && data.hasExtra(AddProjectMember.EXTRA_SELECTED_USERS)){
-                userArrayList = data.getParcelableArrayListExtra(AddProjectMember.EXTRA_SELECTED_USERS);
+        if (requestCode == TAG_ADD_MEMBER && resultCode == RESULT_OK) {
+            if (data != null && data.hasExtra(AddProjectMember.EXTRA_SELECTED_USERS)) {
+                newUserArrayList = data.getParcelableArrayListExtra(AddProjectMember.EXTRA_SELECTED_USERS);
 
-                MemberSelectionAdapter mAdapter = new MemberSelectionAdapter(CreateProjectActivity.this, userArrayList, false);
+                MemberSelectionAdapter mAdapter = new MemberSelectionAdapter(CreateProjectActivity.this, newUserArrayList, false);
                 rvMember.setLayoutManager(new LinearLayoutManager(CreateProjectActivity.this));
                 rvMember.setItemAnimator(new DefaultItemAnimator());
                 rvMember.setAdapter(mAdapter);
@@ -227,16 +224,12 @@ public class CreateProjectActivity extends BaseAppCompatActivity implements View
         newDate.set(year, month, day, 0, 0, 1);
 
         if (selectedTime.equalsIgnoreCase(TAG_START_TIME)) {
-            start_date = DateUtils.convertCurrentToUTC(newDate.getTime(), "");
+            start_date = DateUtils.convertCurrentToUTC(newDate.getTime(), "yyyy-MM-dd");
             etStartDate.setText(displayFormat.format(newDate.getTime()));
         } else if (selectedTime.equalsIgnoreCase(TAG_END_TIME)) {
-            end_date = DateUtils.convertCurrentToUTC(newDate.getTime(), "");
+            end_date = DateUtils.convertCurrentToUTC(newDate.getTime(), "yyyy-MM-dd");
             etEndDate.setText(displayFormat.format(newDate.getTime()));
         }
-
-//        timePickerDialog.setVibrate(false);
-//        timePickerDialog.setCloseOnSingleTapMinute(false);
-//        timePickerDialog.show(getSupportFragmentManager(), TIMEPICKER_TAG);
     }
 
     @Override
@@ -258,18 +251,15 @@ public class CreateProjectActivity extends BaseAppCompatActivity implements View
 
     private class CreateProject extends AsyncTask<String, Void, Boolean> {
 
-        MyProgressDialog dialog;
-
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            dialog = new MyProgressDialog(CreateProjectActivity.this);
-            dialog.show();
+            showProgressDialog();
         }
 
         @Override
         protected Boolean doInBackground(String... strings) {
-            return model.createProject(strings[0], strings[1], strings[2], strings[3], userArrayList, isForUpdate, local_project_id, project_id);
+            return model.createProject(strings[0], strings[1], strings[2], strings[3], prevSelectedUserArrayList, newUserArrayList, isForUpdate, local_project_id, project_id);
         }
 
         @Override
@@ -285,7 +275,7 @@ public class CreateProjectActivity extends BaseAppCompatActivity implements View
             } else {
                 displayError("There might be some issue, please try later.");
             }
-            dialog.dismiss();
+            dismissProgressDialog();
         }
     }
 
@@ -324,14 +314,14 @@ public class CreateProjectActivity extends BaseAppCompatActivity implements View
 
                             etProject.setText(projectArrayList.get(0).getTitle());
                             etDescription.setText(projectArrayList.get(0).getDescription());
-                            etStartDate.setText(DateUtils.getLocalDateFromUTC(projectArrayList.get(0).getStart_date(), "dd MMM, yyyy"));
-                            etEndDate.setText(DateUtils.getLocalDateFromUTC(projectArrayList.get(0).getEnd_date(), "dd MMM, yyyy"));
+                            etStartDate.setText(DateUtils.getLocalDateFromUTC(projectArrayList.get(0).getStart_date(), "dd MMM, yyyy", "yyyy-MM-dd"));
+                            etEndDate.setText(DateUtils.getLocalDateFromUTC(projectArrayList.get(0).getEnd_date(), "dd MMM, yyyy", "yyyy-MM-dd"));
                         }
 
-                        userArrayList = new Gson().fromJson(object.getJSONObject(PARAMS.TAG_RESULT).getString(PARAMS.TAG_USER_LIST), new TypeToken<List<SyncUserInfo>>() {
+                        prevSelectedUserArrayList = new Gson().fromJson(object.getJSONObject(PARAMS.TAG_RESULT).getString(PARAMS.TAG_USER_LIST), new TypeToken<List<SyncUserInfo>>() {
                         }.getType());
-                        if (userArrayList != null && !userArrayList.isEmpty()) {
-                            MemberSelectionAdapter mAdapter = new MemberSelectionAdapter(CreateProjectActivity.this, userArrayList, false);
+                        if (prevSelectedUserArrayList != null && !prevSelectedUserArrayList.isEmpty()) {
+                            MemberSelectionAdapter mAdapter = new MemberSelectionAdapter(CreateProjectActivity.this, prevSelectedUserArrayList, false);
                             rvMember.setLayoutManager(new LinearLayoutManager(CreateProjectActivity.this));
                             rvMember.setItemAnimator(new DefaultItemAnimator());
                             rvMember.setAdapter(mAdapter);
