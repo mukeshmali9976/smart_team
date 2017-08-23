@@ -9,14 +9,13 @@ import android.support.v7.widget.LinearSnapHelper;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
-import com.techmali.smartteam.domain.adapters.ProjectListAdapter;
-
 import java.lang.ref.WeakReference;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.HashMap;
 import java.util.Locale;
 
 
@@ -83,6 +82,8 @@ public class HorizontalCalendar {
 
     private final boolean showMonthName;
     private final boolean showDayName;
+
+    private HashMap<Date, String> totalHour = new HashMap<>();
     //endregion
 
     /**
@@ -106,6 +107,7 @@ public class HorizontalCalendar {
         this.dateEndCalendar = builder.dateEndCalendar;
         this.showDayName = builder.showDayName;
         this.showMonthName = builder.showMonthName;
+        this.totalHour = builder.totalHour;
 
         handler = new DateHandler(this, builder.defaultSelectedDate);
     }
@@ -140,7 +142,7 @@ public class HorizontalCalendar {
      * Select today date and center the Horizontal Calendar to this date
      *
      * @param immediate pass true to make the calendar scroll as fast as possible to reach the date of today
-     * ,or false to play default scroll animation speed.
+     *                  ,or false to play default scroll animation speed.
      */
     public void goToday(boolean immediate) {
         selectDate(new Date(), immediate);
@@ -149,9 +151,9 @@ public class HorizontalCalendar {
     /**
      * Select the date and center the Horizontal Calendar to this date
      *
-     * @param date The date to select
+     * @param date      The date to select
      * @param immediate pass true to make the calendar scroll as fast as possible to reach the target date
-     * ,or false to play default scroll animation speed.
+     *                  ,or false to play default scroll animation speed.
      */
     public void selectDate(Date date, boolean immediate) {
         if (loading) {
@@ -392,9 +394,11 @@ public class HorizontalCalendar {
         boolean showDayName = true;
         Date defaultSelectedDate;
 
+        HashMap<Date, String> totalHour = new HashMap<>();
+
         /**
          * @param rootView pass the rootView for the Fragment where HorizontalCalendar is attached
-         * @param viewId the id specified for HorizontalCalendarView in your layout
+         * @param viewId   the id specified for HorizontalCalendarView in your layout
          */
         public Builder(View rootView, int viewId) {
             this.rootView = rootView;
@@ -403,7 +407,7 @@ public class HorizontalCalendar {
 
         /**
          * @param activity pass the activity where HorizontalCalendar is attached
-         * @param viewId the id specified for HorizontalCalendarView in your layout
+         * @param viewId   the id specified for HorizontalCalendarView in your layout
          */
         public Builder(Activity activity, int viewId) {
             this.rootView = activity.getWindow().getDecorView();
@@ -458,6 +462,11 @@ public class HorizontalCalendar {
 
         public Builder selectorColor(int selectorColor) {
             this.selectorColor = selectorColor;
+            return this;
+        }
+
+        public Builder getTotalHour(HashMap<Date, String> totalHour) {
+            this.totalHour = totalHour;
             return this;
         }
 
@@ -551,7 +560,7 @@ public class HorizontalCalendar {
                 c2.add(Calendar.MONTH, 1);
                 dateEndCalendar = c2.getTime();
             }
-            if (defaultSelectedDate == null){
+            if (defaultSelectedDate == null) {
                 defaultSelectedDate = new Date();
             }
         }

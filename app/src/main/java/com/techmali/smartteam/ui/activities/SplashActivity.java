@@ -54,7 +54,7 @@ public class SplashActivity extends BaseAppCompatActivity implements RequestList
                     overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
                     finish();
                 }else {
-                    Intent mainIntent = new Intent(SplashActivity.this, LoginActivity.class);
+                    Intent mainIntent = new Intent(SplashActivity.this, MainActivity.class);
                     startActivity(mainIntent);
                     overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
                     finish();

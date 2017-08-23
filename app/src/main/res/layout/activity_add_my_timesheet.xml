@@ -17,11 +17,64 @@
         android:paddingLeft="@dimen/margin_10"
         android:paddingRight="@dimen/margin_10">
 
+        <Spinner
+            android:id="@+id/spProjects"
+            android:spinnerMode="dropdown"
+            android:dropDownWidth="match_parent"
+            android:layout_marginTop="@dimen/margin_20"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <EditText
+            android:id="@+id/etProjects"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:visibility="gone"
+            android:hint="@string/lbl_select_project"
+            android:imeOptions="actionDone"
+            android:padding="@dimen/margin_10" />
+
+        <TextView
+            android:id="@+id/tvErrorProjects"
+            style="@style/styleErrorTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/error_enter"
+            android:visibility="gone" />
+
+        <Spinner
+            android:id="@+id/spTask"
+            android:spinnerMode="dropdown"
+            android:layout_marginTop="@dimen/margin_10"
+            android:dropDownWidth="match_parent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <EditText
+            android:id="@+id/etTasks"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_10"
+            android:ems="10"
+            android:visibility="gone"
+            android:hint="@string/lbl_select_task"
+            android:imeOptions="actionDone"
+            android:padding="@dimen/margin_10" />
+
+        <TextView
+            android:id="@+id/tvErrorTasks"
+            style="@style/styleErrorTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/error_enter"
+            android:visibility="gone" />
+
         <EditText
             android:id="@+id/etDate"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_20"
+            android:layout_marginTop="@dimen/margin_10"
             android:ems="10"
             android:hint="@string/lbl_select_date"
             android:imeOptions="actionDone"
@@ -35,44 +88,6 @@
             android:text="@string/error_enter"
             android:visibility="gone" />
 
-
-        <EditText
-            android:id="@+id/etProjects"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_10"
-            android:ems="10"
-            android:hint="@string/lbl_select_project"
-            android:imeOptions="actionDone"
-            android:padding="@dimen/margin_10" />
-
-        <TextView
-            android:id="@+id/tvErrorProjects"
-            style="@style/styleErrorTextView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/error_enter"
-            android:visibility="gone" />
-
-        <EditText
-            android:id="@+id/etTasks"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_10"
-            android:ems="10"
-            android:hint="@string/lbl_select_task"
-            android:imeOptions="actionDone"
-            android:padding="@dimen/margin_10" />
-
-        <TextView
-            android:id="@+id/tvErrorTasks"
-            style="@style/styleErrorTextView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/error_enter"
-            android:visibility="gone" />
-
-
         <EditText
             android:id="@+id/etTime"
             android:layout_width="match_parent"
@@ -80,8 +95,8 @@
             android:layout_marginTop="@dimen/margin_10"
             android:ems="10"
             android:hint="@string/lbl_time"
-            android:inputType="none"
             android:imeOptions="actionDone"
+            android:inputType="none"
             android:padding="@dimen/margin_10" />
 
         <TextView
@@ -98,10 +113,11 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin_10"
             android:ems="10"
-            android:maxLines="5"
             android:hint="@string/lbl_description_two"
             android:imeOptions="actionDone"
+            android:maxLines="5"
             android:padding="@dimen/margin_10" />
+
         <TextView
             android:id="@+id/tvErrorDescription"
             style="@style/styleErrorTextView"

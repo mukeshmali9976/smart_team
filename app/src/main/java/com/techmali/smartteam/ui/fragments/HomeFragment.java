@@ -81,6 +81,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
         return mRootView;
     }
 
+
     private void initView() {
 
         mRootView.findViewById(R.id.tvMyTimeSheet).setOnClickListener(this);
@@ -112,10 +113,13 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+
         initActionBar(getActivity().getString(R.string.app_name), mRootView);
         setTitle(getResources().getString(R.string.app_name));
-        getLoginDetail();
 
+        if (Utils.isInternetAvailable(mActivity)) {
+//            getLoginDetail();
+        }
     }
 
 
@@ -128,8 +132,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
 
         @Override
         protected String doInBackground(Void... voids) {
-            String reqParams = pendingData.getSyncData();
-            return reqParams;
+            return pendingData.getSyncData();
         }
 
         @Override
@@ -230,6 +233,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
         displayError(message);
     }
 
+
     private void saveLoginDataInPref(UserData data) {
 
         prefManager.edit().putString(PARAMS.KEY_COMPANY_ID, data.getCompany_id()).apply();
@@ -245,7 +249,6 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
 
         prefManager.edit().putBoolean(PARAMS.KEY_IS_LOGGED_IN, true).apply();
     }
-
 
     private class SaveData extends AsyncTask<String, Void, String> {
 
@@ -422,7 +425,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
                     boolean isExists = pendingData.checkRecordExist(table, DbParams.CLM_LOCAL_CHECK_IN_ID, syncList.get(i).getLocal_checkin_id());
                     Log.e(TAG, "isAvailable: " + isExists);
                     if (isExists)
-                        pendingData.update(syncList.get(i), table, syncList.get(i).getCheckin_id());
+                        pendingData.update(syncList.get(i), table, syncList.get(i).getServer_checkin_id());
                     else
                         pendingData.insert(syncList.get(i), table);
                 }

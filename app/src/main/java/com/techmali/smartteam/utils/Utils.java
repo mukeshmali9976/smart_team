@@ -12,6 +12,7 @@ import android.graphics.Canvas;
 import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Point;
+import android.location.LocationManager;
 import android.media.ExifInterface;
 import android.net.ConnectivityManager;
 import android.net.Uri;
@@ -31,6 +32,7 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 
 
+import com.google.firebase.analytics.FirebaseAnalytics.Param;
 import com.techmali.smartteam.R;
 
 import java.io.File;
@@ -839,23 +841,54 @@ public class Utils {
 
     public static String generateRandomNo() {
         List<Integer> numbers = new ArrayList<>();
-        for(int i = 0; i < 10; i++){
+        for (int i = 0; i < 10; i++) {
             numbers.add(i);
         }
 
         Collections.shuffle(numbers);
 
         String result = "";
-        for(int i = 0; i < 4; i++){
+        for (int i = 0; i < 4; i++) {
             result += numbers.get(i).toString();
         }
         return result;
     }
 
-    public static String createBlank(String string){
-        if(isEmptyString(string))
+    public static String createBlank(String string) {
+        if (isEmptyString(string))
             return "";
         else
             return string;
     }
+
+    public static boolean isLocationEnabled(Context context) {
+        try {
+            return ((LocationManager) context.getSystemService(Context.LOCATION_SERVICE)).isProviderEnabled("gps");
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public static void showSettingsAlert(final Context context) {
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(context);
+        alertDialog.setTitle((CharSequence) "Location setting");
+        alertDialog.setMessage((CharSequence) "Location is not enabled. Do you want to go to settings menu?");
+        alertDialog.setPositiveButton((CharSequence) "Settings", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+                dialog.dismiss();
+                context.startActivity(new Intent("android.settings.LOCATION_SOURCE_SETTINGS"));
+            }
+        });
+        alertDialog.setNegativeButton((CharSequence) "Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dialogInterface.dismiss();
+                dialogInterface.dismiss();
+            }
+        });
+        alertDialog.show();
+    }
+
 }

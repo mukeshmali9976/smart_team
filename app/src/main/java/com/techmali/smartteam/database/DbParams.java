@@ -24,7 +24,7 @@ public class DbParams {
     public static final String TBL_SECURITY_MENU_CONTROLLERS_ACTION = "security_menu_controllers_action";
     public static final String TBL_SECURITY_MENU_CONTROLLERS_LINK = "security_menu_controllers_link";
     public static final String TBL_SECURITY_CONTROLLERS = "security_controllers";
-
+    public static final String TBL_TRACKING = "tracking";
 
     public static final String TBL_ROLE = "role";
     public static final String TBL_MESSAGE = "message";
@@ -96,9 +96,9 @@ public class DbParams {
     public static final String CLM_ATTENDANCE_TYPE = "attandance_type";
 
     ////// Check in..........
-    public static final String CLM_CHECK_IN_ID = "checkin_id";
+    public static final String CLM_SERVER_CHECK_IN_ID = "server_checkin_id";
     public static final String CLM_LOCAL_CHECK_IN_ID = "local_checkin_id";
-    public static final String CLM_CHECK_IN_TIME = "checkin_time";
+    public static final String CLM_CHECK_IN_TYPE = "checkin_type";
 
     ///// Expense.........
     public static final String CLM_LOCAL_EXPENSE_ID = "local_expance_id";
@@ -203,6 +203,11 @@ public class DbParams {
 
     ////// Security_Action_User_Permission........
     public static final String CLM_USER_PERMISSION_ID = "user_permission_id";
+
+    ////// Tracking...
+    public static final String CLM_SERVER_TRACKING_ID = "server_tracking_id";
+    public static final String CLM_LOCAL_TRACKING_ID = "local_tracking_id";
+    public static final String CLM_TACKING_TIME = "tracking_time";
 
 
     ////////////////////
@@ -365,18 +370,20 @@ public class DbParams {
 
     /*
            CHECK_IN TABLE.........
+           checkin_type :: 1 = auto, 2 = manual                           DEFAULT => 1
+           status_id :: DEFAULT => 1
     */
     static final String CREATE_TBL_CHECK_IN = "CREATE TABLE " + TBL_CHECK_IN + " (" +
             CLM_LOCAL_CHECK_IN_ID + " VARCHAR PRIMARY KEY," +
-            CLM_CHECK_IN_ID + " VARCHAR," +
+            CLM_SERVER_CHECK_IN_ID + " VARCHAR," +
             CLM_COMPANY_ID + " VARCHAR DEFAULT '0'," +
-            CLM_LOCAL_ATTENDANCE_ID + " VARCHAR DEFAULT '0'," +
-            CLM_ATTENDANCE_ID + " VARCHAR," +
             CLM_LOCAL_USER_ID + " VARCHAR," +
             CLM_USER_ID + " VARCHAR," +
-            CLM_CHECK_IN_TIME + " VARCHAR," +
-            CLM_LAT + " VARCHAR DEFAULT '0.00000000'," +
-            CLM_LONG + " VARCHAR DEFAULT '0.00000000'," +
+            CLM_TITLE + " VARCHAR," +
+            CLM_DESCRIPTION + " VARCHAR," +
+            CLM_START_DATE + " VARCHAR," +
+            CLM_END_DATE + " VARCHAR," +
+            CLM_CHECK_IN_TYPE + " INTEGER DEFAULT 1," +
             CLM_STATUS_ID + " INTEGER DEFAULT 1," +
             CLM_CREATED_BY + " VARCHAR," +
             CLM_UPDATED_BY + " VARCHAR," +
@@ -418,7 +425,7 @@ public class DbParams {
     static final String CREATE_TBL_LEAVE = "CREATE TABLE " + TBL_LEAVE + "(" +
             CLM_LOCAL_LEAVE_ID + " VARCHAR PRIMARY KEY," +
             CLM_LEAVE_ID + " VARCHAR," +
-            CLM_COMPANY_ID + " INTEGER," +
+            CLM_COMPANY_ID + " VARCHAR," +
             CLM_LOCAL_USER_ID + " VARCHAR," +
             CLM_USER_ID + " VARCHAR," +
             CLM_START_DATE + "  VARCHAR," +
@@ -651,6 +658,32 @@ public class DbParams {
             CLM_ROLE_GROUP + " VARCHAR," +
             CLM_IS_CUSTOM + " VARCHAR," +
             CLM_STATUS + " INTEGER," +
+            CLM_CREATED_BY + " INTEGER," +
+            CLM_CREATED_ON + " DATETIME DEFAULT (CURRENT_TIMESTAMP)," +
+            CLM_UPDATED_BY + " INTEGER," +
+            CLM_UPDATED_ON + " DATETIME DEFAULT (CURRENT_TIMESTAMP)," +
+            CLM_IS_UPDATED + " INTEGER DEFAULT 0)";
+
+
+    /*
+            Tracking.......
+            server_checkin_id :: DEFAULT => 0
+            lat :: DEFAULT => 0.0000000
+            lng :: DEFAULT => 0.0000000
+            status_id :: DEFAULT => 1
+    */
+    static final String CREATE_TBL_TRACKING = "CREATE TABLE " + TBL_TRACKING + "(" +
+            CLM_SERVER_TRACKING_ID + " VARCHAR PRIMARY KEY," +
+            CLM_LOCAL_TRACKING_ID + " VARCHAR," +
+            CLM_COMPANY_ID + " VARCHAR," +
+            CLM_SERVER_CHECK_IN_ID + " VARCHAR," +
+            CLM_LOCAL_CHECK_IN_ID + " VARCHAR," +
+            CLM_SERVER_USER_ID + " VARCHAR," +
+            CLM_LOCAL_USER_ID + " VARCHAR," +
+            CLM_TACKING_TIME + " DATETIME DEFAULT (CURRENT_TIMESTAMP)," +
+            CLM_LAT + " VARCHAR DEFAULT '0.000000'," +
+            CLM_LONG + " VARCHAR DEFAULT '0.000000'," +
+            CLM_STATUS_ID + " INTEGER DEFAULT 1," +
             CLM_CREATED_BY + " INTEGER," +
             CLM_CREATED_ON + " DATETIME DEFAULT (CURRENT_TIMESTAMP)," +
             CLM_UPDATED_BY + " INTEGER," +

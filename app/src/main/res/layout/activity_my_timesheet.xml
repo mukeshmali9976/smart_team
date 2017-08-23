@@ -13,11 +13,22 @@
             android:id="@+id/toolbar"
             layout="@layout/layout_toolbar" />
 
+        <TextView
+            android:id="@+id/tvMonthName"
+            style="@style/TextSemiBold"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimary"
+            android:gravity="center_horizontal"
+            android:text="Jan"
+            android:textColor="@color/white"
+            android:textSize="@dimen/font_16" />
+
         <com.techmali.smartteam.horizontalcalendar.HorizontalCalendarView
             android:id="@+id/calendarView"
-            android:background="@color/colorPrimary"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimary" />
 
     </android.support.design.widget.AppBarLayout>
 

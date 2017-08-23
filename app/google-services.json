@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "204018676699",
+    "firebase_url": "https://smartteam-c50cc.firebaseio.com",
+    "project_id": "smartteam-c50cc",
+    "storage_bucket": "smartteam-c50cc.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:204018676699:android:5572f5831c78ac33",
+        "android_client_info": {
+          "package_name": "com.techmali.smartteam"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "204018676699-lmsec684dqtndhsjm3spcqcijge2ajf9.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.techmali.smartteam",
+            "certificate_hash": "85397a38d9b3c7e2fb84a1760265701441bfdc76"
+          }
+        },
+        {
+          "client_id": "204018676699-ns1gg0h92o0he5edoskub47i8sl9741n.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD5UPWpU5acbmneeqoInuXbO8sqEpZwfio"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "204018676699-ns1gg0h92o0he5edoskub47i8sl9741n.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

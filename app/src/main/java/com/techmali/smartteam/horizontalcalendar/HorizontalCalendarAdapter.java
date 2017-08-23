@@ -109,9 +109,9 @@ public class HorizontalCalendarAdapter extends RecyclerView.Adapter<HorizontalCa
         }
 
         if (horizontalCalendar.isShowMonthName()) {
-            holder.txtMonthName.setText(DateFormat.format(horizontalCalendar.getFormatMonth(), day).toString());
-            holder.txtMonthName.setTextSize(TypedValue.COMPLEX_UNIT_SP,
-                    horizontalCalendar.getTextSizeMonthName());
+//            holder.txtMonthName.setText(DateFormat.format(horizontalCalendar.getFormatMonth(), day).toString());
+            holder.txtMonthName.setText("10:00");
+            holder.txtMonthName.setTextSize(TypedValue.COMPLEX_UNIT_SP, horizontalCalendar.getTextSizeMonthName());
         } else {
             holder.txtMonthName.setVisibility(View.GONE);
         }

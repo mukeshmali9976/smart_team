@@ -59,12 +59,8 @@ public class Constants {
     public static final String USER_LIST = "5001";
 
 
-
     public static final String CURRENT_LATITUDE = "currant_latitude";
     public static final String CURRENT_LONGITUDE = "currant_longtitue";
 
-
-
-
-
+    public static boolean IS_LOCATION_SERVICE_RUNNING = false;
 }

@@ -10,6 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.techmali.smartteam.R;
@@ -22,10 +23,12 @@ import com.techmali.smartteam.network.NetworkManager;
 import com.techmali.smartteam.utils.CryptoManager;
 import com.techmali.smartteam.utils.Utils;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public class MyTimeSheetActivity extends BaseAppCompatActivity implements View.OnClickListener {
 
@@ -36,6 +39,7 @@ public class MyTimeSheetActivity extends BaseAppCompatActivity implements View.O
 
     private MyTimeSheetAdapter mAdapter;
     private RecyclerView rvMyTimeSheet;
+    private TextView tvMonthName;
     private HorizontalCalendar horizontalCalendar;
 
     @Override
@@ -52,6 +56,8 @@ public class MyTimeSheetActivity extends BaseAppCompatActivity implements View.O
 
 
     private void initView() {
+
+        tvMonthName = (TextView) findViewById(R.id.tvMonthName);
 
         Calendar endDate = Calendar.getInstance();
         endDate.add(Calendar.MONTH, 1);
@@ -89,6 +95,8 @@ public class MyTimeSheetActivity extends BaseAppCompatActivity implements View.O
         horizontalCalendar.setCalendarListener(new HorizontalCalendarListener() {
             @Override
             public void onDateSelected(Date date, int position) {
+                SimpleDateFormat dateFormat = new SimpleDateFormat("MMMM", Locale.getDefault());
+                tvMonthName.setText(dateFormat.format(date).toUpperCase());
             }
         });
     }

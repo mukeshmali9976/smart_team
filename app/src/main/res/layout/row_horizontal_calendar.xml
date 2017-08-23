@@ -17,29 +17,29 @@
         android:paddingRight="@dimen/margin_8">
 
         <TextView
-            android:id="@+id/monthName"
+            android:id="@+id/dayNumber"
             style="@style/TextSemiBold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Jan"
+            android:text="2"
             android:textSize="@dimen/font_16" />
 
         <TextView
-            android:id="@+id/dayNumber"
             style="@style/TextBold"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_4"
-            android:text="2"
-            android:textSize="@dimen/font_20" />
-
-        <TextView
             android:id="@+id/dayName"
-            style="@style/TextSemiBold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin_4"
             android:text="Mon"
+            android:textSize="@dimen/font_20" />
+
+        <TextView
+            android:id="@+id/monthName"
+            style="@style/TextSemiBold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_4"
+            android:text="10:00"
             android:textSize="@dimen/font_16" />
 
     </LinearLayout>

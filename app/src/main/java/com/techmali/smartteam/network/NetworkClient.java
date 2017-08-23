@@ -135,9 +135,9 @@ public class NetworkClient extends AsyncTask<Void, Void, String> {
                 Log.i(TAG, "==========================================================================================");
 
                 OkHttpClient.Builder clientBuilder = new OkHttpClient.Builder();
-                clientBuilder.connectTimeout(10, TimeUnit.SECONDS);
-                clientBuilder.writeTimeout(10, TimeUnit.SECONDS);
-                clientBuilder.readTimeout(20, TimeUnit.SECONDS);
+                clientBuilder.connectTimeout(60, TimeUnit.SECONDS);
+                clientBuilder.writeTimeout(60, TimeUnit.SECONDS);
+                clientBuilder.readTimeout(60, TimeUnit.SECONDS);
                 OkHttpClient client = clientBuilder.build();
 
                 if (reqMethod == RequestMethod.GET) {
