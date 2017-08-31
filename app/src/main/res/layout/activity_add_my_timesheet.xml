@@ -19,21 +19,21 @@
 
         <Spinner
             android:id="@+id/spProjects"
-            android:spinnerMode="dropdown"
-            android:dropDownWidth="match_parent"
-            android:layout_marginTop="@dimen/margin_20"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_20"
+            android:dropDownWidth="match_parent"
+            android:spinnerMode="dropdown" />
 
         <EditText
             android:id="@+id/etProjects"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:visibility="gone"
             android:hint="@string/lbl_select_project"
             android:imeOptions="actionDone"
-            android:padding="@dimen/margin_10" />
+            android:padding="@dimen/margin_10"
+            android:visibility="gone" />
 
         <TextView
             android:id="@+id/tvErrorProjects"
@@ -45,11 +45,11 @@
 
         <Spinner
             android:id="@+id/spTask"
-            android:spinnerMode="dropdown"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin_10"
             android:dropDownWidth="match_parent"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:spinnerMode="dropdown" />
 
         <EditText
             android:id="@+id/etTasks"
@@ -57,10 +57,10 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin_10"
             android:ems="10"
-            android:visibility="gone"
             android:hint="@string/lbl_select_task"
             android:imeOptions="actionDone"
-            android:padding="@dimen/margin_10" />
+            android:padding="@dimen/margin_10"
+            android:visibility="gone" />
 
         <TextView
             android:id="@+id/tvErrorTasks"
@@ -76,6 +76,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin_10"
             android:ems="10"
+            android:focusable="false"
             android:hint="@string/lbl_select_date"
             android:imeOptions="actionDone"
             android:padding="@dimen/margin_10" />
@@ -94,6 +95,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin_10"
             android:ems="10"
+            android:focusable="false"
             android:hint="@string/lbl_time"
             android:imeOptions="actionDone"
             android:inputType="none"
@@ -110,13 +112,12 @@
         <EditText
             android:id="@+id/etDescription"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_marginTop="@dimen/margin_10"
-            android:ems="10"
-            android:hint="@string/lbl_description_two"
-            android:imeOptions="actionDone"
-            android:maxLines="5"
-            android:padding="@dimen/margin_10" />
+            android:gravity="top|left"
+            android:hint="@string/hint_description"
+            android:inputType="textCapSentences|textMultiLine"
+            android:lines="5" />
 
         <TextView
             android:id="@+id/tvErrorDescription"

@@ -1133,4 +1133,30 @@ public class PendingDataImpl {
         return isCreated;
     }
 
+    public boolean addTimesheet(String project_id, String task_id, String date_time, String desc, boolean isExists) {
+
+        boolean isCreated = false;
+        try {
+            String id = prefManager.getString(PARAMS.KEY_UNIQUE_CODE, "") + "_" + System.currentTimeMillis();
+            String query = "";
+            if (!isExists) {
+//                query = "INSERT INTO " + DbParams.TBL_PROJECT + " (" + DbParams.CLM_LOCAL_PROJECT_ID + "," + DbParams.CLM_SERVER_PROJECT_ID + "," + DbParams.CLM_COMPANY_ID + "," +
+//                        DbParams.CLM_TITLE + "," + DbParams.CLM_START_DATE + "," + DbParams.CLM_END_DATE + "," + DbParams.CLM_DESCRIPTION + "," + DbParams.CLM_CREATED_BY + "," +
+//                        DbParams.CLM_UPDATED_BY + "," + DbParams.CLM_UPDATED_ON + ") VALUES ('" + id + "','','" + prefManager.getString(PARAMS.KEY_COMPANY_ID, "") +
+//                        "','" + p_name + "','" + start_date + "','" + end_date + "'," + DatabaseUtils.sqlEscapeString(desc) + ",'" + prefManager.getString(PARAMS.KEY_LOGGED_IN_USER_ID, "") +
+//                        "','" + prefManager.getString(PARAMS.KEY_LOGGED_IN_USER_ID, "") + "','" + DateUtils.currentUTCDateTime() + "')";
+            } else {
+//                query = "UPDATE " + DbParams.TBL_PROJECT + " SET " + DbParams.CLM_TITLE + "='" + p_name + "', " + DbParams.CLM_START_DATE + "='" + start_date + "', " + DbParams.CLM_END_DATE +
+//                        "='" + end_date + "', " + DbParams.CLM_DESCRIPTION + "=" + DatabaseUtils.sqlEscapeString(desc) + ", " + DbParams.CLM_UPDATED_ON + "='" + DateUtils.currentUTCDateTime() +
+//                        "' WHERE " + DbParams.CLM_LOCAL_PROJECT_ID + "='" + project_id + "'";
+            }
+            Log.e(TAG, query);
+//            database.execSQL(query);
+            isCreated = true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            isCreated = false;
+        }
+        return isCreated;
+    }
 }

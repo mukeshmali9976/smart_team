@@ -265,5 +265,4 @@ public class CreateTaskActivity extends BaseAppCompatActivity implements View.On
             dismissProgressDialog();
         }
     }
-
 }

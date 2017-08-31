@@ -48,12 +48,10 @@ public class MyTimeSheetActivity extends BaseAppCompatActivity implements View.O
         setContentView(R.layout.activity_my_timesheet);
 
         initActionBar("My TimeSheet");
-
         prefManager = CryptoManager.getInstance(MyTimeSheetActivity.this).getPrefs();
 
         initView();
     }
-
 
     private void initView() {
 
@@ -114,8 +112,6 @@ public class MyTimeSheetActivity extends BaseAppCompatActivity implements View.O
         switch (item.getItemId()) {
             case R.id.action_menu_add:
                 startActivity(new Intent(this, AddMyTimeSheetActivity.class));
-                Utils.hideKeyboard(this);
-
                 break;
         }
         return super.onOptionsItemSelected(item);
