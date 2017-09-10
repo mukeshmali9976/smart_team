@@ -33,6 +33,7 @@ import com.techmali.smartteam.base.BasePermissionFragment;
 import com.techmali.smartteam.base.PermissionListener;
 import com.techmali.smartteam.network.NetworkManager;
 import com.techmali.smartteam.network.RequestListener;
+import com.techmali.smartteam.ui.activities.MainActivity;
 import com.techmali.smartteam.ui.views.imageCrop.CropActivity;
 import com.techmali.smartteam.utils.Constants;
 import com.techmali.smartteam.utils.CryptoManager;
@@ -79,8 +80,8 @@ public class ProfileFragment extends BasePermissionFragment implements RequestLi
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        initActionBar(getResources().getString(R.string.lbl_profile), mRootView);
-        getActivity().setTitle(getActivity().getResources().getString(R.string.lbl_profile));
+        ((MainActivity) getActivity()).initActionBar(getResources().getString(R.string.lbl_profile), mRootView);
+        ((MainActivity) getActivity()).setTitle(getActivity().getResources().getString(R.string.lbl_profile));
     }
 
     @Override

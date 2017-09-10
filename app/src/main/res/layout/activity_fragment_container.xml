@@ -1,13 +1,44 @@
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
-    <FrameLayout
-        android:id="@+id/fragmentContainer"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/layout_toolbar" />
 
-</LinearLayout>
+    <android.support.v4.view.ViewPager
+        android:id="@+id/viewpager"
+        android:layout_below="@+id/toolbar"
+        android:layout_above="@+id/flTab"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/white" />
+
+    <!--<FrameLayout-->
+        <!--android:id="@+id/fragmentContainer"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent" />-->
+
+    <FrameLayout
+        android:id="@+id/flTab"
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <android.support.design.widget.TabLayout
+            android:id="@+id/tabLayout"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/margin_64"
+            android:background="@color/colorPrimary"
+            custom:tabGravity="fill"
+            custom:tabIndicatorColor="@android:color/white"
+            custom:tabIndicatorHeight="1dp"
+            custom:tabMode="fixed"
+            custom:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    </FrameLayout>
+
+</RelativeLayout>
 

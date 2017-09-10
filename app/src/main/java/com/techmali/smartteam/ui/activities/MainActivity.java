@@ -13,15 +13,26 @@ import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.ContextCompat;
+import android.support.v4.view.ViewPager;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
+import android.util.TypedValue;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
@@ -38,6 +49,7 @@ import com.google.android.gms.location.LocationSettingsStates;
 import com.google.android.gms.location.LocationSettingsStatusCodes;
 import com.techmali.smartteam.R;
 import com.techmali.smartteam.database.PendingDataImpl;
+import com.techmali.smartteam.domain.adapters.HomePagerAdapter;
 import com.techmali.smartteam.domain.services.GPSTracker;
 import com.techmali.smartteam.domain.services.LocationUpdateService;
 import com.techmali.smartteam.request.PARAMS;
@@ -48,9 +60,10 @@ import com.techmali.smartteam.ui.fragments.MenuFragment;
 import com.techmali.smartteam.ui.views.MyProgressDialog;
 import com.techmali.smartteam.utils.CryptoManager;
 import com.techmali.smartteam.utils.Log;
+import com.techmali.smartteam.utils.TypefaceUtils;
 import com.techmali.smartteam.utils.Utils;
 
-import java.text.DateFormat;
+import java.util.ArrayList;
 
 public class MainActivity extends SlidingActivity implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, LocationListener {
 
@@ -60,6 +73,8 @@ public class MainActivity extends SlidingActivity implements GoogleApiClient.Con
 
     protected MenuFragment menuFragment;
     public Activity mActivity;
+    private ViewPager viewpager;
+    private TabLayout tabLayout;
 
     private PendingDataImpl dbHelper;
     private SharedPreferences prefManager = null;
@@ -74,6 +89,11 @@ public class MainActivity extends SlidingActivity implements GoogleApiClient.Con
 
     private MenuItem menuItem;
     private boolean isCheckedIn = false;
+    private TextView mActionBarTitle = null;
+    private static ActionBar actionBar;
+
+    private ArrayList<String> tab_id = new ArrayList<String>();
+    private ArrayList<String> tab_name = new ArrayList<String>();
 
     protected void createLocationRequest() {
         mLocationRequest = new LocationRequest();
@@ -125,6 +145,36 @@ public class MainActivity extends SlidingActivity implements GoogleApiClient.Con
         dialog = new MyProgressDialog(mActivity);
         dialog.dismiss();
 
+        viewpager = (ViewPager) findViewById(R.id.viewpager);
+        viewpager.setOffscreenPageLimit(3);
+
+        tabLayout = (TabLayout) findViewById(R.id.tabLayout);
+
+        setupViewpager(viewpager);
+        tabLayout.post(new Runnable() {
+            @Override
+            public void run() {
+                tabLayout.setupWithViewPager(viewpager);
+                setupTabIcons();
+            }
+        });
+
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                viewpager.setCurrentItem(tab.getPosition());
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
 //        if (isGooglePlayServicesAvailable()) {
 //            createLocationRequest();
 //            mGoogleApiClient = new GoogleApiClient.Builder(this)
@@ -141,7 +191,7 @@ public class MainActivity extends SlidingActivity implements GoogleApiClient.Con
             menuFragment = new MenuFragment();
             t.replace(R.id.menuFragmentContainer, menuFragment);
             t.commit();
-            replaceFragment(new HomeFragment(), "Home");
+//            replaceFragment(new HomeFragment(), "Home");
         } else {
             menuFragment = (MenuFragment) this.getSupportFragmentManager().findFragmentById(R.id.menuFragmentContainer);
         }
@@ -164,12 +214,68 @@ public class MainActivity extends SlidingActivity implements GoogleApiClient.Con
         });
     }
 
+    public void setupViewpager(ViewPager viewPager) {
+
+        tab_id.add(0, "1");
+        tab_id.add(1, "2");
+        tab_id.add(2, "3");
+        tab_id.add(3, "4");
+        tab_id.add(4, "5");
+
+        tab_name.add(0, "My Frame");
+        tab_name.add(1, "Time sheet");
+        tab_name.add(2, "Home");
+        tab_name.add(3, "Check-in");
+        tab_name.add(4, "Projects");
+
+        HomePagerAdapter adapter = new HomePagerAdapter(getSupportFragmentManager());
+
+        for (int i = 0; i < tab_id.size(); i++) {
+            Bundle bundle = new Bundle();
+            bundle.putString("tab_id", tab_id.get(i));
+            adapter.addFrag(new HomeFragment(), tab_name.get(i));
+        }
+        viewPager.setAdapter(adapter);
+    }
+
+    private void setupTabIcons() {
+
+        View view = LayoutInflater.from(this).inflate(R.layout.row_tab, null);
+        TextView tabOne = (TextView) view.findViewById(R.id.tab);
+        tabOne.setText("My Frame");
+        tabOne.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.ic_home, 0, 0);
+        tabLayout.getTabAt(0).setCustomView(tabOne);
+
+        View viewTwo = LayoutInflater.from(this).inflate(R.layout.row_tab, null);
+        TextView tabTwo = (TextView) viewTwo.findViewById(R.id.tab);
+        tabTwo.setText("Time sheet");
+        tabTwo.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.ic_home, 0, 0);
+        tabLayout.getTabAt(1).setCustomView(tabTwo);
+
+        View viewThree = LayoutInflater.from(this).inflate(R.layout.row_tab, null);
+        TextView tabThree = (TextView) viewThree.findViewById(R.id.tab);
+        tabThree.setText("Home");
+        tabThree.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.ic_home, 0, 0);
+        tabLayout.getTabAt(2).setCustomView(tabThree);
+
+        View viewFour = LayoutInflater.from(this).inflate(R.layout.row_tab, null);
+        TextView tabFour = (TextView) viewFour.findViewById(R.id.tab);
+        tabFour.setText("Check-in");
+        tabFour.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.ic_home, 0, 0);
+        tabLayout.getTabAt(3).setCustomView(tabFour);
+
+        View viewFive = LayoutInflater.from(this).inflate(R.layout.row_tab, null);
+        TextView tabFive = (TextView) viewFive.findViewById(R.id.tab);
+        tabFive.setText("Projects");
+        tabFive.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.ic_home, 0, 0);
+        tabLayout.getTabAt(4).setCustomView(tabFive);
+    }
+
     public void restartActivity() {
         Intent intent = getIntent();
         finish();
         startActivity(intent);
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -184,7 +290,6 @@ public class MainActivity extends SlidingActivity implements GoogleApiClient.Con
         }
         return super.onCreateOptionsMenu(menu);
     }
-
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -267,15 +372,15 @@ public class MainActivity extends SlidingActivity implements GoogleApiClient.Con
                 mGoogleApiClient.connect();
             }
         } else {
-            Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.fragmentContainer);
-            if (fragment != null) {
-                fragment.onActivityResult(requestCode, resultCode, data);
-            }
+//            Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.fragmentContainer);
+//            if (fragment != null) {
+//                fragment.onActivityResult(requestCode, resultCode, data);
+//            }
         }
     }
 
     public void replaceFragment(Fragment frm, String tag) {
-        getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, frm, tag).addToBackStack(null).commit();
+//        getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, frm, tag).addToBackStack(null).commit();
     }
 
     public void addFragment(Fragment f) {
@@ -283,15 +388,14 @@ public class MainActivity extends SlidingActivity implements GoogleApiClient.Con
     }
 
     public void addFragment(Fragment f, boolean clearStack) {
-        if (clearStack) {
-            getSupportFragmentManager().popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
-        }
-        getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, f).addToBackStack(null).commit();
+//        if (clearStack) {
+//            getSupportFragmentManager().popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+//        }
+//        getSupportFragmentManager().beginTransaction().replace(R.id.fragmentContainer, f).addToBackStack(null).commit();
     }
 
-    public Fragment getActiveFragment() {
-
-        return getSupportFragmentManager().findFragmentById(R.id.fragmentContainer);
+    public void getActiveFragment() {
+//        return getSupportFragmentManager().findFragmentById(R.id.fragmentContainer);
     }
 
     public void clearBackStack() {
@@ -304,41 +408,68 @@ public class MainActivity extends SlidingActivity implements GoogleApiClient.Con
             getSlidingMenu().toggle();
         }
 
-        if (getActiveFragment() instanceof HomeFragment) {
-            if (getSupportFragmentManager().getBackStackEntryCount() == 1) {
-
-                try {
-                    AlertDialog.Builder builder = new AlertDialog.Builder(this);
-//                builder.setTitle(R.string.alert);
-                    builder.setCancelable(false);
-                    builder.setMessage("finish");
-                    builder.setPositiveButton(R.string.lbl_yes,
-                            new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int id) {
-                                    dialog.dismiss();
-                                    finish();
-                                }
-                            });
-                    builder.setNegativeButton(R.string.lbl_no, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            dialog.dismiss();
-                        }
-                    });
-                    // create alert dialog
-                    AlertDialog alertDialog = builder.create();
-//                alertDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-                    // show it
-                    alertDialog.show();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            } else {
-                getSupportFragmentManager().popBackStack();
+//        if (getActiveFragment() instanceof HomeFragment) {
+//            if (getSupportFragmentManager().getBackStackEntryCount() == 1) {
+//
+//                try {
+//                    AlertDialog.Builder builder = new AlertDialog.Builder(this);
+////                builder.setTitle(R.string.alert);
+//                    builder.setCancelable(false);
+//                    builder.setMessage("finish");
+//                    builder.setPositiveButton(R.string.lbl_yes,
+//                            new DialogInterface.OnClickListener() {
+//                                public void onClick(DialogInterface dialog, int id) {
+//                                    dialog.dismiss();
+//                                    finish();
+//                                }
+//                            });
+//                    builder.setNegativeButton(R.string.lbl_no, new DialogInterface.OnClickListener() {
+//                        @Override
+//                        public void onClick(DialogInterface dialog, int which) {
+//                            dialog.dismiss();
+//                        }
+//                    });
+//                    // create alert dialog
+//                    AlertDialog alertDialog = builder.create();
+////                alertDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+//                    // show it
+//                    alertDialog.show();
+//                } catch (Exception e) {
+//                    e.printStackTrace();
+//                }
+//            } else {
+//                getSupportFragmentManager().popBackStack();
+//            }
+//        } else {
+//            getSupportFragmentManager().popBackStack();
+//            replaceFragment(new HomeFragment(), "Home");
+//        }
+        if (viewpager.getCurrentItem() == 0) {
+            try {
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                builder.setCancelable(false);
+                builder.setMessage("finish");
+                builder.setPositiveButton(R.string.lbl_yes,
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                dialog.dismiss();
+                                finish();
+                            }
+                        });
+                builder.setNegativeButton(R.string.lbl_no, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+                // create alert dialog
+                AlertDialog alertDialog = builder.create();
+                alertDialog.show();
+            } catch (Exception e) {
+                e.printStackTrace();
             }
         } else {
-            getSupportFragmentManager().popBackStack();
-            replaceFragment(new HomeFragment(), "Home");
+            viewpager.setCurrentItem(0);
         }
     }
 
@@ -445,5 +576,67 @@ public class MainActivity extends SlidingActivity implements GoogleApiClient.Con
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
         mGoogleApiClient.connect();
+    }
+
+    public void initActionBar(String title, View view) {
+
+        try {
+            // initialize toolbar
+            Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+            setSupportActionBar(toolbar);
+
+            // initialize actionbar
+            actionBar = getSupportActionBar();
+            if (actionBar != null) {
+                actionBar.setDisplayHomeAsUpEnabled(true);
+                actionBar.setHomeButtonEnabled(true);
+                actionBar.setDisplayShowTitleEnabled(false);
+                actionBar.setDisplayShowCustomEnabled(true);
+                actionBar.setHomeAsUpIndicator(R.drawable.ic_drawer_menu);
+
+                TextView tvTitle = (TextView) toolbar.findViewById(R.id.tvTitle);
+                tvTitle.setText(title);
+
+                if (mActionBarTitle != null)
+                    actionBar.setCustomView(null);
+
+                mActionBarTitle = new TextView(this);
+                ActionBar.LayoutParams params = new ActionBar.LayoutParams(ActionBar.LayoutParams.WRAP_CONTENT, ActionBar.LayoutParams.WRAP_CONTENT);
+//        params.setMargins(0, 0, 15, 0);
+                params.gravity = Gravity.CENTER;
+                mActionBarTitle.setGravity(Gravity.CENTER);
+                mActionBarTitle.setMaxEms(15);
+                mActionBarTitle.setTextColor(ContextCompat.getColor(this, R.color.colorWhite));
+//        mActionBarTitle.setTextSize(TypedValue.COMPLEX_UNIT_PX, getResources().getDimension(R.dimen.font_actionbar_title));
+                TypefaceUtils.getInstance(this).applyTypeface(mActionBarTitle, TypefaceUtils.SEMI_BOLD);
+//                actionBar.setCustomView(mActionBarTitle, params);
+//                mActionBarTitle.setTypeface(Typeface.DEFAULT_BOLD);
+                mActionBarTitle.setTextSize(TypedValue.COMPLEX_UNIT_PX, getResources().getDimension(R.dimen.font_18));
+
+                if (!TextUtils.isEmpty(title)) {
+                    setTitle(title);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    //    @Override
+    public void setTitle(int titleId) {
+
+        if (mActionBarTitle != null) {
+            mActionBarTitle.setText(titleId);
+        }
+//        super.setTitle(titleId);
+    }
+
+    //    @Override
+    public void setTitle(CharSequence title) {
+
+        if (mActionBarTitle != null) {
+            mActionBarTitle.setText(title);
+        }
+//        super.setTitle(title);
     }
 }

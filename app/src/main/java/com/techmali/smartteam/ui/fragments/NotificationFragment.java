@@ -19,6 +19,7 @@ import com.techmali.smartteam.domain.adapters.NotificationAdapter;
 import com.techmali.smartteam.models.NotificationModel;
 import com.techmali.smartteam.network.NetworkManager;
 import com.techmali.smartteam.network.RequestListener;
+import com.techmali.smartteam.ui.activities.MainActivity;
 import com.techmali.smartteam.utils.CryptoManager;
 import com.techmali.smartteam.utils.Log;
 
@@ -70,8 +71,8 @@ public class NotificationFragment extends BasePermissionFragment implements Requ
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        initActionBar(getActivity().getString(R.string.title_notification), mRootView);
-        setTitle(getString(R.string.title_notification));
+        ((MainActivity)getActivity()).initActionBar(getActivity().getString(R.string.title_notification), mRootView);
+        ((MainActivity)getActivity()).setTitle(getString(R.string.title_notification));
 
     }
 

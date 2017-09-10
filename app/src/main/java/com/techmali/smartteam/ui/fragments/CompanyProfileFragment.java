@@ -15,6 +15,7 @@ import com.techmali.smartteam.base.BasePermissionFragment;
 import com.techmali.smartteam.domain.adapters.MyLeavesAdapter;
 import com.techmali.smartteam.network.NetworkManager;
 import com.techmali.smartteam.network.RequestListener;
+import com.techmali.smartteam.ui.activities.MainActivity;
 import com.techmali.smartteam.utils.CryptoManager;
 import com.techmali.smartteam.utils.Log;
 
@@ -46,8 +47,8 @@ public class CompanyProfileFragment extends BaseFragment implements RequestListe
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        initActionBar(getActivity().getString(R.string.title_company_profile), mRootView);
-        setTitle(getString(R.string.title_company_profile));
+        ((MainActivity)getActivity()).initActionBar(getActivity().getString(R.string.title_company_profile), mRootView);
+        ((MainActivity)getActivity()).setTitle(getString(R.string.title_company_profile));
 
     }
 
