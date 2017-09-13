@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/white">
+
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/custom_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:padding="@dimen/margin_14">
+
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/round_imgborder_gray">
+
+            <ImageView
+                android:layout_width="@dimen/margin_30"
+                android:layout_height="@dimen/margin_30"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_profile_photo" />
+
+            <ImageView
+                android:id="@+id/ivThumbImage"
+                android:layout_width="@dimen/photo_width"
+                android:layout_height="@dimen/photo_width"
+                android:padding="@dimen/margin_5"
+                android:scaleType="fitXY" />
+        </FrameLayout>
+
+        <com.fermax.views.MyEditText
+            android:id="@+id/etVideoUrl"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_10"
+            android:background="@drawable/round_imgborder_gray"
+            android:gravity="start"
+            android:hint="@string/enter_video"
+            android:imeOptions="actionDone"
+            android:inputType="textCapSentences|textMultiLine"
+            android:minHeight="@dimen/dialog_btn_min_width"
+            android:padding="@dimen/margin_10" />
+    </LinearLayout>
+</LinearLayout>

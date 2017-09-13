@@ -890,5 +890,24 @@ public class Utils {
         });
         alertDialog.show();
     }
-
+    /**
+     * Open document in installed one of the applications.
+     *
+     * @param mContext the m context
+     * @param name     the name of the file
+     */
+    public static void openDocument(Context mContext, String name) {
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        File file = new File(name);
+        String extension = android.webkit.MimeTypeMap.getFileExtensionFromUrl(Uri.fromFile(file).toString());
+        String mimetype = android.webkit.MimeTypeMap.getSingleton().getMimeTypeFromExtension(extension);
+        if (extension.equalsIgnoreCase("") || mimetype == null) {
+            // if there is no extension or there is no definite mimetype, still try to open the file
+            intent.setDataAndType(Uri.fromFile(file), "text/*");
+        } else {
+            intent.setDataAndType(Uri.fromFile(file), mimetype);
+        }
+        // custom message for the intent
+        mContext.startActivity(Intent.createChooser(intent, "Choose an Application:"));
+    }
 }

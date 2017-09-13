@@ -1,0 +1,39 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="@dimen/margin_10">
+
+    <LinearLayout
+        android:id="@+id/lnrQueue"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1">
+
+        <ImageView
+            android:id="@+id/imgDocQueue"
+            android:layout_width="@dimen/doc_width"
+            android:layout_height="@dimen/doc_width"
+            android:scaleType="centerInside"
+            android:src="@drawable/circle_orange" />
+
+        <TextView
+            android:id="@+id/tvDocName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top|left"
+            android:padding="5dp"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="@color/blackRow"
+            android:textSize="@dimen/font_16" />
+
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/imgDocQueueMultiSelected"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginRight="@dimen/margin_10"
+        android:background="@drawable/checkbox_off"
+        android:scaleType="center" />
+</LinearLayout>

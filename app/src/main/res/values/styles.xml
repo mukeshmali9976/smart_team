@@ -269,4 +269,26 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="filePickerTheme" parent="@style/Widget.AppCompat.ActionBar.Solid">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:windowBackground">@color/grey</item>
+        <item name="background">@color/bg_gray</item>
+        <item name="icon">@android:color/transparent</item>
+        <item name="android:icon">@android:color/transparent</item>
+        <item name="displayOptions">homeAsUp|showHome</item>
+        <item name="android:actionMenuTextColor">@color/grey</item>
+
+    </style>
+    <!--Transparent activity-->
+    <style name="Theme.AppCompat.Translucent" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowIsFloating">false</item>
+        <item name="android:backgroundDimEnabled">true</item>
+    </style>
+
 </resources>

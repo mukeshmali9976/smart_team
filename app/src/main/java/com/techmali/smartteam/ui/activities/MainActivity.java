@@ -1,11 +1,13 @@
 package com.techmali.smartteam.ui.activities;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentSender;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.location.Location;
@@ -14,6 +16,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -21,7 +24,6 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.TypedValue;
@@ -32,6 +34,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.FrameLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -56,6 +60,7 @@ import com.techmali.smartteam.request.PARAMS;
 import com.techmali.smartteam.slidingmenu.SlidingActivity;
 import com.techmali.smartteam.slidingmenu.SlidingMenu;
 import com.techmali.smartteam.ui.fragments.HomeFragment;
+import com.techmali.smartteam.ui.fragments.HomeMenuFragment;
 import com.techmali.smartteam.ui.fragments.MenuFragment;
 import com.techmali.smartteam.ui.views.MyProgressDialog;
 import com.techmali.smartteam.utils.CryptoManager;
@@ -91,6 +96,8 @@ public class MainActivity extends SlidingActivity implements GoogleApiClient.Con
     private boolean isCheckedIn = false;
     private TextView mActionBarTitle = null;
     private static ActionBar actionBar;
+    public static int toolbar_height;
+    public static int tab_height;
 
     private ArrayList<String> tab_id = new ArrayList<String>();
     private ArrayList<String> tab_name = new ArrayList<String>();
@@ -113,6 +120,16 @@ public class MainActivity extends SlidingActivity implements GoogleApiClient.Con
     }
 
     protected void startLocationUpdates() {
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return;
+        }
         PendingResult<Status> pendingResult = LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest, MainActivity.this);
         Log.d(TAG, "Location update started ..............: ");
     }
@@ -149,6 +166,8 @@ public class MainActivity extends SlidingActivity implements GoogleApiClient.Con
         viewpager.setOffscreenPageLimit(3);
 
         tabLayout = (TabLayout) findViewById(R.id.tabLayout);
+        FrameLayout.LayoutParams lpToolbar = (FrameLayout.LayoutParams) tabLayout.getLayoutParams();
+        tab_height = lpToolbar.height;
 
         setupViewpager(viewpager);
         tabLayout.post(new Runnable() {
@@ -233,7 +252,10 @@ public class MainActivity extends SlidingActivity implements GoogleApiClient.Con
         for (int i = 0; i < tab_id.size(); i++) {
             Bundle bundle = new Bundle();
             bundle.putString("tab_id", tab_id.get(i));
-            adapter.addFrag(new HomeFragment(), tab_name.get(i));
+            if (tab_id.get(i).equals("3")) {
+                adapter.addFrag(new HomeMenuFragment(), tab_name.get(i));
+            } else
+                adapter.addFrag(new HomeFragment(), tab_name.get(i));
         }
         viewPager.setAdapter(adapter);
     }
@@ -583,6 +605,8 @@ public class MainActivity extends SlidingActivity implements GoogleApiClient.Con
         try {
             // initialize toolbar
             Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+            RelativeLayout.LayoutParams lpToolbar = (RelativeLayout.LayoutParams) toolbar.getLayoutParams();
+            toolbar_height = lpToolbar.height;
             setSupportActionBar(toolbar);
 
             // initialize actionbar

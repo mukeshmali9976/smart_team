@@ -3,40 +3,17 @@ package com.techmali.smartteam.ui.fragments;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.TabLayout;
-import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import com.techmali.smartteam.R;
 import com.techmali.smartteam.base.BaseFragment;
-import com.techmali.smartteam.database.DbParams;
 import com.techmali.smartteam.database.PendingDataImpl;
-import com.techmali.smartteam.domain.adapters.HomePagerAdapter;
-import com.techmali.smartteam.models.SyncAttendance;
-import com.techmali.smartteam.models.SyncCheckIn;
-import com.techmali.smartteam.models.SyncCompany;
-import com.techmali.smartteam.models.SyncExpense;
-import com.techmali.smartteam.models.SyncLeave;
-import com.techmali.smartteam.models.SyncProject;
-import com.techmali.smartteam.models.SyncProjectUserLink;
-import com.techmali.smartteam.models.SyncRole;
-import com.techmali.smartteam.models.SyncSecurityController;
-import com.techmali.smartteam.models.SyncSecurityMenu;
-import com.techmali.smartteam.models.SyncSecurityMenuControllerAction;
-import com.techmali.smartteam.models.SyncSecurityMenuControllerLink;
-import com.techmali.smartteam.models.SyncTask;
-import com.techmali.smartteam.models.SyncTaskType;
-import com.techmali.smartteam.models.SyncTaskUserLink;
-import com.techmali.smartteam.models.SyncUserInfo;
 import com.techmali.smartteam.models.UserData;
 import com.techmali.smartteam.network.NetworkManager;
 import com.techmali.smartteam.network.RequestListener;
@@ -45,21 +22,16 @@ import com.techmali.smartteam.request.PARAMS;
 import com.techmali.smartteam.request.RequestBuilder;
 import com.techmali.smartteam.ui.activities.AttendanceActivity;
 import com.techmali.smartteam.ui.activities.CreateUserActivity;
+import com.techmali.smartteam.ui.activities.ImageSelectionActivity;
 import com.techmali.smartteam.ui.activities.MainActivity;
 import com.techmali.smartteam.ui.activities.MyAttendanceActivity;
 import com.techmali.smartteam.ui.activities.MyExpenseActivity;
 import com.techmali.smartteam.ui.activities.MyTimeSheetActivity;
 import com.techmali.smartteam.ui.activities.ProjectListActivity;
 import com.techmali.smartteam.utils.CryptoManager;
-import com.techmali.smartteam.utils.SyncData;
 import com.techmali.smartteam.utils.Utils;
 
-import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 
 public class HomeFragment extends BaseFragment implements View.OnClickListener, RequestListener {
 
@@ -152,6 +124,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
                 startActivity(new Intent(getActivity(), MyAttendanceActivity.class));
                 break;
             case R.id.tvCamera:
+                startActivity(new Intent(getActivity(), HomeMenuFragment.class));
                 break;
 
             case R.id.tvProject:
@@ -159,6 +132,7 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
                 break;
 
             case R.id.tvTimeSheet:
+                startActivity(new Intent(getActivity(), ImageSelectionActivity.class));
                 break;
 
             case R.id.tvExpense:

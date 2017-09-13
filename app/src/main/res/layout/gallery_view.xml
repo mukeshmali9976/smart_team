@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/GalleryLayout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:background="@color/bg_gray"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tvTitle"
+            android:layout_width="0dp"
+            android:textColor="@color/blackRow"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/upload_photo"
+            android:textAllCaps="true"
+            />
+
+        <FrameLayout
+            android:id="@+id/ivPhotos"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/margin_16">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@android:drawable/ic_menu_upload" />
+        </FrameLayout>
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/listLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_6"
+        android:background="@drawable/list_border"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:visibility="gone"
+        tools:visibility="visible">
+
+        <FrameLayout
+            android:id="@+id/frmThumbnail"
+            android:layout_width="@dimen/frame_width"
+            android:layout_height="match_parent"
+            android:background="@color/colorPrimary">
+
+            <ImageView
+                android:id="@+id/ivThumb"
+                android:layout_width="@dimen/img_width"
+                android:layout_height="@dimen/img_width"
+                android:layout_gravity="center"
+                android:background="@drawable/round_imgborder_white"
+                android:padding="@dimen/margin_2"
+                android:scaleType="fitXY" />
+        </FrameLayout>
+
+        <LinearLayout
+            android:id="@+id/llImageList"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:paddingBottom="@dimen/margin_3"
+            android:paddingTop="@dimen/margin_3">
+
+            <com.techmali.smartteam.multipleimage.HorizontalListView
+                android:id="@+id/lvImages"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/list_height"
+                android:layout_gravity="center"
+                android:layout_marginLeft="@dimen/margin_2"
+                android:layout_marginRight="@dimen/margin_2"
+                android:choiceMode="singleChoice"
+                android:descendantFocusability="beforeDescendants"
+                app:dividerWidth="@dimen/margin_5"
+                tools:listitem="@layout/row_item">
+
+            </com.techmali.smartteam.multipleimage.HorizontalListView>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:layout_marginTop="@dimen/margin_5"
+                android:background="@drawable/list_border" />
+
+            <TextView
+                android:id="@+id/tvTotalSize"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:paddingTop="@dimen/margin_2"
+                android:textColor="@color/btn_pressed"
+                android:textSize="@dimen/font_11" />
+
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

@@ -10,7 +10,32 @@
     <string name="digit_token_error_message">An error occurred while either fetching the token, Please try again</string>
     <string name="token_error_message">An error occurred while either fetching the InstanceID token, sending the fetched token to the server or subscribing to the PubSub topic. Please try running the sample again.</string>
 
+    <!--add media-->
+    <string name="choose_gallery">CHOOSE FROM GALLERY</string>
+    <string name="open_document">OPEN DOCUMENT</string>
+    <string name="choose_document">CHOOSE DOCUMENT</string>
     <string name="crop_image">Crop Image</string>
+    <string name="total_photos">Total Photo(s) </string>
+    <string name="choosephotos">Choose Photos</string>
+    <string name="open_camera">Open Camera</string>
+    <string name="open_gallery">Open Gallery</string>
+
+    <string name="add_video_url">ADD VIDEO URL</string>
+    <string name="error_video_thumb">please select a thumb for video url</string>
+    <string name="blank_video_url">Please enter video url</string>
+    <string name="error_video_url">Please enter valid video url</string>
+    <string name="enter_video">Please enter video url starts with http://</string>
+
+    <!--Unit Floor Plan-->
+    <string name="take_photo">take photo</string>
+    <string name="upload_photo">upload photo</string>
+    <string name="upload_parking_card">upload vehicle log card photo</string>
+    <string name="choose_floor_plan">choose floor plan</string>
+    <string name="close">Close</string>
+    <string name="msg_file_extension">Please select PDF/Doc/Excel/PPT/Generic Text/JPEG/PNG file</string>
+    <string name="upload_image">Upload Photo(s)</string>
+    <string name="upload_image_video">upload photo(s)/video</string>
+
     <string name="bullet">\u2022</string>
     <string name="bullet_big">\u26AB</string>
     <string name="lbl_to">To</string>

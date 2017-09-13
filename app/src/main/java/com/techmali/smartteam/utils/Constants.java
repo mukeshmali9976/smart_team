@@ -63,4 +63,12 @@ public class Constants {
     public static final String CURRENT_LONGITUDE = "currant_longtitue";
 
     public static boolean IS_LOCATION_SERVICE_RUNNING = false;
+    // Add media
+    public static final int FILE_TYPE_IMAGE = 1;
+    public static final int FILE_TYPE_VIDEO = 2;
+    public static final int FILE_TYPE_PDF = 3;
+    public static final int FILE_TYPE_TXT = 4;
+    public static final int FILE_TYPE_DOC = 5;
+    public static final int FILE_TYPE_EXCEL = 6;
+    public static final int FILE_TYPE_EXTERNAL_LINK = 7;
 }

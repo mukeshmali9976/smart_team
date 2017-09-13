@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_gray"
+    android:orientation="vertical">
+
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/custom_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        android:scrollbarStyle="outsideOverlay">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:layout_marginTop="@dimen/margin_normal"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:id="@+id/llImageList"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/list_border"
+                    android:gravity="center"
+                    android:orientation="vertical"
+                    android:paddingBottom="@dimen/margin_3"
+                    android:paddingTop="@dimen/margin_3"
+                    android:visibility="gone">
+
+                    <com.techmali.smartteam.multipleimage.HorizontalListView
+                        android:id="@+id/lvImages"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/list_height"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="@dimen/margin_2"
+                        android:layout_marginRight="@dimen/margin_2"
+                        android:choiceMode="singleChoice"
+                        android:descendantFocusability="beforeDescendants"
+                        app:dividerWidth="@dimen/margin_5"
+                        tools:listitem="@layout/row_item" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1px"
+                        android:background="@drawable/list_border" />
+
+                    <TextView
+                        android:id="@+id/tvTotalSize"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:paddingTop="@dimen/margin_2"
+                        android:textColor="@color/btn_pressed"
+                        android:textSize="@dimen/font_11" />
+                </LinearLayout>
+
+                <com.techmali.smartteam.multipleimage.GalleryView
+                    android:id="@+id/galleryView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:text="@string/upload_image"
+                    custom:camera="true"
+                    custom:document="true"
+                    custom:gallery="true"
+                    custom:video="false" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

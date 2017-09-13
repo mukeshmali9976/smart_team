@@ -118,5 +118,24 @@
             <enum name="on" value="1" />
         </attr>
     </declare-styleable>
+    <!-- Defines the custom XML attributes supported for a HorizontalListView -->
+    <declare-styleable name="HorizontalListView">
+        <attr name="dividerWidth" format="dimension" />
+        <attr name="android:divider" />
+        <attr name="android:requiresFadingEdge" />
+        <attr name="android:fadingEdgeLength" />
+    </declare-styleable>
+
+    <declare-styleable name="GalleryView">
+        <attr name="text" format="string" />
+        <attr name="textColor" format="integer" />
+        <attr name="gallery" format="boolean" />
+        <attr name="camera" format="boolean" />
+        <attr name="video" format="boolean" />
+        <attr name="document" format="boolean" />
+        <!--<attr name="singleDocument" format="boolean" />-->
+        <attr name="thumbnail" format="boolean" />
+    </declare-styleable>
+
 
 </resources>
