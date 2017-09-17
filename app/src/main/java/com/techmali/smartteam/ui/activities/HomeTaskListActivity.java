@@ -3,25 +3,20 @@ package com.techmali.smartteam.ui.activities;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 
-import com.daimajia.swipe.util.Attributes;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.techmali.smartteam.R;
 import com.techmali.smartteam.base.BaseAppCompatActivity;
 import com.techmali.smartteam.database.PendingDataImpl;
 import com.techmali.smartteam.domain.adapters.HomeTaskListAdapter;
-import com.techmali.smartteam.domain.adapters.ProjectListAdapter;
 import com.techmali.smartteam.models.SyncProject;
 import com.techmali.smartteam.models.SyncTask;
 import com.techmali.smartteam.request.PARAMS;
-import com.techmali.smartteam.ui.fragments.ActiveProjectFragment;
 import com.techmali.smartteam.utils.Log;
 import com.techmali.smartteam.utils.Utils;
 
@@ -40,7 +35,7 @@ public class HomeTaskListActivity extends BaseAppCompatActivity {
     private HomeTaskListAdapter mTaskListAdapter;
     private PendingDataImpl pendingData;
 
-    List<SyncTask> mTaskList = new ArrayList<>();
+    List<SyncProject> mTaskList = new ArrayList<>();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -57,7 +52,7 @@ public class HomeTaskListActivity extends BaseAppCompatActivity {
         rvTaskList = (RecyclerView) findViewById(R.id.rvTaskList);
         rvTaskList.setLayoutManager(new LinearLayoutManager(this));
 
-        new getTaskList().execute();
+        new getProjectList().execute();
     }
 
 
@@ -79,11 +74,11 @@ public class HomeTaskListActivity extends BaseAppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private class getTaskList extends AsyncTask<Void, Void, String> {
+    private class getProjectList extends AsyncTask<Void, Void, String> {
 
         @Override
         protected String doInBackground(Void... voids) {
-            return pendingData.getTaskList("");
+            return pendingData.getProjectList();
         }
 
         @Override
@@ -95,7 +90,7 @@ public class HomeTaskListActivity extends BaseAppCompatActivity {
                     JSONObject object = new JSONObject(result);
                     if (object.getInt(PARAMS.TAG_STATUS) == PARAMS.TAG_STATUS_200) {
                         mTaskList.clear();
-                        mTaskList = new Gson().fromJson(object.getString(PARAMS.TAG_RESULT), new TypeToken<List<SyncTask>>() {
+                        mTaskList = new Gson().fromJson(object.getString(PARAMS.TAG_RESULT), new TypeToken<List<SyncProject>>() {
                         }.getType());
                         mTaskListAdapter = new HomeTaskListAdapter(HomeTaskListActivity.this, mTaskList);
                         rvTaskList.setAdapter(mTaskListAdapter);

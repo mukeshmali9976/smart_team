@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/tvProjectName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:background="@color/grey"
+        android:gravity="center_vertical"
+        android:padding="@dimen/margin_10"
+        android:textColor="@color/colorPrimary"
+        android:textSize="@dimen/font_16"
+        android:textStyle="bold"
+        tools:text="Fields" />
+
+    <LinearLayout
+        android:id="@+id/llTaskList"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="-3dp"
+        android:background="@color/white"
+        android:orientation="vertical" />
+
+</LinearLayout>
