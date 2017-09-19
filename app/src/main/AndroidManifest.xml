@@ -188,6 +188,8 @@
             android:value="@integer/google_play_services_version" />
 
         <service android:name=".domain.services.LocationUpdateService" />
+        <service android:name=".utils.SyncData" />
+
         <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="${applicationId}.provider"

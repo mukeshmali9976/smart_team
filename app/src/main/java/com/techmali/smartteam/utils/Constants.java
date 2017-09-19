@@ -5,7 +5,8 @@ public class Constants {
 
     // Local web service url
     public static final String SERVER_NAME = "local";
-    public static final String SERVER_URL = "http://13.126.183.36/test/api/web/";
+//    public static final String SERVER_URL = "http://13.126.183.36/test/api/web/";
+    public static final String SERVER_URL = "http://www.techmali.com/smartteam_test/api/web/";
 
 
     public static final String TEMP_DIRECTORY_NAME = "SmartTeam";

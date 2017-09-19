@@ -2,8 +2,12 @@ package com.techmali.smartteam.utils;
 
 import android.app.Service;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
+import android.os.IBinder;
+import android.support.annotation.IntDef;
+import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.util.*;
 
@@ -33,6 +37,7 @@ import com.techmali.smartteam.network.RequestListener;
 import com.techmali.smartteam.network.RequestMethod;
 import com.techmali.smartteam.request.PARAMS;
 import com.techmali.smartteam.request.RequestBuilder;
+import com.techmali.smartteam.ui.views.MyProgressDialog;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -45,7 +50,7 @@ import java.util.List;
  * Created by Gaurav on 9/10/2017.
  */
 
-public class SyncData implements RequestListener {
+public class SyncData extends Service implements RequestListener {
 
     private static final String TAG = SyncData.class.getSimpleName();
 
@@ -54,28 +59,38 @@ public class SyncData implements RequestListener {
     private SharedPreferences prefManager = null;
     private NetworkManager networkManager;
     private PendingDataImpl pendingData;
+    private MyProgressDialog dialog;
 
-    private Context context;
-
-    public SyncData(Context context) {
-        this.context = context;
-        networkManager = NetworkManager.getInstance();
-        prefManager = CryptoManager.getInstance(context).getPrefs();
-        pendingData = new PendingDataImpl(this.context);
+    @Override
+    public void onCreate() {
+        Log.e(TAG, "onCreate");
+        super.onCreate();
     }
 
-    public void startSync() {
-        if (context != null) {
-            networkManager.setListener(this);
-            new GetSyncData().execute();
-        }
+    @Override
+    public int onStartCommand(Intent intent, int flags, int startId) {
+        Log.e(TAG, "onStartCommand");
+        networkManager = NetworkManager.getInstance();
+        prefManager = CryptoManager.getInstance(this).getPrefs();
+        pendingData = new PendingDataImpl(this);
+        networkManager.setListener(this);
+
+        new GetSyncData().execute();
+        return Service.START_STICKY;
+    }
+
+    @Nullable
+    @Override
+    public IBinder onBind(Intent intent) {
+        return null;
     }
 
     private class GetSyncData extends AsyncTask<Void, Void, String> {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            networkManager.isProgressBarVisible(true);
+            dialog = new MyProgressDialog(getApplicationContext());
+            Log.e(TAG, "GetSyncData");
         }
 
         @Override
@@ -90,9 +105,9 @@ public class SyncData implements RequestListener {
                 Log.e(TAG, reqParams);
                 HashMap<String, String> parameters = new HashMap<>();
                 parameters.put(PARAMS.TAG_PARAMS, reqParams);
-                reqIdSyncData = networkManager.addRequest(parameters, context, RequestMethod.POST, RequestBuilder.METHOD_SYNC_DATA);
+                reqIdSyncData = networkManager.addRequest(parameters, getApplicationContext(), RequestMethod.POST, RequestBuilder.METHOD_SYNC_DATA);
             } else {
-                networkManager.isProgressBarVisible(false);
+                dialog.dismiss();
             }
         }
     }
@@ -108,7 +123,8 @@ public class SyncData implements RequestListener {
                     }
                 }
             } else {
-                DialogUtils.showDialog(context, "", context.getString(R.string.no_network_connection), context.getString(R.string.ok));
+                dialog.dismiss();
+                DialogUtils.showDialog(getApplicationContext(), "", getString(R.string.no_network_connection), getString(R.string.ok));
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -118,7 +134,8 @@ public class SyncData implements RequestListener {
     @Override
     public void onError(int id, String message) {
         if (id == reqIdSyncData) {
-            DialogUtils.showDialog(context, "", message, context.getString(R.string.ok));
+            dialog.dismiss();
+            DialogUtils.showDialog(getApplicationContext(), "", message, getString(R.string.ok));
         }
     }
 
@@ -127,7 +144,6 @@ public class SyncData implements RequestListener {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            networkManager.isProgressBarVisible(true);
         }
 
         @Override
@@ -165,7 +181,8 @@ public class SyncData implements RequestListener {
             if (!Utils.isEmptyString(result)) {
                 prefManager.edit().putString(PARAMS.KEY_LAST_SYNC_DATE, result).apply();
             }
-            networkManager.isProgressBarVisible(false);
+            dialog.dismiss();
+            stopSelf();
         }
     }
 

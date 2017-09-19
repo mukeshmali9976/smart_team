@@ -32,9 +32,9 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/margin_64"
             android:background="@color/colorPrimary"
-            custom:tabGravity="fill"
+            custom:tabGravity="center"
             custom:tabIndicatorColor="@android:color/white"
-            custom:tabIndicatorHeight="1dp"
+            custom:tabIndicatorHeight="0dp"
             custom:tabMode="fixed"
             custom:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
 

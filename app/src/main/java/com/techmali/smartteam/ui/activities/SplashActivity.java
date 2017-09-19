@@ -37,8 +37,6 @@ public class SplashActivity extends BaseAppCompatActivity implements RequestList
 
         networkManager = NetworkManager.getInstance();
         prefManager = CryptoManager.getInstance(SplashActivity.this).getPrefs();
-
-
     }
 
     @Override
@@ -54,7 +52,7 @@ public class SplashActivity extends BaseAppCompatActivity implements RequestList
                     overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
                     finish();
                 }else {
-                    Intent mainIntent = new Intent(SplashActivity.this, MainActivity.class);
+                    Intent mainIntent = new Intent(SplashActivity.this, LoginActivity.class);
                     startActivity(mainIntent);
                     overridePendingTransition(R.anim.slide_in, R.anim.slide_out);
                     finish();

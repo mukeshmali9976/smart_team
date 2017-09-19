@@ -59,9 +59,13 @@ import com.techmali.smartteam.domain.services.LocationUpdateService;
 import com.techmali.smartteam.request.PARAMS;
 import com.techmali.smartteam.slidingmenu.SlidingActivity;
 import com.techmali.smartteam.slidingmenu.SlidingMenu;
+import com.techmali.smartteam.ui.fragments.ActiveProjectFragment;
+import com.techmali.smartteam.ui.fragments.ComingSoonFragment;
 import com.techmali.smartteam.ui.fragments.HomeFragment;
 import com.techmali.smartteam.ui.fragments.HomeMenuFragment;
 import com.techmali.smartteam.ui.fragments.MenuFragment;
+import com.techmali.smartteam.ui.fragments.MessageProjectFragment;
+import com.techmali.smartteam.ui.fragments.MyFrameFragment;
 import com.techmali.smartteam.ui.views.MyProgressDialog;
 import com.techmali.smartteam.utils.CryptoManager;
 import com.techmali.smartteam.utils.Log;
@@ -241,10 +245,10 @@ public class MainActivity extends SlidingActivity implements GoogleApiClient.Con
         tab_id.add(3, "4");
         tab_id.add(4, "5");
 
-        tab_name.add(0, "My Frame");
-        tab_name.add(1, "Time sheet");
+        tab_name.add(0, "Chat");
+        tab_name.add(1, "My Frame");
         tab_name.add(2, "Home");
-        tab_name.add(3, "Check-in");
+        tab_name.add(3, "Notification");
         tab_name.add(4, "Projects");
 
         HomePagerAdapter adapter = new HomePagerAdapter(getSupportFragmentManager());
@@ -252,10 +256,16 @@ public class MainActivity extends SlidingActivity implements GoogleApiClient.Con
         for (int i = 0; i < tab_id.size(); i++) {
             Bundle bundle = new Bundle();
             bundle.putString("tab_id", tab_id.get(i));
-            if (tab_id.get(i).equals("3")) {
-                adapter.addFrag(new HomeMenuFragment(), tab_name.get(i));
-            } else
+            if (tab_id.get(i).equals("1"))
                 adapter.addFrag(new HomeFragment(), tab_name.get(i));
+            else if (tab_id.get(i).equals("2"))
+                adapter.addFrag(new MyFrameFragment(), tab_name.get(i));
+            else if (tab_id.get(i).equals("3"))
+                adapter.addFrag(new HomeMenuFragment(), tab_name.get(i));
+            else if (tab_id.get(i).equals("4"))
+                adapter.addFrag(new ComingSoonFragment(), tab_name.get(i));
+            else if (tab_id.get(i).equals("5"))
+                adapter.addFrag(new ActiveProjectFragment(), tab_name.get(i));
         }
         viewPager.setAdapter(adapter);
     }
@@ -264,13 +274,13 @@ public class MainActivity extends SlidingActivity implements GoogleApiClient.Con
 
         View view = LayoutInflater.from(this).inflate(R.layout.row_tab, null);
         TextView tabOne = (TextView) view.findViewById(R.id.tab);
-        tabOne.setText("My Frame");
+        tabOne.setText("Chat");
         tabOne.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.ic_home, 0, 0);
         tabLayout.getTabAt(0).setCustomView(tabOne);
 
         View viewTwo = LayoutInflater.from(this).inflate(R.layout.row_tab, null);
         TextView tabTwo = (TextView) viewTwo.findViewById(R.id.tab);
-        tabTwo.setText("Time sheet");
+        tabTwo.setText("My Frame");
         tabTwo.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.ic_home, 0, 0);
         tabLayout.getTabAt(1).setCustomView(tabTwo);
 
@@ -282,7 +292,7 @@ public class MainActivity extends SlidingActivity implements GoogleApiClient.Con
 
         View viewFour = LayoutInflater.from(this).inflate(R.layout.row_tab, null);
         TextView tabFour = (TextView) viewFour.findViewById(R.id.tab);
-        tabFour.setText("Check-in");
+        tabFour.setText("Notification");
         tabFour.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.ic_home, 0, 0);
         tabLayout.getTabAt(3).setCustomView(tabFour);
 
@@ -291,6 +301,8 @@ public class MainActivity extends SlidingActivity implements GoogleApiClient.Con
         tabFive.setText("Projects");
         tabFive.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.ic_home, 0, 0);
         tabLayout.getTabAt(4).setCustomView(tabFive);
+
+        viewpager.setCurrentItem(2);
     }
 
     public void restartActivity() {

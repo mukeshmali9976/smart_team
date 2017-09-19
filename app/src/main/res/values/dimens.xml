@@ -149,4 +149,8 @@
     <dimen name="margin_largest">34dp</dimen>
     <dimen name="checkbox_padding">18dp</dimen>
     <dimen name="login_checkbox_padding">26dp</dimen>
+
+    <dimen name="minus_margin_4">-4dp</dimen>
+    <dimen name="minus_margin_8">-8dp</dimen>
+
 </resources>

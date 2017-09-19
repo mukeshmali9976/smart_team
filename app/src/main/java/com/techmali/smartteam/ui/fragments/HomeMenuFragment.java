@@ -30,7 +30,9 @@ import com.techmali.smartteam.models.GalleryItem;
 import com.techmali.smartteam.network.NetworkManager;
 import com.techmali.smartteam.network.RequestListener;
 import com.techmali.smartteam.ui.activities.HomeTaskListActivity;
+import com.techmali.smartteam.ui.activities.MainActivity;
 import com.techmali.smartteam.utils.CryptoManager;
+import com.techmali.smartteam.utils.SyncData;
 import com.techmali.smartteam.utils.Utils;
 
 import java.util.ArrayList;
@@ -48,13 +50,13 @@ public class HomeMenuFragment extends BaseFragment implements AdapterView.OnItem
     public static int height;
 
     private SharedPreferences prefManager = null;
-    private NetworkManager networkManager = null;
     private ViewPager vpEventPager;
     private TabLayout tabDots;
     private RecyclerView rvGridMenu;
     private ImageView ivScroll, ivLastTabIcon;
     private TextView tvLastTabName;
     private LinearLayout llLastRow, lastrowItem;
+    private View mRootView;
 
     private int totalItem = 0;
 
@@ -72,29 +74,28 @@ public class HomeMenuFragment extends BaseFragment implements AdapterView.OnItem
         super.onCreate(savedInstanceState);
 
         prefManager = CryptoManager.getInstance(getActivity()).getPrefs();
-        networkManager = NetworkManager.getInstance();
     }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View mView = inflater.inflate(R.layout.activity_home_menu, container, false);
+        mRootView = inflater.inflate(R.layout.activity_home_menu, container, false);
 
-        initView(mView);
-        return mView;
+        initView();
+        return mRootView;
     }
 
-    private void initView(View mView) {
+    private void initView() {
 
-        rvGridMenu = (RecyclerView) mView.findViewById(R.id.rvGridMenu);
-        tabDots = (TabLayout) mView.findViewById(R.id.tabDots);
-        vpEventPager = (ViewPager) mView.findViewById(R.id.vpEventPager);
-        ivScroll = (ImageView) mView.findViewById(R.id.ivScroll);
+        rvGridMenu = (RecyclerView) mRootView.findViewById(R.id.rvGridMenu);
+        tabDots = (TabLayout) mRootView.findViewById(R.id.tabDots);
+        vpEventPager = (ViewPager) mRootView.findViewById(R.id.vpEventPager);
+        ivScroll = (ImageView) mRootView.findViewById(R.id.ivScroll);
         /*Last Row*/
-        llLastRow = (LinearLayout) mView.findViewById(R.id.llLastRow);
-        tvLastTabName = (TextView) mView.findViewById(R.id.tvTabName);
-        ivLastTabIcon = (ImageView) mView.findViewById(R.id.ivTabIcon);
-        lastrowItem = (LinearLayout) mView.findViewById(R.id.rowItem);
+        llLastRow = (LinearLayout) mRootView.findViewById(R.id.llLastRow);
+        tvLastTabName = (TextView) mRootView.findViewById(R.id.tvTabName);
+        ivLastTabIcon = (ImageView) mRootView.findViewById(R.id.ivTabIcon);
+        lastrowItem = (LinearLayout) mRootView.findViewById(R.id.rowItem);
 
         ivScroll.setColorFilter(ContextCompat.getColor(getActivity(), android.R.color.darker_gray), PorterDuff.Mode.SRC_ATOP);
         // initializeFragmentManager toolbar
@@ -120,7 +121,6 @@ public class HomeMenuFragment extends BaseFragment implements AdapterView.OnItem
         } else {
             ivScroll.setVisibility(View.GONE);
         }
-
 
         ivScroll.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -154,9 +154,15 @@ public class HomeMenuFragment extends BaseFragment implements AdapterView.OnItem
                 LAST_VISIBLE_POSITION = currentFirstVisPos;
             }
         });
-
     }
 
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+        ((MainActivity) getActivity()).initActionBar(getActivity().getString(R.string.app_name), mRootView);
+        ((MainActivity) getActivity()).setTitle(getResources().getString(R.string.app_name));
+    }
 
     Runnable mRunnable = new Runnable() {
         @Override
@@ -171,13 +177,6 @@ public class HomeMenuFragment extends BaseFragment implements AdapterView.OnItem
         }
     };
 
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        networkManager.setListener(this);
-    }
-
     @Override
     public void onResume() {
         super.onResume();
@@ -187,11 +186,14 @@ public class HomeMenuFragment extends BaseFragment implements AdapterView.OnItem
                 isRunning = false;
             }
         }
+        if (Utils.isInternetAvailable(getActivity())) {
+            Intent intent = new Intent(getActivity(), SyncData.class);
+            getActivity().startService(intent);
+        }
     }
 
     @Override
     public void onStop() {
-        networkManager.removeListener(this);
         if (mHandler != null && mRunnable != null) {
             mHandler.removeCallbacks(mRunnable);
             isRunning = false;
