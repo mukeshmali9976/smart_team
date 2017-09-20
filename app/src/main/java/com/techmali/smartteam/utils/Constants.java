@@ -72,4 +72,6 @@ public class Constants {
     public static final int FILE_TYPE_DOC = 5;
     public static final int FILE_TYPE_EXCEL = 6;
     public static final int FILE_TYPE_EXTERNAL_LINK = 7;
+
+    public static String TAG_SELECTED_PROJECT_ID = "";
 }

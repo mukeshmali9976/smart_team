@@ -24,6 +24,8 @@ public class SyncProject implements Serializable {
     public String thumb;
     public String start_date;
 
+    public boolean selected;
+
     public String getCreated_by() {
         return created_by;
     }
@@ -142,5 +144,13 @@ public class SyncProject implements Serializable {
 
     public void setProject_id(String project_id) {
         this.project_id = project_id;
+    }
+
+    public boolean isSelected() {
+        return selected;
+    }
+
+    public void setSelected(boolean selected) {
+        this.selected = selected;
     }
 }

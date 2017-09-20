@@ -79,6 +79,7 @@ public class MainActivity extends SlidingActivity implements GoogleApiClient.Con
     public static final String TAG = MainActivity.class.getSimpleName();
 
     private static int REQUEST_CHECK_SETTINGS = 101;
+    private static int REQUEST_CHANGE_PROJECT = 123;
 
     protected MenuFragment menuFragment;
     public Activity mActivity;
@@ -101,7 +102,7 @@ public class MainActivity extends SlidingActivity implements GoogleApiClient.Con
     private TextView mActionBarTitle = null;
     private static ActionBar actionBar;
     public static int toolbar_height;
-    public static int tab_height;
+    public static int tab_height, lastSelected = 0;
 
     private ArrayList<String> tab_id = new ArrayList<String>();
     private ArrayList<String> tab_name = new ArrayList<String>();
@@ -167,7 +168,7 @@ public class MainActivity extends SlidingActivity implements GoogleApiClient.Con
         dialog.dismiss();
 
         viewpager = (ViewPager) findViewById(R.id.viewpager);
-        viewpager.setOffscreenPageLimit(3);
+        viewpager.setOffscreenPageLimit(5);
 
         tabLayout = (TabLayout) findViewById(R.id.tabLayout);
         FrameLayout.LayoutParams lpToolbar = (FrameLayout.LayoutParams) tabLayout.getLayoutParams();
@@ -185,7 +186,12 @@ public class MainActivity extends SlidingActivity implements GoogleApiClient.Con
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
-                viewpager.setCurrentItem(tab.getPosition());
+                if (tab.getPosition() == 4) {
+                    startActivityForResult(new Intent(MainActivity.this, MyProjectListActivity.class), REQUEST_CHANGE_PROJECT);
+                } else {
+                    lastSelected = tab.getPosition();
+                    viewpager.setCurrentItem(tab.getPosition());
+                }
             }
 
             @Override
@@ -265,7 +271,7 @@ public class MainActivity extends SlidingActivity implements GoogleApiClient.Con
             else if (tab_id.get(i).equals("4"))
                 adapter.addFrag(new ComingSoonFragment(), tab_name.get(i));
             else if (tab_id.get(i).equals("5"))
-                adapter.addFrag(new ActiveProjectFragment(), tab_name.get(i));
+                adapter.addFrag(new Fragment(), tab_name.get(i));
         }
         viewPager.setAdapter(adapter);
     }
@@ -405,11 +411,12 @@ public class MainActivity extends SlidingActivity implements GoogleApiClient.Con
 //                }
                 mGoogleApiClient.connect();
             }
-        } else {
-//            Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.fragmentContainer);
-//            if (fragment != null) {
-//                fragment.onActivityResult(requestCode, resultCode, data);
-//            }
+        } else if (requestCode == REQUEST_CHANGE_PROJECT) {
+            if (resultCode == RESULT_OK) {
+                viewpager.setCurrentItem(2);
+            } else {
+                viewpager.setCurrentItem(lastSelected);
+            }
         }
     }
 

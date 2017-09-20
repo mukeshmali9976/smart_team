@@ -179,6 +179,12 @@
             android:configChanges="screenSize|keyboardHidden|orientation"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden|stateHidden|adjustPan" />
+        <activity
+            android:name=".ui.activities.MyProjectListActivity"
+            android:configChanges="screenSize|keyboardHidden|orientation"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="stateAlwaysHidden|stateHidden|adjustPan" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"

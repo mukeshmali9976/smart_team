@@ -35,7 +35,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ComingSoonFragment extends BasePermissionFragment implements ProjectListAdapter.OnInnerViewsClickListener {
+public class ComingSoonFragment extends BasePermissionFragment {
 
     public static final String TAG = ComingSoonFragment.class.getSimpleName();
 
@@ -67,18 +67,6 @@ public class ComingSoonFragment extends BasePermissionFragment implements Projec
 
     private void initView() {
 
-        swipe = (SwipeRefreshLayout) mRootView.findViewById(R.id.swipe);
-        rvActiveProjectList = (RecyclerView) mRootView.findViewById(R.id.rvActiveProjectList);
-
-        swipe.setColorSchemeColors(ContextCompat.getColor(getActivity(), R.color.colorPrimary));
-        new GetProjectList().execute();
-
-        swipe.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                new GetProjectList().execute();
-            }
-        });
     }
 
     @Override
@@ -87,81 +75,5 @@ public class ComingSoonFragment extends BasePermissionFragment implements Projec
 
         ((MainActivity) getActivity()).initActionBar(getActivity().getString(R.string.app_name), mRootView);
         ((MainActivity) getActivity()).setTitle(getResources().getString(R.string.app_name));
-    }
-
-    @Override
-    public void onItemClick(View view, int position) {
-        switch (view.getId()) {
-            case R.id.llRowProjectList:
-                startActivity(new Intent(getActivity(), ProjectDetailActivity.class));
-                break;
-        }
-    }
-
-    @Override
-    public void onDelete(View view, int position) {
-        swipeLayout = (SwipeLayout) view;
-        mPosition = position;
-        new DeleteProject().execute(projectArrayList.get(mPosition).getLocal_project_id());
-    }
-
-    private class GetProjectList extends AsyncTask<Void, Void, String> {
-
-        @Override
-        protected String doInBackground(Void... voids) {
-            return pendingData.getProjectList();
-        }
-
-        @Override
-        protected void onPostExecute(String result) {
-            super.onPostExecute(result);
-            try {
-                if (!Utils.isEmptyString(result)) {
-                    Log.e(TAG, result);
-                    JSONObject object = new JSONObject(result);
-                    if (object.getInt(PARAMS.TAG_STATUS) == PARAMS.TAG_STATUS_200) {
-                        projectArrayList.clear();
-                        projectArrayList = new Gson().fromJson(object.getString(PARAMS.TAG_RESULT), new TypeToken<List<SyncProject>>() {
-                        }.getType());
-
-                        mAdapter = new ProjectListAdapter(getActivity(), projectArrayList, ComingSoonFragment.this);
-                        rvActiveProjectList.setLayoutManager(new LinearLayoutManager(getActivity()));
-                        rvActiveProjectList.setItemAnimator(new DefaultItemAnimator());
-                        mAdapter.setMode(Attributes.Mode.Single);
-                        rvActiveProjectList.setAdapter(mAdapter);
-                    }
-                }
-                if (swipe.isRefreshing())
-                    swipe.setRefreshing(false);
-
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
-    private class DeleteProject extends AsyncTask<String, Void, Boolean> {
-
-        @Override
-        protected Boolean doInBackground(String... strings) {
-            return pendingData.deleteProject(strings[0]);
-        }
-
-        @Override
-        protected void onPostExecute(Boolean result) {
-            super.onPostExecute(result);
-            try {
-                if (result) {
-                    displayError("Project Deleted Successfully....");
-                    mAdapter.mItemManger.removeShownLayouts(swipeLayout);
-                    projectArrayList.remove(mPosition);
-                    mAdapter.notifyItemRemoved(mPosition);
-                    mAdapter.notifyItemRangeChanged(mPosition, projectArrayList.size());
-                    mAdapter.mItemManger.closeAllItems();
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
     }
 }
