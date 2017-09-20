@@ -1,7 +1,6 @@
 package com.techmali.smartteam.domain.adapters;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -13,8 +12,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.daimajia.swipe.SwipeLayout;
-import com.daimajia.swipe.adapters.RecyclerSwipeAdapter;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.ImageScaleType;
@@ -22,7 +19,6 @@ import com.nostra13.universalimageloader.core.display.CircleBitmapDisplayer;
 import com.techmali.smartteam.R;
 import com.techmali.smartteam.models.SyncProject;
 import com.techmali.smartteam.utils.Constants;
-import com.techmali.smartteam.utils.DialogUtils;
 import com.techmali.smartteam.utils.Utils;
 
 import java.util.List;
@@ -77,7 +73,6 @@ public class ProjectSelectionAdapter extends RecyclerView.Adapter<ProjectSelecti
             imageLoader.displayImage(project.getThumb(), holder.ivProject, options);
 
         holder.tvProjectName.setText(project.getTitle());
-        holder.cbSelect.setChecked(project.isSelected());
 
         if (project.isSelected() || Constants.TAG_SELECTED_PROJECT_ID.equalsIgnoreCase(project.getLocal_project_id())) {
             modelList.get(position).setSelected(true);
@@ -88,23 +83,24 @@ public class ProjectSelectionAdapter extends RecyclerView.Adapter<ProjectSelecti
             holder.llMain.setEnabled(true);
             holder.cbSelect.setEnabled(true);
         }
+        holder.cbSelect.setChecked(modelList.get(position).isSelected());
 
         holder.llMain.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                setSelected(mListener, position);
+                setSelected(view, mListener, position);
             }
         });
 
         holder.cbSelect.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
-                setSelected(mListener, position);
+                setSelected(compoundButton, mListener, position);
             }
         });
     }
 
-    private void setSelected(OnInnerViewsClickListener mListener, int pos){
+    private void setSelected(View view, OnInnerViewsClickListener mListener, int pos) {
         if (!modelList.get(pos).isSelected()) {
             Constants.TAG_SELECTED_PROJECT_ID = modelList.get(pos).getLocal_project_id();
             for (int i = 0; i < modelList.size(); i++) {
@@ -112,6 +108,7 @@ public class ProjectSelectionAdapter extends RecyclerView.Adapter<ProjectSelecti
                     modelList.get(i).setSelected(false);
             }
             notifyDataSetChanged();
+            mListener.onItemClick(view, pos);
         }
     }
 
