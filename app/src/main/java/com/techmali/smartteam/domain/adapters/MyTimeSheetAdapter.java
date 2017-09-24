@@ -21,9 +21,11 @@ public class MyTimeSheetAdapter extends RecyclerView.Adapter<MyTimeSheetAdapter.
 
     private Context context;
     private List<TimeSheetModel> myTimeSheetList;
+    private boolean showDate;
 
-    public MyTimeSheetAdapter(Context context, List<TimeSheetModel> myTimeSheetList) {
+    public MyTimeSheetAdapter(Context context, List<TimeSheetModel> myTimeSheetList, boolean showDate) {
         this.context = context;
+        this.showDate = showDate;
         this.myTimeSheetList = myTimeSheetList;
     }
 
@@ -41,6 +43,8 @@ public class MyTimeSheetAdapter extends RecyclerView.Adapter<MyTimeSheetAdapter.
         holder.tvTaskName.setText(myTimeSheetList.get(position).getTask_name() + " (" + myTimeSheetList.get(position).getProject_name() + ")");
         holder.tvTime.setText("Time: " + myTimeSheetList.get(position).getTotal_time());
         holder.tvDescription.setText("Description: " + myTimeSheetList.get(position).getNote());
+        holder.tvDate.setText("Date: " + myTimeSheetList.get(position).getTimesheet_date());
+        holder.tvDate.setVisibility(showDate ? View.VISIBLE : View.GONE);
     }
 
     @Override
@@ -50,7 +54,7 @@ public class MyTimeSheetAdapter extends RecyclerView.Adapter<MyTimeSheetAdapter.
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        TextView tvTaskName, tvTime, tvDescription;
+        TextView tvTaskName, tvTime, tvDescription, tvDate;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -58,6 +62,7 @@ public class MyTimeSheetAdapter extends RecyclerView.Adapter<MyTimeSheetAdapter.
             tvTaskName = (TextView) itemView.findViewById(R.id.tvTaskName);
             tvDescription = (TextView) itemView.findViewById(R.id.tvDescription);
             tvTime = (TextView) itemView.findViewById(R.id.tvTime);
+            tvDate = (TextView) itemView.findViewById(R.id.tvDate);
         }
     }
 }

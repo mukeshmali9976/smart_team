@@ -264,7 +264,7 @@ public class MainActivity extends SlidingActivity implements GoogleApiClient.Con
             Bundle bundle = new Bundle();
             bundle.putString("tab_id", tab_id.get(i));
             if (tab_id.get(i).equals("1"))
-                adapter.addFrag(new HomeFragment(), tab_name.get(i));
+                adapter.addFrag(new ComingSoonFragment(), tab_name.get(i));
             else if (tab_id.get(i).equals("2"))
                 adapter.addFrag(new MyFrameFragment(), tab_name.get(i));
             else if (tab_id.get(i).equals("3"))

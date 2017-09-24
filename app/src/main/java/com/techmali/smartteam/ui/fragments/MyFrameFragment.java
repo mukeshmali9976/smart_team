@@ -13,6 +13,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.daimajia.swipe.SwipeLayout;
 import com.daimajia.swipe.util.Attributes;
@@ -21,36 +22,38 @@ import com.google.gson.reflect.TypeToken;
 import com.techmali.smartteam.R;
 import com.techmali.smartteam.base.BasePermissionFragment;
 import com.techmali.smartteam.database.PendingDataImpl;
+import com.techmali.smartteam.domain.adapters.MyTimeSheetAdapter;
 import com.techmali.smartteam.domain.adapters.ProjectListAdapter;
 import com.techmali.smartteam.models.SyncProject;
+import com.techmali.smartteam.models.TimeSheetModel;
 import com.techmali.smartteam.request.PARAMS;
 import com.techmali.smartteam.ui.activities.MainActivity;
+import com.techmali.smartteam.ui.activities.MyTimeSheetActivity;
 import com.techmali.smartteam.ui.activities.ProjectDetailActivity;
 import com.techmali.smartteam.utils.CryptoManager;
 import com.techmali.smartteam.utils.Log;
 import com.techmali.smartteam.utils.Utils;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class MyFrameFragment extends BasePermissionFragment implements ProjectListAdapter.OnInnerViewsClickListener {
+public class MyFrameFragment extends BasePermissionFragment {
 
     public static final String TAG = MyFrameFragment.class.getSimpleName();
 
     private SharedPreferences prefManager = null;
-    private PendingDataImpl pendingData;
+    private PendingDataImpl model;
 
     private View mRootView;
 
-    private ProjectListAdapter mAdapter;
-    private RecyclerView rvActiveProjectList;
-    private SwipeRefreshLayout swipe;
-    private SwipeLayout swipeLayout;
+    private MyTimeSheetAdapter mAdapter;
+    private RecyclerView rvTimesheet;
+    private TextView tvTimeSheet;
 
-    private ArrayList<SyncProject> projectArrayList = new ArrayList<>();
-    private int mPosition = -1;
+    private List<TimeSheetModel> listModels = new ArrayList<>();
 
     @Nullable
     @Override
@@ -58,27 +61,21 @@ public class MyFrameFragment extends BasePermissionFragment implements ProjectLi
         mRootView = inflater.inflate(R.layout.fragment_my_frame, null);
 
         prefManager = CryptoManager.getInstance(getActivity()).getPrefs();
-        pendingData = new PendingDataImpl(getActivity());
+        model = new PendingDataImpl(getActivity());
 
-//        initView();
-
+        initView();
         return mRootView;
     }
 
     private void initView() {
+        tvTimeSheet = (TextView) mRootView.findViewById(R.id.tvTimeSheet);
+        rvTimesheet = (RecyclerView) mRootView.findViewById(R.id.rvTimesheet);
+    }
 
-        swipe = (SwipeRefreshLayout) mRootView.findViewById(R.id.swipe);
-        rvActiveProjectList = (RecyclerView) mRootView.findViewById(R.id.rvActiveProjectList);
-
-        swipe.setColorSchemeColors(ContextCompat.getColor(getActivity(), R.color.colorPrimary));
-        new GetProjectList().execute();
-
-        swipe.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                new GetProjectList().execute();
-            }
-        });
+    @Override
+    public void onResume() {
+        super.onResume();
+        new GetTimesheetList().execute();
     }
 
     @Override
@@ -89,78 +86,37 @@ public class MyFrameFragment extends BasePermissionFragment implements ProjectLi
         ((MainActivity) getActivity()).setTitle(getResources().getString(R.string.app_name));
     }
 
-    @Override
-    public void onItemClick(View view, int position) {
-        switch (view.getId()) {
-            case R.id.llRowProjectList:
-                startActivity(new Intent(getActivity(), ProjectDetailActivity.class));
-                break;
-        }
-    }
-
-    @Override
-    public void onDelete(View view, int position) {
-        swipeLayout = (SwipeLayout) view;
-        mPosition = position;
-        new DeleteProject().execute(projectArrayList.get(mPosition).getLocal_project_id());
-    }
-
-    private class GetProjectList extends AsyncTask<Void, Void, String> {
+    private class GetTimesheetList extends AsyncTask<Void, Void, String> {
 
         @Override
         protected String doInBackground(Void... voids) {
-            return pendingData.getProjectList();
+            return model.getTimesheet();
         }
 
         @Override
         protected void onPostExecute(String result) {
             super.onPostExecute(result);
-            try {
-                if (!Utils.isEmptyString(result)) {
-                    Log.e(TAG, result);
+            if (!Utils.isEmptyString(result)) {
+                android.util.Log.e(TAG, result);
+                try {
                     JSONObject object = new JSONObject(result);
                     if (object.getInt(PARAMS.TAG_STATUS) == PARAMS.TAG_STATUS_200) {
-                        projectArrayList.clear();
-                        projectArrayList = new Gson().fromJson(object.getString(PARAMS.TAG_RESULT), new TypeToken<List<SyncProject>>() {
+                        listModels = new Gson().fromJson(object.getString(PARAMS.TAG_RESULT), new TypeToken<List<TimeSheetModel>>() {
                         }.getType());
 
-                        mAdapter = new ProjectListAdapter(getActivity(), projectArrayList, MyFrameFragment.this);
-                        rvActiveProjectList.setLayoutManager(new LinearLayoutManager(getActivity()));
-                        rvActiveProjectList.setItemAnimator(new DefaultItemAnimator());
-                        mAdapter.setMode(Attributes.Mode.Single);
-                        rvActiveProjectList.setAdapter(mAdapter);
+                        if (listModels != null && !listModels.isEmpty()) {
+
+                            mAdapter = new MyTimeSheetAdapter(getActivity(), listModels, true);
+                            RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getActivity().getApplicationContext());
+                            rvTimesheet.setLayoutManager(mLayoutManager);
+                            rvTimesheet.setItemAnimator(new DefaultItemAnimator());
+                            rvTimesheet.setAdapter(mAdapter);
+                        }
                     }
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
                 }
-                if (swipe.isRefreshing())
-                    swipe.setRefreshing(false);
-
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
-    private class DeleteProject extends AsyncTask<String, Void, Boolean> {
-
-        @Override
-        protected Boolean doInBackground(String... strings) {
-            return pendingData.deleteProject(strings[0]);
-        }
-
-        @Override
-        protected void onPostExecute(Boolean result) {
-            super.onPostExecute(result);
-            try {
-                if (result) {
-                    displayError("Project Deleted Successfully....");
-                    mAdapter.mItemManger.removeShownLayouts(swipeLayout);
-                    projectArrayList.remove(mPosition);
-                    mAdapter.notifyItemRemoved(mPosition);
-                    mAdapter.notifyItemRangeChanged(mPosition, projectArrayList.size());
-                    mAdapter.mItemManger.closeAllItems();
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
             }
         }
     }

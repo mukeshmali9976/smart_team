@@ -111,7 +111,7 @@ public class MyTimeSheetActivity extends BaseAppCompatActivity implements View.O
                     }
                 }
 
-                mAdapter = new MyTimeSheetAdapter(MyTimeSheetActivity.this, model);
+                mAdapter = new MyTimeSheetAdapter(MyTimeSheetActivity.this, model, false);
                 RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
                 rvMyTimeSheet.setLayoutManager(mLayoutManager);
                 rvMyTimeSheet.setItemAnimator(new DefaultItemAnimator());
@@ -165,7 +165,7 @@ public class MyTimeSheetActivity extends BaseAppCompatActivity implements View.O
 
                         if (listModels != null && !listModels.isEmpty()) {
 
-                            mAdapter = new MyTimeSheetAdapter(MyTimeSheetActivity.this, listModels);
+                            mAdapter = new MyTimeSheetAdapter(MyTimeSheetActivity.this, listModels, false);
                             RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
                             rvMyTimeSheet.setLayoutManager(mLayoutManager);
                             rvMyTimeSheet.setItemAnimator(new DefaultItemAnimator());
