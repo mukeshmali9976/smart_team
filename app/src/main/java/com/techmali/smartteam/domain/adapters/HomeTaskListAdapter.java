@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.techmali.smartteam.R;
 import com.techmali.smartteam.models.SyncProject;
 import com.techmali.smartteam.models.SyncTask;
+import com.techmali.smartteam.models.TaskModel;
 
 import java.util.List;
 
@@ -19,12 +20,14 @@ public class HomeTaskListAdapter extends RecyclerView.Adapter<HomeTaskListAdapte
 
 
     private Context context;
-    private List<SyncProject> taskModelList;
+    private List<TaskModel> taskModelList;
+    private List<String> modelList;
     private LayoutInflater layoutInflater;
 
-    public HomeTaskListAdapter(Context context, List<SyncProject> taskModelList) {
+    public HomeTaskListAdapter(Context context, List<TaskModel> taskModelList, List<String> modelList) {
         this.context = context;
         this.taskModelList = taskModelList;
+        this.modelList = modelList;
         layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
@@ -38,10 +41,11 @@ public class HomeTaskListAdapter extends RecyclerView.Adapter<HomeTaskListAdapte
     @Override
     public void onBindViewHolder(ViewHolder holder, final int position) {
 
-        holder.tvProjectName.setText(taskModelList.get(position).getTitle());
+        holder.tvProjectName.setText(modelList.get(position));
         holder.llTaskList.removeAllViews();
-        for (int i = 0; i < 5; i++) {
-            initTaskList(holder.llTaskList, i);
+        for (int i = 0; i < taskModelList.size(); i++) {
+            if (taskModelList.get(i).getProject_name().equalsIgnoreCase(modelList.get(position)))
+                initTaskList(holder.llTaskList, i);
         }
     }
 
@@ -49,13 +53,13 @@ public class HomeTaskListAdapter extends RecyclerView.Adapter<HomeTaskListAdapte
         View mTaskView = layoutInflater.inflate(R.layout.row_task_list, llTaskList, false);
         TextView tvTaskName = (TextView) mTaskView.findViewById(R.id.tvTaskName);
 
-        tvTaskName.setText("Task " + pos);
+        tvTaskName.setText(taskModelList.get(pos).getTask_name());
         llTaskList.addView(mTaskView);
     }
 
     @Override
     public int getItemCount() {
-        return taskModelList.size();
+        return modelList.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -68,6 +72,4 @@ public class HomeTaskListAdapter extends RecyclerView.Adapter<HomeTaskListAdapte
             llTaskList = (LinearLayout) itemView.findViewById(R.id.llTaskList);
         }
     }
-
-
 }

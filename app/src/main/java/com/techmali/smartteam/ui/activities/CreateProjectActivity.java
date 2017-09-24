@@ -282,13 +282,10 @@ public class CreateProjectActivity extends BaseAppCompatActivity implements View
 
     private class GetProjectDetail extends AsyncTask<String, Void, String> {
 
-        MyProgressDialog dialog;
-
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            dialog = new MyProgressDialog(CreateProjectActivity.this);
-            dialog.show();
+            showProgressDialog();
         }
 
         @Override
@@ -333,7 +330,7 @@ public class CreateProjectActivity extends BaseAppCompatActivity implements View
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            dialog.dismiss();
+            dismissProgressDialog();
         }
     }
 }

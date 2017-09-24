@@ -36,7 +36,7 @@ public class TimeSheetActivity extends BaseAppCompatActivity implements View.OnC
         setContentView(R.layout.activity_attendance);
 
         networkManager = NetworkManager.getInstance();
-        prefManager = CryptoManager.getInstance(TimeSheetActivity.this).getPrefs();
+        prefManager = CryptoManager.getInstance(this).getPrefs();
         initActionBar(getResources().getString(R.string.title_attendance));
         initView();
     }
@@ -52,7 +52,7 @@ public class TimeSheetActivity extends BaseAppCompatActivity implements View.OnC
         }
         rvAttendanceList = (RecyclerView) findViewById(R.id.rvAttendance);
 
-        mAdapter = new AttendanceAdapter(TimeSheetActivity.this, listModels);
+        mAdapter = new AttendanceAdapter(this, listModels);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
         rvAttendanceList.setLayoutManager(mLayoutManager);
         rvAttendanceList.setItemAnimator(new DefaultItemAnimator());

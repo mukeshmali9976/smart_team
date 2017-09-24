@@ -54,7 +54,7 @@
 
 
                 <TextView
-                    android:id="@+id/tvMemberEmail"
+                    android:id="@+id/tvMemberContact"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"

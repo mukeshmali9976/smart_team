@@ -224,7 +224,7 @@
     <string name="lbl_select_date">Select Date</string>
     <string name="lbl_select_project">Select Peoject</string>
     <string name="lbl_select_task">Select Task</string>
-    <string name="lbl_time">Time</string>
+    <string name="lbl_time">Time in HH:MM</string>
     <string name="lbl_description_two">Description</string>
 
     <!--My Expense-->

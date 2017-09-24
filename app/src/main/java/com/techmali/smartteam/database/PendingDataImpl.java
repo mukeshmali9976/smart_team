@@ -24,6 +24,7 @@ import com.techmali.smartteam.models.SyncSecurityMenuControllerLink;
 import com.techmali.smartteam.models.SyncTask;
 import com.techmali.smartteam.models.SyncTaskType;
 import com.techmali.smartteam.models.SyncTaskUserLink;
+import com.techmali.smartteam.models.SyncTimesheet;
 import com.techmali.smartteam.models.SyncUserInfo;
 import com.techmali.smartteam.request.PARAMS;
 import com.techmali.smartteam.utils.CryptoManager;
@@ -120,6 +121,10 @@ public class PendingDataImpl {
                 SyncRole role = (SyncRole) object;
                 id = database.insert(table, null, this.getRoleContentValues(role, role.getRole_id(), role.getRole_id()));
                 break;
+            case DbParams.TBL_TIMESHEET:
+                SyncTimesheet timesheet = (SyncTimesheet) object;
+                id = database.insert(table, null, this.getTimesheetContentValues(timesheet, timesheet.getTimesheet_id(), timesheet.getLocal_timesheet_id()));
+                break;
             case DbParams.TBL_COMPANY:
                 SyncCompany syncCompany = (SyncCompany) object;
                 id = database.insert(table, null, this.getCompanyContentValues(syncCompany, syncCompany.getCompany_id(), syncCompany.getCompany_id()));
@@ -146,7 +151,7 @@ public class PendingDataImpl {
             case DbParams.TBL_USER_INFO:
                 SyncUserInfo userInfo = (SyncUserInfo) object;
                 id = database.update(table, this.getUserInfoContentValues(userInfo, server_id, userInfo.getLocal_user_id()),
-                        DbParams.CLM_USER_ID + "=?", new String[]{server_id});
+                        DbParams.CLM_SERVER_USER_ID + "=?", new String[]{server_id});
                 break;
             case DbParams.TBL_PROJECT:
                 SyncProject project = (SyncProject) object;
@@ -217,6 +222,11 @@ public class PendingDataImpl {
                 SyncRole role = (SyncRole) object;
                 id = database.update(table, this.getRoleContentValues(role, server_id, role.getRole_id()),
                         DbParams.CLM_ROLE_ID + "=?", new String[]{server_id});
+                break;
+            case DbParams.TBL_TIMESHEET:
+                SyncTimesheet timesheet = (SyncTimesheet) object;
+                id = database.update(table, this.getTimesheetContentValues(timesheet, server_id, timesheet.getLocal_timesheet_id()),
+                        DbParams.CLM_SERVER_TIMESHEET_ID + "=?", new String[]{server_id});
                 break;
             case DbParams.TBL_COMPANY:
                 SyncCompany mDbModel = (SyncCompany) object;
@@ -493,6 +503,39 @@ public class PendingDataImpl {
                 } while (leaveCursor.moveToNext());
             }
             reqObject.put(DbParams.TBL_LEAVE, leaveArray);
+
+            // TIMESHEET TBL........
+            String whereCondTimesheet = "";
+            if (!Utils.isEmptyString(last_sync_date))
+                whereCondLeave = " WHERE " + DbParams.CLM_UPDATED_ON + " >= DATETIME('" + last_sync_date + "')";
+
+            String timesheet = "SELECT * FROM " + DbParams.TBL_TIMESHEET + whereCondTimesheet;
+            Cursor timesheetCursor = database.rawQuery(timesheet, null);
+            JSONArray timesheetArray = new JSONArray();
+            if (timesheetCursor.getCount() > 0) {
+                timesheetCursor.moveToFirst();
+                do {
+
+                    JSONObject timesheetObject = new JSONObject();
+                    timesheetObject.put(DbParams.CLM_SERVER_TIMESHEET_ID, Utils.createBlank(timesheetCursor.getString(timesheetCursor.getColumnIndex(DbParams.CLM_SERVER_TIMESHEET_ID))));
+                    timesheetObject.put(DbParams.CLM_LOCAL_TIMESHEET_ID, timesheetCursor.getString(timesheetCursor.getColumnIndex(DbParams.CLM_LOCAL_TIMESHEET_ID)));
+                    timesheetObject.put(DbParams.CLM_COMPANY_ID, timesheetCursor.getString(timesheetCursor.getColumnIndex(DbParams.CLM_COMPANY_ID)));
+                    timesheetObject.put(DbParams.CLM_USER_ID, Utils.createBlank(timesheetCursor.getString(timesheetCursor.getColumnIndex(DbParams.CLM_SERVER_USER_ID))));
+                    timesheetObject.put(DbParams.CLM_LOCAL_USER_ID, timesheetCursor.getString(timesheetCursor.getColumnIndex(DbParams.CLM_LOCAL_USER_ID)));
+                    timesheetObject.put(DbParams.CLM_SERVER_PROJECT_ID, Utils.createBlank(timesheetCursor.getString(timesheetCursor.getColumnIndex(DbParams.CLM_SERVER_PROJECT_ID))));
+                    timesheetObject.put(DbParams.CLM_LOCAL_PROJECT_ID, timesheetCursor.getString(timesheetCursor.getColumnIndex(DbParams.CLM_LOCAL_PROJECT_ID)));
+                    timesheetObject.put(DbParams.CLM_SERVER_TASK_ID, Utils.createBlank(timesheetCursor.getString(timesheetCursor.getColumnIndex(DbParams.CLM_SERVER_TASK_ID))));
+                    timesheetObject.put(DbParams.CLM_LOCAL_TASK_ID, timesheetCursor.getString(timesheetCursor.getColumnIndex(DbParams.CLM_LOCAL_TASK_ID)));
+                    timesheetObject.put(DbParams.CLM_TIMESHEET_DATE, timesheetCursor.getString(timesheetCursor.getColumnIndex(DbParams.CLM_TIMESHEET_DATE)));
+                    timesheetObject.put(DbParams.CLM_TOTAL_TIME, timesheetCursor.getString(timesheetCursor.getColumnIndex(DbParams.CLM_TOTAL_TIME)));
+                    timesheetObject.put(DbParams.CLM_NOTE, timesheetCursor.getString(timesheetCursor.getColumnIndex(DbParams.CLM_NOTE)));
+                    timesheetObject.put(DbParams.CLM_STATUS_ID, timesheetCursor.getInt(timesheetCursor.getColumnIndex(DbParams.CLM_STATUS_ID)));
+
+                    timesheetArray.put(timesheetObject);
+                } while (timesheetCursor.moveToNext());
+            }
+            reqObject.put(DbParams.TBL_TIMESHEET, timesheetArray);
+
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -800,6 +843,30 @@ public class PendingDataImpl {
         values.put(DbParams.CLM_ROLE_GROUP, model.getRole_group());
         values.put(DbParams.CLM_IS_CUSTOM, model.getIs_custom());
         values.put(DbParams.CLM_STATUS, model.getStatus());
+        values.put(DbParams.CLM_CREATED_ON, model.getCreated_on());
+        values.put(DbParams.CLM_UPDATED_ON, model.getUpdated_on());
+        values.put(DbParams.CLM_CREATED_BY, model.getCreated_by());
+        values.put(DbParams.CLM_UPDATED_BY, model.getUpdated_by());
+        values.put(DbParams.CLM_IS_UPDATED, 1);
+        return values;
+    }
+
+    private ContentValues getTimesheetContentValues(SyncTimesheet model, String id, String local_id) {
+        ContentValues values = new ContentValues();
+
+        values.put(DbParams.CLM_LOCAL_TIMESHEET_ID, local_id);
+        values.put(DbParams.CLM_SERVER_TIMESHEET_ID, id);
+        values.put(DbParams.CLM_COMPANY_ID, model.getCompany_id());
+        values.put(DbParams.CLM_LOCAL_USER_ID, model.getLocal_user_id());
+        values.put(DbParams.CLM_SERVER_USER_ID, model.getUser_id());
+        values.put(DbParams.CLM_SERVER_TASK_ID, model.getServer_task_id());
+        values.put(DbParams.CLM_LOCAL_TASK_ID, model.getLocal_task_id());
+        values.put(DbParams.CLM_SERVER_PROJECT_ID, model.getServer_project_id());
+        values.put(DbParams.CLM_LOCAL_PROJECT_ID, model.getLocal_project_id());
+        values.put(DbParams.CLM_TIMESHEET_DATE, model.getTimesheet_date());
+        values.put(DbParams.CLM_TOTAL_TIME, model.getTotal_time());
+        values.put(DbParams.CLM_NOTE, model.getNote());
+        values.put(DbParams.CLM_STATUS_ID, model.getStatus_id());
         values.put(DbParams.CLM_CREATED_ON, model.getCreated_on());
         values.put(DbParams.CLM_UPDATED_ON, model.getUpdated_on());
         values.put(DbParams.CLM_CREATED_BY, model.getCreated_by());
@@ -1133,13 +1200,22 @@ public class PendingDataImpl {
         return isCreated;
     }
 
-    public boolean addTimesheet(String project_id, String task_id, String date_time, String desc, boolean isExists) {
+    public boolean addTimesheet(SyncTimesheet model, boolean isExists) {
 
         boolean isCreated = false;
         try {
             String id = prefManager.getString(PARAMS.KEY_UNIQUE_CODE, "") + "_" + System.currentTimeMillis();
             String query = "";
             if (!isExists) {
+                query = "INSERT INTO " + DbParams.TBL_TIMESHEET + " (" + DbParams.CLM_LOCAL_TIMESHEET_ID + "," + DbParams.CLM_SERVER_TIMESHEET_ID + "," + DbParams.CLM_COMPANY_ID +
+                        "," + DbParams.CLM_LOCAL_USER_ID + "," + DbParams.CLM_SERVER_USER_ID + "," + DbParams.CLM_LOCAL_PROJECT_ID + "," + DbParams.CLM_SERVER_PROJECT_ID +
+                        "," + DbParams.CLM_LOCAL_TASK_ID + "," + DbParams.CLM_SERVER_TASK_ID + "," + DbParams.CLM_TIMESHEET_DATE + "," + DbParams.CLM_TOTAL_TIME + "," + DbParams.CLM_NOTE +
+                        "," + DbParams.CLM_CREATED_BY + "," + DbParams.CLM_UPDATED_BY + "," + DbParams.CLM_UPDATED_ON + ") VALUES ('" + id + "','','" + prefManager.getString(PARAMS.KEY_COMPANY_ID, "") +
+                        "','" + prefManager.getString(PARAMS.KEY_LOCAL_USER_ID, "") + "','" + prefManager.getString(PARAMS.KEY_SERVER_USER_ID, "") + "','" + model.getLocal_project_id() + "','" +
+                        model.getServer_project_id() + "','" + model.getLocal_task_id() + "','" + model.getServer_task_id() + "','" + model.getTimesheet_date() + "','" + model.getTotal_time() +
+                        "'," + DatabaseUtils.sqlEscapeString(model.getNote()) + ",'" + prefManager.getString(PARAMS.KEY_LOGGED_IN_USER_ID, "") + "','" + prefManager.getString(PARAMS.KEY_LOGGED_IN_USER_ID, "")
+                        + "','" + DateUtils.currentUTCDateTime() + "')";
+
 //                query = "INSERT INTO " + DbParams.TBL_PROJECT + " (" + DbParams.CLM_LOCAL_PROJECT_ID + "," + DbParams.CLM_SERVER_PROJECT_ID + "," + DbParams.CLM_COMPANY_ID + "," +
 //                        DbParams.CLM_TITLE + "," + DbParams.CLM_START_DATE + "," + DbParams.CLM_END_DATE + "," + DbParams.CLM_DESCRIPTION + "," + DbParams.CLM_CREATED_BY + "," +
 //                        DbParams.CLM_UPDATED_BY + "," + DbParams.CLM_UPDATED_ON + ") VALUES ('" + id + "','','" + prefManager.getString(PARAMS.KEY_COMPANY_ID, "") +
@@ -1151,12 +1227,147 @@ public class PendingDataImpl {
 //                        "' WHERE " + DbParams.CLM_LOCAL_PROJECT_ID + "='" + project_id + "'";
             }
             Log.e(TAG, query);
-//            database.execSQL(query);
+            database.execSQL(query);
             isCreated = true;
         } catch (SQLException e) {
             e.printStackTrace();
             isCreated = false;
         }
         return isCreated;
+    }
+
+    public String getTimesheet() {
+        JSONObject response = new JSONObject();
+        JSONArray array = new JSONArray();
+        try {
+            String query = "SELECT * FROM " + DbParams.TBL_TIMESHEET + " WHERE " + DbParams.CLM_STATUS_ID + "=1";
+
+//            if (Utils.isEmptyString(project_id))
+//                query = "SELECT * FROM " + DbParams.TBL_USER_INFO + " WHERE " + DbParams.CLM_STATUS_ID + "=1";
+//            else
+//                query = "SELECT user.*, count(p_link." + DbParams.CLM_LOCAL_PROJECT_ID + ") As is_selected from " + DbParams.TBL_USER_INFO + " As user " +
+//                        "LEFT JOIN " + DbParams.TBL_PROJECT_USER_LINK + " As p_link ON p_link." + DbParams.CLM_LOCAL_USER_ID + "=user." + DbParams.CLM_LOCAL_USER_ID +
+//                        " and p_link." + DbParams.CLM_LOCAL_PROJECT_ID + "='" + project_id + "' WHERE user." + DbParams.CLM_STATUS_ID +
+//                        "=1 Group by user." + DbParams.CLM_LOCAL_USER_ID + " having is_selected > 0";
+
+            Log.e(TAG, query);
+            Cursor cursor = database.rawQuery(query, null);
+            if (cursor.getCount() > 0) {
+                cursor.moveToFirst();
+                do {
+
+                    String task = "SELECT * FROM " + DbParams.TBL_TASK + " WHERE " + DbParams.CLM_LOCAL_TASK_ID + "='" + cursor.getString(cursor.getColumnIndex(DbParams.CLM_LOCAL_TASK_ID)) + "'";
+                    String project = "SELECT * FROM " + DbParams.TBL_PROJECT + " WHERE " + DbParams.CLM_LOCAL_PROJECT_ID + "='" + cursor.getString(cursor.getColumnIndex(DbParams.CLM_LOCAL_PROJECT_ID)) + "'";
+
+                    Cursor taskCursor = database.rawQuery(task, null);
+                    Cursor projectCursor = database.rawQuery(project, null);
+
+                    JSONObject timesheet = new JSONObject();
+                    timesheet.put(DbParams.CLM_TIMESHEET_DATE, cursor.getString(cursor.getColumnIndex(DbParams.CLM_TIMESHEET_DATE)));
+                    timesheet.put(DbParams.CLM_NOTE, cursor.getString(cursor.getColumnIndex(DbParams.CLM_NOTE)));
+                    timesheet.put(DbParams.CLM_TOTAL_TIME, cursor.getString(cursor.getColumnIndex(DbParams.CLM_TOTAL_TIME)));
+                    if (taskCursor.moveToFirst())
+                        timesheet.put("task_name", taskCursor.getString(taskCursor.getColumnIndex(DbParams.CLM_TITLE)));
+                    if (projectCursor.moveToFirst())
+                        timesheet.put("project_name", projectCursor.getString(projectCursor.getColumnIndex(DbParams.CLM_TITLE)));
+
+                    array.put(timesheet);
+                } while (cursor.moveToNext());
+            }
+            cursor.close();
+            response.put(PARAMS.TAG_STATUS, array.length() > 0 ? PARAMS.TAG_STATUS_200 : PARAMS.TAG_STATUS_4004);
+            response.put(PARAMS.TAG_RESULT, array);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return response.toString();
+    }
+
+    public String getTaskList(){
+
+        JSONObject response = new JSONObject();
+        JSONArray array = new JSONArray();
+        try {
+            String query = "SELECT * FROM " + DbParams.TBL_PROJECT + " WHERE " + DbParams.CLM_STATUS_ID + "=1";
+            Log.e(TAG, query);
+
+            Cursor cursor = database.rawQuery(query, null);
+            if (cursor.getCount() > 0) {
+                cursor.moveToFirst();
+                do {
+
+                    String task = "SELECT * FROM " + DbParams.TBL_TASK + " WHERE " + DbParams.CLM_LOCAL_PROJECT_ID + "='" + cursor.getString(cursor.getColumnIndex(DbParams.CLM_LOCAL_PROJECT_ID)) + "'";
+                    Cursor taskCursor = database.rawQuery(task, null);
+
+                    if(taskCursor.getCount() > 0){
+                        taskCursor.moveToFirst();
+                        do{
+                            JSONObject taskObject = new JSONObject();
+                            taskObject.put(DbParams.CLM_LOCAL_TASK_ID, taskCursor.getString(taskCursor.getColumnIndex(DbParams.CLM_LOCAL_TASK_ID)));
+                            taskObject.put(DbParams.CLM_SERVER_TASK_ID, taskCursor.getString(taskCursor.getColumnIndex(DbParams.CLM_SERVER_TASK_ID)));
+                            taskObject.put(DbParams.CLM_LOCAL_PROJECT_ID, taskCursor.getString(taskCursor.getColumnIndex(DbParams.CLM_LOCAL_PROJECT_ID)));
+                            taskObject.put(DbParams.CLM_SERVER_PROJECT_ID, taskCursor.getString(taskCursor.getColumnIndex(DbParams.CLM_SERVER_PROJECT_ID)));
+                            taskObject.put(DbParams.CLM_STATUS_ID, taskCursor.getInt(taskCursor.getColumnIndex(DbParams.CLM_STATUS_ID)));
+                            taskObject.put("task_name", taskCursor.getString(taskCursor.getColumnIndex(DbParams.CLM_TITLE)));
+                            taskObject.put("project_name", cursor.getString(cursor.getColumnIndex(DbParams.CLM_TITLE)));
+                            taskObject.put(DbParams.CLM_THUMB, taskCursor.getString(taskCursor.getColumnIndex(DbParams.CLM_THUMB)));
+
+                            array.put(taskObject);
+                        }while (taskCursor.moveToNext());
+                    }
+
+                } while (cursor.moveToNext());
+            }
+            cursor.close();
+            response.put(PARAMS.TAG_STATUS, array.length() > 0 ? PARAMS.TAG_STATUS_200 : PARAMS.TAG_STATUS_4004);
+            response.put(PARAMS.TAG_RESULT, array);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return response.toString();
+    }
+
+    public String getUserList(){
+
+        JSONObject response = new JSONObject();
+        JSONArray array = new JSONArray();
+        try {
+            String query = "SELECT * FROM " + DbParams.TBL_PROJECT + " WHERE " + DbParams.CLM_STATUS_ID + "=1";
+            Log.e(TAG, query);
+
+            Cursor cursor = database.rawQuery(query, null);
+            if (cursor.getCount() > 0) {
+                cursor.moveToFirst();
+                do {
+
+                    String user = "SELECT user.*, count(p_link." + DbParams.CLM_LOCAL_PROJECT_ID + ") As is_selected from " + DbParams.TBL_USER_INFO + " As user " +
+                            "LEFT JOIN " + DbParams.TBL_PROJECT_USER_LINK + " As p_link ON p_link." + DbParams.CLM_LOCAL_USER_ID + "=user." + DbParams.CLM_LOCAL_USER_ID +
+                            " and p_link." + DbParams.CLM_LOCAL_PROJECT_ID + "='" + cursor.getString(cursor.getColumnIndex(DbParams.CLM_LOCAL_PROJECT_ID)) + "' WHERE user." + DbParams.CLM_STATUS_ID +
+                            "=1 Group by user." + DbParams.CLM_LOCAL_USER_ID + " having is_selected > 0";
+                    Cursor userCursor = database.rawQuery(user, null);
+
+                    if(userCursor.getCount() > 0){
+                        userCursor.moveToFirst();
+                        do{
+                            JSONObject userObject = new JSONObject();
+                            userObject.put(DbParams.CLM_FIRST_NAME, userCursor.getString(userCursor.getColumnIndex(DbParams.CLM_FIRST_NAME)));
+                            userObject.put(DbParams.CLM_LAST_NAME, userCursor.getString(userCursor.getColumnIndex(DbParams.CLM_LAST_NAME)));
+                            userObject.put(DbParams.CLM_THUMB, userCursor.getString(userCursor.getColumnIndex(DbParams.CLM_THUMB)));
+                            userObject.put(DbParams.CLM_PHONE_NO, userCursor.getString(userCursor.getColumnIndex(DbParams.CLM_PHONE_NO)) + "");
+                            userObject.put("project_name", cursor.getString(cursor.getColumnIndex(DbParams.CLM_TITLE)));
+
+                            array.put(userObject);
+                        }while (userCursor.moveToNext());
+                    }
+
+                } while (cursor.moveToNext());
+            }
+            cursor.close();
+            response.put(PARAMS.TAG_STATUS, array.length() > 0 ? PARAMS.TAG_STATUS_200 : PARAMS.TAG_STATUS_4004);
+            response.put(PARAMS.TAG_RESULT, array);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return response.toString();
     }
 }

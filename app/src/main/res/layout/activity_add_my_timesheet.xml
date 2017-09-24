@@ -17,13 +17,34 @@
         android:paddingLeft="@dimen/margin_10"
         android:paddingRight="@dimen/margin_10">
 
-        <Spinner
-            android:id="@+id/spProjects"
+        <LinearLayout
+            android:id="@+id/llProject"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/margin_48"
             android:layout_marginTop="@dimen/margin_20"
-            android:dropDownWidth="match_parent"
-            android:spinnerMode="dropdown" />
+            android:background="@drawable/spinner_border"
+            android:orientation="horizontal"
+            android:padding="@dimen/margin_2">
+
+            <Spinner
+                android:id="@+id/spProjects"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="4"
+                android:background="@color/white"
+                android:dropDownWidth="match_parent"
+                android:spinnerMode="dropdown" />
+
+            <ImageView
+                android:layout_width="@dimen/margin_32"
+                android:layout_height="@dimen/margin_32"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="@dimen/margin_10"
+                android:layout_marginRight="@dimen/margin_10"
+                android:scaleType="fitXY"
+                android:src="@drawable/ic_arrow_down" />
+
+        </LinearLayout>
 
         <EditText
             android:id="@+id/etProjects"
@@ -43,13 +64,34 @@
             android:text="@string/error_enter"
             android:visibility="gone" />
 
-        <Spinner
-            android:id="@+id/spTask"
+        <LinearLayout
+            android:id="@+id/llTask"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/margin_48"
             android:layout_marginTop="@dimen/margin_10"
-            android:dropDownWidth="match_parent"
-            android:spinnerMode="dropdown" />
+            android:background="@drawable/spinner_border"
+            android:orientation="horizontal"
+            android:padding="@dimen/margin_2">
+
+            <Spinner
+                android:id="@+id/spTask"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="4"
+                android:background="@color/white"
+                android:dropDownWidth="match_parent"
+                android:spinnerMode="dropdown" />
+
+            <ImageView
+                android:layout_width="@dimen/margin_32"
+                android:layout_height="@dimen/margin_32"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="@dimen/margin_10"
+                android:layout_marginRight="@dimen/margin_10"
+                android:scaleType="fitXY"
+                android:src="@drawable/ic_arrow_down" />
+
+        </LinearLayout>
 
         <EditText
             android:id="@+id/etTasks"

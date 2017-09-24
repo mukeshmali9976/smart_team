@@ -33,7 +33,7 @@ import com.techmali.smartteam.utils.Utils;
 
 import org.json.JSONObject;
 
-public class HomeFragment extends BaseFragment implements View.OnClickListener, RequestListener {
+public class HomeFragment extends BaseFragment implements View.OnClickListener {
 
     public static final String TAG = HomeFragment.class.getSimpleName();
 
@@ -45,7 +45,6 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
     private Activity mActivity;
 
     private int reqIdLoginDetail = -1, reqIdSyncData = -1;
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -59,7 +58,6 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
         initView();
         return mRootView;
     }
-
 
     private void initView() {
 
@@ -78,35 +76,11 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
     }
 
     @Override
-    public void onStart() {
-        networkManager.setListener(this);
-        super.onStart();
-    }
-
-    @Override
-    public void onStop() {
-        networkManager.removeListener(this);
-        super.onStop();
-    }
-
-    @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
         ((MainActivity) getActivity()).initActionBar(getActivity().getString(R.string.app_name), mRootView);
         ((MainActivity) getActivity()).setTitle(getResources().getString(R.string.app_name));
-
-        if (Utils.isInternetAvailable(mActivity)) {
-//            getLoginDetail();
-//            SyncData data = new SyncData(mActivity);
-//            data.startSync();
-        }
-    }
-
-
-    private void getLoginDetail() {
-        networkManager.isProgressBarVisible(true);
-        reqIdLoginDetail = networkManager.addRequest(RequestBuilder.blankRequest(), getActivity(), RequestMethod.POST, RequestBuilder.METHOD_LOGIN_DETAIL);
     }
 
     @Override
@@ -155,52 +129,6 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
                 break;
         }
 
-    }
-
-    @Override
-    public void onSuccess(int id, String response) {
-        try {
-            if (!TextUtils.isEmpty(response)) {
-                if (id == reqIdLoginDetail) {
-                    JSONObject object = new JSONObject(response);
-                    if (object.getInt(PARAMS.TAG_STATUS) == PARAMS.TAG_STATUS_200) {
-
-                        String roleList = object.getJSONObject(PARAMS.TAG_RESULT).getString(PARAMS.TAG_ROLE_LIST);
-                        prefManager.edit().putString(PARAMS.KEY_ROLE_LIST, roleList).apply();
-
-                        String userObject = object.getJSONObject(PARAMS.TAG_RESULT).getJSONArray(PARAMS.TAG_USER_DATA).getString(0);
-                        UserData data = new Gson().fromJson(userObject, UserData.class);
-                        saveLoginDataInPref(data);
-                    }
-                }
-            } else {
-                displayError(getString(R.string.no_network_connection));
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    @Override
-    public void onError(int id, String message) {
-        displayError(message);
-    }
-
-
-    private void saveLoginDataInPref(UserData data) {
-
-        prefManager.edit().putString(PARAMS.KEY_COMPANY_ID, data.getCompany_id()).apply();
-        prefManager.edit().putString(PARAMS.KEY_HEADER_TOKEN, data.getHeader_token()).apply();
-        prefManager.edit().putString(PARAMS.KEY_COMPANY_NAME, data.getCompany_name()).apply();
-        prefManager.edit().putString(PARAMS.KEY_UNIQUE_CODE, data.getUnique_code()).apply();
-        prefManager.edit().putString(PARAMS.KEY_FIRST_NAME, data.getFirst_name()).apply();
-        prefManager.edit().putString(PARAMS.KEY_LAST_NAME, data.getLast_name()).apply();
-        prefManager.edit().putString(PARAMS.KEY_GENDER, data.getGender()).apply();
-        prefManager.edit().putString(PARAMS.KEY_EMAIL, data.getEmail()).apply();
-        prefManager.edit().putString(PARAMS.KEY_ROLE_NAME, data.getRole_name()).apply();
-        prefManager.edit().putString(PARAMS.KEY_STATUS_ID, data.getStatus_id()).apply();
-
-        prefManager.edit().putBoolean(PARAMS.KEY_IS_LOGGED_IN, true).apply();
     }
 
 }

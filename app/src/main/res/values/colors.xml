@@ -41,6 +41,7 @@
 
     <color name="colorText">#262642</color>
     <color name="colorTextHint">#C6C4C4</color>
+    <color name="spinner_background">#ECECF2</color>
 
 
 

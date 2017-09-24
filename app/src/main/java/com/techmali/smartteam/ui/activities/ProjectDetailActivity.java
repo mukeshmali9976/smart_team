@@ -27,11 +27,9 @@ import com.techmali.smartteam.models.SyncProject;
 import com.techmali.smartteam.models.SyncTask;
 import com.techmali.smartteam.models.SyncUserInfo;
 import com.techmali.smartteam.request.PARAMS;
-import com.techmali.smartteam.ui.views.MyProgressDialog;
 import com.techmali.smartteam.utils.DateUtils;
 import com.techmali.smartteam.utils.Log;
 import com.techmali.smartteam.utils.Utils;
-
 
 import org.json.JSONObject;
 

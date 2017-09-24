@@ -66,6 +66,8 @@ public class PARAMS {
     public static final String KEY_ROLE_NAME = "role_name";
     public static final String KEY_STATUS_ID = "status_id";
     public static final String KEY_ROLE_LIST = "role_list";
+    public static final String KEY_SERVER_USER_ID = "server_user_id";
+    public static final String KEY_LOCAL_USER_ID = "local_user_id";
 
     public static final String KEY_IS_CHECKED_IN = "is_checked_in";
 }

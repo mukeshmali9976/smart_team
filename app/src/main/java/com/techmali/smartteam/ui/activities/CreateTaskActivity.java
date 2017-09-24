@@ -9,27 +9,38 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.fourmob.datetimepicker.date.DatePickerDialog;
 import com.fourmob.datetimepicker.date.SimpleMonthAdapter;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.sleepbot.datetimepicker.time.RadialPickerLayout;
 import com.sleepbot.datetimepicker.time.TimePickerDialog;
 import com.techmali.smartteam.R;
 import com.techmali.smartteam.base.BaseAppCompatActivity;
 import com.techmali.smartteam.database.PendingDataImpl;
 import com.techmali.smartteam.domain.adapters.MemberSelectionAdapter;
+import com.techmali.smartteam.domain.adapters.SpinnerProjectAdapter;
+import com.techmali.smartteam.models.SyncProject;
 import com.techmali.smartteam.models.SyncUserInfo;
+import com.techmali.smartteam.request.PARAMS;
 import com.techmali.smartteam.ui.views.MyProgressDialog;
 import com.techmali.smartteam.utils.CryptoManager;
 import com.techmali.smartteam.utils.DateUtils;
 import com.techmali.smartteam.utils.DialogUtils;
+import com.techmali.smartteam.utils.Log;
 import com.techmali.smartteam.utils.Utils;
+
+import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 import java.util.Locale;
 
 
@@ -50,8 +61,9 @@ public class CreateTaskActivity extends BaseAppCompatActivity implements View.On
     private SharedPreferences prefManager = null;
     private PendingDataImpl model;
 
+    private Spinner spProject;
     private EditText etTaskTitle, etStartDate, etEndDate, etDescription;
-    private TextView tvErrorTaskTitle, tvErrorStartDate, tvErrorEndDate, tvErrorDescription;
+    private TextView tvErrorTaskTitle, tvErrorStartDate, tvErrorEndDate, tvErrorDescription, tvErrorProject;
     private RecyclerView rvMember;
 
     private TimePickerDialog timePickerDialog;
@@ -60,6 +72,7 @@ public class CreateTaskActivity extends BaseAppCompatActivity implements View.On
     private String selectedTime = "", start_date = "", end_date = "", local_project_id = "", server_project_id = "";
     private ArrayList<SyncUserInfo> prevSelectedUserArrayList = new ArrayList<>();
     private ArrayList<SyncUserInfo> newUserArrayList = new ArrayList<>();
+    private ArrayList<SyncProject> projectArrayList = new ArrayList<>();
 
     private Calendar newDate, calendar;
     private SimpleDateFormat displayFormat = new SimpleDateFormat("dd MMM, yyyy", Locale.getDefault());
@@ -97,6 +110,8 @@ public class CreateTaskActivity extends BaseAppCompatActivity implements View.On
         tvErrorStartDate = (TextView) findViewById(R.id.tvErrorStartDate);
         tvErrorEndDate = (TextView) findViewById(R.id.tvErrorEndDate);
         tvErrorDescription = (TextView) findViewById(R.id.tvErrorDescription);
+        tvErrorProject = (TextView) findViewById(R.id.tvErrorProject);
+        spProject = (Spinner) findViewById(R.id.spProjects);
 
         calendar = Calendar.getInstance();
         newDate = Calendar.getInstance();
@@ -108,6 +123,26 @@ public class CreateTaskActivity extends BaseAppCompatActivity implements View.On
         etEndDate.setOnClickListener(this);
         findViewById(R.id.btnSubmit).setOnClickListener(this);
         findViewById(R.id.tvAssignTo).setOnClickListener(this);
+
+        new GetProjectList().execute();
+
+        spProject.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                if (i > 0) {
+                    local_project_id = projectArrayList.get(i).getLocal_project_id();
+                    server_project_id = projectArrayList.get(i).getServer_project_id();
+                } else {
+                    local_project_id = "";
+                    server_project_id = "";
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
     }
 
     @Override
@@ -168,6 +203,14 @@ public class CreateTaskActivity extends BaseAppCompatActivity implements View.On
 
     private boolean checkValidation() {
         boolean flag = true;
+        if (spProject.getSelectedItemPosition() == 0) {
+            flag = false;
+            tvErrorProject.setVisibility(View.VISIBLE);
+            tvErrorProject.setText(getString(R.string.error_enter));
+        } else {
+            tvErrorProject.setVisibility(View.GONE);
+        }
+
         if (Utils.isEmptyString(etTaskTitle.getText().toString().trim())) {
             flag = false;
             tvErrorTaskTitle.setVisibility(View.VISIBLE);
@@ -263,6 +306,41 @@ public class CreateTaskActivity extends BaseAppCompatActivity implements View.On
                 displayError("There might be some issue, please try later.");
             }
             dismissProgressDialog();
+        }
+    }
+
+    private class GetProjectList extends AsyncTask<Void, Void, String> {
+
+        @Override
+        protected String doInBackground(Void... voids) {
+            return model.getProjectList();
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            super.onPostExecute(result);
+            try {
+                projectArrayList.clear();
+                SyncProject project = new SyncProject();
+                project.setTitle("Select Project");
+                projectArrayList.add(project);
+
+                if (!Utils.isEmptyString(result)) {
+                    Log.e(TAG, result);
+                    JSONObject object = new JSONObject(result);
+                    if (object.getInt(PARAMS.TAG_STATUS) == PARAMS.TAG_STATUS_200) {
+                        ArrayList<SyncProject> syncProjects = new Gson().fromJson(object.getString(PARAMS.TAG_RESULT), new TypeToken<List<SyncProject>>() {
+                        }.getType());
+                        projectArrayList.addAll(syncProjects);
+                    }
+                }
+
+                SpinnerProjectAdapter adapter = new SpinnerProjectAdapter(CreateTaskActivity.this, R.layout.spinner_item, projectArrayList);
+                adapter.setDropDownViewResource(R.layout.spinner_item);
+                spProject.setAdapter(adapter);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
 }

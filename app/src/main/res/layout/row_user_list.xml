@@ -71,7 +71,7 @@
                         android:text="Mukesh Mali" />
 
                     <TextView
-                        android:id="@+id/tvMemberEmail"
+                        android:id="@+id/tvMemberContact"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"

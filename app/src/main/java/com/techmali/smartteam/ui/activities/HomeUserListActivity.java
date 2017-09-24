@@ -14,9 +14,10 @@ import com.techmali.smartteam.R;
 import com.techmali.smartteam.base.BaseAppCompatActivity;
 import com.techmali.smartteam.database.PendingDataImpl;
 import com.techmali.smartteam.domain.adapters.HomeTaskListAdapter;
-import com.techmali.smartteam.models.SyncProject;
-import com.techmali.smartteam.models.SyncTask;
+import com.techmali.smartteam.domain.adapters.HomeUserListAdapter;
 import com.techmali.smartteam.models.TaskModel;
+import com.techmali.smartteam.models.UserData;
+import com.techmali.smartteam.models.UserModel;
 import com.techmali.smartteam.request.PARAMS;
 import com.techmali.smartteam.utils.Log;
 import com.techmali.smartteam.utils.Utils;
@@ -27,16 +28,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class HomeTaskListActivity extends BaseAppCompatActivity {
+public class HomeUserListActivity extends BaseAppCompatActivity {
 
-    public static final String TAG = HomeTaskListActivity.class.getSimpleName();
+    public static final String TAG = HomeUserListActivity.class.getSimpleName();
 
     private RecyclerView rvTaskList;
 
-    private HomeTaskListAdapter mTaskListAdapter;
+    private HomeUserListAdapter mTaskListAdapter;
     private PendingDataImpl pendingData;
 
-    List<TaskModel> mTaskList = new ArrayList<>();
+    List<UserModel> mTaskList = new ArrayList<>();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -45,7 +46,7 @@ public class HomeTaskListActivity extends BaseAppCompatActivity {
 
         pendingData = new PendingDataImpl(this);
 
-        initActionBar(getString(R.string.tab_task));
+        initActionBar("Users");
         initView();
     }
 
@@ -57,32 +58,14 @@ public class HomeTaskListActivity extends BaseAppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        new getProjectList().execute();
+        new GetUserList().execute();
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_add, menu);
-        menu.findItem(R.id.action_menu_add).setVisible(true);
-        return super.onCreateOptionsMenu(menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.action_menu_add:
-                startActivity(new Intent(HomeTaskListActivity.this, CreateTaskActivity.class));
-                Utils.hideKeyboard(this);
-                break;
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
-    private class getProjectList extends AsyncTask<Void, Void, String> {
+    private class GetUserList extends AsyncTask<Void, Void, String> {
 
         @Override
         protected String doInBackground(Void... voids) {
-            return pendingData.getTaskList();
+            return pendingData.getUserList();
         }
 
         @Override
@@ -94,7 +77,7 @@ public class HomeTaskListActivity extends BaseAppCompatActivity {
                     JSONObject object = new JSONObject(result);
                     if (object.getInt(PARAMS.TAG_STATUS) == PARAMS.TAG_STATUS_200) {
                         mTaskList.clear();
-                        mTaskList = new Gson().fromJson(object.getString(PARAMS.TAG_RESULT), new TypeToken<List<TaskModel>>() {
+                        mTaskList = new Gson().fromJson(object.getString(PARAMS.TAG_RESULT), new TypeToken<List<UserModel>>() {
                         }.getType());
 
                         List<String> projectList = new ArrayList<>();
@@ -109,7 +92,7 @@ public class HomeTaskListActivity extends BaseAppCompatActivity {
                             if (!isAdded)
                                 projectList.add(mTaskList.get(i).getProject_name());
                         }
-                        mTaskListAdapter = new HomeTaskListAdapter(HomeTaskListActivity.this, mTaskList, projectList);
+                        mTaskListAdapter = new HomeUserListAdapter(HomeUserListActivity.this, mTaskList, projectList);
                         rvTaskList.setAdapter(mTaskListAdapter);
                     }
                 }

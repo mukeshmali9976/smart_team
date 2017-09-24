@@ -18,7 +18,7 @@ public class DbHelper extends SQLiteOpenHelper {
 
     // All Static variables
     // Database Version
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 2;
 
     // Database Name
     private static final String DATABASE_NAME = "SmartTeamDb";
@@ -56,6 +56,7 @@ public class DbHelper extends SQLiteOpenHelper {
         db.execSQL(DbParams.CREATE_TBL_SETTING);
         db.execSQL(DbParams.CREATE_TBL_APP_SETTING);
         db.execSQL(DbParams.CREATE_TBL_TRACKING);
+        db.execSQL(DbParams.CREATE_TBL_TIMESHEET);
 
         String dbpath = context.getDatabasePath(DATABASE_NAME).getAbsolutePath();
         Log.e("Path", dbpath);
@@ -64,7 +65,8 @@ public class DbHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-
+        db.execSQL("DROP TABLE IF EXISTS " + DbParams.TBL_TIMESHEET);
+        db.execSQL(DbParams.CREATE_TBL_TIMESHEET);
     }
 
     public static DbHelper getInstance(Context context) {

@@ -91,6 +91,7 @@ public class MyProjectListActivity extends BaseAppCompatActivity implements Proj
     public void onItemClick(View view, int position) {
         setResult(RESULT_OK);
         finish();
+        overridePendingTransition(R.anim.fix, R.anim.from_top);
     }
 
     private class GetProjectList extends AsyncTask<Void, Void, String> {

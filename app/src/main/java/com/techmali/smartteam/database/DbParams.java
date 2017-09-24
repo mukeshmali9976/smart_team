@@ -25,6 +25,7 @@ public class DbParams {
     public static final String TBL_SECURITY_MENU_CONTROLLERS_LINK = "security_menu_controllers_link";
     public static final String TBL_SECURITY_CONTROLLERS = "security_controllers";
     public static final String TBL_TRACKING = "tracking";
+    public static final String TBL_TIMESHEET = "timesheet";
 
     public static final String TBL_ROLE = "role";
     public static final String TBL_MESSAGE = "message";
@@ -208,6 +209,12 @@ public class DbParams {
     public static final String CLM_SERVER_TRACKING_ID = "server_tracking_id";
     public static final String CLM_LOCAL_TRACKING_ID = "local_tracking_id";
     public static final String CLM_TACKING_TIME = "tracking_time";
+
+    ////// Timesheet....
+    public static final String CLM_SERVER_TIMESHEET_ID = "timesheet_id";
+    public static final String CLM_LOCAL_TIMESHEET_ID = "local_timesheet_id";
+    public static final String CLM_TIMESHEET_DATE = "timesheet_date";
+    public static final String CLM_TOTAL_TIME = "total_time";
 
 
     ////////////////////
@@ -683,6 +690,31 @@ public class DbParams {
             CLM_TACKING_TIME + " DATETIME DEFAULT (CURRENT_TIMESTAMP)," +
             CLM_LAT + " VARCHAR DEFAULT '0.000000'," +
             CLM_LONG + " VARCHAR DEFAULT '0.000000'," +
+            CLM_STATUS_ID + " INTEGER DEFAULT 1," +
+            CLM_CREATED_BY + " INTEGER," +
+            CLM_CREATED_ON + " DATETIME DEFAULT (CURRENT_TIMESTAMP)," +
+            CLM_UPDATED_BY + " INTEGER," +
+            CLM_UPDATED_ON + " DATETIME DEFAULT (CURRENT_TIMESTAMP)," +
+            CLM_IS_UPDATED + " INTEGER DEFAULT 0)";
+
+
+    /*
+            Timesheet.....
+            status_id :: 1=> active, 2=> inactive, 3=> deleted                DEFAULT => 1
+     */
+    static final String CREATE_TBL_TIMESHEET = "CREATE TABLE " + TBL_TIMESHEET + "(" +
+            CLM_LOCAL_TIMESHEET_ID + " VARCHAR PRIMARY_KEY," +
+            CLM_SERVER_TIMESHEET_ID + " VARCHAR," +
+            CLM_COMPANY_ID + " VARCHAR," +
+            CLM_SERVER_USER_ID + " VARCHAR," +
+            CLM_LOCAL_USER_ID + " VARCHAR," +
+            CLM_LOCAL_PROJECT_ID + " VARCHAR," +
+            CLM_SERVER_PROJECT_ID + " VARCHAR," +
+            CLM_LOCAL_TASK_ID + " VARCHAR," +
+            CLM_SERVER_TASK_ID + " VARCHAR," +
+            CLM_TIMESHEET_DATE + " VARCHAR," +
+            CLM_TOTAL_TIME + " VARCHAR," +
+            CLM_NOTE + " VARCHAR," +
             CLM_STATUS_ID + " INTEGER DEFAULT 1," +
             CLM_CREATED_BY + " INTEGER," +
             CLM_CREATED_ON + " DATETIME DEFAULT (CURRENT_TIMESTAMP)," +

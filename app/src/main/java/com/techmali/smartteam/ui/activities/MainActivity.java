@@ -188,6 +188,7 @@ public class MainActivity extends SlidingActivity implements GoogleApiClient.Con
             public void onTabSelected(TabLayout.Tab tab) {
                 if (tab.getPosition() == 4) {
                     startActivityForResult(new Intent(MainActivity.this, MyProjectListActivity.class), REQUEST_CHANGE_PROJECT);
+                    overridePendingTransition(R.anim.fix, R.anim.fix);
                 } else {
                     lastSelected = tab.getPosition();
                     viewpager.setCurrentItem(tab.getPosition());

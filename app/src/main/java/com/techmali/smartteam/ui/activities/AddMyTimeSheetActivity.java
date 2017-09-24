@@ -4,15 +4,12 @@ import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import com.daimajia.swipe.util.Attributes;
 import com.fourmob.datetimepicker.date.DatePickerDialog;
 import com.fourmob.datetimepicker.date.SimpleMonthAdapter;
 import com.google.gson.Gson;
@@ -22,15 +19,12 @@ import com.sleepbot.datetimepicker.time.TimePickerDialog;
 import com.techmali.smartteam.R;
 import com.techmali.smartteam.base.BaseAppCompatActivity;
 import com.techmali.smartteam.database.PendingDataImpl;
-import com.techmali.smartteam.domain.adapters.ProjectListAdapter;
 import com.techmali.smartteam.domain.adapters.SpinnerProjectAdapter;
 import com.techmali.smartteam.domain.adapters.SpinnerTaskAdapter;
 import com.techmali.smartteam.models.SyncProject;
 import com.techmali.smartteam.models.SyncTask;
-import com.techmali.smartteam.network.NetworkManager;
-import com.techmali.smartteam.network.RequestListener;
+import com.techmali.smartteam.models.SyncTimesheet;
 import com.techmali.smartteam.request.PARAMS;
-import com.techmali.smartteam.ui.fragments.ActiveProjectFragment;
 import com.techmali.smartteam.utils.CryptoManager;
 import com.techmali.smartteam.utils.DateUtils;
 import com.techmali.smartteam.utils.DialogUtils;
@@ -72,7 +66,7 @@ public class AddMyTimeSheetActivity extends BaseAppCompatActivity implements Vie
     private Calendar newDate, calendar;
     private SimpleDateFormat displayFormat = new SimpleDateFormat("dd MMM, yyyy", Locale.getDefault());
 
-    private String start_date = "", project_id = "", task_id = "";
+    private String start_date = "", local_project_id = "", project_id = "", local_task_id = "", task_id = "";
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -127,10 +121,12 @@ public class AddMyTimeSheetActivity extends BaseAppCompatActivity implements Vie
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
                 if (position > 0) {
-                    project_id = projectArrayList.get(position).getLocal_project_id();
+                    local_project_id = projectArrayList.get(position).getLocal_project_id();
+                    project_id = projectArrayList.get(position).getServer_project_id();
                     new GetTaskList().execute(projectArrayList.get(position).getLocal_project_id());
                 } else {
-                    project_id = "";
+                      local_project_id = "";
+                      project_id = "";
                 }
             }
 
@@ -144,8 +140,10 @@ public class AddMyTimeSheetActivity extends BaseAppCompatActivity implements Vie
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
                 if (position > 0) {
-                    task_id = taskArrayList.get(position).getLocal_task_id();
+                    local_task_id = taskArrayList.get(position).getLocal_task_id();
+                    task_id = taskArrayList.get(position).getServer_task_id();
                 } else {
+                    local_task_id = "";
                     task_id = "";
                 }
             }
@@ -161,8 +159,20 @@ public class AddMyTimeSheetActivity extends BaseAppCompatActivity implements Vie
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btnSubmit:
-                if (checkValidation())
-                    new AddTimesheet().execute(project_id, task_id, start_date, etDescription.getText().toString());
+                if (checkValidation()){
+                    SyncTimesheet timesheet = new SyncTimesheet();
+                    timesheet.setLocal_project_id(local_project_id);
+                    timesheet.setServer_project_id(project_id);
+                    timesheet.setLocal_task_id(local_task_id);
+                    timesheet.setServer_task_id(task_id);
+                    timesheet.setUser_id(prefManager.getString(PARAMS.KEY_SERVER_USER_ID, ""));
+                    timesheet.setLocal_user_id(prefManager.getString(PARAMS.KEY_LOCAL_USER_ID, ""));
+                    timesheet.setNote(etDescription.getText().toString() + "");
+                    timesheet.setTimesheet_date(start_date);
+                    timesheet.setTotal_time(etTime.getText().toString() + "");
+                    AddTimesheet addTimesheet = new AddTimesheet(timesheet);
+                    addTimesheet.execute();
+                }
                 break;
             case R.id.etDate:
                 datePickerDialog.setVibrate(false);
@@ -173,7 +183,7 @@ public class AddMyTimeSheetActivity extends BaseAppCompatActivity implements Vie
                 break;
             case R.id.etTime:
                 timePickerDialog.setVibrate(false);
-                timePickerDialog.setCloseOnSingleTapMinute(true);
+                timePickerDialog.setCloseOnSingleTapMinute(false);
                 timePickerDialog.show(getSupportFragmentManager(), TIMEPICKER_TAG);
                 break;
         }
@@ -189,7 +199,7 @@ public class AddMyTimeSheetActivity extends BaseAppCompatActivity implements Vie
         } else {
             tvErrorDate.setVisibility(View.GONE);
         }
-        if (Utils.isEmptyString(project_id)) {
+        if (Utils.isEmptyString(local_project_id)) {
             flag = false;
             tvErrorProjects.setVisibility(View.VISIBLE);
             tvErrorProjects.setText(getString(R.string.error_enter));
@@ -197,7 +207,7 @@ public class AddMyTimeSheetActivity extends BaseAppCompatActivity implements Vie
         } else {
             tvErrorProjects.setVisibility(View.GONE);
         }
-        if (Utils.isEmptyString(task_id)) {
+        if (Utils.isEmptyString(local_task_id)) {
             flag = false;
             tvErrorTasks.setVisibility(View.VISIBLE);
             tvErrorTasks.setText(getString(R.string.error_enter));
@@ -265,6 +275,7 @@ public class AddMyTimeSheetActivity extends BaseAppCompatActivity implements Vie
                 }
 
                 adapter = new SpinnerProjectAdapter(AddMyTimeSheetActivity.this, R.layout.spinner_item, projectArrayList);
+                adapter.setDropDownViewResource(R.layout.spinner_item);
                 spProject.setAdapter(adapter);
             } catch (Exception e) {
                 e.printStackTrace();
@@ -309,6 +320,12 @@ public class AddMyTimeSheetActivity extends BaseAppCompatActivity implements Vie
 
     private class AddTimesheet extends AsyncTask<String, Void, Boolean> {
 
+        private SyncTimesheet timesheet;
+
+        public AddTimesheet(SyncTimesheet timesheet) {
+            this.timesheet = timesheet;
+        }
+
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
@@ -317,7 +334,7 @@ public class AddMyTimeSheetActivity extends BaseAppCompatActivity implements Vie
 
         @Override
         protected Boolean doInBackground(String... strings) {
-            return model.addTimesheet(strings[0], strings[1], strings[2], strings[3], false);
+            return model.addTimesheet(timesheet, false);
         }
 
         @Override

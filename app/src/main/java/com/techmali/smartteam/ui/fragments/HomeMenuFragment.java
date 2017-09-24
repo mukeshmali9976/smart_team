@@ -20,6 +20,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
 import com.techmali.smartteam.R;
 
 import com.techmali.smartteam.base.BaseFragment;
@@ -27,13 +28,21 @@ import com.techmali.smartteam.domain.adapters.HomeGridAdapter;
 import com.techmali.smartteam.domain.adapters.ImageViewPagerAdapter;
 import com.techmali.smartteam.domain.listeners.RecyclerItemClickListener;
 import com.techmali.smartteam.models.GalleryItem;
+import com.techmali.smartteam.models.UserData;
 import com.techmali.smartteam.network.NetworkManager;
 import com.techmali.smartteam.network.RequestListener;
+import com.techmali.smartteam.network.RequestMethod;
+import com.techmali.smartteam.request.PARAMS;
+import com.techmali.smartteam.request.RequestBuilder;
 import com.techmali.smartteam.ui.activities.HomeTaskListActivity;
+import com.techmali.smartteam.ui.activities.HomeUserListActivity;
 import com.techmali.smartteam.ui.activities.MainActivity;
+import com.techmali.smartteam.ui.activities.MyTimeSheetActivity;
 import com.techmali.smartteam.utils.CryptoManager;
 import com.techmali.smartteam.utils.SyncData;
 import com.techmali.smartteam.utils.Utils;
+
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 
@@ -49,7 +58,9 @@ public class HomeMenuFragment extends BaseFragment implements AdapterView.OnItem
     public static int viewpager_height;
     public static int height;
 
+    private NetworkManager networkManager = null;
     private SharedPreferences prefManager = null;
+
     private ViewPager vpEventPager;
     private TabLayout tabDots;
     private RecyclerView rvGridMenu;
@@ -60,7 +71,7 @@ public class HomeMenuFragment extends BaseFragment implements AdapterView.OnItem
 
     private int totalItem = 0;
 
-    private int reqIdLogout = -1, reqIdChangeLanguate = -2;
+    private int reqIdLogout = -1, reqIdChangeLanguate = -2, reqIdLoginDetail = -1;
 
 
     private HomeGridAdapter mGridAdapter;
@@ -73,6 +84,7 @@ public class HomeMenuFragment extends BaseFragment implements AdapterView.OnItem
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        networkManager = NetworkManager.getInstance();
         prefManager = CryptoManager.getInstance(getActivity()).getPrefs();
     }
 
@@ -120,6 +132,10 @@ public class HomeMenuFragment extends BaseFragment implements AdapterView.OnItem
             ivScroll.setVisibility(View.VISIBLE);
         } else {
             ivScroll.setVisibility(View.GONE);
+        }
+
+        if (Utils.isInternetAvailable(getActivity())) {
+            getLoginDetail();
         }
 
         ivScroll.setOnClickListener(new View.OnClickListener() {
@@ -192,6 +208,17 @@ public class HomeMenuFragment extends BaseFragment implements AdapterView.OnItem
         }
     }
 
+    private void getLoginDetail() {
+        networkManager.isProgressBarVisible(true);
+        reqIdLoginDetail = networkManager.addRequest(RequestBuilder.blankRequest(), getActivity(), RequestMethod.POST, RequestBuilder.METHOD_LOGIN_DETAIL);
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        networkManager.setListener(this);
+    }
+
     @Override
     public void onStop() {
         if (mHandler != null && mRunnable != null) {
@@ -199,6 +226,7 @@ public class HomeMenuFragment extends BaseFragment implements AdapterView.OnItem
             isRunning = false;
         }
         super.onStop();
+        networkManager.removeListener(this);
     }
 
     @Override
@@ -214,7 +242,18 @@ public class HomeMenuFragment extends BaseFragment implements AdapterView.OnItem
     public void onSuccess(int id, String response) {
         try {
             if (!Utils.isEmptyString(response)) {
-                if (id == reqIdLogout || id == reqIdChangeLanguate) {
+                if (id == reqIdLoginDetail) {
+                    JSONObject object = new JSONObject(response);
+                    if (object.getInt(PARAMS.TAG_STATUS) == PARAMS.TAG_STATUS_200) {
+
+                        String roleList = object.getJSONObject(PARAMS.TAG_RESULT).getString(PARAMS.TAG_ROLE_LIST);
+                        prefManager.edit().putString(PARAMS.KEY_ROLE_LIST, roleList).apply();
+
+                        String userObject = object.getJSONObject(PARAMS.TAG_RESULT).getJSONArray(PARAMS.TAG_USER_DATA).getString(0);
+                        UserData data = new Gson().fromJson(userObject, UserData.class);
+                        saveLoginDataInPref(data);
+                    }
+                }else if (id == reqIdLogout || id == reqIdChangeLanguate) {
 
                 }
             }
@@ -228,6 +267,22 @@ public class HomeMenuFragment extends BaseFragment implements AdapterView.OnItem
         if (id == reqIdLogout || id == reqIdChangeLanguate) {
             displayError(message);
         }
+    }
+
+    private void saveLoginDataInPref(UserData data) {
+
+        prefManager.edit().putString(PARAMS.KEY_COMPANY_ID, data.getCompany_id()).apply();
+        prefManager.edit().putString(PARAMS.KEY_HEADER_TOKEN, data.getHeader_token()).apply();
+        prefManager.edit().putString(PARAMS.KEY_COMPANY_NAME, data.getCompany_name()).apply();
+        prefManager.edit().putString(PARAMS.KEY_UNIQUE_CODE, data.getUnique_code()).apply();
+        prefManager.edit().putString(PARAMS.KEY_FIRST_NAME, data.getFirst_name()).apply();
+        prefManager.edit().putString(PARAMS.KEY_LAST_NAME, data.getLast_name()).apply();
+        prefManager.edit().putString(PARAMS.KEY_GENDER, data.getGender()).apply();
+        prefManager.edit().putString(PARAMS.KEY_EMAIL, data.getEmail()).apply();
+        prefManager.edit().putString(PARAMS.KEY_ROLE_NAME, data.getRole_name()).apply();
+        prefManager.edit().putString(PARAMS.KEY_STATUS_ID, data.getStatus_id()).apply();
+
+        prefManager.edit().putBoolean(PARAMS.KEY_IS_LOGGED_IN, true).apply();
     }
 
     @Override
@@ -252,10 +307,12 @@ public class HomeMenuFragment extends BaseFragment implements AdapterView.OnItem
                     startActivity(new Intent(getActivity(), HomeTaskListActivity.class));
                     break;
                 case 2:
+                    startActivity(new Intent(getActivity(), MyTimeSheetActivity.class));
                     break;
                 case 3:
                     break;
                 case 4:
+                    startActivity(new Intent(getActivity(), HomeUserListActivity.class));
                     break;
                 case 5:
                     break;

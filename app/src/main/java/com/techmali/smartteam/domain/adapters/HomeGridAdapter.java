@@ -26,7 +26,7 @@ public class HomeGridAdapter extends RecyclerView.Adapter<HomeGridAdapter.ViewHo
     private SharedPreferences prefManager = null;
     private onItemClickListener mListener;
     private boolean viewOthers = false;
-    private String[] mListResult = {"DOCUMENT", "TASK", "MY TIMESHEET", "EXPENSE", "USERS", "MY FRAME"};
+    private String[] mListResult = {"DOCUMENT", "TASK", "MY TIMESHEET", "EXPENSE", "USERS"};
 
     public HomeGridAdapter(Activity mContext, onItemClickListener mListener) {
         this.mContext = mContext;
@@ -99,7 +99,6 @@ public class HomeGridAdapter extends RecyclerView.Adapter<HomeGridAdapter.ViewHo
     private int setMenus(String name, ViewHolder holder) {
         int resourceId = R.drawable.ic_home;
         String moduleName = name;
-
 
         holder.ivTabIcon.setImageResource(resourceId);
         holder.ivTabIcon.setColorFilter(ContextCompat.getColor(mContext, R.color.blackRow), PorterDuff.Mode.SRC_ATOP);

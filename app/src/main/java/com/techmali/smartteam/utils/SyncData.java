@@ -31,6 +31,7 @@ import com.techmali.smartteam.models.SyncSecurityMenuControllerLink;
 import com.techmali.smartteam.models.SyncTask;
 import com.techmali.smartteam.models.SyncTaskType;
 import com.techmali.smartteam.models.SyncTaskUserLink;
+import com.techmali.smartteam.models.SyncTimesheet;
 import com.techmali.smartteam.models.SyncUserInfo;
 import com.techmali.smartteam.network.NetworkManager;
 import com.techmali.smartteam.network.RequestListener;
@@ -61,11 +62,7 @@ public class SyncData extends Service implements RequestListener {
     private PendingDataImpl pendingData;
     private MyProgressDialog dialog;
 
-    @Override
-    public void onCreate() {
-        Log.e(TAG, "onCreate");
-        super.onCreate();
-    }
+    private Context context;
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
@@ -75,6 +72,7 @@ public class SyncData extends Service implements RequestListener {
         pendingData = new PendingDataImpl(this);
         networkManager.setListener(this);
 
+        context = this;
         new GetSyncData().execute();
         return Service.START_STICKY;
     }
@@ -105,7 +103,7 @@ public class SyncData extends Service implements RequestListener {
                 Log.e(TAG, reqParams);
                 HashMap<String, String> parameters = new HashMap<>();
                 parameters.put(PARAMS.TAG_PARAMS, reqParams);
-                reqIdSyncData = networkManager.addRequest(parameters, getApplicationContext(), RequestMethod.POST, RequestBuilder.METHOD_SYNC_DATA);
+                reqIdSyncData = networkManager.addRequest(parameters, context, RequestMethod.POST, RequestBuilder.METHOD_SYNC_DATA);
             } else {
                 dialog.dismiss();
             }
@@ -124,7 +122,7 @@ public class SyncData extends Service implements RequestListener {
                 }
             } else {
                 dialog.dismiss();
-                DialogUtils.showDialog(getApplicationContext(), "", getString(R.string.no_network_connection), getString(R.string.ok));
+                DialogUtils.showDialog(context, "", getString(R.string.no_network_connection), getString(R.string.ok));
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -135,7 +133,7 @@ public class SyncData extends Service implements RequestListener {
     public void onError(int id, String message) {
         if (id == reqIdSyncData) {
             dialog.dismiss();
-            DialogUtils.showDialog(getApplicationContext(), "", message, getString(R.string.ok));
+            DialogUtils.showDialog(context, "", message, getString(R.string.ok));
         }
     }
 
@@ -165,6 +163,7 @@ public class SyncData extends Service implements RequestListener {
                     insertSecurityMenuControllerLink(object.getString(DbParams.TBL_SECURITY_MENU_CONTROLLERS_LINK), DbParams.TBL_SECURITY_MENU_CONTROLLERS_LINK);
                     insertSecurityController(object.getString(DbParams.TBL_SECURITY_CONTROLLERS), DbParams.TBL_SECURITY_CONTROLLERS);
                     insertRole(object.getString(DbParams.TBL_ROLE), DbParams.TBL_ROLE);
+//                    insertTimesheet(object.getString(DbParams.TBL_TIMESHEET), DbParams.TBL_TIMESHEET);
                     insertCompany(object.getString(DbParams.TBL_COMPANY), DbParams.TBL_COMPANY);
 //                    insertTaskType(object.getString(DbParams.TBL_TASK_TYPE), DbParams.TBL_TASK_TYPE);
                     return strings[1];
@@ -192,6 +191,11 @@ public class SyncData extends Service implements RequestListener {
             }.getType());
             if (syncList != null && !syncList.isEmpty()) {
                 for (int i = 0; i < syncList.size(); i++) {
+                    if(syncList.get(i).getEmail().equalsIgnoreCase(prefManager.getString(PARAMS.KEY_EMAIL, ""))){
+                        prefManager.edit().putString(PARAMS.KEY_SERVER_USER_ID, syncList.get(i).getServer_user_id()).apply();
+                        prefManager.edit().putString(PARAMS.KEY_LOCAL_USER_ID, syncList.get(i).getLocal_user_id()).apply();
+                    }
+
                     boolean isExists = pendingData.checkRecordExist(table, DbParams.CLM_LOCAL_USER_ID, syncList.get(i).getLocal_user_id());
                     android.util.Log.e(TAG, "isAvailable: " + isExists);
                     if (isExists)
@@ -434,6 +438,23 @@ public class SyncData extends Service implements RequestListener {
                     android.util.Log.e(TAG, "isAvailable: " + isExists);
                     if (isExists)
                         pendingData.update(syncList.get(i), table, syncList.get(i).getRole_id());
+                    else
+                        pendingData.insert(syncList.get(i), table);
+                }
+            }
+        }
+    }
+
+    private void insertTimesheet(String syncModel, String table) {
+        if (!Utils.isEmptyString(syncModel)) {
+            ArrayList<SyncTimesheet> syncList = new Gson().fromJson(syncModel, new TypeToken<List<SyncTimesheet>>() {
+            }.getType());
+            if (syncList != null && !syncList.isEmpty()) {
+                for (int i = 0; i < syncList.size(); i++) {
+                    boolean isExists = pendingData.checkRecordExist(table, DbParams.CLM_LOCAL_TIMESHEET_ID, syncList.get(i).getLocal_timesheet_id());
+                    android.util.Log.e(TAG, "isAvailable: " + isExists);
+                    if (isExists)
+                        pendingData.update(syncList.get(i), table, syncList.get(i).getTimesheet_id());
                     else
                         pendingData.insert(syncList.get(i), table);
                 }
